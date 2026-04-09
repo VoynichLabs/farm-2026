@@ -10,11 +10,30 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Mark's AI Farm Projects",
+  title: {
+    default: "Farm 2026 — AI-Powered Backyard Farm",
+    template: "%s | Farm 2026",
+  },
   description:
-    "Farm 2026 — a hobby farm in Hampton, CT where Claude builds the technology and the birds run the show. Farm Guardian AI, heritage flock, and weekly field notes.",
+    "A hobby farm in Hampton, CT where Claude builds the technology and the birds run the show. Three cameras, local AI, and one farmer protecting his flock.",
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐔</text></svg>",
+  },
+  openGraph: {
+    title: "Farm 2026 — AI-Powered Backyard Farm",
+    description:
+      "Three cameras, local AI on a Mac Mini, and one farmer protecting his flock. Built entirely by Claude.",
+    images: ["/photos/command-center-setup.jpg"],
+    type: "website",
+    siteName: "Farm 2026",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Farm 2026 — AI-Powered Backyard Farm",
+    description:
+      "Three cameras, local AI on a Mac Mini, and one farmer protecting his flock. Built entirely by Claude.",
+    images: ["/photos/command-center-setup.jpg"],
   },
 };
 

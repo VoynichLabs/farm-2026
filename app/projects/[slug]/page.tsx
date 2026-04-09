@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -19,6 +20,32 @@ const statusColors: Record<string, string> = {
 
 export function generateStaticParams() {
   return getProjects().map((p) => ({ slug: p.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const project = getProject(slug);
+  if (!project) return {};
+  return {
+    title: project.title,
+    description: project.description,
+    openGraph: {
+      title: project.title,
+      description: project.description,
+      ...(project.heroPhoto ? { images: [project.heroPhoto] } : {}),
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.description,
+      ...(project.heroPhoto ? { images: [project.heroPhoto] } : {}),
+    },
+  };
 }
 
 export default async function ProjectPage({

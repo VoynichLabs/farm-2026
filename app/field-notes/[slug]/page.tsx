@@ -6,6 +6,7 @@
  * SRP/DRY check: Pass — reuses getFieldNote/getAllFieldNotes from lib/content.ts,
  *   follows same MDXRemote pattern as project pages.
  */
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -14,6 +15,32 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 
 export function generateStaticParams() {
   return getAllFieldNotes().map((n) => ({ slug: n.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const note = getFieldNote(slug);
+  if (!note) return {};
+  return {
+    title: note.title,
+    description: `Farm field note — ${note.date}`,
+    openGraph: {
+      title: note.title,
+      description: `Farm field note — ${note.date}`,
+      ...(note.cover ? { images: [note.cover] } : {}),
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: note.title,
+      description: `Farm field note — ${note.date}`,
+      ...(note.cover ? { images: [note.cover] } : {}),
+    },
+  };
 }
 
 export default async function FieldNotePage({
