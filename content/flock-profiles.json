@@ -1,0 +1,251 @@
+{
+  "breeds": {
+    "Rhode Island Red": {
+      "description": "American breed known for reliable egg production and hardiness. Medium-sized birds with deep red plumage and red-brown eyes.",
+      "egg_color": "Brown to dark brown",
+      "eggs_per_year": 250,
+      "temperament": "Friendly but independent, good foragers",
+      "cold_hardiness": "Excellent — large comb can be susceptible to frostbite, but otherwise very hardy",
+      "typical_lifespan": "5-8 years",
+      "fun_fact": "Rhode Island Reds were the state bird of Rhode Island (1954) and are one of the most productive brown-egg layers."
+    },
+    "Speckled Sussex": {
+      "description": "British breed with distinctive mahogany and white speckled plumage. Curious, active foragers with excellent table manners (quiet compared to other breeds).",
+      "egg_color": "Tan to light brown",
+      "eggs_per_year": 240,
+      "temperament": "Docile, curious, excellent foragers, friendly to humans",
+      "cold_hardiness": "Good — medium comb, adapts well to cold",
+      "typical_lifespan": "5-8 years",
+      "fun_fact": "Speckled Sussex are known for being particularly friendly and following their owners around, almost dog-like in behavior."
+    },
+    "Golden Laced Wyandotte": {
+      "description": "American breed with beautiful gold and black laced plumage. Compact, muscular birds with rose combs (frost-resistant) and yellow legs.",
+      "egg_color": "Brown",
+      "eggs_per_year": "200-220",
+      "temperament": "Hardy, independent, can be broody, broody hens are excellent mothers",
+      "cold_hardiness": "Excellent — rose comb is frost-resistant, compact body, ideal for cold climates",
+      "typical_lifespan": "5-7 years",
+      "fun_fact": "Wyandottes are excellent mothers and will often go broody, making them perfect for natural hatching."
+    },
+    "Easter Egger": {
+      "description": "Not a standard breed but a hybrid type that lays colored eggs (blue, green, or pink). Variable plumage; typically have ear tufts or muffs and beards.",
+      "egg_color": "Blue, green, or pink (highly variable)",
+      "eggs_per_year": "200-280",
+      "temperament": "Generally friendly, curious, good foragers",
+      "cold_hardiness": "Good — varies by individual genetics",
+      "typical_lifespan": "5-8 years",
+      "fun_fact": "Easter Eggers are prized by backyard farmers for their distinctive colored eggs. The 'Araucana' gene creates the blue egg color."
+    },
+    "White Rock": {
+      "description": "American breed with white plumage and yellow legs. Large, friendly birds originally bred for meat production. Commonly crossed with other breeds.",
+      "egg_color": "Brown",
+      "eggs_per_year": "200-220",
+      "temperament": "Friendly, calm, excellent mothers (when broody), good foragers",
+      "cold_hardiness": "Good — large comb can be susceptible to frostbite",
+      "typical_lifespan": "5-8 years",
+      "fun_fact": "White Rocks were one of the first breeds to be widely used for commercial broiler production in the mid-20th century."
+    },
+    "Black Australorp": {
+      "description": "Australian breed with glossy black plumage with a green sheen. Medium-sized, docile birds known for excellent egg production.",
+      "egg_color": "Brown (often large)",
+      "eggs_per_year": "250-300",
+      "temperament": "Docile, friendly, good mothers (broody), excellent foragers",
+      "cold_hardiness": "Good — moderate comb, handles cold well",
+      "typical_lifespan": "5-7 years",
+      "fun_fact": "Black Australorps hold the record for highest single-year egg production by a hen — 364 eggs in 365 days, set in the 1920s."
+    },
+    "Easter Egger × Rhode Island Red Cross": {
+      "description": "Hybrid offspring combining Easter Egger's colored-egg genetics with RIR vigor. Inherits blue-egg production from EE parent and reliability from RIR.",
+      "egg_color": "Blue",
+      "eggs_per_year": "240-260",
+      "temperament": "Friendly, curious, good foragers, benefits from hybrid vigor",
+      "cold_hardiness": "Excellent — inherits RIR hardiness",
+      "typical_lifespan": "5-8 years",
+      "fun_fact": "Homestead hybrids like this combine the best traits of both parents: reliable egg production with unique blue egg color."
+    },
+    "White Broad-Breasted Turkey": {
+      "description": "The standard commercial turkey breed. Fast-growing, broad-chested birds raised primarily for meat. White plumage makes for clean processing.",
+      "egg_color": "Cream to light brown (seasonal)",
+      "eggs_per_year": "50-80",
+      "temperament": "Curious, social, can imprint on handlers when raised from poults",
+      "cold_hardiness": "Moderate — need shelter from wind and wet, but tolerate cold if dry",
+      "typical_lifespan": "2-5 years (heritage strains longer)",
+      "fun_fact": "Turkey poults will follow the first moving thing they see after hatching — making hand-raised poults remarkably tame."
+    },
+    "Cream Legbar": {
+      "description": "British autosexing breed developed in the 1930s at Cambridge. Medium-sized birds with cream plumage and distinctive crests. Hens reliably lay blue eggs.",
+      "egg_color": "Blue (sky blue to pale blue-green)",
+      "eggs_per_year": "180-200",
+      "temperament": "Active, alert, good foragers, can be flighty",
+      "cold_hardiness": "Good — moderate comb, handles temperate climates well",
+      "typical_lifespan": "5-8 years",
+      "fun_fact": "Cream Legbars are one of the few breeds where you can tell males from females at hatch by their down color — an 'autosexing' trait."
+    }
+  },
+  "flock_birds": [
+    {
+      "name": "Birdatha",
+      "breed": "Rhode Island Red",
+      "age": "2+ years",
+      "age_note": "One of the oldest birds on the farm",
+      "status": "deceased",
+      "egg_color": "Brown",
+      "temperament": "Independent, good forager",
+      "color_description": "Reddish-brown",
+      "photo": "birds/birdatha.jpg",
+      "notes": "Oldest hen on property, reliable producer. Lost in early April 2026.",
+      "deceased_date": "2026-04-09",
+      "cause_of_death": "Predator losses — first week of April 2026"
+    },
+    {
+      "name": "Birdgit",
+      "breed": "Speckled Sussex",
+      "age": "2+ years",
+      "age_note": "One of the older birds",
+      "status": "deceased",
+      "egg_color": "Tan to light brown",
+      "temperament": "Docile, curious, excellent forager",
+      "color_description": "Mahogany with white-tipped black-barred feathers",
+      "photo": "birds/birdgit.jpg",
+      "notes": "Lost to hawk attack on 08-April-2026. Friendly and active, often seen exploring. Her namesake chick Birdadette carries on her legacy.",
+      "deceased_date": "2026-04-08",
+      "cause_of_death": "Hawk attack"
+    },
+    {
+      "name": "Henrietta",
+      "breed": "Golden Laced Wyandotte",
+      "age": "2 years",
+      "age_note": "About 2 years old",
+      "status": "active",
+      "egg_color": "Brown",
+      "temperament": "Hardy, independent",
+      "color_description": "Gold and black laced plumage, purple leg band on left leg",
+      "photo": "birds/henrietta.jpg",
+      "notes": "Identified by purple leg band; hatched with chick band"
+    },
+    {
+      "name": "Little Big Red Junior",
+      "breed": "Rhode Island Red (likely)",
+      "age": "Unknown",
+      "age_note": "Adult rooster",
+      "status": "active",
+      "egg_color": "N/A (rooster)",
+      "temperament": "Protective, active, attentive flock manager",
+      "color_description": "Deep auburn/red",
+      "photo": "birds/little-big-red.jpg",
+      "notes": "Primary rooster; father of Birdadonna; visible in farm photos"
+    },
+    {
+      "name": "Whitey Red Legs",
+      "breed": "Easter Egger × Rhode Island Red cross (rooster)",
+      "age": "Unknown",
+      "age_note": "Adult rooster",
+      "status": "active",
+      "egg_color": "N/A (rooster)",
+      "temperament": "Calm, friendly",
+      "color_description": "White body with black-barred tail, yellow legs, likely male EE × RIR cross",
+      "photo": "birds/whitey-red-legs.jpg",
+      "notes": "Secondary rooster; large single comb; mixed breed background"
+    },
+    {
+      "name": "EE hen 1",
+      "breed": "Easter Egger",
+      "age": "1+ years",
+      "age_note": "At least 1 year old",
+      "status": "active",
+      "egg_color": "Blue or green",
+      "temperament": "Friendly, curious",
+      "color_description": "Dark blue-black slate plumage, single comb",
+      "photo": "birds/ee-hen-1.jpg",
+      "notes": "Darker of the two Easter Egger hens; likely mother of Birdadonna"
+    },
+    {
+      "name": "EE hen 2",
+      "breed": "Easter Egger",
+      "age": "1+ years",
+      "age_note": "At least 1 year old",
+      "status": "active",
+      "egg_color": "Blue or green",
+      "temperament": "Friendly, curious",
+      "color_description": "Blue-gray plumage with yellow legs, single comb",
+      "photo": "birds/ee-hen-2.jpg",
+      "notes": "Lighter of the two Easter Egger hens; good forager"
+    },
+    {
+      "name": "Birdadonna",
+      "breed": "Easter Egger × RIR cross",
+      "age": "1 year",
+      "age_note": "Hatched April 2, 2025 — almost exactly 1 year old",
+      "status": "deceased",
+      "egg_color": "Blue",
+      "temperament": "Friendly, active",
+      "color_description": "Blue-gray body with golden auburn hackle",
+      "photo": "birds/birdadonna-2.jpg",
+      "notes": "Hatched in incubator on boss's desk; dam: EE hen 1, sire: Little Big Red Junior. Lost in early April 2026.",
+      "deceased_date": "2026-04-09",
+      "cause_of_death": "Predator losses — first week of April 2026"
+    },
+    {
+      "name": "Black Australorp hen",
+      "breed": "Black Australorp",
+      "age": "Unknown",
+      "age_note": "Adult",
+      "status": "deceased",
+      "egg_color": "Brown (large)",
+      "temperament": "Docile, broody",
+      "color_description": "Black plumage with iridescent green sheen",
+      "photo": "birds/australorp.jpg",
+      "notes": "Excellent egg producer. Lost in early April 2026.",
+      "deceased_date": "2026-04-09",
+      "cause_of_death": "Predator losses — first week of April 2026"
+    },
+    {
+      "name": "Birdadette",
+      "breed": "Easter Egger",
+      "age": "3 days",
+      "age_note": "Hatched April 6, 2026 in incubator on the boss's desk",
+      "status": "active",
+      "egg_color": "TBD (too young)",
+      "temperament": "Alert, curious — started learning computer skills on day two",
+      "color_description": "Gray-brown downy plumage, yellow legs",
+      "photo": "april-2026/birdadette-fresh-hatch.jpg",
+      "notes": "First successful incubator hatch of 2026. Hatched from a blue egg (set 16-March, ~21 day incubation). Named after Birdgit who was lost to a hawk two days later. Posed on the keyboard next to her cracked shell moments after hatching."
+    },
+    {
+      "name": "Turkey poults (3)",
+      "breed": "White Broad-Breasted Turkey",
+      "age": "~1 week",
+      "age_note": "Purchased 07-April-2026 from local source",
+      "status": "active",
+      "egg_color": "N/A (poults)",
+      "temperament": "Social, curious, imprinting on handlers",
+      "color_description": "Yellow downy plumage",
+      "photo": "april-2026/turkey-poult-in-hand.jpg",
+      "notes": "3 White Broad-Breasted turkey poults, about 1 week old when purchased. First turkeys on the farm."
+    },
+    {
+      "name": "Cream Legbar chicks (4)",
+      "breed": "Cream Legbar",
+      "age": "~1 week",
+      "age_note": "Purchased 07-April-2026 from local source",
+      "status": "active",
+      "egg_color": "Blue (when mature)",
+      "temperament": "Active, alert",
+      "color_description": "Varied chick down (autosexing breed — males and females have different coloring)",
+      "photo": null,
+      "notes": "4 Cream Legbar chicks, about 1 week old when purchased. Will lay blue eggs when mature. Autosexing breed — can tell gender from hatch."
+    },
+    {
+      "name": "Cackle Hatchery chicks (15)",
+      "breed": "Mixed — Exotic Island Fowl Special (5) + Rare Chick Special (10)",
+      "age": "1 day",
+      "age_note": "Shipped 08-April-2026 from Cackle Hatchery, Lebanon MO (Order #519118)",
+      "status": "active",
+      "egg_color": "TBD (assorted breeds)",
+      "temperament": "TBD — just arrived",
+      "color_description": "Varied — assortment of rare and exotic breeds",
+      "photo": "april-2026/cackle-hatchery-arrival.jpg",
+      "notes": "15 chicks from Cackle Hatchery: 5 Exotic Island Fowl Special + 10 Rare Chick Special. Reinforcements after losing Birdgit. Exact breeds TBD as they feather out. Total order: $122.80 shipped USPS Priority."
+    }
+  ]
+}

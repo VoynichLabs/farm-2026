@@ -1,0 +1,43 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "PID": 546,
+        "ACRES": 13.66,
+        "ADDRESS": "653 Pudding Hill Road, Hampton, CT 06247",
+        "SOURCE": "Calculated boundary from acreage estimate",
+        "ESTIMATED": true,
+        "NOTES": "Boundary estimated from 13.66 acres with 1.5:1 aspect ratio. Official parcel boundary from CT assessor recommended for legal purposes."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -72.06946340814525,
+              41.7418658724175
+            ],
+            [
+              -72.06714439185475,
+              41.7418658724175
+            ],
+            [
+              -72.06714439185475,
+              41.744461327582506
+            ],
+            [
+              -72.06946340814525,
+              41.744461327582506
+            ],
+            [
+              -72.06946340814525,
+              41.7418658724175
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

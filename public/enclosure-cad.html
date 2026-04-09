@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>House + Deck CAD — Farm 2026</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0f1117; color: #e0e8f0; font-family: 'Courier New', monospace; overflow: hidden; }
+    #canvas { display: block; width: 100vw; height: 100vh; }
+    #ui {
+      position: fixed; top: 16px; left: 16px; background: rgba(10,14,26,0.85);
+      border: 1px solid #2a3a5a; border-radius: 8px; padding: 14px 18px;
+      font-size: 12px; line-height: 1.7; max-width: 240px; backdrop-filter: blur(4px);
+    }
+    #ui h2 { font-size: 13px; color: #7eb8f7; margin-bottom: 8px; letter-spacing: 0.06em; text-transform: uppercase; }
+    #ui .dim { color: #8fa8c0; }
+    #ui .label { color: #c4d8f0; }
+    #legend {
+      position: fixed; bottom: 16px; left: 16px; background: rgba(10,14,26,0.85);
+      border: 1px solid #2a3a5a; border-radius: 8px; padding: 12px 16px;
+      font-size: 11px; line-height: 1.8; backdrop-filter: blur(4px);
+    }
+    #legend h3 { font-size: 11px; color: #7eb8f7; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .swatch { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+    #controls {
+      position: fixed; bottom: 16px; right: 16px; background: rgba(10,14,26,0.85);
+      border: 1px solid #2a3a5a; border-radius: 8px; padding: 12px 16px;
+      font-size: 11px; color: #8fa8c0; line-height: 1.7; backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<div id="ui">
+  <h2>653 Pudding Hill Rd</h2>
+  <div class="label">Under-Deck Enclosure — 2026</div>
+  <hr style="border-color:#2a3a5a;margin:8px 0">
+  <div class="dim">House width: ~42 ft</div>
+  <div class="dim">Deck: right side, upper level</div>
+  <div class="dim">Enclosure (trapezoidal):</div>
+  <div class="dim" style="padding-left:10px">Front (S): 8 ft</div>
+  <div class="dim" style="padding-left:10px">Left depth (W): 9 ft</div>
+  <div class="dim" style="padding-left:10px">Right depth (E): 12 ft</div>
+  <div class="dim" style="padding-left:10px">Height: 7 ft</div>
+</div>
+
+<div id="legend">
+  <h3>Legend</h3>
+  <div><span class="swatch" style="background:#c8d8e8;border:1px solid #8ab0cc"></span>House (raised ranch)</div>
+  <div><span class="swatch" style="background:#4a5568;border:1px solid #2d3748"></span>Elevated deck</div>
+  <div><span class="swatch" style="background:#6b7280;border:1px solid #4b5563"></span>Deck staircase</div>
+  <div><span class="swatch" style="background:#d97706;opacity:0.7;border:1px solid #92400e"></span>Proposed enclosure</div>
+  <div><span class="swatch" style="background:#1d4ed8;border:1px solid #1e3a8a"></span>RAM 1500 (scale ref)</div>
+</div>
+
+<div id="controls">
+  <strong style="color:#c4d8f0">Controls</strong><br>
+  Drag — Orbit<br>
+  Right-drag / Two-finger — Pan<br>
+  Scroll — Zoom<br>
+  R — Reset view
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.163.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.163.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// ─── Scene Setup ───────────────────────────────────────────────────────────
+const canvas = document.getElementById('canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0f1117);
+scene.fog = new THREE.Fog(0x0f1117, 80, 200);
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 500);
+camera.position.set(-30, 22, 42);
+camera.lookAt(0, 5, 0);
+
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.target.set(0, 5, 0);
+controls.minDistance = 8;
+controls.maxDistance = 120;
+
+// ─── Lighting ──────────────────────────────────────────────────────────────
+scene.add(new THREE.AmbientLight(0x8ab0cc, 0.6));
+
+const sun = new THREE.DirectionalLight(0xffffff, 1.2);
+sun.position.set(20, 40, 20);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.near = 0.5;
+sun.shadow.camera.far = 200;
+sun.shadow.camera.left = -60;
+sun.shadow.camera.right = 60;
+sun.shadow.camera.top = 60;
+sun.shadow.camera.bottom = -60;
+scene.add(sun);
+
+const fill = new THREE.DirectionalLight(0x4a80b0, 0.4);
+fill.position.set(-15, 10, -10);
+scene.add(fill);
+
+// ─── Materials ─────────────────────────────────────────────────────────────
+const matHouse = new THREE.MeshLambertMaterial({ color: 0xd0dce8 });
+const matHouseWire = new THREE.LineBasicMaterial({ color: 0x7aa8cc, linewidth: 1 });
+const matRoof = new THREE.MeshLambertMaterial({ color: 0x4a5568 });
+const matDeck = new THREE.MeshLambertMaterial({ color: 0x374151 });
+const matDeckWire = new THREE.LineBasicMaterial({ color: 0x6b8fa8 });
+const matStair = new THREE.MeshLambertMaterial({ color: 0x4b5563 });
+const matEnclosure = new THREE.MeshLambertMaterial({ color: 0xd97706, transparent: true, opacity: 0.45 });
+const matEnclosureWire = new THREE.LineBasicMaterial({ color: 0xfbbf24, linewidth: 2 });
+const matGround = new THREE.MeshLambertMaterial({ color: 0x1a2a1a });
+const matTruck = new THREE.MeshLambertMaterial({ color: 0x1d3461 });
+const matTruckWire = new THREE.LineBasicMaterial({ color: 0x5b9bd5 });
+const matWindow = new THREE.MeshLambertMaterial({ color: 0x93c5fd, transparent: true, opacity: 0.5 });
+const matDoor = new THREE.MeshLambertMaterial({ color: 0x78350f });
+const matFoundation = new THREE.MeshLambertMaterial({ color: 0x9ca3af });
+
+// ─── Helper: wireframe edges ───────────────────────────────────────────────
+function addWireEdges(mesh, mat) {
+  const edges = new THREE.EdgesGeometry(mesh.geometry, 15);
+  const line = new THREE.LineSegments(edges, mat);
+  mesh.add(line);
+}
+
+function box(w, h, d, mat, wireMat, px, py, pz, castShadow = true) {
+  const geo = new THREE.BoxGeometry(w, h, d);
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.set(px, py, pz);
+  mesh.castShadow = castShadow;
+  mesh.receiveShadow = true;
+  if (wireMat) addWireEdges(mesh, wireMat);
+  scene.add(mesh);
+  return mesh;
+}
+
+// ─── Scale: 1 unit = 1 foot ────────────────────────────────────────────────
+
+// ─── Ground ────────────────────────────────────────────────────────────────
+const groundGeo = new THREE.PlaneGeometry(120, 120);
+const ground = new THREE.Mesh(groundGeo, matGround);
+ground.rotation.x = -Math.PI / 2;
+ground.receiveShadow = true;
+scene.add(ground);
+
+// Grid
+const grid = new THREE.GridHelper(120, 60, 0x1a3a5a, 0x142030);
+grid.position.y = 0.01;
+scene.add(grid);
+
+// ─── HOUSE (Raised Ranch / Split-Level) ───────────────────────────────────
+// House is ~42ft wide, positioned centered at X=0
+// Lower level (basement/ground level): 42 × 8 × 28 ft
+// Upper level (main living): 42 × 10 × 28 ft  
+// The house rear (NORTH face) is at Z = -14 (half of 28ft depth)
+
+const HOUSE_W = 42;
+const HOUSE_LOWER_H = 8;
+const HOUSE_UPPER_H = 10;
+const HOUSE_D = 28;
+const HOUSE_X = 0;
+const HOUSE_Z = -1; // center of house depth
+
+// Foundation / lower level
+box(HOUSE_W, HOUSE_LOWER_H, HOUSE_D, matFoundation, matHouseWire, HOUSE_X, HOUSE_LOWER_H / 2, HOUSE_Z);
+
+// Upper level body
+box(HOUSE_W, HOUSE_UPPER_H, HOUSE_D, matHouse, matHouseWire, HOUSE_X, HOUSE_LOWER_H + HOUSE_UPPER_H / 2, HOUSE_Z);
+
+// Gable roof — simple box for now
+const ROOF_H = 7;
+const roofGeo = new THREE.CylinderGeometry(0, HOUSE_W * 0.72, ROOF_H, 4, 1);
+const roofMesh = new THREE.Mesh(roofGeo, matRoof);
+roofMesh.rotation.y = Math.PI / 4;
+roofMesh.position.set(HOUSE_X, HOUSE_LOWER_H + HOUSE_UPPER_H + ROOF_H / 2, HOUSE_Z);
+roofMesh.castShadow = true;
+scene.add(roofMesh);
+
+// Windows — upper level rear face (Z = HOUSE_Z - HOUSE_D/2 = -1 - 14 = -15)
+const REAR_Z = HOUSE_Z - HOUSE_D / 2;
+const winPositions = [-14, -6, 2, 10]; // X positions
+for (const wx of winPositions) {
+  const win = box(3.5, 3, 0.2, matWindow, null, wx, HOUSE_LOWER_H + 5, REAR_Z - 0.1);
+}
+
+// Upper level front windows
+const FRONT_Z = HOUSE_Z + HOUSE_D / 2;
+for (const wx of [-16, -8, 0, 8, 16]) {
+  box(3, 3, 0.2, matWindow, null, wx, HOUSE_LOWER_H + 5, FRONT_Z + 0.1);
+}
+
+// Front door
+box(3.5, 7, 0.2, matDoor, null, -2, HOUSE_LOWER_H + 3.5, FRONT_Z + 0.15);
+
+// ─── ELEVATED DECK (right side of house) ──────────────────────────────────
+// Deck is on the RIGHT (positive X) side, at upper-floor level
+// Deck: ~14ft wide × 12ft deep, elevated at ~8ft (top of lower level)
+// Right edge of house is at X = HOUSE_W/2 = 21
+// Deck extends from X=9 to X=21 (right 12ft of house rear area)
+
+const DECK_LEVEL = HOUSE_LOWER_H; // 8ft — top of lower level
+const DECK_FLOOR_T = 0.5;         // floor thickness
+const DECK_W = 14;                 // east-west width
+const DECK_D = 10;                 // north-south depth  
+const DECK_X = HOUSE_W / 2 - DECK_W / 2; // right side: 21 - 7 = 14
+const DECK_Z = REAR_Z - DECK_D / 2 - 0.1; // butts against house rear
+
+// Deck floor
+box(DECK_W, DECK_FLOOR_T, DECK_D, matDeck, matDeckWire, DECK_X, DECK_LEVEL + DECK_FLOOR_T / 2, DECK_Z);
+
+// Deck railing posts (4 corners + midpoints)
+const deckLeft = DECK_X - DECK_W / 2;
+const deckRight = DECK_X + DECK_W / 2;
+const deckFront = DECK_Z + DECK_D / 2;
+const deckBack = DECK_Z - DECK_D / 2;
+const RAIL_H = 3.5;
+const RAIL_BASE = DECK_LEVEL + DECK_FLOOR_T;
+
+const railPostPositions = [
+  [deckLeft, deckFront], [deckRight, deckFront],
+  [deckLeft, deckBack], [deckRight, deckBack],
+  [(deckLeft + deckRight) / 2, deckFront],
+];
+for (const [px, pz] of railPostPositions) {
+  box(0.25, RAIL_H, 0.25, matDeck, null, px, RAIL_BASE + RAIL_H / 2, pz);
+}
+
+// Top rail bars
+box(DECK_W, 0.2, 0.2, matDeck, null, DECK_X, RAIL_BASE + RAIL_H, deckFront);
+box(0.2, 0.2, DECK_D, matDeck, null, deckLeft, RAIL_BASE + RAIL_H, DECK_Z);
+box(0.2, 0.2, DECK_D, matDeck, null, deckRight, RAIL_BASE + RAIL_H, DECK_Z);
+
+// Deck support posts (under deck)
+for (const [px, pz] of [[deckLeft + 1, deckFront - 0.5], [deckRight - 1, deckFront - 0.5], [DECK_X, deckFront - 0.5]]) {
+  box(0.5, DECK_LEVEL, 0.5, matFoundation, null, px, DECK_LEVEL / 2, pz);
+}
+
+// ─── STAIRCASE (descends from RIGHT end of deck, going south) ─────────────
+// Staircase from deckRight, DECK_LEVEL down to grade
+// Each stair: ~1ft rise, ~1ft run, 3ft wide
+const STAIR_W = 4;
+const numStairs = 8;
+for (let i = 0; i < numStairs; i++) {
+  const sx = deckRight + 0.5 + i * 1.1;
+  const sy = DECK_LEVEL - i * 1.0 - 0.5;
+  const sz = deckFront - 0.5;
+  box(1.1, DECK_LEVEL - i * 1.0, STAIR_W, matStair, null, sx, sy / 2 + 0.25, sz);
+}
+// Stair railing
+box(0.15, RAIL_H * 0.8, 0.15, matDeck, null, deckRight + 0.3, RAIL_BASE + RAIL_H * 0.4, deckFront + 0.5);
+box(0.15, RAIL_H * 0.5, 0.15, matDeck, null, deckRight + numStairs * 1.1, RAIL_H * 0.25, deckFront + 0.5);
+
+// ─── ENCLOSURE (trapezoidal under-deck space) ──────────────────────────────
+// Front (south face, at deckFront): 8ft wide
+// Left depth (staircase side, at deckRight side): 9ft
+// Right depth (far east side): 12ft
+// Height: 7ft
+// The enclosure sits at grade under the deck on the RIGHT side of house
+
+// Approximate trapezoidal shape with a shape geometry
+// Place enclosure front face at z = deckFront
+// Left side (staircase side): x = deckRight - 8ft front width = deckRight - 8
+// Right side (far east): x = deckRight
+
+// Build as 4 vertical walls using custom geometry
+const ENC_FRONT_W = 8;     // south face width
+const ENC_LEFT_D = 9;      // staircase side depth
+const ENC_RIGHT_D = 12;    // far east depth
+const ENC_H = 7;
+
+// Enclosure corners (at grade, Y=0)
+// Front-left: (deckRight - ENC_FRONT_W, deckFront)
+// Front-right: (deckRight, deckFront)
+// Back-left:  (deckRight - ENC_LEFT_D... wait, depth is Z, not X)
+// Actually enclosure is under deck: front is at deckFront, back is toward house
+// Left side is at x = deckLeft of enclosure = DECK_X - DECK_W/2 roughly
+
+// Re-anchor: enclosure is under the deck area
+// Front (south) face: 8ft wide at deckFront
+// The enclosure depth goes NORTH from deckFront toward house
+// Left wall (west side): 9ft deep
+// Right wall (east side): 12ft deep
+
+const encFrontRight = deckRight;
+const encFrontLeft = deckRight - ENC_FRONT_W;
+const encBackRight = encFrontRight;       // right wall at x = deckRight
+const encBackLeft = encFrontLeft;         // left wall at x = encFrontLeft
+const encFrontZ = deckFront;
+const encBackRightZ = encFrontZ - ENC_RIGHT_D;   // right back corner
+const encBackLeftZ = encFrontZ - ENC_LEFT_D;     // left back corner
+
+// South face (8ft wide)
+{
+  const geo = new THREE.BoxGeometry(ENC_FRONT_W, ENC_H, 0.15);
+  const mesh = new THREE.Mesh(geo, matEnclosure);
+  mesh.position.set((encFrontLeft + encFrontRight) / 2, ENC_H / 2, encFrontZ);
+  addWireEdges(mesh, matEnclosureWire);
+  scene.add(mesh);
+}
+
+// West wall (left, 9ft deep) — slight taper
+{
+  const geo = new THREE.BoxGeometry(0.15, ENC_H, ENC_LEFT_D);
+  const mesh = new THREE.Mesh(geo, matEnclosure);
+  mesh.position.set(encFrontLeft, ENC_H / 2, encFrontZ - ENC_LEFT_D / 2);
+  addWireEdges(mesh, matEnclosureWire);
+  scene.add(mesh);
+}
+
+// East wall (right, 12ft deep)
+{
+  const geo = new THREE.BoxGeometry(0.15, ENC_H, ENC_RIGHT_D);
+  const mesh = new THREE.Mesh(geo, matEnclosure);
+  mesh.position.set(encFrontRight, ENC_H / 2, encFrontZ - ENC_RIGHT_D / 2);
+  addWireEdges(mesh, matEnclosureWire);
+  scene.add(mesh);
+}
+
+// North wall (back, angled — connect back-left to back-right)
+// Approximate as a box between the two back corners
+{
+  const backMidX = (encBackLeft + encBackRight) / 2;
+  const backMidZ = (encBackLeftZ + encBackRightZ) / 2;
+  const backW = Math.abs(encBackRight - encBackLeft);
+  const backAngle = Math.atan2(encBackLeftZ - encBackRightZ, ENC_FRONT_W);
+  const backGeo = new THREE.BoxGeometry(ENC_FRONT_W, ENC_H, 0.15);
+  const backMesh = new THREE.Mesh(backGeo, matEnclosure);
+  backMesh.position.set(backMidX, ENC_H / 2, backMidZ);
+  backMesh.rotation.y = backAngle;
+  addWireEdges(backMesh, matEnclosureWire);
+  scene.add(backMesh);
+}
+
+// Floor / ground highlight for enclosure
+{
+  // Trapezoidal floor using ShapeGeometry
+  const shape = new THREE.Shape();
+  shape.moveTo(encFrontLeft, encFrontZ);
+  shape.lineTo(encFrontRight, encFrontZ);
+  shape.lineTo(encBackRight, encBackRightZ);
+  shape.lineTo(encBackLeft, encBackLeftZ);
+  shape.closePath();
+
+  const floorGeo = new THREE.ShapeGeometry(shape);
+  const floorMesh = new THREE.Mesh(floorGeo, new THREE.MeshLambertMaterial({ color: 0xd97706, transparent: true, opacity: 0.25, side: THREE.DoubleSide }));
+  floorMesh.rotation.x = -Math.PI / 2;
+  floorMesh.position.y = 0.05;
+  scene.add(floorMesh);
+
+  // Floor outline
+  const points3D = [
+    new THREE.Vector3(encFrontLeft, 0.08, encFrontZ),
+    new THREE.Vector3(encFrontRight, 0.08, encFrontZ),
+    new THREE.Vector3(encBackRight, 0.08, encBackRightZ),
+    new THREE.Vector3(encBackLeft, 0.08, encBackLeftZ),
+    new THREE.Vector3(encFrontLeft, 0.08, encFrontZ),
+  ];
+  const lineGeo = new THREE.BufferGeometry().setFromPoints(points3D);
+  scene.add(new THREE.Line(lineGeo, new THREE.LineBasicMaterial({ color: 0xfbbf24, linewidth: 2 })));
+}
+
+// ─── RAM 1500 (scale reference, parked to the right/east) ─────────────────
+// RAM 1500 dimensions: ~19.5ft long, 6.7ft wide, 6.1ft tall
+const TRUCK_L = 19.5;
+const TRUCK_W = 6.7;
+const TRUCK_H = 6.1;
+const TRUCK_CAB_H = 2.5;
+const TRUCK_X = deckRight + 16;
+const TRUCK_Z = deckFront + 2;
+
+// Bed + cab as two boxes
+const truckBody = box(TRUCK_L, TRUCK_H * 0.55, TRUCK_W, matTruck, matTruckWire, TRUCK_X, TRUCK_H * 0.55 / 2 + 1.8, TRUCK_Z);
+const truckCab = box(TRUCK_L * 0.45, TRUCK_CAB_H, TRUCK_W * 0.95, matTruck, matTruckWire, TRUCK_X - TRUCK_L * 0.15, TRUCK_H * 0.55 + 1.8 + TRUCK_CAB_H / 2, TRUCK_Z);
+
+// Wheels
+const wheelMat = new THREE.MeshLambertMaterial({ color: 0x111111 });
+const wheelGeo = new THREE.CylinderGeometry(1.4, 1.4, 0.7, 16);
+for (const [wx, wz] of [[-7, TRUCK_W / 2 + 0.1], [-7, -TRUCK_W / 2 - 0.1], [5, TRUCK_W / 2 + 0.1], [5, -TRUCK_W / 2 - 0.1]]) {
+  const wm = new THREE.Mesh(wheelGeo, wheelMat);
+  wm.rotation.x = Math.PI / 2;
+  wm.position.set(TRUCK_X + wx, 1.4, TRUCK_Z + wz);
+  wm.castShadow = true;
+  scene.add(wm);
+}
+
+// Truck windshield
+box(TRUCK_L * 0.15, TRUCK_CAB_H * 0.7, TRUCK_W * 0.85, matWindow, null,
+  TRUCK_X + TRUCK_L * 0.05, TRUCK_H * 0.55 + 1.8 + TRUCK_CAB_H * 0.65, TRUCK_Z);
+
+// ─── DIMENSION LABELS ─────────────────────────────────────────────────────
+// Use HTML overlay for labels (CSS2DRenderer alternative — use canvas labels)
+const labelCanvas = document.createElement('canvas');
+labelCanvas.width = 256; labelCanvas.height = 64;
+function makeLabel(text, color = '#fbbf24') {
+  const c = document.createElement('canvas');
+  c.width = 320; c.height = 48;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = 'rgba(10,14,26,0.8)';
+  ctx.roundRect(0, 0, c.width, c.height, 6);
+  ctx.fill();
+  ctx.font = 'bold 20px Courier New';
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, c.width / 2, c.height / 2);
+  const tex = new THREE.CanvasTexture(c);
+  const mat = new THREE.SpriteMaterial({ map: tex, depthTest: false, transparent: true });
+  const sprite = new THREE.Sprite(mat);
+  sprite.scale.set(8, 2.4, 1);
+  return sprite;
+}
+
+// Dimension label placements
+const labels = [
+  { text: '8 ft front', pos: [(encFrontLeft + encFrontRight) / 2, 0.8, encFrontZ + 1.5], color: '#fbbf24' },
+  { text: '9 ft depth', pos: [encFrontLeft - 2, 0.8, (encFrontZ + encBackLeftZ) / 2], color: '#fbbf24' },
+  { text: '12 ft depth', pos: [encFrontRight + 2.5, 0.8, (encFrontZ + encBackRightZ) / 2], color: '#fbbf24' },
+  { text: '7 ft height', pos: [encFrontLeft - 3, ENC_H / 2, encFrontZ], color: '#fbbf24' },
+  { text: '~42 ft wide', pos: [HOUSE_X, HOUSE_LOWER_H + HOUSE_UPPER_H + ROOF_H + 1.5, HOUSE_Z], color: '#7eb8f7' },
+  { text: 'Deck (elev. 8 ft)', pos: [DECK_X, DECK_LEVEL + DECK_FLOOR_T + RAIL_H + 1.5, DECK_Z], color: '#9ca3af' },
+  { text: 'RAM 1500 (scale)', pos: [TRUCK_X, TRUCK_H + 3.5, TRUCK_Z], color: '#5b9bd5' },
+  { text: 'Enclosure', pos: [(encFrontLeft + encFrontRight) / 2, ENC_H + 1.5, (encFrontZ + encBackRightZ) / 2], color: '#fbbf24' },
+];
+
+for (const { text, pos, color } of labels) {
+  const sprite = makeLabel(text, color);
+  sprite.position.set(...pos);
+  scene.add(sprite);
+}
+
+// ─── Dimension lines (thin lines showing measurements) ────────────────────
+function dimLine(a, b, color = 0xfbbf24) {
+  const geo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...a), new THREE.Vector3(...b)]);
+  scene.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color })));
+}
+
+// Front face arrow
+dimLine([encFrontLeft, 0.3, encFrontZ + 0.5], [encFrontRight, 0.3, encFrontZ + 0.5]);
+// Left depth
+dimLine([encFrontLeft - 0.5, 0.3, encFrontZ], [encFrontLeft - 0.5, 0.3, encBackLeftZ]);
+// Right depth
+dimLine([encFrontRight + 0.5, 0.3, encFrontZ], [encFrontRight + 0.5, 0.3, encBackRightZ]);
+// Height
+dimLine([encFrontLeft - 1.5, 0, encFrontZ], [encFrontLeft - 1.5, ENC_H, encFrontZ]);
+
+// House width
+dimLine([-HOUSE_W / 2, HOUSE_LOWER_H + HOUSE_UPPER_H + ROOF_H + 0.5, HOUSE_Z], [HOUSE_W / 2, HOUSE_LOWER_H + HOUSE_UPPER_H + ROOF_H + 0.5, HOUSE_Z], 0x7eb8f7);
+
+// ─── Compass rose ─────────────────────────────────────────────────────────
+// Small N arrow on ground
+const compassGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0.2, -38), new THREE.Vector3(0, 0.2, -44)]);
+scene.add(new THREE.Line(compassGeo, new THREE.LineBasicMaterial({ color: 0xff4444 })));
+const N = makeLabel('N ↑', '#ff6666');
+N.position.set(0, 0.5, -46);
+N.scale.set(3, 1.2, 1);
+scene.add(N);
+
+// ─── Camera reset ─────────────────────────────────────────────────────────
+const defaultCamPos = new THREE.Vector3(-30, 22, 42);
+const defaultTarget = new THREE.Vector3(0, 5, 0);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'r' || e.key === 'R') {
+    camera.position.copy(defaultCamPos);
+    controls.target.copy(defaultTarget);
+    controls.update();
+  }
+});
+
+// ─── Resize ───────────────────────────────────────────────────────────────
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// ─── Render Loop ──────────────────────────────────────────────────────────
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enclosure 3D — Farm 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            color: #ffffff;
+            overflow: hidden;
+        }
+        
+        #canvas {
+            display: block;
+            width: 100%;
+            height: 100vh;
+        }
+        
+        #info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            max-width: 350px;
+            line-height: 1.6;
+            border-left: 4px solid #8b7355;
+        }
+        
+        #info h2 {
+            margin-bottom: 10px;
+            color: #d4a574;
+            font-size: 16px;
+        }
+        
+        #info p {
+            margin: 5px 0;
+            color: #cccccc;
+        }
+        
+        #dimensions {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            border-left: 4px solid #4a7c59;
+        }
+        
+        .legend {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+        
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            border-left: 4px solid #d4a574;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas"></div>
+    
+    <div id="info">
+        <h2>🐔 Chicken Enclosure 3D</h2>
+        <p><strong>Under-Deck Bird Housing</strong></p>
+        <p>653 Pudding Hill Rd</p>
+        <p style="margin-top: 10px; color: #d4a574;"><strong>Confirmed Measurements:</strong></p>
+        <p>Front width: 8 ft</p>
+        <p>Left depth (W): 9 ft</p>
+        <p>Right depth (E): 12 ft</p>
+        <p>Height: 7 ft</p>
+        <p>Shape: Trapezoidal</p>
+        <p style="margin-top: 10px; color: #d4a574;"><strong>Features:</strong></p>
+        <p>✓ 4× chain-link panels (48"W × 53"H)</p>
+        <p>✓ Hardware cloth end walls</p>
+        <p>✓ Staircase cutout (left/west)</p>
+        <p>✓ Deck roof overhead</p>
+    </div>
+    
+    <div id="dimensions">
+        <strong>DIMENSIONS (feet)</strong>
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #888888;"></div>
+                <span>North Wall (house)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #d4a574;"></div>
+                <span>Front Face</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #4a7c59;"></div>
+                <span>Hardware Cloth</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #8b6f47; opacity: 0.4;"></div>
+                <span>Deck (roof)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="controls">
+        <strong>CONTROLS</strong>
+        <p style="margin-top: 8px;">
+            🖱️ Left-drag: Rotate<br>
+            🖱️ Right-drag: Pan<br>
+            🖱️ Scroll: Zoom<br>
+            <br>
+            Press <strong>R</strong> to reset view
+        </p>
+    </div>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.163.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.163.0/examples/jsm/"
+      }
+    }
+    </script>
+    <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        // Scene setup
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1a1a1a);
+        scene.fog = new THREE.Fog(0x1a1a1a, 100, 200);
+
+        const canvas = document.getElementById('canvas');
+        const camera = new THREE.PerspectiveCamera(
+            75,
+            window.innerWidth / window.innerHeight,
+            0.1,
+            1000
+        );
+        camera.position.set(15, 12, 15);
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFShadowShadowMap;
+        canvas.appendChild(renderer.domElement);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(30, 30, 20);
+        directionalLight.castShadow = true;
+        directionalLight.shadow.mapSize.width = 2048;
+        directionalLight.shadow.mapSize.height = 2048;
+        directionalLight.shadow.camera.far = 200;
+        directionalLight.shadow.camera.left = -50;
+        directionalLight.shadow.camera.right = 50;
+        directionalLight.shadow.camera.top = 50;
+        directionalLight.shadow.camera.bottom = -50;
+        scene.add(directionalLight);
+
+        // Ground plane
+        const groundGeometry = new THREE.PlaneGeometry(30, 30);
+        const groundMaterial = new THREE.MeshStandardMaterial({
+            color: 0x3d3d2d,
+            roughness: 0.8,
+            metalness: 0.1
+        });
+        const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+        ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        // Helper function: Create a trapezoid shape for the enclosure
+        const SCALE = 1; // 1 unit = 1 foot
+        
+        // Trapezoidal dimensions (in feet)
+        const frontWidth = 8;      // South face width
+        const leftDepth = 9;       // West end depth
+        const rightDepth = 12;     // East end depth
+        const height = 7;          // North wall height
+        const centerDepth = (leftDepth + rightDepth) / 2;
+
+        // Vertices for trapezoid base (on ground, looking down)
+        // Southwest corner: (0, 0)
+        // Southeast corner: (8, 0)
+        // Northeast corner: (8, 12) → but right is deeper
+        // Northwest corner: (0, 9) → but left is shallower
+        
+        const v1 = new THREE.Vector3(0, 0, 0);           // SW front-left
+        const v2 = new THREE.Vector3(frontWidth, 0, 0); // SE front-right
+        const v3 = new THREE.Vector3(frontWidth, 0, rightDepth); // NE back-right
+        const v4 = new THREE.Vector3(0, 0, leftDepth);   // NW back-left
+
+        // Materials
+        const houseMaterial = new THREE.MeshStandardMaterial({
+            color: 0x6b6b6b,
+            roughness: 0.7,
+            metalness: 0.1
+        });
+
+        const deckMaterial = new THREE.MeshStandardMaterial({
+            color: 0x8b6f47,
+            roughness: 0.6,
+            metalness: 0.05,
+            transparent: true,
+            opacity: 0.35
+        });
+
+        const kennelMaterial = new THREE.MeshStandardMaterial({
+            color: 0xb0b0b0,
+            roughness: 0.5,
+            metalness: 0.3,
+            wireframe: false
+        });
+
+        const hardwareClothMaterial = new THREE.MeshStandardMaterial({
+            color: 0x4a7c59,
+            roughness: 0.8,
+            metalness: 0.2
+        });
+
+        const postMaterial = new THREE.MeshStandardMaterial({
+            color: 0x5a4a3a,
+            roughness: 0.7,
+            metalness: 0.1
+        });
+
+        // 1. NORTH WALL (House foundation) - solid gray
+        const northWallGeometry = new THREE.PlaneGeometry(frontWidth, height);
+        const northWall = new THREE.Mesh(northWallGeometry, houseMaterial);
+        northWall.position.set(frontWidth / 2, height / 2, 0);
+        northWall.rotation.y = 0;
+        northWall.castShadow = true;
+        northWall.receiveShadow = true;
+        scene.add(northWall);
+        addDimensionLabel(frontWidth / 2, height + 0.5, 0, `${frontWidth}'`, 0.5);
+
+        // 2. SOUTH FACE (Front) - 4 kennel panels (48"W x 53"H = 4' x 4.42')
+        // Each panel: 4ft wide, 4.42ft tall
+        const panelWidth = 4;      // 48" = 4'
+        const panelHeight = 4.42;  // 53" ≈ 4.42'
+        
+        // 4 panels placed across 8ft width
+        for (let i = 0; i < 4; i++) {
+            const panelGeometry = new THREE.PlaneGeometry(panelWidth, panelHeight);
+            const panelMesh = new THREE.Mesh(panelGeometry, kennelMaterial);
+            panelMesh.position.set(
+                panelWidth / 2 + i * panelWidth,
+                panelHeight / 2,
+                0
+            );
+            panelMesh.rotation.y = 0;
+            panelMesh.castShadow = true;
+            panelMesh.receiveShadow = true;
+            scene.add(panelMesh);
+            
+            // Add panel labels
+            addDimensionLabel(
+                panelWidth / 2 + i * panelWidth,
+                -0.8,
+                0,
+                `Panel ${i + 1}`,
+                0.3
+            );
+        }
+
+        // 3. WEST END WALL (left/staircase side) - hardware cloth with staircase cutout
+        // Depth: 9ft, Height: 7ft, but with staircase cutout
+        const westGeometry = new THREE.PlaneGeometry(leftDepth, height);
+        const westWall = new THREE.Mesh(westGeometry, hardwareClothMaterial);
+        westWall.position.set(0, height / 2, leftDepth / 2);
+        westWall.rotation.y = Math.PI / 2;
+        westWall.castShadow = true;
+        westWall.receiveShadow = true;
+        scene.add(westWall);
+        
+        // Staircase cutout indicator (visual mark)
+        const staircaseMarker = new THREE.BoxGeometry(0.2, 3, 1.5);
+        const markerMaterial = new THREE.MeshStandardMaterial({ color: 0xff6b6b });
+        const staircase = new THREE.Mesh(staircaseMarker, markerMaterial);
+        staircase.position.set(-0.2, 1.5, 1.5);
+        scene.add(staircase);
+
+        // 4. EAST END WALL (right side) - hardware cloth
+        const eastGeometry = new THREE.PlaneGeometry(rightDepth, height);
+        const eastWall = new THREE.Mesh(eastGeometry, hardwareClothMaterial);
+        eastWall.position.set(frontWidth, height / 2, rightDepth / 2);
+        eastWall.rotation.y = Math.PI / 2;
+        eastWall.castShadow = true;
+        eastWall.receiveShadow = true;
+        scene.add(eastWall);
+
+        // 5. DECK (roof) - semi-transparent brown, slightly elevated
+        const deckGeometry = new THREE.PlaneGeometry(frontWidth, rightDepth);
+        const deck = new THREE.Mesh(deckGeometry, deckMaterial);
+        deck.position.set(frontWidth / 2, height + 0.2, rightDepth / 2);
+        deck.rotation.x = 0;
+        deck.castShadow = true;
+        deck.receiveShadow = true;
+        scene.add(deck);
+
+        // 6. POSTS (4x4 vertical cylinders at corners and intermediate points)
+        const postRadius = 0.25; // ~5.7" diameter for 4x4
+        const postHeight = height;
+        const postGeometry = new THREE.CylinderGeometry(postRadius, postRadius, postHeight, 12);
+        
+        const postPositions = [
+            // Corners
+            [0, 0],
+            [frontWidth, 0],
+            [frontWidth, rightDepth],
+            [0, leftDepth],
+            // Intermediate posts on front (between kennel panels)
+            [panelWidth, 0],
+            [panelWidth * 2, 0],
+            [panelWidth * 3, 0]
+        ];
+
+        postPositions.forEach((pos, idx) => {
+            const post = new THREE.Mesh(postGeometry, postMaterial);
+            post.position.set(pos[0], postHeight / 2, pos[1]);
+            post.castShadow = true;
+            post.receiveShadow = true;
+            scene.add(post);
+        });
+
+        // 7. TOP RAIL HARDWARE CLOTH (31" gap fill above kennel panels)
+        const topRailHeight = 31 / 12; // Convert inches to feet ≈ 2.58'
+        const topRailGeometry = new THREE.PlaneGeometry(frontWidth, topRailHeight);
+        const topRailMaterial = new THREE.MeshStandardMaterial({
+            color: 0x5a9b6a,
+            roughness: 0.7,
+            metalness: 0.1
+        });
+        const topRail = new THREE.Mesh(topRailGeometry, topRailMaterial);
+        topRail.position.set(
+            frontWidth / 2,
+            panelHeight + topRailHeight / 2,
+            0
+        );
+        topRail.castShadow = true;
+        topRail.receiveShadow = true;
+        scene.add(topRail);
+
+        // Dimension labels
+        function addDimensionLabel(x, y, z, text, scale = 0.4) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 256;
+            canvas.height = 64;
+            
+            ctx.fillStyle = '#d4a574';
+            ctx.font = 'bold 24px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, 128, 32);
+            
+            const texture = new THREE.CanvasTexture(canvas);
+            const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
+            const geometry = new THREE.PlaneGeometry(3, 0.75);
+            const label = new THREE.Mesh(geometry, material);
+            label.position.set(x, y, z);
+            label.rotation.y = 0;
+            scene.add(label);
+        }
+
+        // Add key dimension labels
+        addDimensionLabel(frontWidth / 2, -1.5, 0, "8' FRONT", 0.4);
+        addDimensionLabel(-1.5, height / 2, leftDepth / 2, "9' LEFT", 0.35);
+        addDimensionLabel(frontWidth + 1.5, height / 2, rightDepth / 2, "12' RIGHT", 0.35);
+        addDimensionLabel(frontWidth / 2, height / 2 + 0.5, -0.5, "7' HEIGHT", 0.35);
+
+        // Controls
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.autoRotate = false;
+        controls.autoRotateSpeed = 2;
+        controls.minDistance = 10;
+        controls.maxDistance = 60;
+
+        // Keyboard controls
+        document.addEventListener('keydown', (event) => {
+            if (event.key.toLowerCase() === 'r') {
+                camera.position.set(15, 12, 15);
+                camera.lookAt(0, 0, 0);
+                controls.reset();
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
