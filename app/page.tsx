@@ -46,10 +46,13 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
         <div className="relative z-10 px-6 pb-16 md:px-16 max-w-3xl">
-          <h1 className="text-5xl md:text-7xl text-white font-bold font-serif leading-tight mb-6">
+          <h1 className="text-5xl md:text-7xl text-white font-bold font-serif leading-tight mb-4">
             Farm 2026
           </h1>
-          <p className="text-base md:text-lg text-white/70 max-w-lg leading-relaxed mb-2">
+          <p className="text-base md:text-lg text-white/50 italic max-w-lg leading-relaxed mb-4">
+            They say I must be one of the wonders of Claude&apos;s own creation.
+          </p>
+          <p className="text-sm md:text-base text-white/70 max-w-lg leading-relaxed mb-2">
             A chick hatched on the keyboard. A hawk took Birdgit two days later.
             By the end of the week, Claude had built a sky-watching AI and 22
             reinforcements were in the brooder.
@@ -367,7 +370,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
           <div>
             <p className="font-serif font-bold text-cream/80 text-base mb-1">Farm 2026</p>
-            <p>Hampton, CT — built with Claude</p>
+            <p>Hampton, CT — every line built by Claude</p>
           </div>
           <nav className="flex gap-6">
             <Link href="/projects/guardian" className="hover:text-cream/80">Guardian</Link>

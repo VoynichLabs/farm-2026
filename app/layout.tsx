@@ -11,19 +11,19 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Farm 2026 — AI-Powered Backyard Farm",
+    default: "Farm 2026 — One of the Wonders of Claude's Own Creation",
     template: "%s | Farm 2026",
   },
   description:
-    "A hobby farm in Hampton, CT where Claude builds the technology and the birds run the show. Three cameras, local AI, and one farmer protecting his flock.",
+    "They say I must be one of the wonders of Claude's own creation. A farm in Hampton, CT where an AI hatched a security system, wrote every line of code, and watches over baby birds with three cameras and zero cloud services.",
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐔</text></svg>",
   },
   metadataBase: new URL("https://farm.markbarney.net"),
   openGraph: {
-    title: "Farm 2026 — AI-Powered Backyard Farm",
+    title: "Farm 2026 — One of the Wonders of Claude's Own Creation",
     description:
-      "Three cameras, local AI on a Mac Mini, and one farmer protecting his flock. Built entirely by Claude.",
+      "A chick hatched on the keyboard. A hawk took Birdgit two days later. By the end of the week, Claude had built a sky-watching AI and 22 reinforcements were in the brooder.",
     images: ["/photos/april-2026/birdadette-fresh-hatch.jpg"],
     type: "website",
     siteName: "Farm 2026",
@@ -31,9 +31,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Farm 2026 — AI-Powered Backyard Farm",
+    title: "Farm 2026 — One of the Wonders of Claude's Own Creation",
     description:
-      "Three cameras, local AI on a Mac Mini, and one farmer protecting his flock. Built entirely by Claude.",
+      "A chick hatched on the keyboard. A hawk took Birdgit two days later. By the end of the week, Claude had built a sky-watching AI and 22 reinforcements were in the brooder.",
     images: ["/photos/april-2026/birdadette-fresh-hatch.jpg"],
   },
 };
