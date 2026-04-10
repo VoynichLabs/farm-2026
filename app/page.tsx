@@ -44,58 +44,46 @@ export default function Home() {
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-        <div className="relative z-10 px-6 pb-16 md:px-16 max-w-4xl">
-          <p className="text-cream/70 text-sm font-medium tracking-widest uppercase mb-3">
-            Hampton, Connecticut
-          </p>
-          <h1 className="text-5xl md:text-7xl text-white font-bold font-serif leading-tight mb-4">
+        <div className="relative z-10 px-6 pb-16 md:px-16 max-w-3xl">
+          <h1 className="text-5xl md:text-7xl text-white font-bold font-serif leading-tight mb-6">
             Farm 2026
           </h1>
-          <p className="text-lg md:text-xl text-white/80 max-w-xl mb-8">
-            High tech meets baby birds. An AI-powered farm where Claude builds
-            the technology and the flock runs the show.
+          <p className="text-base md:text-lg text-white/70 max-w-lg leading-relaxed mb-2">
+            A chick hatched on the keyboard. A hawk took Birdgit two days later.
+            By the end of the week, Claude had built a sky-watching AI and 22
+            reinforcements were in the brooder.
           </p>
-          <div className="flex flex-wrap gap-4">
+          <p className="text-sm text-white/40 mb-8 font-mono">
+            Hampton, CT — 26 birds, 3 cameras, 0 cloud services
+          </p>
+          <div className="flex flex-wrap gap-3 text-sm">
             <Link
               href="/projects/guardian"
-              className="bg-emerald-700 hover:bg-emerald-600 text-white px-6 py-3 rounded font-semibold transition-colors"
+              className="text-emerald-400 hover:text-emerald-300 underline underline-offset-4 transition-colors"
             >
-              Farm Guardian →
+              Farm Guardian
             </Link>
-            <Link
-              href="/flock"
-              className="bg-wood hover:bg-wood-light text-white px-6 py-3 rounded font-semibold transition-colors"
-            >
-              Meet the Flock
-            </Link>
+            <span className="text-white/30">|</span>
             <Link
               href="/field-notes"
-              className="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-6 py-3 rounded font-semibold transition-colors backdrop-blur-sm"
+              className="text-white/70 hover:text-white underline underline-offset-4 transition-colors"
             >
               Field Notes
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Quick stats bar */}
-      <section className="bg-forest text-cream">
-        <div className="max-w-6xl mx-auto px-4 py-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div>
-            <p className="text-3xl font-bold font-serif text-wood-light">26</p>
-            <p className="text-sm text-cream/70 mt-1">Birds on the farm</p>
-          </div>
-          <div>
-            <p className="text-3xl font-bold font-serif text-wood-light">3</p>
-            <p className="text-sm text-cream/70 mt-1">Cameras watching</p>
-          </div>
-          <div>
-            <p className="text-3xl font-bold font-serif text-wood-light">v2.11</p>
-            <p className="text-sm text-cream/70 mt-1">Guardian version</p>
-          </div>
-          <div>
-            <p className="text-3xl font-bold font-serif text-wood-light">100%</p>
-            <p className="text-sm text-cream/70 mt-1">Built by Claude</p>
+            <span className="text-white/30">|</span>
+            <Link
+              href="/flock"
+              className="text-white/70 hover:text-white underline underline-offset-4 transition-colors"
+            >
+              The Flock
+            </Link>
+            <span className="text-white/30">|</span>
+            <Link
+              href="/gallery"
+              className="text-white/70 hover:text-white underline underline-offset-4 transition-colors"
+            >
+              Gallery
+            </Link>
           </div>
         </div>
       </section>
