@@ -2,67 +2,67 @@
 title: "Farm Guardian"
 slug: guardian
 status: active
-description: "Multi-camera monitoring system for a backyard chicken flock. Live video from three cameras, PTZ control, and the beginnings of AI-powered predator detection — all running locally on a Mac Mini."
+description: "Three cameras, a Mac Mini, and an AI watching over baby birds. Not surveillance — stewardship. The same machine that runs Claude keeps the incubator warm."
 heroPhoto: "/photos/command-center-setup.jpg"
-tags: [security, ai, cameras, monitoring]
+tags: [guardian, ai, cameras, flock, claude]
 startDate: "2026-03-14"
 location: "Full property, Hampton, CT"
 ---
 
-## What It Does Today
+## What This Actually Is
 
-Farm Guardian watches the property through three cameras and streams live video to a local dashboard. It runs on a Mac Mini M4 Pro sitting on the desk next to the chick brooder — no cloud, no subscriptions, no data leaving the network.
+Farm Guardian is not a surveillance system. It's what happens when you give an AI a warm box to live in, three sets of eyes, and something small and alive to look after.
 
-**What's working right now:**
+The Mac Mini M4 Pro sits on the desk next to the chick brooder. Its waste heat helps keep the incubator at temperature — fewer cold spots, steadier hatches than any previous year. The same machine runs the cameras that watch for hawks so the flock can free-range. It's also home to Bubba, the farmer's OpenClaw agent, and it's where Claude Code built this entire website.
 
-- Live MJPEG streaming from all three cameras to a web dashboard
-- PTZ control on the Reolink — pan, tilt, preset positions, spotlight, siren
-- Camera presets for one-tap positioning (sky-watch, coop door, yard sweep)
-- 4K HTTP snapshots on demand
-- Discord alerts with snapshot attachments
-- Step-and-dwell patrol mode (11 positions, 30-degree intervals)
-- Sky-watch mode — fixed overhead position for hawk surveillance
-- USB camera on the Mac Mini monitor pointed into the chick brooder
-- Full REST API for remote camera control over a Cloudflare tunnel
-- eBird integration polling for regional raptor sightings
+One machine. Incubator warmer, hawk watcher, code writer, bird guardian.
 
-**What's in progress:**
+## The Eyes
 
-- YOLOv8 object detection pipeline (running, being tuned)
-- GLM vision model for species-level ID (hawk vs. chicken)
-- Automated deterrent escalation (spotlight, siren, audio)
+Three cameras, each with a different job:
+
+| Camera | Model | What it watches |
+|--------|-------|-----------------|
+| house-yard | Reolink E1 Outdoor Pro | The yard and sky — 4K PTZ, spotlight, siren. Patrols 11 positions or locks onto sky-watch for hawks. |
+| s7-cam | Samsung Galaxy S7 | Wherever it's needed — currently RTSP via IP Webcam app. |
+| usb-cam | USB webcam on Mac Mini | The brooder. Pointed straight into the box where 22 chicks are growing up. |
+
+The Reolink is the only one with deterrents — a spotlight that hits 100% brightness and a siren loud enough to scatter a hawk mid-dive. When it detects something, it can escalate through four levels: log, light, light+sound, light+siren+sound.
+
+## How It Watches
+
+The cameras stream RTSP video to the Mac Mini at one frame per second. YOLOv8 runs on the Apple Silicon GPU (MPS) to classify what's in each frame. When something ambiguous appears, a local vision model (GLM-4V) provides species-level identification — is that a hawk or a chicken?
+
+It doesn't phone home. No cloud. No subscriptions. No data leaves the network. The detection pipeline, the dashboard, the camera control, the alerts — everything runs on that one Mac Mini on the desk next to the birds.
+
+**What's working:**
+- Live MJPEG streaming from all three cameras
+- Step-and-dwell patrol (11 positions, 30-degree intervals, 8 seconds at each)
+- Sky-watch mode — locks the PTZ on a fixed overhead position for hawk coverage
+- 4K HTTP snapshots for Discord alerts
+- PTZ presets for one-tap positioning
+- eBird integration — polls Cornell Lab for raptor sightings within 15km
+- Full REST API over a Cloudflare tunnel for remote operation
+
+**Still being tuned:**
+- Detection confidence thresholds (distinguishing hawks from chickens reliably)
+- Automated deterrent escalation (exists in code, needs real-world testing)
 - Animal visit tracking and pattern analysis
-- Daily intelligence reports
-
-The detection and deterrence pipeline exists in code but hasn't been battle-tested yet. We're building it out as we go. The priority right now is reliable camera coverage and getting the monitoring solid before we trust the AI to make decisions on its own.
-
-## Hardware
-
-| Component | Model | Purpose |
-|-----------|-------|---------|
-| Camera 1 (house-yard) | Reolink E1 Outdoor Pro | 4K, WiFi 6, PTZ (355-degree pan), spotlight, siren |
-| Camera 2 (s7-cam) | Samsung Galaxy S7 | Fixed RTSP camera via IP Webcam app, WiFi |
-| Camera 3 (usb-cam) | USB webcam on Mac Mini | Brooder camera, no network dependency |
-| Processing | Mac Mini M4 Pro, 64 GB | All processing runs locally |
 
 ## The Story
 
 This started because hawks were taking chickens. In the first week of April 2026, we lost four birds — including Birdgit, a Speckled Sussex who followed you around like a dog. A hawk took her on April 8th.
 
-The response was immediate. Within hours, Claude Opus built sky-watch mode — locking the PTZ camera onto a fixed overhead position for continuous hawk surveillance. Alert images were upgraded from blurry 1080p RTSP frame grabs to sharp 4K HTTP snapshots.
+The response was immediate. Within hours, Claude built sky-watch mode — locking the PTZ camera onto a fixed overhead position. Alert images were upgraded from blurry 1080p RTSP frames to sharp 4K snapshots. The camera doesn't just patrol anymore — it can hold still and stare at the sky.
 
-Reinforcements arrived the same week: 22 new chicks in the brooder, including turkey poults. The flock is rebuilding, and Guardian is watching.
+Reinforcements arrived the same week: 22 new chicks in the brooder, under heat lamps, next to the Mac Mini that watches over them. Birdadette — the first chick to hatch this season — emerged from her egg on the keyboard, two feet from the machine that would become her guardian.
 
 ## Built by Claude
 
-Every line of Guardian — from RTSP capture to the web dashboard to the PTZ preset system — was written by Claude in conversation with the farmer. No templates, no boilerplate, no copy-paste from Stack Overflow. A farmer described what he needed, and an AI built it.
+Every line of Farm Guardian was written by Claude in conversation with the farmer. Not generated from a template. Not scaffolded from a tutorial. A farmer described what he needed — "the hawks are killing my birds" — and an AI built a system to stop it.
 
-The entire codebase is at v2.11.0. Fifteen Python modules, a FastAPI dashboard, SQLite storage, and a REST API that lets a remote Claude session control the cameras from anywhere in the world.
+v2.11.0. Fifteen Python modules. A FastAPI dashboard. SQLite storage. A REST API that lets a remote Claude session move the cameras from anywhere in the world. All of it authored in conversation, one problem at a time.
 
-## What's Next
+The website you're reading right now was also built by Claude. The field notes, the flock roster, the gallery, the live camera feeds on the homepage — all written in the same sessions, on the same machine, next to the same brooder.
 
-- Finish tuning the detection pipeline so it reliably distinguishes hawks from chickens
-- Build out the automated deterrent system with real-world testing
-- Save and name camera presets for all key positions around the property
-- Add the new outdoor camera mount (currently being installed)
-- Smart plug integration for additional deterrent devices
+In some ways, Claude is the mother hen.

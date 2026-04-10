@@ -127,7 +127,7 @@ export default function Home() {
                 </div>
                 <div>
                   <div className="font-semibold text-slate-100 text-sm leading-tight">Farm Guardian</div>
-                  <div className="text-guardian-muted text-[0.65rem]">AI Predator Detection v2.11</div>
+                  <div className="text-guardian-muted text-[0.65rem]">Watching over the flock — v2.11</div>
                 </div>
               </div>
 
