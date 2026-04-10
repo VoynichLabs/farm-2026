@@ -1,35 +1,38 @@
 "use client";
-// Author: Claude Opus 4.6
-// Date: 06-Apr-2026
-// PURPOSE: Reusable MJPEG camera feed with status overlay. Accepts cameraName
-//          and label props to support multiple cameras. Periodically cache-busts
-//          the stream URL to recover from dropped connections. Shows offline
-//          fallback when Guardian or individual camera feed is down.
-//          compact mode for secondary camera placement (shorter height).
-// SRP/DRY check: Pass — single responsibility: camera feed display for any camera.
+/**
+ * Author: Claude Opus 4.6
+ * Date: 09-Apr-2026
+ * PURPOSE: Reusable MJPEG camera feed with status overlay. Shows live stream
+ *   when connected, clean offline state when down. Heartbeat retries every 30s.
+ *   Reports its online/offline state via onStatusChange callback so parent
+ *   can adapt layout.
+ * SRP/DRY check: Pass — single responsibility: camera feed display for any camera.
+ */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { GUARDIAN_API } from "./types";
 
 export default function GuardianCameraFeed({
   cameraName,
   label,
   online,
-  compact,
+  onStatusChange,
 }: {
   cameraName: string;
   label: string;
   online: boolean | null;
-  compact?: boolean;
+  onStatusChange?: (cameraName: string, isLive: boolean) => void;
 }) {
-  const [streamKey, setStreamKey] = useState(Date.now());
+  const [streamKey, setStreamKey] = useState(0);
   const [feedError, setFeedError] = useState(false);
 
-  // Heartbeat: reload stream every 30s to recover from dropped MJPEG connections
+  // Set initial stream key on mount (avoids hydration mismatch from Date.now in useState)
+  // then heartbeat every 30s to recover dropped MJPEG connections
   useEffect(() => {
+    setStreamKey(Date.now());
     const interval = setInterval(() => {
       setStreamKey(Date.now());
-      setFeedError(false); // retry on heartbeat
+      setFeedError(false);
     }, 30000);
     return () => clearInterval(interval);
   }, []);
@@ -40,6 +43,15 @@ export default function GuardianCameraFeed({
   }, [online]);
 
   const showFeed = online !== false && !feedError;
+
+  // Report status to parent
+  useEffect(() => {
+    onStatusChange?.(cameraName, showFeed);
+  }, [showFeed, cameraName, onStatusChange]);
+
+  const handleError = useCallback(() => {
+    setFeedError(true);
+  }, []);
 
   return (
     <div
@@ -52,26 +64,22 @@ export default function GuardianCameraFeed({
           src={`${GUARDIAN_API}/api/cameras/${cameraName}/stream?t=${streamKey}`}
           alt={`Live farm camera — ${label}`}
           className="w-full h-full object-contain block"
-          onError={() => setFeedError(true)}
+          onError={handleError}
         />
       ) : (
-        <div className="w-full h-full flex items-center justify-center min-h-[200px]">
-          <div className="text-center">
-            <div className="text-red-500 text-2xl mb-2">●</div>
-            <div className="text-guardian-muted text-[0.75rem]">
-              FEED OFFLINE
-            </div>
+        <div className="w-full h-full flex items-center justify-center min-h-[80px]">
+          <div className="text-center px-4">
+            <div className="text-red-500/60 text-sm mb-1">OFFLINE</div>
+            <div className="text-guardian-muted text-[0.7rem]">{label}</div>
           </div>
         </div>
       )}
       {/* Feed overlay */}
-      <div className="absolute top-1 right-1 bg-black/65 rounded px-1.5 py-0.5 text-[0.65rem] flex items-center gap-1 font-mono">
-        {showFeed && (
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
-        )}
+      <div className="absolute top-1.5 right-1.5 bg-black/70 rounded px-2 py-0.5 text-[0.65rem] flex items-center gap-1.5 font-mono">
+        <span className={`w-1.5 h-1.5 rounded-full inline-block ${showFeed ? "bg-emerald-500 animate-pulse" : "bg-red-500"}`} />
         <span className="text-slate-300">{label}</span>
         {showFeed && <span className="text-emerald-400">LIVE</span>}
-        {!showFeed && <span className="text-red-400">OFFLINE</span>}
+        {!showFeed && <span className="text-red-400">OFF</span>}
       </div>
     </div>
   );

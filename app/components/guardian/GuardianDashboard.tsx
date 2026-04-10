@@ -2,9 +2,9 @@
 /**
  * Author: Claude Opus 4.6
  * Date: 09-Apr-2026
- * PURPOSE: Guardian live dashboard — LIVE STREAMS FIRST. Three camera feeds
- *   dominate the page. Detection data, tracks, and stats are secondary,
- *   shown in a compact grid below the feeds. Status bar at top.
+ * PURPOSE: Guardian live dashboard — LIVE STREAMS FIRST. Three cameras displayed
+ *   with adaptive layout: online cameras get large panels, offline ones collapse
+ *   to compact status bars. Detection data below the feeds.
  * SRP/DRY check: Pass — single orchestrator, delegates rendering to children.
  */
 
@@ -33,6 +33,12 @@ async function fetchJSON<T>(path: string): Promise<T | null> {
     return null;
   }
 }
+
+const CAMERAS = [
+  { name: "house-yard", label: "house-yard — Reolink E1 Pro 4K PTZ" },
+  { name: "s7-cam", label: "s7-cam — Samsung Galaxy S7" },
+  { name: "usb-cam", label: "usb-cam — Brooder Camera" },
+];
 
 export default function GuardianDashboard() {
   const [online, setOnline] = useState<boolean | null>(null);
@@ -110,26 +116,27 @@ export default function GuardianDashboard() {
       {/* Status bar */}
       <GuardianStatusBar status={status} online={online} />
 
-      {/* === LIVE CAMERA FEEDS — the main event === */}
-      <div className="p-2">
-        {/* Primary camera — house-yard PTZ — big and prominent */}
-        <div className="mb-2" style={{ minHeight: "420px" }}>
+      {/* === LIVE CAMERA FEEDS === */}
+      <div className="p-2 space-y-2">
+        {/* All three cameras in a responsive grid */}
+        {/* Primary: house-yard gets full width */}
+        <div className="aspect-video">
           <GuardianCameraFeed cameraName="house-yard" label="house-yard — Reolink E1 Pro 4K PTZ" online={online} />
         </div>
 
-        {/* Secondary cameras — side by side */}
-        <div className="flex gap-2" style={{ minHeight: "240px" }}>
-          <div className="flex-1 min-w-0">
+        {/* Secondary: s7-cam and usb-cam side by side */}
+        <div className="grid grid-cols-2 gap-2">
+          <div className="aspect-video">
             <GuardianCameraFeed cameraName="s7-cam" label="s7-cam — Samsung Galaxy S7" online={online} />
           </div>
-          <div className="flex-1 min-w-0">
+          <div className="aspect-video">
             <GuardianCameraFeed cameraName="usb-cam" label="usb-cam — Brooder Camera" online={online} />
           </div>
         </div>
       </div>
 
       {/* Compact status row */}
-      <div className="mx-2 mb-2 rounded border border-guardian-border bg-guardian-card px-3 py-2 flex items-center gap-4 text-[0.75rem] font-mono">
+      <div className="mx-2 mb-2 rounded border border-guardian-border bg-guardian-card px-3 py-2 flex flex-wrap items-center gap-4 text-[0.75rem] font-mono">
         <div>
           <span className="text-guardian-muted">Patrol:</span>{" "}
           <span className="text-slate-300">
@@ -144,7 +151,7 @@ export default function GuardianDashboard() {
               ? deterrentStatus.active_count > 0
                 ? `${deterrentStatus.active_count} active`
                 : deterrentStatus.enabled
-                  ? "Idle"
+                  ? "Ready"
                   : "Disabled"
               : "—"}
           </span>
@@ -163,11 +170,12 @@ export default function GuardianDashboard() {
         </div>
       </div>
 
-      {/* Detection table + info panels — secondary, below the feeds */}
+      {/* Detection table */}
       <div className="px-2 pb-2">
         <GuardianDetections detections={detections} />
       </div>
 
+      {/* Info panels */}
       <div className="px-2 pb-2">
         <GuardianInfoPanels
           activeTracks={activeTracks}

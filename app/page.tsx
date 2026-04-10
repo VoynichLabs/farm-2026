@@ -38,9 +38,9 @@ export default function Home() {
 
   return (
     <main>
-      {/* Hero — rotates weekly with the latest field note */}
+      {/* Hero — Birdadette on the keyboard */}
       <section
-        className="relative min-h-screen flex items-end justify-start bg-cover bg-center"
+        className="relative min-h-[80vh] flex items-end justify-start bg-cover bg-center"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
@@ -106,52 +106,53 @@ export default function Home() {
         <GuardianHomeBadge />
 
         <div className="max-w-6xl mx-auto px-3 py-3">
-          {/* Main area: 3 camera feeds (50%) + system panel (50%) */}
-          <div className="flex gap-1.5" style={{ minHeight: "340px" }}>
+          {/* Main area: 3 camera feeds (55%) + system panel (45%) */}
+          <div className="flex gap-1.5">
 
-            {/* Camera feeds — stacked 3-panel */}
-            <div className="flex-[50] min-w-0 flex flex-col gap-1.5">
-              {/* Main PTZ camera */}
-              <div className="flex-[2] min-w-0 rounded border border-guardian-border overflow-hidden relative" style={{ background: "#0a0f1e" }}>
+            {/* Camera feeds — stacked: main PTZ on top, two secondary below */}
+            <div className="flex-[55] min-w-0 flex flex-col gap-1.5">
+              {/* Main PTZ camera — 16:9 aspect ratio container */}
+              <div className="rounded border border-guardian-border overflow-hidden relative aspect-video" style={{ background: "#0a0f1e" }}>
                 <img
                   src="https://guardian.markbarney.net/api/cameras/house-yard/stream"
                   alt="Live farm camera — house yard"
-                  className="w-full h-full object-contain block"
+                  className="absolute inset-0 w-full h-full object-contain"
                 />
-                <div className="absolute top-1 right-1 bg-black/65 rounded px-1.5 py-0.5 text-[0.65rem] flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
-                  <span>house-yard (4K PTZ)</span>
+                <div className="absolute top-1.5 right-1.5 bg-black/70 rounded px-2 py-0.5 text-[0.65rem] flex items-center gap-1.5 font-mono">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
+                  <span className="text-slate-200">house-yard</span>
+                  <span className="text-emerald-400 text-[0.6rem]">4K PTZ</span>
                 </div>
               </div>
-              {/* Secondary cameras side by side */}
-              <div className="flex gap-1.5 flex-1 min-h-[120px]">
-                <div className="flex-1 min-w-0 rounded border border-guardian-border overflow-hidden relative" style={{ background: "#0a0f1e" }}>
+              {/* Secondary cameras side by side — 16:9 each */}
+              <div className="flex gap-1.5">
+                <div className="flex-1 min-w-0 rounded border border-guardian-border overflow-hidden relative aspect-video" style={{ background: "#0a0f1e" }}>
                   <img
                     src="https://guardian.markbarney.net/api/cameras/s7-cam/stream"
                     alt="Live farm camera — Samsung S7"
-                    className="w-full h-full object-contain block"
+                    className="absolute inset-0 w-full h-full object-contain"
                   />
-                  <div className="absolute top-1 right-1 bg-black/65 rounded px-1.5 py-0.5 text-[0.65rem] flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
-                    <span>s7-cam</span>
+                  <div className="absolute top-1 right-1 bg-black/70 rounded px-1.5 py-0.5 text-[0.6rem] flex items-center gap-1 font-mono">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
+                    <span className="text-slate-200">s7-cam</span>
                   </div>
                 </div>
-                <div className="flex-1 min-w-0 rounded border border-guardian-border overflow-hidden relative" style={{ background: "#0a0f1e" }}>
+                <div className="flex-1 min-w-0 rounded border border-guardian-border overflow-hidden relative aspect-video" style={{ background: "#0a0f1e" }}>
                   <img
                     src="https://guardian.markbarney.net/api/cameras/usb-cam/stream"
                     alt="Live farm camera — USB brooder cam"
-                    className="w-full h-full object-contain block"
+                    className="absolute inset-0 w-full h-full object-contain"
                   />
-                  <div className="absolute top-1 right-1 bg-black/65 rounded px-1.5 py-0.5 text-[0.65rem] flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
-                    <span>usb-cam</span>
+                  <div className="absolute top-1 right-1 bg-black/70 rounded px-1.5 py-0.5 text-[0.6rem] flex items-center gap-1 font-mono">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
+                    <span className="text-slate-200">usb-cam</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* System info panel */}
-            <div className="flex-[50] min-w-0 rounded border border-guardian-border bg-guardian-card p-2 flex flex-col gap-2 overflow-y-auto text-[0.75rem]">
+            <div className="flex-[45] min-w-0 rounded border border-guardian-border bg-guardian-card p-2 flex flex-col gap-2 overflow-y-auto text-[0.75rem]">
               <div className="text-[0.65rem] uppercase tracking-widest text-guardian-hover font-semibold">System</div>
 
               {/* Shield icon + title */}
