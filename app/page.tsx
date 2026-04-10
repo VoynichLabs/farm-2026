@@ -33,8 +33,8 @@ export default function Home() {
   const latestNote = fieldNotes[0];
   const recentNotes = fieldNotes.slice(0, 3);
 
-  // Hero image: backyard panorama from the deck — the establishing shot
-  const heroImage = "/photos/april-2026/backyard-panorama-deck.jpg";
+  // Hero image: Birdadette on the keyboard moments after hatching
+  const heroImage = "/photos/april-2026/birdadette-fresh-hatch.jpg";
 
   return (
     <main>
