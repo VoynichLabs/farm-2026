@@ -43,12 +43,8 @@ export default function GuardianCameraFeed({
 
   return (
     <div
-      className={`min-w-0 rounded border border-guardian-border overflow-hidden relative${compact ? "" : " flex-[63]"}`}
-      style={{
-        background: "#0a0f1e",
-        minHeight: compact ? "160px" : undefined,
-        maxHeight: compact ? "220px" : undefined,
-      }}
+      className="min-w-0 w-full h-full rounded border border-guardian-border overflow-hidden relative"
+      style={{ background: "#0a0f1e" }}
     >
       {showFeed ? (
         <img
@@ -59,7 +55,7 @@ export default function GuardianCameraFeed({
           onError={() => setFeedError(true)}
         />
       ) : (
-        <div className={`w-full h-full flex items-center justify-center ${compact ? "min-h-[160px]" : "min-h-[300px]"}`}>
+        <div className="w-full h-full flex items-center justify-center min-h-[200px]">
           <div className="text-center">
             <div className="text-red-500 text-2xl mb-2">●</div>
             <div className="text-guardian-muted text-[0.75rem]">

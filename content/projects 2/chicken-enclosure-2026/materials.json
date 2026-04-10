@@ -1,0 +1,11 @@
+[
+  {"name":"4x4x10 Pressure Treated Post","qty":7,"unit":"each","unitCost":14.50,"totalCost":101.50,"category":"framing","notes":"Corner posts (4) + intermediate front posts (3)"},
+  {"name":"2x4x10 Pressure Treated Lumber","qty":20,"unit":"each","unitCost":7.25,"totalCost":145.00,"category":"framing","notes":"Top and bottom rails, frame work"},
+  {"name":"2x6x10 Pressure Treated Lumber","qty":4,"unit":"each","unitCost":12.50,"totalCost":50.00,"category":"framing","notes":"Kickboard base, predator skirt"},
+  {"name":"Hardware Cloth 1/2\" 4ft x 50ft Roll","qty":3,"unit":"roll","unitCost":72.00,"totalCost":216.00,"category":"mesh","notes":"West end wall (9ft × 7ft), East end wall (12ft × 7ft), Top gap fill (8ft × 31\")"},
+  {"name":"Post Anchor/Standoff Bracket","qty":7,"unit":"each","unitCost":8.50,"totalCost":59.50,"category":"hardware","notes":"Keep posts off ground, prevent rot"},
+  {"name":"Fencing Staples 1lb Box","qty":5,"unit":"box","unitCost":6.00,"totalCost":30.00,"category":"hardware","notes":"Attaching hardware cloth to frame (3 walls + top)"},
+  {"name":"Structural Screws 3\" 5lb Box","qty":2,"unit":"box","unitCost":18.00,"totalCost":36.00,"category":"hardware","notes":"Framing connections"},
+  {"name":"J-Bolt Post Anchor 1/2\"","qty":7,"unit":"each","unitCost":4.50,"totalCost":31.50,"category":"hardware","notes":"Anchor posts to concrete if poured"},
+  {"name":"90-degree Corner Brackets","qty":14,"unit":"each","unitCost":2.50,"totalCost":35.00,"category":"hardware","notes":"Rail-to-post connections"}
+]

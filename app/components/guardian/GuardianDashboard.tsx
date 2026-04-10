@@ -1,11 +1,12 @@
 "use client";
-// Author: Claude Opus 4.6
-// Date: 06-Apr-2026
-// PURPOSE: Main orchestrator for the Guardian live dashboard. Owns all state
-//          and polling intervals. Renders sub-components with data as props.
-//          Displays both camera feeds side by side (watch-only, no PTZ controls)
-//          with a compact status row for patrol/deterrent/track monitoring.
-// SRP/DRY check: Pass — single orchestrator, delegates rendering to children.
+/**
+ * Author: Claude Opus 4.6
+ * Date: 09-Apr-2026
+ * PURPOSE: Guardian live dashboard — LIVE STREAMS FIRST. Three camera feeds
+ *   dominate the page. Detection data, tracks, and stats are secondary,
+ *   shown in a compact grid below the feeds. Status bar at top.
+ * SRP/DRY check: Pass — single orchestrator, delegates rendering to children.
+ */
 
 import { useEffect, useRef, useCallback, useState } from "react";
 import {
@@ -88,7 +89,6 @@ export default function GuardianDashboard() {
   useEffect(() => {
     mountedRef.current = true;
 
-    // Initial fetch all
     fetchFast();
     fetchSlow();
     fetchEbird();
@@ -110,22 +110,30 @@ export default function GuardianDashboard() {
       {/* Status bar */}
       <GuardianStatusBar status={status} online={online} />
 
-      {/* Camera feeds — side by side */}
-      <div className="flex gap-1.5 p-1.5" style={{ minHeight: "320px" }}>
-        <div className="flex-[55] min-w-0">
-          <GuardianCameraFeed cameraName="house-yard" label="house-yard" online={online} />
+      {/* === LIVE CAMERA FEEDS — the main event === */}
+      <div className="p-2">
+        {/* Primary camera — house-yard PTZ — big and prominent */}
+        <div className="mb-2" style={{ minHeight: "420px" }}>
+          <GuardianCameraFeed cameraName="house-yard" label="house-yard — Reolink E1 Pro 4K PTZ" online={online} />
         </div>
-        <div className="flex-[45] min-w-0">
-          <GuardianCameraFeed cameraName="nesting-box" label="nesting-box" online={online} />
+
+        {/* Secondary cameras — side by side */}
+        <div className="flex gap-2" style={{ minHeight: "240px" }}>
+          <div className="flex-1 min-w-0">
+            <GuardianCameraFeed cameraName="s7-cam" label="s7-cam — Samsung Galaxy S7" online={online} />
+          </div>
+          <div className="flex-1 min-w-0">
+            <GuardianCameraFeed cameraName="usb-cam" label="usb-cam — Brooder Camera" online={online} />
+          </div>
         </div>
       </div>
 
-      {/* Compact status row — patrol, deterrent, tracks */}
-      <div className="mx-1.5 mb-1.5 rounded border border-guardian-border bg-guardian-card px-3 py-1.5 flex items-center gap-4 text-[0.7rem] font-mono">
+      {/* Compact status row */}
+      <div className="mx-2 mb-2 rounded border border-guardian-border bg-guardian-card px-3 py-2 flex items-center gap-4 text-[0.75rem] font-mono">
         <div>
           <span className="text-guardian-muted">Patrol:</span>{" "}
           <span className="text-slate-300">
-            {online === true ? "Sweep active" : "—"}
+            {online === true ? "Step-and-dwell" : "—"}
           </span>
         </div>
         <span className="text-guardian-hover">|</span>
@@ -146,15 +154,21 @@ export default function GuardianDashboard() {
           <span className="text-guardian-muted">Tracks:</span>{" "}
           <span className="text-slate-300">{activeTracks.length}</span>
         </div>
+        <span className="text-guardian-hover">|</span>
+        <div>
+          <span className="text-guardian-muted">Cameras:</span>{" "}
+          <span className="text-slate-300">
+            {status ? `${status.cameras_online}/${status.cameras_total} online` : "—"}
+          </span>
+        </div>
       </div>
 
-      {/* Detection table */}
-      <div className="px-1.5 pb-1.5">
+      {/* Detection table + info panels — secondary, below the feeds */}
+      <div className="px-2 pb-2">
         <GuardianDetections detections={detections} />
       </div>
 
-      {/* Info panels */}
-      <div className="px-1.5 pb-1.5">
+      <div className="px-2 pb-2">
         <GuardianInfoPanels
           activeTracks={activeTracks}
           deterrentStatus={deterrentStatus}

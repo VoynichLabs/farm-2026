@@ -33,8 +33,8 @@ export default function Home() {
   const latestNote = fieldNotes[0];
   const recentNotes = fieldNotes.slice(0, 3);
 
-  // Hero image: use the latest field note cover, or fall back to backyard
-  const heroImage = latestNote?.cover || "/photos/backyard.png";
+  // Hero image: backyard panorama from the deck — the establishing shot
+  const heroImage = "/photos/april-2026/backyard-panorama-deck.jpg";
 
   return (
     <main>
@@ -106,25 +106,52 @@ export default function Home() {
         <GuardianHomeBadge />
 
         <div className="max-w-6xl mx-auto px-3 py-3">
-          {/* Main area: camera feed (63%) + system panel (37%) — mirrors dashboard layout */}
+          {/* Main area: 3 camera feeds (50%) + system panel (50%) */}
           <div className="flex gap-1.5" style={{ minHeight: "340px" }}>
 
-            {/* Camera feed panel */}
-            <div className="flex-[63] min-w-0 rounded border border-guardian-border overflow-hidden relative" style={{ background: "#0a0f1e" }}>
-              <img
-                src="https://guardian.markbarney.net/api/cameras/house-yard/stream"
-                alt="Live farm camera — house yard"
-                className="w-full h-full object-contain block"
-              />
-              {/* Feed overlay — matches dashboard */}
-              <div className="absolute top-1 right-1 bg-black/65 rounded px-1.5 py-0.5 text-[0.65rem] flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
-                <span>house-yard</span>
+            {/* Camera feeds — stacked 3-panel */}
+            <div className="flex-[50] min-w-0 flex flex-col gap-1.5">
+              {/* Main PTZ camera */}
+              <div className="flex-[2] min-w-0 rounded border border-guardian-border overflow-hidden relative" style={{ background: "#0a0f1e" }}>
+                <img
+                  src="https://guardian.markbarney.net/api/cameras/house-yard/stream"
+                  alt="Live farm camera — house yard"
+                  className="w-full h-full object-contain block"
+                />
+                <div className="absolute top-1 right-1 bg-black/65 rounded px-1.5 py-0.5 text-[0.65rem] flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+                  <span>house-yard (4K PTZ)</span>
+                </div>
+              </div>
+              {/* Secondary cameras side by side */}
+              <div className="flex gap-1.5 flex-1 min-h-[120px]">
+                <div className="flex-1 min-w-0 rounded border border-guardian-border overflow-hidden relative" style={{ background: "#0a0f1e" }}>
+                  <img
+                    src="https://guardian.markbarney.net/api/cameras/s7-cam/stream"
+                    alt="Live farm camera — Samsung S7"
+                    className="w-full h-full object-contain block"
+                  />
+                  <div className="absolute top-1 right-1 bg-black/65 rounded px-1.5 py-0.5 text-[0.65rem] flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+                    <span>s7-cam</span>
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0 rounded border border-guardian-border overflow-hidden relative" style={{ background: "#0a0f1e" }}>
+                  <img
+                    src="https://guardian.markbarney.net/api/cameras/usb-cam/stream"
+                    alt="Live farm camera — USB brooder cam"
+                    className="w-full h-full object-contain block"
+                  />
+                  <div className="absolute top-1 right-1 bg-black/65 rounded px-1.5 py-0.5 text-[0.65rem] flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+                    <span>usb-cam</span>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* System info panel */}
-            <div className="flex-[37] min-w-0 rounded border border-guardian-border bg-guardian-card p-2 flex flex-col gap-2 overflow-y-auto text-[0.75rem]">
+            <div className="flex-[50] min-w-0 rounded border border-guardian-border bg-guardian-card p-2 flex flex-col gap-2 overflow-y-auto text-[0.75rem]">
               <div className="text-[0.65rem] uppercase tracking-widest text-guardian-hover font-semibold">System</div>
 
               {/* Shield icon + title */}
@@ -164,7 +191,7 @@ export default function Home() {
               {/* Patrol */}
               <div className="text-[0.65rem] uppercase tracking-wider text-guardian-hover font-semibold">Patrol</div>
               <div className="text-guardian-muted text-[0.7rem] leading-snug space-y-0.5">
-                <div>Mode: <span className="text-slate-300">Step-and-Dwell</span> (11 positions, 30° intervals)</div>
+                <div>Mode: <span className="text-slate-300">Step-and-dwell</span> (11 positions, 30° intervals)</div>
                 <div>Sky-watch: <span className="text-amber-400">available</span> (fixed hawk surveillance)</div>
               </div>
 
@@ -177,19 +204,6 @@ export default function Home() {
                 <div>Cam 3: <span className="text-slate-300">USB camera</span> brooder</div>
                 <div>CPU: <span className="text-slate-300">Mac Mini M4 Pro</span> 64GB</div>
               </div>
-            </div>
-          </div>
-
-          {/* Nesting-box camera — full width, compact */}
-          <div className="mt-1.5 rounded border border-guardian-border overflow-hidden relative" style={{ background: "#0a0f1e", minHeight: "160px", maxHeight: "220px" }}>
-            <img
-              src="https://guardian.markbarney.net/api/cameras/nesting-box/stream"
-              alt="Live farm camera — nesting box"
-              className="w-full h-full object-contain block"
-            />
-            <div className="absolute top-1 right-1 bg-black/65 rounded px-1.5 py-0.5 text-[0.65rem] flex items-center gap-1 font-mono">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
-              <span className="text-slate-300">nesting-box</span>
             </div>
           </div>
 
