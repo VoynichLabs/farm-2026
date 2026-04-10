@@ -58,7 +58,7 @@ export default function Home() {
             reinforcements were in the brooder.
           </p>
           <p className="text-sm text-white/40 mb-8 font-mono">
-            Hampton, CT — 26 birds, 3 cameras, 0 cloud services
+            Hampton, CT — 26 birds, 4 cameras, 0 cloud services
           </p>
           <div className="flex flex-wrap gap-3 text-sm">
             <Link
@@ -106,12 +106,15 @@ export default function Home() {
               <div className="aspect-video">
                 <GuardianCameraFeed cameraName="house-yard" label="house-yard — 4K PTZ" online={null} />
               </div>
-              <div className="flex gap-1.5">
-                <div className="flex-1 min-w-0 aspect-video">
-                  <GuardianCameraFeed cameraName="s7-cam" label="s7-cam — Samsung S7" online={null} />
+              <div className="grid grid-cols-3 gap-1.5">
+                <div className="aspect-video">
+                  <GuardianCameraFeed cameraName="s7-cam" label="s7-cam" online={null} />
                 </div>
-                <div className="flex-1 min-w-0 aspect-video">
-                  <GuardianCameraFeed cameraName="usb-cam" label="usb-cam — Brooder" online={null} />
+                <div className="aspect-video">
+                  <GuardianCameraFeed cameraName="usb-cam" label="usb-cam" online={null} />
+                </div>
+                <div className="aspect-video">
+                  <GuardianCameraFeed cameraName="gwtc" label="gwtc" online={null} />
                 </div>
               </div>
             </div>
@@ -127,7 +130,7 @@ export default function Home() {
                 </div>
                 <div>
                   <div className="font-semibold text-slate-100 text-sm leading-tight">Farm Guardian</div>
-                  <div className="text-guardian-muted text-[0.65rem]">Watching over the flock — v2.11</div>
+                  <div className="text-guardian-muted text-[0.65rem]">Watching over the flock — v2.12</div>
                 </div>
               </div>
 
@@ -168,6 +171,7 @@ export default function Home() {
                 <div>Cam 1: <span className="text-slate-300">Reolink E1 Pro</span> 4K PTZ</div>
                 <div>Cam 2: <span className="text-slate-300">Samsung S7</span> RTSP</div>
                 <div>Cam 3: <span className="text-slate-300">USB camera</span> brooder</div>
+                <div>Cam 4: <span className="text-slate-300">Gateway laptop</span> coop</div>
                 <div>CPU: <span className="text-slate-300">Mac Mini M4 Pro</span> 64GB</div>
               </div>
             </div>

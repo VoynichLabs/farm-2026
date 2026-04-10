@@ -116,21 +116,23 @@ export default function GuardianDashboard() {
       {/* Status bar */}
       <GuardianStatusBar status={status} online={online} />
 
-      {/* === LIVE CAMERA FEEDS === */}
+      {/* === LIVE CAMERA FEEDS — 4 cameras === */}
       <div className="p-2 space-y-2">
-        {/* All three cameras in a responsive grid */}
-        {/* Primary: house-yard gets full width */}
+        {/* Primary: house-yard PTZ gets full width */}
         <div className="aspect-video">
-          <GuardianCameraFeed cameraName="house-yard" label="house-yard — Reolink E1 Pro 4K PTZ" online={online} />
+          <GuardianCameraFeed cameraName="house-yard" label="house-yard — Reolink 4K PTZ" online={online} />
         </div>
 
-        {/* Secondary: s7-cam and usb-cam side by side */}
-        <div className="grid grid-cols-2 gap-2">
+        {/* Secondary row: s7-cam, usb-cam, gwtc — three across */}
+        <div className="grid grid-cols-3 gap-2">
           <div className="aspect-video">
-            <GuardianCameraFeed cameraName="s7-cam" label="s7-cam — Samsung Galaxy S7" online={online} />
+            <GuardianCameraFeed cameraName="s7-cam" label="s7-cam — Samsung S7" online={online} />
           </div>
           <div className="aspect-video">
-            <GuardianCameraFeed cameraName="usb-cam" label="usb-cam — Brooder Camera" online={online} />
+            <GuardianCameraFeed cameraName="usb-cam" label="usb-cam — Brooder" online={online} />
+          </div>
+          <div className="aspect-video">
+            <GuardianCameraFeed cameraName="gwtc" label="gwtc — Gateway Laptop" online={online} />
           </div>
         </div>
       </div>

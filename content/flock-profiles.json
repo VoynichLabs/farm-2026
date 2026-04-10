@@ -245,7 +245,40 @@
       "temperament": "TBD — just arrived",
       "color_description": "Varied — assortment of rare and exotic breeds",
       "photo": "april-2026/cackle-hatchery-arrival.jpg",
-      "notes": "15 chicks from Cackle Hatchery: 5 Exotic Island Fowl Special + 10 Rare Chick Special. Reinforcements after losing Birdgit. Exact breeds TBD as they feather out. Total order: $122.80 shipped USPS Priority."
+      "notes": "15 chicks from Cackle Hatchery: 5 Exotic Island Fowl Special + 10 Rare Chick Special. Reinforcements after losing Birdgit. Exact breeds TBD as they feather out. Total order: $122.80 shipped USPS Priority.",
+      "breed_identification": {
+        "status": "preliminary — based on day-old chick photos, needs confirmation as they feather out",
+        "assessment_date": "2026-04-10",
+        "assessment_doc": "docs/cackle-hatchery-breed-id.md",
+        "exotic_island_fowl_5": {
+          "source_url": "https://www.cacklehatchery.com/product/special-exotic-island-fowl/",
+          "possible_breeds": ["Wheaten Cubalaya", "BBR Phoenix", "Golden Duckwing Phoenix", "Silver Duckwing Phoenix", "Saipan Jungle Fowl", "Blue Sumatra", "Black Sumatra", "BBR Cubalaya Bantam", "Silver Duckwing Yokohama", "Red Shoulder Yokohama", "White Yokohama", "Red Jungle Fowl"],
+          "preliminary_ids": [
+            {"id": "E1", "photos": ["IMG_7648", "IMG_7649"], "guess": "Red Jungle Fowl or BBR Phoenix", "pattern": "dark chocolate head, buff body, chipmunk stripes"},
+            {"id": "E2", "photos": ["IMG_7662", "IMG_7663", "IMG_7664"], "guess": "Saipan Jungle Fowl or BBR Phoenix", "pattern": "dark brown/black chipmunk, very dark overall"},
+            {"id": "E3", "photos": ["IMG_7665"], "guess": "Silver Duckwing Phoenix or Yokohama", "pattern": "black and silver/grey striped"},
+            {"id": "E4", "photos": ["IMG_7666", "IMG_7667"], "guess": "Golden Duckwing Phoenix", "pattern": "golden/buff with bold dark back stripes"},
+            {"id": "E5", "photos": ["IMG_7670"], "guess": "Silver Duckwing Phoenix/Yokohama", "pattern": "black and silver bold stripes"}
+          ]
+        },
+        "rare_chick_special_10": {
+          "source_url": "https://www.cacklehatchery.com/product/rare-chick-special/",
+          "possible_breeds": ["Blue Cochin", "Buff Cochin", "White Cochin", "Partridge Cochin", "Splash Cochin", "Blue Polish", "Splash Polish", "Buff Laced Polish", "White Sultan", "Mottled Houdan", "Silver Spangled Hamburg", "Egyptian Fayoumi", "Sicilian Buttercup", "Spitzhauben", "Lakenvelder", "Ayam Cemani", "Crevecoeur"],
+          "preliminary_ids": [
+            {"id": "R1", "photos": ["IMG_7634", "IMG_7636", "IMG_7637"], "guess": "Blue Cochin or Blue Polish", "pattern": "grey/tan fluffy", "check": "feathered feet = Cochin, head pouf = Polish"},
+            {"id": "R2", "photos": ["IMG_7642", "IMG_7643"], "guess": "Blue Cochin", "pattern": "grey from above/back"},
+            {"id": "R3", "photos": ["IMG_7644", "IMG_7645"], "guess": "Blue Cochin or Lavender Cochin", "pattern": "grey body, warm amber face"},
+            {"id": "R4", "photos": ["IMG_7646"], "guess": "Blue Cochin (darker) or Blue Sumatra", "pattern": "darker grey, dark head markings"},
+            {"id": "R5", "photos": ["IMG_7647"], "guess": "Buff Cochin or White Cochin", "pattern": "light cream/buff"},
+            {"id": "R6", "photos": ["IMG_7651", "IMG_7652", "IMG_7653"], "guess": "Blue/Splash Polish or Blue Cochin", "pattern": "grey/blue, amber face, yellow legs"},
+            {"id": "R7", "photos": ["IMG_7654", "IMG_7655"], "guess": "White Cochin, White Sultan, or White Yokohama", "pattern": "very pale cream/white"},
+            {"id": "R8", "photos": ["IMG_7659"], "guess": "Blue Cochin", "pattern": "grey/tan, clean background"},
+            {"id": "R9", "photos": ["IMG_7668"], "guess": "Buff Cochin", "pattern": "yellow/buff, very light"},
+            {"id": "R10", "photos": ["IMG_7669"], "guess": "Partridge Cochin or Buff Laced Polish", "pattern": "buff with dark head markings"}
+          ],
+          "note": "Reviewers consistently report Cochins are the most commonly included breed in Rare Chick Special orders"
+        }
+      }
     }
   ]
 }

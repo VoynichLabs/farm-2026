@@ -21,37 +21,46 @@ No test suite exists. Deployment targets Railway.app using the standalone Next.j
 
 | Path | Purpose |
 |------|---------|
-| `content/flock-profiles.json` | Breed definitions + individual bird roster (7 breeds, 9 birds) |
+| `content/flock-profiles.json` | Breed definitions + individual bird roster (9 breeds, 13 entries incl. deceased + groups) |
+| `content/field-notes/*.mdx` | Weekly farm updates (frontmatter: title, date, cover, photos[], tags) — **the main content type** |
 | `content/projects/[slug]/index.mdx` | Project overview (frontmatter: title, status, description, startDate, location) |
 | `content/projects/[slug]/entries/*.mdx` | Per-project diary entries (frontmatter: date, title, tags) |
 | `content/projects/[slug]/materials.json` | Bill of materials (item, qty, unit, cost) |
-| `content/diary/*.mdx` | Global diary entries not tied to a project |
-| `public/photos/` | Bird portraits, group shots, historical photos |
+| `content/diary/*.mdx` | Raw developer notes (not published — source material for field notes) |
+| `content/instagram-posts.json` | Curated Instagram post URLs for embed component |
+| `public/photos/` | All site photos — `april-2026/`, `birds/`, `coop/`, `history/`, `enclosure/`, `guardian-detections/` |
+
+**Note:** `content/flock.json` is deprecated. `content/flock-profiles.json` is the single source of truth for bird data.
 
 ### Pages
 
-- `/` — Hero, stats, Guardian live status section (with MJPEG feed + system panel), flock preview, active projects, recent diary entries
-- `/flock` — Bird roster cards + breed reference guide
-- `/projects` — Project listing with status badges (planning/active/complete)
-- `/projects/guardian` — **Live dashboard**: MJPEG camera feed, PTZ controls, real-time detection table, active tracks, deterrent status, eBird sightings, daily summary. Rendered by `app/components/guardian/GuardianDashboard.tsx` (client component) above the MDX technical docs.
+- `/` — Hero (Birdadette), Guardian live camera feeds + system panel, latest field note, flock preview, projects, Instagram
+- `/field-notes` — Photo-forward weekly update feed (replaces diary)
+- `/field-notes/[slug]` — Individual field note with cover image, MDX content, photo gallery, prev/next nav
+- `/flock` — Bird roster (active / In Memoriam sections) + breed reference guide
+- `/projects` — Project listing with status badges (planning/active/complete/shelved)
+- `/projects/guardian` — **Live dashboard**: 3 MJPEG camera feeds (house-yard, s7-cam, usb-cam), detection table, patrol/deterrent/track status, eBird sightings. Rendered by `GuardianDashboard.tsx` above MDX project docs.
 - `/projects/[slug]` — MDX project detail with materials table and diary timeline
-- `/gallery` — Lightbox photo gallery (current + historical)
-- `/diary` — Full chronological diary feed
+- `/gallery` — Lightbox photo gallery (April 2026 + historical)
+- `/diary` — Redirects to `/field-notes`
+- `/sitemap.xml` — Dynamic sitemap for SEO
+- `/robots.txt` — Crawler directives
 
 ### Guardian integration
 
 The Guardian page (`/projects/guardian`) is a live interactive dashboard, not a static MDX page. Key architecture:
 
-- **Client components** in `app/components/guardian/` — `GuardianDashboard` (orchestrator), `GuardianStatusBar`, `GuardianCameraFeed`, `GuardianPTZPanel`, `GuardianDetections`, `GuardianInfoPanels`, `GuardianHomeBadge`, `types.ts`
+- **Client components** in `app/components/guardian/` — `GuardianDashboard` (orchestrator), `GuardianStatusBar`, `GuardianCameraFeed`, `GuardianDetections`, `GuardianInfoPanels`, `GuardianHomeBadge`, `types.ts`
 - **API base**: `https://guardian.markbarney.net` (Cloudflare tunnel to Mac Mini port 6530)
-- **MJPEG feed**: `<img>` tag pointing at `/api/cameras/house-yard/stream` — no JS needed
-- **PTZ controls**: POST to Guardian API — pan/tilt use unit values (1/-1), zoom auto-stops after 500ms
-- **Polling**: fast (5s: status, detections, tracks, deterrent), medium (10s: PTZ), slow (60s: summary, effectiveness), glacial (5min: eBird)
-- **Offline handling**: graceful degradation when Guardian is down
+- **Three cameras** (v2.11 names): `house-yard` (Reolink 4K PTZ), `s7-cam` (Samsung S7 RTSP), `usb-cam` (USB brooder). Names are device-based, not location-based.
+- **MJPEG feeds**: `GuardianCameraFeed` component handles stream loading, heartbeat retry (30s), and offline fallback. Used on both homepage and dashboard.
+- **Polling**: fast (5s: status, detections, tracks, deterrent), slow (60s: summary, effectiveness), glacial (5min: eBird)
+- **Offline handling**: per-camera offline state with label. System-level offline via `GuardianHomeBadge`.
 - **`'use client'` must be line 1** — before file header comments, or Next.js treats the component as a Server Component
 - Guardian slug gets `max-w-7xl` container (wider than standard `max-w-4xl`)
-- Hero photo suppressed for Guardian slug (live feed replaces it)
-- Homepage uses `GuardianHomeBadge` to fetch live status once on mount
+- Hero photo suppressed for Guardian slug (live feeds replace it)
+- Homepage uses both `GuardianHomeBadge` (status bar) and `GuardianCameraFeed` (3 feeds)
+- **Content pipeline**: see `docs/CONTENT-PIPELINE.md` for the full operational guide
 
 ### Design tokens
 
