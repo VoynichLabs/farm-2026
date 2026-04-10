@@ -16,14 +16,12 @@ export const metadata: Metadata = {
   },
   description:
     "A hobby farm in Hampton, CT where Claude builds the technology and the birds run the show. Three cameras, local AI, and one farmer protecting his flock.",
-  icons: {
-    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐔</text></svg>",
-  },
+  metadataBase: new URL("https://farm.markbarney.net"),
   openGraph: {
     title: "Farm 2026 — AI-Powered Backyard Farm",
     description:
       "Three cameras, local AI on a Mac Mini, and one farmer protecting his flock. Built entirely by Claude.",
-    images: ["/photos/command-center-setup.jpg"],
+    images: ["/photos/april-2026/birdadette-fresh-hatch.jpg"],
     type: "website",
     siteName: "Farm 2026",
     locale: "en_US",
@@ -33,7 +31,7 @@ export const metadata: Metadata = {
     title: "Farm 2026 — AI-Powered Backyard Farm",
     description:
       "Three cameras, local AI on a Mac Mini, and one farmer protecting his flock. Built entirely by Claude.",
-    images: ["/photos/command-center-setup.jpg"],
+    images: ["/photos/april-2026/birdadette-fresh-hatch.jpg"],
   },
 };
 

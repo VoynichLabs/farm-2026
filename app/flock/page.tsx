@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getFlockProfiles } from "@/lib/content";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "The Flock",
+  description: "Heritage breeds, Easter Eggers, turkey poults, and 22 reinforcements in the brooder. Hampton, CT.",
+};
 
 const eggColorBadgeColors: Record<string, string> = {
   "Brown to dark brown": "bg-amber-700 text-white",

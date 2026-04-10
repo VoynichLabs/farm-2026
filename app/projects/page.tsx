@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getProjects } from "@/lib/content";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description: "Farm Guardian AI predator detection and other 2026 farm projects. Every line of code built by Claude.",
+};
 
 const statusColors: Record<string, string> = {
   planning: "bg-yellow-600",

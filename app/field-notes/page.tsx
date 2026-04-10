@@ -6,9 +6,15 @@
  *   Replaces the old /diary page.
  * SRP/DRY check: Pass — reuses getAllFieldNotes() from lib/content.ts
  */
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { getAllFieldNotes } from "@/lib/content";
+
+export const metadata: Metadata = {
+  title: "Field Notes",
+  description: "Weekly updates from the farm — what happened, what hatched, what Claude built.",
+};
 
 export default function FieldNotesPage() {
   const notes = getAllFieldNotes();
