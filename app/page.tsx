@@ -10,6 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getProjects, getAllFieldNotes } from "@/lib/content";
 import GuardianHomeBadge from "@/app/components/guardian/GuardianHomeBadge";
+import GuardianCameraFeed from "@/app/components/guardian/GuardianCameraFeed";
 import InstagramFeed from "@/app/components/InstagramFeed";
 import instagramPosts from "@/content/instagram-posts.json";
 
@@ -97,44 +98,17 @@ export default function Home() {
           {/* Main area: 3 camera feeds (55%) + system panel (45%) */}
           <div className="flex gap-1.5">
 
-            {/* Camera feeds — stacked: main PTZ on top, two secondary below */}
+            {/* Camera feeds — uses GuardianCameraFeed for proper offline handling */}
             <div className="flex-[55] min-w-0 flex flex-col gap-1.5">
-              {/* Main PTZ camera — 16:9 aspect ratio container */}
-              <div className="rounded border border-guardian-border overflow-hidden relative aspect-video" style={{ background: "#0a0f1e" }}>
-                <img
-                  src="https://guardian.markbarney.net/api/cameras/house-yard/stream"
-                  alt="Live farm camera — house yard"
-                  className="absolute inset-0 w-full h-full object-contain"
-                />
-                <div className="absolute top-1.5 right-1.5 bg-black/70 rounded px-2 py-0.5 text-[0.65rem] flex items-center gap-1.5 font-mono">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
-                  <span className="text-slate-200">house-yard</span>
-                  <span className="text-emerald-400 text-[0.6rem]">4K PTZ</span>
-                </div>
+              <div className="aspect-video">
+                <GuardianCameraFeed cameraName="house-yard" label="house-yard — 4K PTZ" online={null} />
               </div>
-              {/* Secondary cameras side by side — 16:9 each */}
               <div className="flex gap-1.5">
-                <div className="flex-1 min-w-0 rounded border border-guardian-border overflow-hidden relative aspect-video" style={{ background: "#0a0f1e" }}>
-                  <img
-                    src="https://guardian.markbarney.net/api/cameras/s7-cam/stream"
-                    alt="Live farm camera — Samsung S7"
-                    className="absolute inset-0 w-full h-full object-contain"
-                  />
-                  <div className="absolute top-1 right-1 bg-black/70 rounded px-1.5 py-0.5 text-[0.6rem] flex items-center gap-1 font-mono">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
-                    <span className="text-slate-200">s7-cam</span>
-                  </div>
+                <div className="flex-1 min-w-0 aspect-video">
+                  <GuardianCameraFeed cameraName="s7-cam" label="s7-cam — Samsung S7" online={null} />
                 </div>
-                <div className="flex-1 min-w-0 rounded border border-guardian-border overflow-hidden relative aspect-video" style={{ background: "#0a0f1e" }}>
-                  <img
-                    src="https://guardian.markbarney.net/api/cameras/usb-cam/stream"
-                    alt="Live farm camera — USB brooder cam"
-                    className="absolute inset-0 w-full h-full object-contain"
-                  />
-                  <div className="absolute top-1 right-1 bg-black/70 rounded px-1.5 py-0.5 text-[0.6rem] flex items-center gap-1 font-mono">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
-                    <span className="text-slate-200">usb-cam</span>
-                  </div>
+                <div className="flex-1 min-w-0 aspect-video">
+                  <GuardianCameraFeed cameraName="usb-cam" label="usb-cam — Brooder" online={null} />
                 </div>
               </div>
             </div>
