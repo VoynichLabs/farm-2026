@@ -72,14 +72,14 @@
       "typical_lifespan": "2-5 years (heritage strains longer)",
       "fun_fact": "Turkey poults will follow the first moving thing they see after hatching — making hand-raised poults remarkably tame."
     },
-    "Cream Legbar": {
-      "description": "British autosexing breed developed in the 1930s at Cambridge. Medium-sized birds with cream plumage and distinctive crests. Hens reliably lay blue eggs.",
-      "egg_color": "Blue (sky blue to pale blue-green)",
-      "eggs_per_year": "180-200",
-      "temperament": "Active, alert, good foragers, can be flighty",
-      "cold_hardiness": "Good — moderate comb, handles temperate climates well",
+    "Brahma": {
+      "description": "Large, heavily feathered breed known as the 'King of Chickens.' Broad body, feathered feet, pea comb. Originally bred for meat but makes a calm dual-purpose bird.",
+      "egg_color": "Brown (medium to large)",
+      "eggs_per_year": "150-200",
+      "temperament": "Calm, docile, cold-hardy, slow to mature",
+      "cold_hardiness": "Excellent — pea comb resists frostbite, heavy feathering insulates well, bred for northern climates",
       "typical_lifespan": "5-8 years",
-      "fun_fact": "Cream Legbars are one of the few breeds where you can tell males from females at hatch by their down color — an 'autosexing' trait."
+      "fun_fact": "Brahmas can weigh over 12 pounds and were the primary meat breed in the US from the 1850s to the 1930s."
     }
   },
   "flock_birds": [
@@ -209,7 +209,8 @@
       "temperament": "Alert, curious — started learning computer skills on day two",
       "color_description": "Gray-brown downy plumage, yellow legs",
       "photo": "april-2026/birdadette-fresh-hatch.jpg",
-      "notes": "First successful incubator hatch of 2026. Hatched from a blue egg (set 16-March, ~21 day incubation). Named after Birdgit who was lost to a hawk two days later. Posed on the keyboard next to her cracked shell moments after hatching."
+      "notes": "First successful incubator hatch of 2026. Hatched from a blue egg (set 16-March, ~21 day incubation). Named after Birdgit who was lost to a hawk two days later. Posed on the keyboard next to her cracked shell moments after hatching. Currently in the desk brooder with the Cackle Hatchery and Tractor Supply chicks.",
+      "location": "desk-brooder"
     },
     {
       "name": "Turkey poults (3)",
@@ -221,19 +222,21 @@
       "temperament": "Social, curious, imprinting on handlers",
       "color_description": "Yellow downy plumage",
       "photo": "april-2026/turkey-poult-in-hand.jpg",
-      "notes": "3 White Broad-Breasted turkey poults, about 1 week old when purchased. First turkeys on the farm."
+      "notes": "3 White Broad-Breasted turkey poults, about 1 week old when purchased. First turkeys on the farm. Currently in the Mustang box.",
+      "location": "mustang-box"
     },
     {
-      "name": "Cream Legbar chicks (4)",
-      "breed": "Cream Legbar",
-      "age": "~1 week",
-      "age_note": "Purchased 07-April-2026 from local source",
+      "name": "Tractor Supply chicks (4)",
+      "breed": "Brahma or Cream Leghorn (uncertain)",
+      "age": "~1.5 weeks",
+      "age_note": "Purchased 07-April-2026 from Tractor Supply, straight run",
       "status": "active",
-      "egg_color": "Blue (when mature)",
+      "egg_color": "TBD",
       "temperament": "Active, alert",
-      "color_description": "Varied chick down (autosexing breed — males and females have different coloring)",
+      "color_description": "Varied chick down",
       "photo": null,
-      "notes": "4 Cream Legbar chicks, about 1 week old when purchased. Will lay blue eggs when mature. Autosexing breed — can tell gender from hatch."
+      "notes": "4 chicks from Tractor Supply, straight run (unsexed). Brahma or Cream Leghorn — breed uncertain. May be males. Currently in the desk brooder with Birdadette and the Cackle Hatchery chicks.",
+      "location": "desk-brooder"
     },
     {
       "name": "Cackle Hatchery chicks (15)",
@@ -245,7 +248,8 @@
       "temperament": "TBD — just arrived",
       "color_description": "Varied — assortment of rare and exotic breeds",
       "photo": "april-2026/cackle-hatchery-arrival.jpg",
-      "notes": "15 chicks from Cackle Hatchery: 5 Exotic Island Fowl Special + 10 Rare Chick Special. Reinforcements after losing Birdgit. Exact breeds TBD as they feather out. Total order: $122.80 shipped USPS Priority.",
+      "notes": "15 chicks from Cackle Hatchery: 5 Exotic Island Fowl Special + 10 Rare Chick Special. Reinforcements after losing Birdgit. Likely mostly males — the cheap ones from hatchery specials. These birds would have been culled otherwise. Exact breeds TBD as they feather out. Total order: $122.80 shipped USPS Priority. Currently in the desk brooder.",
+      "location": "desk-brooder",
       "breed_identification": {
         "status": "preliminary — based on day-old chick photos, needs confirmation as they feather out",
         "assessment_date": "2026-04-10",
