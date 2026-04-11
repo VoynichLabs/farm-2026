@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Related Repositories
+
+This project is part of a two-repo system:
+
+- **[farm-2026](https://github.com/VoynichLabs/farm-2026)** (this repo) — Next.js public website at [farm.markbarney.net](https://farm.markbarney.net). Deployed on Railway. Embeds live Guardian camera feeds and system data.
+- **[farm-guardian](https://github.com/VoynichLabs/farm-guardian)** — Python backend running on a Mac Mini: camera discovery, YOLO detection, vision refinement, automated deterrence, tracking, alerts, REST API. Exposed via Cloudflare tunnel at `guardian.markbarney.net`.
+
+The Guardian components in this repo (`app/components/guardian/`) consume farm-guardian's REST API. The TypeScript interfaces in `types.ts` must stay in sync with the API response shapes in farm-guardian's `api.py` and `dashboard.py`.
+
 ## Commands
 
 ```bash
