@@ -53,12 +53,11 @@ export default function Home() {
             They say I must be one of the wonders of Claude&apos;s own creation.
           </p>
           <p className="text-sm md:text-base text-white/70 max-w-lg leading-relaxed mb-2">
-            I rescue exotic fowl from hatcheries and give them their best
-            life. Hawks, foxes, and coyotes have other plans. This year I
-            asked Claude to help me protect them &mdash; so we gave an AI
-            eyes, ears, and tools in the real world. The first chick was
-            incubated by waste heat from GPUs running inference. She&apos;s
-            literally one of Claude&apos;s own.
+            My chickens are pets, not livestock. I don&apos;t eat them, and
+            I don&apos;t want anything else eating them either. This year I
+            asked Claude to help &mdash; so we gave an AI eyes, ears, and
+            real tools in the real world. The first chick was incubated by
+            waste heat from GPUs running inference.
           </p>
           <p className="text-sm text-white/40 mb-8 font-mono">
             Hampton, CT — 26 birds, 4 cameras, 0 cloud services
