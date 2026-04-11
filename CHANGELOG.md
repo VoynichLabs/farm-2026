@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.1.0] — 2026-04-11
+
+### Fixed — Camera feeds starving through Cloudflare tunnel (Claude Opus 4.6)
+
+- **`GuardianCameraFeed.tsx`** — Replaced persistent MJPEG streaming (`multipart/x-mixed-replace`) with snapshot polling. The component now fetches a single JPEG from `/api/cameras/{name}/frame` every ~1.2s and swaps the img src via `URL.createObjectURL()`. Previous object URLs are revoked to prevent memory leaks. Errors require 3 consecutive failures before showing offline state (tolerates occasional dropped frames).
+
+- **`GuardianDashboard.tsx`** — Removed dead `CAMERAS` array that was defined but never used in the JSX.
+
+**Why:** With 4 cameras, the browser was opening 4 persistent MJPEG connections through the Cloudflare tunnel. MJPEG uses `multipart/x-mixed-replace` (HTTP/1.1 legacy), and browsers cap at ~6 concurrent connections per domain. The 4 held-open MJPEG streams plus API polling calls (status, detections, tracks every 5s) competed for connections, causing feeds to starve — users would see one camera load but the others stuck on OFFLINE. Snapshot polling uses short-lived requests compatible with HTTP/2 multiplexing, so all 4 feeds load reliably.
+
 ## [1.0.0] — 2026-04-09
 
 ### Changed — Weekly Updates, Content Refresh, Instagram (Claude Opus 4.6)

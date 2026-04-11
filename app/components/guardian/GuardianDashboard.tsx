@@ -34,12 +34,6 @@ async function fetchJSON<T>(path: string): Promise<T | null> {
   }
 }
 
-const CAMERAS = [
-  { name: "house-yard", label: "house-yard — Reolink E1 Pro 4K PTZ" },
-  { name: "s7-cam", label: "s7-cam — Samsung Galaxy S7" },
-  { name: "usb-cam", label: "usb-cam — Brooder Camera" },
-];
-
 export default function GuardianDashboard() {
   const [online, setOnline] = useState<boolean | null>(null);
   const [status, setStatus] = useState<GuardianStatus | null>(null);

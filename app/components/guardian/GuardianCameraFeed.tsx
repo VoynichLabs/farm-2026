@@ -1,16 +1,22 @@
 "use client";
 /**
  * Author: Claude Opus 4.6
- * Date: 09-Apr-2026
- * PURPOSE: Reusable MJPEG camera feed with status overlay. Shows live stream
- *   when connected, clean offline state when down. Heartbeat retries every 30s.
- *   Reports its online/offline state via onStatusChange callback so parent
- *   can adapt layout.
+ * Date: 11-Apr-2026
+ * PURPOSE: Reusable camera feed via snapshot polling. Fetches a single JPEG from
+ *   Guardian's /api/cameras/{name}/frame endpoint every ~1s and swaps the img src.
+ *   Replaced persistent MJPEG streaming because browsers limit concurrent HTTP/1.1
+ *   connections per domain (~6), and 4 MJPEG streams + API polling through the
+ *   Cloudflare tunnel exceeded that limit — causing feeds to starve and show only
+ *   one camera at a time. Snapshot polling uses short-lived requests that work with
+ *   HTTP/2 multiplexing and don't hold connections open.
  * SRP/DRY check: Pass — single responsibility: camera feed display for any camera.
  */
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { GUARDIAN_API } from "./types";
+
+// How often to fetch a new snapshot (ms)
+const POLL_INTERVAL = 1200;
 
 export default function GuardianCameraFeed({
   cameraName,
@@ -23,35 +29,70 @@ export default function GuardianCameraFeed({
   online: boolean | null;
   onStatusChange?: (cameraName: string, isLive: boolean) => void;
 }) {
-  const [streamKey, setStreamKey] = useState(0);
+  const [frameUrl, setFrameUrl] = useState<string | null>(null);
   const [feedError, setFeedError] = useState(false);
+  const consecutiveErrors = useRef(0);
+  const mountedRef = useRef(true);
 
-  // Set initial stream key on mount (avoids hydration mismatch from Date.now in useState)
-  // then heartbeat every 30s to recover dropped MJPEG connections
+  // Poll for snapshots
   useEffect(() => {
-    setStreamKey(Date.now());
-    const interval = setInterval(() => {
-      setStreamKey(Date.now());
-      setFeedError(false);
-    }, 30000);
-    return () => clearInterval(interval);
-  }, []);
+    mountedRef.current = true;
+
+    const fetchFrame = async () => {
+      if (!mountedRef.current) return;
+      try {
+        const res = await fetch(
+          `${GUARDIAN_API}/api/cameras/${cameraName}/frame?t=${Date.now()}`,
+        );
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const blob = await res.blob();
+        if (!mountedRef.current) return;
+
+        // Revoke previous object URL to prevent memory leaks
+        setFrameUrl((prev) => {
+          if (prev) URL.revokeObjectURL(prev);
+          return URL.createObjectURL(blob);
+        });
+        consecutiveErrors.current = 0;
+        setFeedError(false);
+      } catch {
+        if (!mountedRef.current) return;
+        consecutiveErrors.current++;
+        // Mark as error after 3 consecutive failures (not just one dropped frame)
+        if (consecutiveErrors.current >= 3) {
+          setFeedError(true);
+        }
+      }
+    };
+
+    fetchFrame();
+    const interval = setInterval(fetchFrame, POLL_INTERVAL);
+
+    return () => {
+      mountedRef.current = false;
+      clearInterval(interval);
+      // Clean up last object URL
+      setFrameUrl((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return null;
+      });
+    };
+  }, [cameraName]);
 
   // Reset feed error when system comes back online
   useEffect(() => {
-    if (online === true) setFeedError(false);
+    if (online === true) {
+      setFeedError(false);
+      consecutiveErrors.current = 0;
+    }
   }, [online]);
 
-  const showFeed = online !== false && !feedError;
+  const showFeed = online !== false && !feedError && frameUrl !== null;
 
   // Report status to parent
   useEffect(() => {
     onStatusChange?.(cameraName, showFeed);
   }, [showFeed, cameraName, onStatusChange]);
-
-  const handleError = useCallback(() => {
-    setFeedError(true);
-  }, []);
 
   return (
     <div
@@ -60,11 +101,9 @@ export default function GuardianCameraFeed({
     >
       {showFeed ? (
         <img
-          key={streamKey}
-          src={`${GUARDIAN_API}/api/cameras/${cameraName}/stream?t=${streamKey}`}
+          src={frameUrl!}
           alt={`Live farm camera — ${label}`}
           className="w-full h-full object-contain block"
-          onError={handleError}
         />
       ) : (
         <div className="w-full h-full flex items-center justify-center min-h-[80px]">
@@ -76,7 +115,9 @@ export default function GuardianCameraFeed({
       )}
       {/* Feed overlay */}
       <div className="absolute top-1.5 right-1.5 bg-black/70 rounded px-2 py-0.5 text-[0.65rem] flex items-center gap-1.5 font-mono">
-        <span className={`w-1.5 h-1.5 rounded-full inline-block ${showFeed ? "bg-emerald-500 animate-pulse" : "bg-red-500"}`} />
+        <span
+          className={`w-1.5 h-1.5 rounded-full inline-block ${showFeed ? "bg-emerald-500 animate-pulse" : "bg-red-500"}`}
+        />
         <span className="text-slate-300">{label}</span>
         {showFeed && <span className="text-emerald-400">LIVE</span>}
         {!showFeed && <span className="text-red-400">OFF</span>}
