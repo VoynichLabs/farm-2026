@@ -39,7 +39,7 @@ No test suite exists. Deployment targets Railway.app using the standalone Next.j
 - `/field-notes/[slug]` — Individual field note with cover image, MDX content, photo gallery, prev/next nav
 - `/flock` — Bird roster (active / In Memoriam sections) + breed reference guide
 - `/projects` — Project listing with status badges (planning/active/complete/shelved)
-- `/projects/guardian` — **Live dashboard**: 3 MJPEG camera feeds (house-yard, s7-cam, usb-cam), detection table, patrol/deterrent/track status, eBird sightings. Rendered by `GuardianDashboard.tsx` above MDX project docs.
+- `/projects/guardian` — **Live dashboard**: 4 camera feeds via snapshot polling (house-yard, s7-cam, usb-cam, gwtc), detection table, patrol/deterrent/track status, eBird sightings. Rendered by `GuardianDashboard.tsx` above MDX project docs.
 - `/projects/[slug]` — MDX project detail with materials table and diary timeline
 - `/gallery` — Lightbox photo gallery (April 2026 + historical)
 - `/diary` — Redirects to `/field-notes`
@@ -52,14 +52,14 @@ The Guardian page (`/projects/guardian`) is a live interactive dashboard, not a 
 
 - **Client components** in `app/components/guardian/` — `GuardianDashboard` (orchestrator), `GuardianStatusBar`, `GuardianCameraFeed`, `GuardianDetections`, `GuardianInfoPanels`, `GuardianHomeBadge`, `types.ts`
 - **API base**: `https://guardian.markbarney.net` (Cloudflare tunnel to Mac Mini port 6530)
-- **Three cameras** (v2.11 names): `house-yard` (Reolink 4K PTZ), `s7-cam` (Samsung S7 RTSP), `usb-cam` (USB brooder). Names are device-based, not location-based.
-- **MJPEG feeds**: `GuardianCameraFeed` component handles stream loading, heartbeat retry (30s), and offline fallback. Used on both homepage and dashboard.
+- **Four cameras** (v2.12 names): `house-yard` (Reolink 4K PTZ), `s7-cam` (Samsung S7 RTSP), `usb-cam` (USB brooder), `gwtc` (Gateway laptop webcam via MediaMTX). Names are device-based, not location-based.
+- **Snapshot polling feeds**: `GuardianCameraFeed` fetches a JPEG from `/api/cameras/{name}/frame` every ~1.2s via `fetch()` + `createObjectURL()`. Replaced persistent MJPEG streaming (v1.1.0) because browsers cap HTTP/1.1 connections at ~6 per domain — 4 MJPEG streams + API polling starved connections through the Cloudflare tunnel.
 - **Polling**: fast (5s: status, detections, tracks, deterrent), slow (60s: summary, effectiveness), glacial (5min: eBird)
 - **Offline handling**: per-camera offline state with label. System-level offline via `GuardianHomeBadge`.
 - **`'use client'` must be line 1** — before file header comments, or Next.js treats the component as a Server Component
 - Guardian slug gets `max-w-7xl` container (wider than standard `max-w-4xl`)
 - Hero photo suppressed for Guardian slug (live feeds replace it)
-- Homepage uses both `GuardianHomeBadge` (status bar) and `GuardianCameraFeed` (3 feeds)
+- Homepage uses both `GuardianHomeBadge` (status bar) and `GuardianCameraFeed` (4 feeds)
 - **Content pipeline**: see `docs/CONTENT-PIPELINE.md` for the full operational guide
 
 ### Design tokens
