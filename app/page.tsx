@@ -34,12 +34,12 @@ export default function Home() {
   const latestNote = fieldNotes[0];
   const recentNotes = fieldNotes.slice(0, 3);
 
-  // Hero image: Birdadette on the keyboard moments after hatching
+  // Hero image: Birdadette — incubated by GPU waste heat, hatched into AI
   const heroImage = "/photos/april-2026/birdadette-fresh-hatch.jpg";
 
   return (
     <main>
-      {/* Hero — Birdadette on the keyboard */}
+      {/* Hero — Birdadette */}
       <section
         className="relative min-h-[80vh] flex items-end justify-start bg-cover bg-center"
         style={{ backgroundImage: `url(${heroImage})` }}
@@ -53,8 +53,9 @@ export default function Home() {
             They say I must be one of the wonders of Claude&apos;s own creation.
           </p>
           <p className="text-sm md:text-base text-white/70 max-w-lg leading-relaxed mb-2">
-            A chick hatched on the keyboard. A hawk took Birdgit two days later.
-            By the end of the week, Claude had built a sky-watching AI and 22
+            A chick incubated by waste heat from an RTX 5070 and a Mac Mini
+            running inference. A hawk took Birdgit two days later. By the end
+            of the week, Claude had built a sky-watching AI and 22
             reinforcements were in the brooder.
           </p>
           <p className="text-sm text-white/40 mb-8 font-mono">
