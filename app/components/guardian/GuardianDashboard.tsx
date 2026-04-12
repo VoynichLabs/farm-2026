@@ -1,11 +1,12 @@
 "use client";
 /**
  * Author: Claude Opus 4.6
- * Date: 09-Apr-2026
- * PURPOSE: Guardian live dashboard — LIVE STREAMS FIRST. Three cameras displayed
- *   with adaptive layout: online cameras get large panels, offline ones collapse
- *   to compact status bars. Detection data below the feeds.
+ * Date: 12-Apr-2026
+ * PURPOSE: Guardian live dashboard — LIVE STREAMS FIRST. Cameras rendered via
+ *   GuardianCameraStage (one featured, others as live thumbnails; click to
+ *   promote). Detection data below the feeds.
  * SRP/DRY check: Pass — single orchestrator, delegates rendering to children.
+ *   Camera list sourced from lib/cameras.ts (SSoT).
  */
 
 import { useEffect, useRef, useCallback, useState } from "react";
@@ -20,9 +21,10 @@ import {
   EBirdSighting,
 } from "./types";
 import GuardianStatusBar from "./GuardianStatusBar";
-import GuardianCameraFeed from "./GuardianCameraFeed";
+import GuardianCameraStage from "./GuardianCameraStage";
 import GuardianDetections from "./GuardianDetections";
 import GuardianInfoPanels from "./GuardianInfoPanels";
+import { CAMERAS } from "@/lib/cameras";
 
 async function fetchJSON<T>(path: string): Promise<T | null> {
   try {
@@ -110,25 +112,14 @@ export default function GuardianDashboard() {
       {/* Status bar */}
       <GuardianStatusBar status={status} online={online} />
 
-      {/* === LIVE CAMERA FEEDS — 4 cameras === */}
-      <div className="p-2 space-y-2">
-        {/* Primary: house-yard PTZ gets full width */}
-        <div className="aspect-video">
-          <GuardianCameraFeed cameraName="house-yard" label="house-yard — Reolink 4K PTZ" online={online} />
-        </div>
-
-        {/* Secondary row: s7-cam, usb-cam, gwtc — three across */}
-        <div className="grid grid-cols-3 gap-2">
-          <div className="aspect-video">
-            <GuardianCameraFeed cameraName="s7-cam" label="s7-cam — Samsung S7" online={online} />
-          </div>
-          <div className="aspect-video">
-            <GuardianCameraFeed cameraName="usb-cam" label="usb-cam — Brooder" online={online} />
-          </div>
-          <div className="aspect-video">
-            <GuardianCameraFeed cameraName="gwtc" label="gwtc — Gateway Laptop" online={online} />
-          </div>
-        </div>
+      {/* === LIVE CAMERA FEEDS — modular stage: click a thumb to promote it === */}
+      <div className="p-2">
+        <GuardianCameraStage
+          cameras={CAMERAS}
+          defaultFeatured="house-yard"
+          storageKey="farm2026.guardian.featured.dashboard"
+          online={online}
+        />
       </div>
 
       {/* Compact status row */}

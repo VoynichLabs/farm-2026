@@ -1,6 +1,6 @@
 /**
  * Author: Claude Opus 4.6
- * Date: 09-Apr-2026
+ * Date: 12-Apr-2026
  * PURPOSE: Individual field note detail page. Renders MDX content with
  *   a hero cover image, inline photo gallery, and prev/next navigation.
  * SRP/DRY check: Pass — reuses getFieldNote/getAllFieldNotes from lib/content.ts,
@@ -67,13 +67,13 @@ export default async function FieldNotePage({
 
       {/* Cover image */}
       {note.cover && (
-        <div className="mb-8 rounded-xl overflow-hidden shadow-lg">
+        <div className="mb-8 rounded-xl overflow-hidden shadow-lg bg-forest/5">
           <Image
             src={note.cover}
             alt={note.title}
             width={1200}
-            height={600}
-            className="w-full object-cover max-h-[500px]"
+            height={800}
+            className="w-full h-auto max-h-[75vh] object-contain mx-auto"
             priority
           />
         </div>
@@ -109,13 +109,15 @@ export default async function FieldNotePage({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {note.photos.map((photo, i) => (
               <figure key={i} className="m-0">
-                <Image
-                  src={photo.src}
-                  alt={photo.caption}
-                  width={600}
-                  height={400}
-                  className="rounded-lg w-full object-cover aspect-[3/2]"
-                />
+                <div className="rounded-lg overflow-hidden bg-forest/5">
+                  <Image
+                    src={photo.src}
+                    alt={photo.caption}
+                    width={600}
+                    height={400}
+                    className="w-full h-auto max-h-[70vh] object-contain mx-auto"
+                  />
+                </div>
                 <figcaption className="text-sm text-forest-light/60 mt-2">
                   {photo.caption}
                 </figcaption>

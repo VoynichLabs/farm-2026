@@ -59,9 +59,9 @@ export default function FlockPage() {
 
   return (
     <main className="min-h-screen bg-cream">
-      {/* Hero section */}
+      {/* Hero section — whole photo shown (contain), dark canvas fills any gap */}
       <section
-        className="relative min-h-[45vh] flex items-end justify-start bg-cover bg-center"
+        className="relative min-h-[45vh] flex items-end justify-start bg-contain bg-center bg-no-repeat bg-forest"
         style={{ backgroundImage: "url('/photos/flock-group.jpg')" }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />

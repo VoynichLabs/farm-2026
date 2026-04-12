@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.3.0] — 2026-04-12
+
+### Changed — Modular camera stage + stop cropping story photos (Claude Opus 4.6)
+
+- **Modular camera picker** — `app/components/guardian/GuardianCameraStage.tsx` (new) renders one featured camera large plus the other three as live, clickable thumbnails. Clicking a thumb promotes it to the stage. Selection persists in `localStorage` per page (separate keys for homepage and `/projects/guardian`), and accepts `?cam=<name>` deep-linking. No `useSearchParams` — reads/writes `window.location` + `history.replaceState` directly so static pre-render works without a Suspense boundary.
+
+- **Camera registry (single source of truth)** — `lib/cameras.ts` (new) exports `CAMERAS`, `DEFAULT_FEATURED`, and `getCamera()`. Every hardcoded camera literal in `app/page.tsx`, `GuardianDashboard.tsx`, and the homepage system panel's Cameras sub-list now maps over this registry. Native aspect ratios (all 16:9, verified from live JPEG dimensions) live with each entry so stage/thumb containers size correctly.
+
+- **Stop cropping story photos** — replaced `object-cover` + fixed-height containers with `object-contain` + `max-h` (capped at 60–75 vh) + subtle neutral canvas on these story-critical images:
+  - Homepage featured field note cover (was `h-[350px] object-cover`)
+  - Field notes index featured card (was `h-[400px] object-cover`)
+  - Individual field note cover (was `max-h-[500px] object-cover`)
+  - Field note inline photo gallery (was `aspect-[3/2] object-cover` — forced 3:2)
+  - Project hero photo (was `max-h-[480px] object-cover`)
+  - Homepage Birdadette hero section (was `bg-cover` — cropped top/bottom)
+  - Flock page hero section (was `bg-cover`)
+
+  Thumbnail grids (homepage flock preview, secondary field note cards, gallery thumbs) intentionally left as `object-cover` — uniform grid height still wins there.
+
+**Why:** Two complaints. (1) The homepage and live dashboard hardcoded a single "featured" camera — swapping the hero cam required a deploy. Users should be able to flip between brooder and yard cams on demand. (2) Story photos (Birdadette, the command-center field note cover, project heroes) were getting their top and bottom shaved by `object-cover` instead of being shown whole. Story images must be seen in full; thumbnails can crop.
+
+**How:** `GuardianCameraStage` is a new `"use client"` component that owns featured-camera state and a three-thumbnail grid. Server renders the default; client's `useEffect` reconciles with `localStorage`/URL. For photos, switched to a pattern where the image drives container height (`w-full h-auto max-h-[65vh] object-contain` with a soft-tint background behind any letterbox gap). Heroes moved from `bg-cover` to `bg-contain bg-no-repeat bg-forest` — the forest background fills any canvas gap cleanly.
+
 ## [1.2.0] — 2026-04-12
 
 ### Changed — Hero layout, brooder cameras, chick ages, Guardian v2.15 (Claude Opus 4.6)

@@ -1,6 +1,6 @@
 /**
  * Author: Claude Opus 4.6
- * Date: 09-Apr-2026
+ * Date: 12-Apr-2026
  * PURPOSE: Field Notes feed page — photo-forward weekly farm updates.
  *   Shows latest note as a featured hero, remaining as a card grid.
  *   Replaces the old /diary page.
@@ -44,7 +44,7 @@ export default function FieldNotesPage() {
                 alt={featured.title}
                 width={1200}
                 height={600}
-                className="w-full object-cover h-[400px] group-hover:scale-[1.02] transition-transform duration-500"
+                className="w-full h-auto max-h-[65vh] object-contain bg-forest/5 group-hover:scale-[1.02] transition-transform duration-500"
                 priority
               />
             )}

@@ -76,13 +76,13 @@ export default async function ProjectPage({
 
       {/* Hero Photo (not for Guardian — live feed replaces it) */}
       {!isGuardian && project.heroPhoto && (
-        <div className="mb-10 rounded-xl overflow-hidden shadow-lg">
+        <div className="mb-10 rounded-xl overflow-hidden shadow-lg bg-forest/5">
           <Image
             src={project.heroPhoto}
             alt={project.title}
             width={1200}
-            height={600}
-            className="w-full object-cover max-h-[480px]"
+            height={800}
+            className="w-full h-auto max-h-[70vh] object-contain mx-auto"
             priority
           />
         </div>

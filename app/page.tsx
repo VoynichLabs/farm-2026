@@ -10,9 +10,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { getProjects, getAllFieldNotes, getChickAgeLabel } from "@/lib/content";
 import GuardianHomeBadge from "@/app/components/guardian/GuardianHomeBadge";
-import GuardianCameraFeed from "@/app/components/guardian/GuardianCameraFeed";
+import GuardianCameraStage from "@/app/components/guardian/GuardianCameraStage";
 import InstagramFeed from "@/app/components/InstagramFeed";
 import instagramPosts from "@/content/instagram-posts.json";
+import { CAMERAS, DEFAULT_FEATURED } from "@/lib/cameras";
 
 const statusColors: Record<string, string> = {
   planning: "bg-yellow-600",
@@ -39,9 +40,9 @@ export default function Home() {
 
   return (
     <main>
-      {/* Hero — Birdadette: text frames around the bird, center stays clear */}
+      {/* Hero — Birdadette: whole photo shown (contain), dark canvas fills any gap */}
       <section
-        className="relative min-h-[80vh] bg-cover bg-center"
+        className="relative min-h-[80vh] bg-contain bg-center bg-no-repeat bg-forest"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         {/* Subtle vignette — heavier at edges, light in center so the bird shows through */}
@@ -112,22 +113,14 @@ export default function Home() {
           {/* Main area: 3 camera feeds (55%) + system panel (45%) */}
           <div className="flex gap-1.5">
 
-            {/* Camera feeds — uses GuardianCameraFeed for proper offline handling */}
-            <div className="flex-[55] min-w-0 flex flex-col gap-1.5">
-              <div className="aspect-video">
-                <GuardianCameraFeed cameraName="usb-cam" label="usb-cam — desk brooder" online={null} />
-              </div>
-              <div className="grid grid-cols-3 gap-1.5">
-                <div className="aspect-video">
-                  <GuardianCameraFeed cameraName="s7-cam" label="s7-cam — brooder" online={null} />
-                </div>
-                <div className="aspect-video">
-                  <GuardianCameraFeed cameraName="gwtc" label="gwtc" online={null} />
-                </div>
-                <div className="aspect-video">
-                  <GuardianCameraFeed cameraName="house-yard" label="house-yard — 4K PTZ" online={null} />
-                </div>
-              </div>
+            {/* Camera feeds — modular stage: click a thumb to promote it */}
+            <div className="flex-[55] min-w-0">
+              <GuardianCameraStage
+                cameras={CAMERAS}
+                defaultFeatured={DEFAULT_FEATURED}
+                storageKey="farm2026.guardian.featured.home"
+                online={null}
+              />
             </div>
 
             {/* System info panel */}
@@ -150,10 +143,11 @@ export default function Home() {
               {/* Cameras */}
               <div className="text-[0.65rem] uppercase tracking-wider text-guardian-hover font-semibold">Cameras</div>
               <div className="text-guardian-muted text-[0.7rem] leading-snug space-y-0.5">
-                <div>Cam 1: <span className="text-slate-300">USB camera</span> desk brooder</div>
-                <div>Cam 2: <span className="text-slate-300">Samsung S7</span> brooder</div>
-                <div>Cam 3: <span className="text-slate-300">Gateway laptop</span> coop</div>
-                <div>Cam 4: <span className="text-slate-300">Reolink E1 Pro</span> 4K PTZ yard</div>
+                {CAMERAS.map((cam, i) => (
+                  <div key={cam.name}>
+                    Cam {i + 1}: <span className="text-slate-300">{cam.device}</span> — {cam.location}
+                  </div>
+                ))}
               </div>
 
               <div className="border-t border-guardian-border my-0.5" />
@@ -227,7 +221,7 @@ export default function Home() {
                   alt={latestNote.title}
                   width={1200}
                   height={500}
-                  className="w-full object-cover h-[350px] group-hover:scale-[1.02] transition-transform duration-500"
+                  className="w-full h-auto max-h-[60vh] object-contain bg-forest/5 group-hover:scale-[1.02] transition-transform duration-500"
                 />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
