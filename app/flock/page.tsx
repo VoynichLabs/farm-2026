@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getFlockProfiles } from "@/lib/content";
+import { getFlockProfiles, getChickAgeLabel } from "@/lib/content";
 import Image from "next/image";
 
 export const metadata: Metadata = {
@@ -174,6 +174,7 @@ interface FlockBird {
   name: string;
   breed: string;
   age: string;
+  hatch_date?: string;
   age_note: string;
   status: string;
   egg_color: string;
@@ -181,6 +182,7 @@ interface FlockBird {
   color_description: string;
   photo: string | null;
   notes: string;
+  location?: string;
 }
 
 interface BreedProfile {
@@ -250,9 +252,18 @@ function BirdCard({
 
         {/* Badges */}
         <div className="flex flex-wrap gap-2 mb-4">
-          <span className="inline-block text-xs bg-forest/10 text-forest px-2 py-1 rounded">
-            {bird.age}
-          </span>
+          {(() => {
+            const dynamicAge = getChickAgeLabel(bird.hatch_date);
+            return dynamicAge ? (
+              <span className="inline-block text-xs bg-amber-500 text-white font-semibold px-2 py-1 rounded">
+                {dynamicAge}
+              </span>
+            ) : (
+              <span className="inline-block text-xs bg-forest/10 text-forest px-2 py-1 rounded">
+                {bird.age}
+              </span>
+            );
+          })()}
           {bird.egg_color !== "N/A (rooster)" && (
             <span
               className={`inline-block text-xs px-2 py-1 rounded ${eggColorBadgeColors[bird.egg_color] || "bg-gray-500 text-white"}`}

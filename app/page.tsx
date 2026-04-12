@@ -1,6 +1,6 @@
 /**
  * Author: Claude Opus 4.6
- * Date: 09-Apr-2026
+ * Date: 12-Apr-2026
  * PURPOSE: Homepage — hero (rotates weekly with latest field note cover),
  *   stats bar, Guardian live section, latest field note feature, flock preview,
  *   projects, Instagram, and footer. Guardian is the flagship project.
@@ -8,7 +8,7 @@
  */
 import Link from "next/link";
 import Image from "next/image";
-import { getProjects, getAllFieldNotes } from "@/lib/content";
+import { getProjects, getAllFieldNotes, getChickAgeLabel } from "@/lib/content";
 import GuardianHomeBadge from "@/app/components/guardian/GuardianHomeBadge";
 import GuardianCameraFeed from "@/app/components/guardian/GuardianCameraFeed";
 import InstagramFeed from "@/app/components/InstagramFeed";
@@ -39,57 +39,66 @@ export default function Home() {
 
   return (
     <main>
-      {/* Hero — Birdadette */}
+      {/* Hero — Birdadette: text frames around the bird, center stays clear */}
       <section
-        className="relative min-h-[80vh] flex items-end justify-start bg-cover bg-center"
+        className="relative min-h-[80vh] bg-cover bg-center"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-        <div className="relative z-10 px-6 pb-16 md:px-16 max-w-3xl">
-          <h1 className="text-5xl md:text-7xl text-white font-bold font-serif leading-tight mb-4">
+        {/* Subtle vignette — heavier at edges, light in center so the bird shows through */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
+
+        {/* Top-left: title + tagline */}
+        <div className="absolute top-0 left-0 z-10 px-6 pt-16 md:px-16">
+          <h1 className="text-5xl md:text-7xl text-white font-bold font-serif leading-tight">
             Farm 2026
           </h1>
-          <p className="text-base md:text-lg text-white/50 italic max-w-lg leading-relaxed mb-4">
+          <p className="text-base md:text-lg text-white/50 italic max-w-sm leading-relaxed mt-2">
             They say I must be one of the wonders of Claude&apos;s own creation.
           </p>
-          <p className="text-sm md:text-base text-white/70 max-w-lg leading-relaxed mb-2">
+        </div>
+
+        {/* Bottom bar: body text left, location + links right */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 px-6 pb-6 md:px-16 md:pb-10 flex items-end justify-between gap-8">
+          <p className="text-xs md:text-sm text-white/70 leading-relaxed max-w-xs">
             My chickens are pets, not livestock. I don&apos;t eat them, and
             I don&apos;t want anything else eating them either. This year I
             asked Claude to help &mdash; so we gave an AI eyes, ears, and
-            real tools in the real world. The first chick was incubated by
-            waste heat from GPUs running inference.
+            real tools in the real world.
           </p>
-          <p className="text-sm text-white/40 mb-8 font-mono">
-            Hampton, CT — 26 birds, 4 cameras, 0 cloud services
-          </p>
-          <div className="flex flex-wrap gap-3 text-sm">
-            <Link
-              href="/projects/guardian"
-              className="text-emerald-400 hover:text-emerald-300 underline underline-offset-4 transition-colors"
-            >
-              Farm Guardian
-            </Link>
-            <span className="text-white/30">|</span>
-            <Link
-              href="/field-notes"
-              className="text-white/70 hover:text-white underline underline-offset-4 transition-colors"
-            >
-              Field Notes
-            </Link>
-            <span className="text-white/30">|</span>
-            <Link
-              href="/flock"
-              className="text-white/70 hover:text-white underline underline-offset-4 transition-colors"
-            >
-              The Flock
-            </Link>
-            <span className="text-white/30">|</span>
-            <Link
-              href="/gallery"
-              className="text-white/70 hover:text-white underline underline-offset-4 transition-colors"
-            >
-              Gallery
-            </Link>
+          <div className="text-right flex-shrink-0">
+            <p className="text-xs text-white/40 font-mono mb-3">
+              Hampton, CT
+            </p>
+            <div className="flex flex-wrap justify-end gap-3 text-sm">
+              <Link
+                href="/projects/guardian"
+                className="text-emerald-400 hover:text-emerald-300 underline underline-offset-4 transition-colors"
+              >
+                Farm Guardian
+              </Link>
+              <span className="text-white/30">|</span>
+              <Link
+                href="/field-notes"
+                className="text-white/70 hover:text-white underline underline-offset-4 transition-colors"
+              >
+                Field Notes
+              </Link>
+              <span className="text-white/30">|</span>
+              <Link
+                href="/flock"
+                className="text-white/70 hover:text-white underline underline-offset-4 transition-colors"
+              >
+                The Flock
+              </Link>
+              <span className="text-white/30">|</span>
+              <Link
+                href="/gallery"
+                className="text-white/70 hover:text-white underline underline-offset-4 transition-colors"
+              >
+                Gallery
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -106,17 +115,17 @@ export default function Home() {
             {/* Camera feeds — uses GuardianCameraFeed for proper offline handling */}
             <div className="flex-[55] min-w-0 flex flex-col gap-1.5">
               <div className="aspect-video">
-                <GuardianCameraFeed cameraName="house-yard" label="house-yard — 4K PTZ" online={null} />
+                <GuardianCameraFeed cameraName="usb-cam" label="usb-cam — desk brooder" online={null} />
               </div>
               <div className="grid grid-cols-3 gap-1.5">
                 <div className="aspect-video">
-                  <GuardianCameraFeed cameraName="s7-cam" label="s7-cam" online={null} />
-                </div>
-                <div className="aspect-video">
-                  <GuardianCameraFeed cameraName="usb-cam" label="usb-cam" online={null} />
+                  <GuardianCameraFeed cameraName="s7-cam" label="s7-cam — brooder" online={null} />
                 </div>
                 <div className="aspect-video">
                   <GuardianCameraFeed cameraName="gwtc" label="gwtc" online={null} />
+                </div>
+                <div className="aspect-video">
+                  <GuardianCameraFeed cameraName="house-yard" label="house-yard — 4K PTZ" online={null} />
                 </div>
               </div>
             </div>
@@ -132,49 +141,38 @@ export default function Home() {
                 </div>
                 <div>
                   <div className="font-semibold text-slate-100 text-sm leading-tight">Farm Guardian</div>
-                  <div className="text-guardian-muted text-[0.65rem]">Watching over the flock — v2.12</div>
+                  <div className="text-guardian-muted text-[0.65rem]">Watching over the flock — v2.15</div>
                 </div>
               </div>
 
               <div className="border-t border-guardian-border my-0.5" />
 
-              {/* Detection pipeline */}
-              <div className="text-[0.65rem] uppercase tracking-wider text-guardian-hover font-semibold">Detection</div>
+              {/* Cameras */}
+              <div className="text-[0.65rem] uppercase tracking-wider text-guardian-hover font-semibold">Cameras</div>
               <div className="text-guardian-muted text-[0.7rem] leading-snug space-y-0.5">
-                <div>RTSP 1fps → <span className="text-slate-300">YOLOv8</span> (MPS)</div>
-                <div>Ambiguous → <span className="text-slate-300">GLM-4V</span> species ID</div>
-                <div>Targets: <span className="text-red-400">hawk fox raccoon coyote bobcat</span></div>
+                <div>Cam 1: <span className="text-slate-300">USB camera</span> desk brooder</div>
+                <div>Cam 2: <span className="text-slate-300">Samsung S7</span> brooder</div>
+                <div>Cam 3: <span className="text-slate-300">Gateway laptop</span> coop</div>
+                <div>Cam 4: <span className="text-slate-300">Reolink E1 Pro</span> 4K PTZ yard</div>
               </div>
 
               <div className="border-t border-guardian-border my-0.5" />
 
-              {/* Deterrence levels */}
-              <div className="text-[0.65rem] uppercase tracking-wider text-guardian-hover font-semibold">Deterrence</div>
-              <div className="text-[0.7rem] space-y-0.5">
-                <div><span className="text-guardian-muted">L1</span> <span className="text-slate-400">Log only</span></div>
-                <div><span className="text-amber-400">L2</span> <span className="text-slate-300">Spotlight</span></div>
-                <div><span className="text-orange-400">L3</span> <span className="text-slate-300">Spotlight + Audio</span></div>
-                <div><span className="text-red-400">L4</span> <span className="text-slate-300">Spotlight + Siren + Audio</span></div>
-              </div>
-
-              <div className="border-t border-guardian-border my-0.5" />
-
-              {/* Patrol */}
-              <div className="text-[0.65rem] uppercase tracking-wider text-guardian-hover font-semibold">Patrol</div>
+              {/* Streaming */}
+              <div className="text-[0.65rem] uppercase tracking-wider text-guardian-hover font-semibold">Streaming</div>
               <div className="text-guardian-muted text-[0.7rem] leading-snug space-y-0.5">
-                <div>Mode: <span className="text-slate-300">Step-and-dwell</span> (11 positions, 30° intervals)</div>
-                <div>Sky-watch: <span className="text-amber-400">available</span> (fixed hawk surveillance)</div>
+                <div>Mode: <span className="text-slate-300">Snapshot polling</span> (all cams)</div>
+                <div>Capture: <span className="text-slate-300">OpenCV</span> — no ffmpeg, no HLS</div>
+                <div>Refresh: <span className="text-slate-300">~10s</span> via Cloudflare tunnel</div>
               </div>
 
               <div className="border-t border-guardian-border my-0.5" />
 
+              {/* Hardware */}
               <div className="text-[0.65rem] uppercase tracking-wider text-guardian-hover font-semibold">Hardware</div>
               <div className="text-guardian-muted text-[0.7rem] leading-snug space-y-0.5">
-                <div>Cam 1: <span className="text-slate-300">Reolink E1 Pro</span> 4K PTZ</div>
-                <div>Cam 2: <span className="text-slate-300">Samsung S7</span> RTSP</div>
-                <div>Cam 3: <span className="text-slate-300">USB camera</span> brooder</div>
-                <div>Cam 4: <span className="text-slate-300">Gateway laptop</span> coop</div>
                 <div>CPU: <span className="text-slate-300">Mac Mini M4 Pro</span> 64GB</div>
+                <div>Detection: <span className="text-slate-400">offline</span> — cameras only</div>
               </div>
             </div>
           </div>
@@ -192,7 +190,7 @@ export default function Home() {
               </thead>
               <tbody>
                 <tr>
-                  <td className="px-2 py-1 text-slate-300">RTSP → YOLO → GLM → Track</td>
+                  <td className="px-2 py-1 text-slate-300">Snapshot polling (OpenCV)</td>
                   <td className="px-2 py-1 text-slate-300">4 cameras · M4 Pro 64GB</td>
                   <td className="px-2 py-1 text-slate-300">Discord + 4K Snapshots</td>
                   <td className="px-2 py-1 text-right">
@@ -283,7 +281,7 @@ export default function Home() {
             <div>
               <h2 className="text-3xl font-bold font-serif">The Flock</h2>
               <p className="text-forest/60 mt-2">
-                Four survivors, one brave chick, and 22 reinforcements in the brooder.
+                Heritage breeds, Easter Eggers, and a brooder full of new arrivals.
               </p>
             </div>
             <Link href="/flock" className="text-wood hover:underline text-sm font-medium">
@@ -293,15 +291,17 @@ export default function Home() {
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {[
-              { photo: "/photos/april-2026/birdadette-fresh-hatch.jpg", name: "Birdadette", breed: "Easter Egger — hatched Apr 6" },
+              { photo: "/photos/april-2026/birdadette-fresh-hatch.jpg", name: "Birdadette", breed: "Easter Egger — hatched Apr 6", hatchDate: "2026-04-06" },
               { photo: "/photos/birds/henrietta.jpg", name: "Henrietta", breed: "Golden Laced Wyandotte" },
               { photo: "/photos/birds/whitey-red-legs.jpg", name: "Whitey Red Legs", breed: "EE × RIR Rooster" },
               { photo: "/photos/birds/ee-hen-1.jpg", name: "EE Hen 1", breed: "Easter Egger" },
               { photo: "/photos/birds/ee-hen-2.jpg", name: "EE Hen 2", breed: "Easter Egger" },
-              { photo: "/photos/april-2026/turkey-poult-in-hand.jpg", name: "Turkey Poults (3)", breed: "White Broad-Breasted" },
-              { photo: "/photos/april-2026/cackle-hatchery-arrival.jpg", name: "New Arrivals (15)", breed: "Cackle Hatchery specials" },
+              { photo: "/photos/april-2026/turkey-poult-in-hand.jpg", name: "Turkey Poults (3)", breed: "White Broad-Breasted", hatchDate: "2026-03-31" },
+              { photo: "/photos/april-2026/cackle-hatchery-arrival.jpg", name: "New Arrivals (15)", breed: "Cackle Hatchery specials", hatchDate: "2026-04-08" },
               { photo: "/photos/april-2026/chicks-samsung-enrichment.jpg", name: "Enrichment Hour", breed: "Chicks watching the Samsung" },
-            ].map((bird) => (
+            ].map((bird) => {
+              const ageLabel = "hatchDate" in bird ? getChickAgeLabel(bird.hatchDate) : null;
+              return (
               <Link href="/flock" key={bird.name} className="group block">
                 <div className="relative h-40 rounded-lg overflow-hidden bg-forest/10">
                   <Image
@@ -311,13 +311,19 @@ export default function Home() {
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  {ageLabel && (
+                    <div className="absolute top-2 right-2">
+                      <span className="bg-amber-500/90 text-white text-[0.6rem] font-bold px-1.5 py-0.5 rounded-full">{ageLabel}</span>
+                    </div>
+                  )}
                   <div className="absolute bottom-0 left-0 right-0 p-3">
                     <p className="text-white font-semibold text-sm leading-tight">{bird.name}</p>
                     <p className="text-white/70 text-xs">{bird.breed}</p>
                   </div>
                 </div>
               </Link>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

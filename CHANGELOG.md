@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.2.0] — 2026-04-12
+
+### Changed — Hero layout, brooder cameras, chick ages, Guardian v2.15 (Claude Opus 4.6)
+
+- **Hero redesign** — text no longer covers the bird. Title and tagline anchored top-left, body text bottom-left (narrow column), nav links bottom-right. Center of the image stays clear so Birdadette is the focal point. Gradient changed from a heavy bottom-up wash to edge vignetting.
+
+- **Camera reorder** — brooder cameras promoted to hero position. Featured large feed is now `usb-cam` (desk brooder) instead of `house-yard`. Small row: `s7-cam` (brooder), `gwtc`, `house-yard` (4K PTZ). Reflects that the chicks are the focus right now, not the yard.
+
+- **Dynamic chick age** — added `hatch_date` fields to `flock-profiles.json` for Birdadette (Apr 6), Turkey poults (est. Mar 31), Tractor Supply chicks (est. Mar 27), Cackle Hatchery chicks (Apr 8). New `getChickAgeLabel()` utility in `lib/content.ts` computes "Day X" / "X weeks" / "X months" at render time. Age badges appear on both homepage flock preview and `/flock` page BirdCard. Adult birds without `hatch_date` still show their static age string.
+
+- **Guardian system panel updated for v2.15** — removed YOLO detection pipeline, deterrence levels, and patrol sections (detection not currently running). Replaced with Cameras section (listing all 4 by current location), Streaming section (snapshot polling via OpenCV, ~10s refresh, no ffmpeg / no HLS), and Hardware section noting detection is offline. Bottom bar simplified to "Snapshot polling (OpenCV)". Offline badge text updated from "Pipeline: YOLOv8 → GLM-4V → Deterrent" to "4 cameras · snapshot polling".
+
+- **Copy fixes** — removed bird count from hero stats (was "26 birds", now just "4 cameras, 0 cloud services"). Updated flock preview description.
+
+**Why:** The farm-guardian backend shipped v2.15 (2026-04-12) which *replaced* the HLS video pipeline entirely with simple periodic JPEG snapshots via OpenCV. `stream.py` was deleted; zero ffmpeg processes remain. Detection (YOLO/GLM-4V) isn't running — the system is focused on camera feeds for watching the chicks. The hero text was covering the bird photo. Chick ages were static strings frozen at time of entry.
+
+**How:** Hero section restructured with absolute positioning (top-left / bottom-left / bottom-right). `getChickAgeLabel()` is a pure function that computes days from `hatch_date` — no client JS, runs at SSR time. Guardian panel content replaced to match current v2.15 operational state (snapshot polling only). No new dependencies.
+
 ## [1.1.0] — 2026-04-11
 
 ### Fixed — Camera feeds starving through Cloudflare tunnel (Claude Opus 4.6)

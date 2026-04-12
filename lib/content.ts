@@ -5,6 +5,7 @@
  *   field notes, flock profiles, and materials from the content/ directory using gray-matter.
  *   Field notes are the weekly farm update system (replaces diary for public-facing updates).
  * SRP/DRY check: Pass — all content loading flows through this single module.
+ *   getChickAgeLabel() computes dynamic age from hatch_date for chick entries.
  */
 import fs from "fs";
 import path from "path";
@@ -58,6 +59,7 @@ export interface FlockBird {
   name: string;
   breed: string;
   age: string;
+  hatch_date?: string;
   age_note: string;
   status: string;
   egg_color: string;
@@ -65,6 +67,25 @@ export interface FlockBird {
   color_description: string;
   photo: string | null;
   notes: string;
+  location?: string;
+}
+
+/**
+ * Compute a human-readable age label from a hatch date.
+ * Days 0–13 → "Day X", 14–55 → "X weeks", 56+ → "X months".
+ * Returns null if no hatch_date is provided.
+ */
+export function getChickAgeLabel(hatchDate?: string): string | null {
+  if (!hatchDate) return null;
+  const hatch = new Date(hatchDate + "T00:00:00");
+  const now = new Date();
+  const days = Math.floor((now.getTime() - hatch.getTime()) / (1000 * 60 * 60 * 24));
+  if (days < 0) return null;
+  if (days <= 13) return `Day ${days}`;
+  const weeks = Math.floor(days / 7);
+  if (days <= 55) return `${weeks} week${weeks !== 1 ? "s" : ""}`;
+  const months = Math.floor(days / 30);
+  return `${months} month${months !== 1 ? "s" : ""}`;
 }
 
 export interface FlockProfiles {

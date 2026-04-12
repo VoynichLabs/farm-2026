@@ -1,6 +1,6 @@
 "use client";
 // Author: Claude Opus 4.6
-// Date: 05-Apr-2026
+// Date: 11-Apr-2026
 // PURPOSE: Small client component for the homepage Guardian section status bar.
 //          Fetches /api/status once on mount (no polling) and renders real values.
 //          Falls back to static text if Guardian is offline.
@@ -69,7 +69,7 @@ export default function GuardianHomeBadge() {
         <>
           <span className="text-guardian-hover">|</span>
           <span className="text-guardian-muted">
-            Pipeline: YOLOv8 → GLM-4V → Deterrent
+            4 cameras · HLS streaming · snapshot polling
           </span>
         </>
       )}
