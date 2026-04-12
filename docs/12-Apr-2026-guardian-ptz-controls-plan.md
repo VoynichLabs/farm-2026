@@ -2,7 +2,7 @@
 
 **Date:** 12-April-2026
 **Author:** Claude Opus 4.6 (handoff — next session will implement)
-**Status:** Plan only. Not implemented. Previous session was redirected here by Mark before writing code.
+**Status:** **Implemented in v1.4.0** — commits `64b7999` (initial) and the follow-up on this same branch. Camera was nudged from 183.7° → 169.7° as the functional ack Mark asked for. Next session: verify from Mark's phone on cellular; address any UX surprises.
 
 ---
 

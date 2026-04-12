@@ -140,26 +140,35 @@ export default function GuardianPTZPanel() {
         return;
       }
 
-      // Iterate small bursts until we've moved ~the requested amount,
+      // Pan: iterate small bursts until we've moved ~the requested degrees,
       // capped at MAX_BURST_ITERATIONS so a dropped stop can't run away.
+      // Tilt: single burst only. The tilt-units-per-degree ratio is not
+      // documented (pan is 20 u/°, tilt range is smaller and has different
+      // scale — see farm-guardian/camera_control.py). Report raw unit delta
+      // instead of guessing degrees. One click = one burst — Mark can re-nudge.
       let totalMoved = 0;
       let current = before;
-      for (let i = 0; i < MAX_BURST_ITERATIONS; i++) {
-        const remaining = requested - totalMoved;
-        if (remaining <= 1) break;
-        const burstMs = estimateBurstMs(Math.min(remaining, 15));
+      let tiltUnitDelta = 0;
+      const maxIterations = axis === "pan" ? MAX_BURST_ITERATIONS : 1;
+      for (let i = 0; i < maxIterations; i++) {
+        if (axis === "pan") {
+          const remaining = requested - totalMoved;
+          if (remaining <= 1) break;
+        }
+        const burstMs = estimateBurstMs(
+          axis === "pan" ? Math.min(requested - totalMoved, 15) : requested
+        );
         await runBurst(axis, signedDir, burstMs);
         await new Promise((r) => setTimeout(r, POSITION_SETTLE_MS));
         const next = await getPosition();
         if (!next) break;
         if (axis === "pan") {
-          const delta = Math.abs(panDelta(before.pan_degrees, next.pan_degrees));
-          totalMoved = delta;
+          totalMoved = Math.abs(panDelta(before.pan_degrees, next.pan_degrees));
         } else {
-          totalMoved = Math.abs(next.tilt - before.tilt) / 20; // ~20 units per degree
+          tiltUnitDelta = Math.abs(next.tilt - before.tilt);
         }
         current = next;
-        if (totalMoved >= requested - 1) break;
+        if (axis === "pan" && totalMoved >= requested - 1) break;
       }
 
       // Autofocus after any movement. Don't await — the 3s wait is
@@ -168,8 +177,12 @@ export default function GuardianPTZPanel() {
       postJSON("/autofocus").catch(() => {});
       if (mountedRef.current) {
         setPosition(current);
+        const movedLabel =
+          axis === "pan"
+            ? `moved ≈${totalMoved.toFixed(1)}°`
+            : `tilt Δ ${tiltUnitDelta} units`;
         setStatus(
-          `Requested ${requested}° ${dir} · moved ≈${totalMoved.toFixed(1)}°. ` +
+          `Requested ${requested}° ${dir} · ${movedLabel}. ` +
             `Autofocusing — image may blur for ~3s.`
         );
         setMoving(false);
