@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.4.1] — 2026-04-12
+
+### Fixed — Guardian camera feeds no longer blank on shared status hiccups (Claude Opus 4.6)
+
+The live camera tiles on `/projects/guardian` and the homepage were being blanked whenever the shared `/api/status` poll hiccupped, even if the per-camera snapshot poll was still returning fresh JPEGs. That made the feeds look like they were flapping offline every so often.
+
+**Fixed**
+- `app/components/guardian/GuardianCameraFeed.tsx` now treats snapshot polling as the source of truth for per-camera visibility. The camera stays visible unless its own snapshot polling fails repeatedly; a transient status poll failure no longer hides healthy frames.
+
+**Why**
+- The Guardian page has one shared status poll and four independent camera snapshot polls. A transient status failure was cascading into all feeds through the `online` prop, which turned a shared blip into a full-page offline flash.
+
+**How**
+- Removed the `online !== false` gate from the feed render path so the camera frame remains visible while snapshots are healthy.
+- Kept the existing 3-failure snapshot threshold for true per-camera offline handling.
+- Updated the component header and this changelog entry to match the behavior change.
+
 ## [1.4.0] — 2026-04-12
 
 ### Added — Manual PTZ controls; detection UI stripped from Guardian page (Claude Opus 4.6)

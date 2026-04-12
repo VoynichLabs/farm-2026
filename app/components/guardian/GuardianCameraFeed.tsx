@@ -1,14 +1,16 @@
 "use client";
 /**
  * Author: Claude Opus 4.6
- * Date: 11-Apr-2026
+ * Date: 12-Apr-2026
  * PURPOSE: Reusable camera feed via snapshot polling. Fetches a single JPEG from
  *   Guardian's /api/cameras/{name}/frame endpoint every ~1s and swaps the img src.
  *   Replaced persistent MJPEG streaming because browsers limit concurrent HTTP/1.1
  *   connections per domain (~6), and 4 MJPEG streams + API polling through the
  *   Cloudflare tunnel exceeded that limit — causing feeds to starve and show only
  *   one camera at a time. Snapshot polling uses short-lived requests that work with
- *   HTTP/2 multiplexing and don't hold connections open.
+ *   HTTP/2 multiplexing and don't hold connections open. The feed stays visible
+ *   unless its own snapshot polling fails; shared `/api/status` hiccups should not
+ *   blank healthy camera frames.
  * SRP/DRY check: Pass — single responsibility: camera feed display for any camera.
  */
 
@@ -87,7 +89,9 @@ export default function GuardianCameraFeed({
     }
   }, [online]);
 
-  const showFeed = online !== false && !feedError && frameUrl !== null;
+  // Keep a healthy camera visible even if the shared status poll hiccups.
+  // The snapshot poll is the actual source of truth for per-camera liveness.
+  const showFeed = !feedError && frameUrl !== null;
 
   // Report status to parent
   useEffect(() => {
