@@ -1,7 +1,11 @@
 // Author: Claude Opus 4.6
-// Date: 06-Apr-2026
+// Date: 12-Apr-2026
 // PURPOSE: TypeScript interfaces for Farm Guardian API responses.
-//          Maps to endpoints at guardian.markbarney.net.
+//          Maps to endpoints at guardian.markbarney.net. Detection-pipeline
+//          types (Detection, DeterrentStatus, ActiveTrack, DailySummary,
+//          DeterrentEffectiveness, EBirdSighting) are retained for future
+//          reuse even though the live Guardian page no longer renders them
+//          (v1.4.0 strip). PTZ types added for the GuardianPTZPanel.
 // SRP/DRY check: Pass — single file for all Guardian API types.
 
 export const GUARDIAN_API = "https://guardian.markbarney.net";
@@ -78,4 +82,18 @@ export interface EBirdSighting {
   species: string;
   location: string;
   confidence: number;
+}
+
+// PTZ — house-yard Reolink manual control surface.
+export interface PTZPosition {
+  camera_id: string;
+  pan: number;         // raw units (0–7200, 20 per degree)
+  pan_degrees: number; // 0–360
+  tilt: number;        // raw units
+  zoom: number;        // stays 0 — zoom out of scope
+}
+
+export interface PresetMapResponse {
+  camera_id: string;
+  presets: Record<string, number>;
 }

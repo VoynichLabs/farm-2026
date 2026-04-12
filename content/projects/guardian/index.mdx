@@ -32,23 +32,22 @@ The Reolink is the only one with deterrents — a spotlight that hits 100% brigh
 
 ## How It Watches
 
-The cameras stream RTSP video to the Mac Mini at one frame per second. YOLOv8 runs on the Apple Silicon GPU (MPS) to classify what's in each frame. When something ambiguous appears, a local vision model (GLM-4V) provides species-level identification — is that a hawk or a chicken?
+The Mac Mini pulls a JPEG from each camera every ten seconds — no video encoding, no ffmpeg processes, no HLS segments. The old video pipeline got ripped out in v2.15 because nobody actually needed 30fps of their own backyard. A still image every ten seconds is plenty to see what's happening, and it sails through the Cloudflare tunnel instead of choking it.
 
-It doesn't phone home. No cloud. No subscriptions. No data leaves the network. The detection pipeline, the dashboard, the camera control, the alerts — everything runs on that one Mac Mini on the desk next to the birds.
+It doesn't phone home. No cloud. No subscriptions. No data leaves the network. The dashboard, the camera control, the snapshots — everything runs on that one Mac Mini on the desk next to the birds.
 
-**What's working:**
-- Live MJPEG streaming from all three cameras
-- Step-and-dwell patrol (11 positions, 30-degree intervals, 8 seconds at each)
-- Sky-watch mode — locks the PTZ on a fixed overhead position for hawk coverage
-- 4K HTTP snapshots for Discord alerts
-- PTZ presets for one-tap positioning
-- eBird integration — polls Cornell Lab for raptor sightings within 15km
-- Full REST API over a Cloudflare tunnel for remote operation
+**What's working right now:**
+- Live snapshot feeds from all four cameras, visible here and on the homepage
+- Manual PTZ on the Reolink — pan/tilt by approximate degrees, or jump to a named preset in one tap
+- Five on-camera presets: yard-center, coop-approach, fence-line, sky-watch, driveway
+- Spotlight and siren as on-demand deterrents from the web UI
+- 4K HTTP snapshots for Discord alerts when something matters
+- Full REST API exposed via Cloudflare tunnel — the farmer can reposition the camera from his phone on cellular
+- eBird integration polls Cornell Lab for raptor sightings within 15km
 
-**Still being tuned:**
-- Detection confidence thresholds (distinguishing hawks from chickens reliably)
-- Automated deterrent escalation (exists in code, needs real-world testing)
-- Animal visit tracking and pattern analysis
+**Paused, on the bench:**
+- YOLOv8 + GLM-4V automated detection. The plumbing is all in `farm-guardian`, but it's not running against live frames right now. The cameras are watching; the farmer is watching the cameras. Good enough while the chicks are in the brooder.
+- Automated patrol and deterrent escalation. Both have been written and rewritten; for now the farmer drives the camera directly.
 
 ## The Story
 
@@ -62,7 +61,7 @@ Reinforcements arrived the same week: 22 new chicks in the brooder, under heat l
 
 Every line of Farm Guardian was written by Claude in conversation with the farmer. Not generated from a template. Not scaffolded from a tutorial. A farmer described what he needed — "the hawks are killing my birds" — and an AI built a system to stop it.
 
-v2.11.0. Fifteen Python modules. A FastAPI dashboard. SQLite storage. A REST API that lets a remote Claude session move the cameras from anywhere in the world. All of it authored in conversation, one problem at a time.
+v2.15.0. Fifteen Python modules. A FastAPI dashboard. SQLite storage. A REST API that lets a remote Claude session move the cameras from anywhere in the world. All of it authored in conversation, one problem at a time.
 
 The website you're reading right now was also built by Claude. The field notes, the flock roster, the gallery, the live camera feeds on the homepage — all written in the same sessions, on the same machine, next to the same brooder.
 

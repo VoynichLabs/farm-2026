@@ -3,11 +3,40 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
-## [Unreleased] — handoff note 2026-04-12 (Claude Opus 4.6)
+## [1.4.0] — 2026-04-12
 
-Session ended before implementation. Mark wants the Guardian page rebuilt with **manual PTZ controls** (pan/tilt by degrees, preset recall, preset save, spotlight/siren) and the **detection-pipeline UI stripped entirely** (detections table, tracks panel, deterrent panel, eBird panel, summary). No backend changes — every endpoint needed is already in Guardian v2.15.0.
+### Added — Manual PTZ controls; detection UI stripped from Guardian page (Claude Opus 4.6)
 
-Full plan, API reference, past-mistakes list, and verification steps: **`docs/12-Apr-2026-guardian-ptz-controls-plan.md`**. Read that plus `farm-guardian/AGENTS_CAMERA.md` and `farm-guardian/docs/08-Apr-2026-absolute-ptz-investigation.md` before touching anything. PTZ has been written in and ripped out multiple times in this repo; the plan doc exists so the next session doesn't make the same investigations again.
+Mark asked for the Guardian page to become a remote control for the `house-yard` Reolink — not a broken detection dashboard. This release delivers that and follows the plan in `docs/12-Apr-2026-guardian-ptz-controls-plan.md`.
+
+**Added**
+- `app/components/guardian/GuardianPTZPanel.tsx` — new `"use client"` control surface. Reads current position, pan/tilt nudges by an approximate degree input (default 10°, max 60°), one-tap recall of the five on-camera presets (yard-center, coop-approach, fence-line, sky-watch, driveway), a save-current-position dialog, spotlight toggle, 10-second siren with confirm dialog, always-visible emergency STOP, and auto-stop on component unmount. Auto-fires autofocus after every move and surfaces a "refocusing ~3s" note so stale frames aren't misread as blurry lens.
+- `lib/ptz.ts` — pure timing helpers: `estimateBurstMs(deg)`, `panDelta(from, to)`, plus `PTZ_SPEED`, `BURST_CAP_MS`, `MAX_DEGREE_INPUT` constants. Bursts are capped at 500ms per click; larger degree requests iterate (up to 5 bursts) with a `/position` re-read between each, so the UI reports **actual** movement instead of a fictional degree count.
+- `PTZPosition`, `PresetMapResponse` types added to `app/components/guardian/types.ts`.
+
+**Removed (from Guardian page — component files preserved for future reuse)**
+- `GuardianDetections` render call in `GuardianDashboard.tsx`.
+- `GuardianInfoPanels` render call in `GuardianDashboard.tsx`.
+- The Patrol / Deterrent / Tracks compact status row. Replaced with a single "Cameras N/M online" line.
+- The `fetchFast`'s detections/tracks/deterrent calls, plus `fetchSlow` and `fetchEbird` entirely. The dashboard now polls only `/api/status` (every 10s). That's a ~6× reduction in Cloudflare-tunnel requests per cycle while detection is dormant.
+
+**Copy**
+- `content/projects/guardian/index.mdx` — "How It Watches" rewritten to match v2.15 reality. No more YOLOv8+GLM-4V promises the live pipeline isn't currently delivering. Says what Mark's system actually does today: four snapshot feeds, manual PTZ, spotlight + siren deterrents, 4K alert snapshots, detection paused on purpose.
+
+**Why**
+Mark's own words from 12-April: *"I really want the ability to just be able to move it from the web UI… set kind of how many degrees I want to turn. And absolutely ignore the detections."* The detection cards were rendering zeros because the pipeline isn't running; they made the site look broken. The site now shows only things that are live.
+
+**How — honest timing**
+Absolute pan/tilt is a firmware limit (see `farm-guardian/docs/08-Apr-2026-absolute-ptz-investigation.md`, re-confirmed three times — don't re-investigate). Nudges are timed move→stop bursts. Empirically, at speed 5: a 180ms burst moves ~0.8°, a 500ms burst moves ~12.5°. The ramp-up is nonlinear and tunnel jitter adds overshoot, so a single click does **one** ≤500ms burst and then re-reads position. The status line reports "Requested X° · moved ≈Y°" so Mark can re-nudge if needed. Precision positioning uses presets.
+
+**Safety**
+Emergency STOP is always visible. The component's unmount cleanup also sends a stop — if Mark navigates away mid-burst, the camera halts. The siren button prompts for confirmation (10s blast scares the chickens). Zoom is deliberately absent — camera stays at zoom 0 per the camera agents doc.
+
+**Verified**
+- Empirically nudged the house-yard camera from 183.7° to 169.7° via the Guardian API during development. The Reolink view now shows the truck prominently in the driveway — what Mark asked for today.
+- Local preset recall and spotlight toggle tested end-to-end through the Cloudflare tunnel.
+- Siren not test-fired (chickens on-site).
+- No `farm-guardian` backend changes. Every endpoint already existed in v2.15.0.
 
 ## [1.3.2] — 2026-04-12
 
