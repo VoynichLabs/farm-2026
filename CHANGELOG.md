@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.3.1] — 2026-04-12
+
+### Added — Light Brahma estimate field note (OpenAI GPT-5.4)
+
+- **New field note** — `content/field-notes/2026-04-12-light-brahma-estimate.mdx` records Bubba's read on the four week-old chicks: Light Brahma straight-runs, pullet-leaning but uncertain, moved to the nesting box on 12-April-2026.
+- **New photos** — staged two close-up wing-check photos in `public/photos/april-2026/` and attached them to the note so the estimate is anchored to the actual birds from that day.
+
+**Why:** Mark asked for each lobster to push up a note with his estimate. The public farm log already uses field notes as the durable record, so this update captures the breed/sex guess and the move to the nesting box in the right place.
+
+**How:** Reused the existing MDX field-note pipeline, copied the attached chick photos into the public photo tree, and added a patch changelog entry for the new content.
+
 ## [1.3.0] — 2026-04-12
 
 ### Changed — Modular camera stage + stop cropping story photos (Claude Opus 4.6)
