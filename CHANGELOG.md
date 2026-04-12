@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.3.2] — 2026-04-12
+
+### Changed — Guardian share image now uses fresh-hatch Birdadette (OpenAI GPT-5.4)
+
+- **Guardian project metadata** — changed `content/projects/guardian/index.mdx` so the Guardian page now uses `/photos/april-2026/birdadette-fresh-hatch.jpg` as its `heroPhoto`, which also drives the project page's Open Graph and Twitter image metadata.
+
+**Why:** Mark wanted the Guardian SEO/share image to be Birdadette freshly hatched on the keyboard instead of the broader command-center shot.
+
+**How:** Reused the existing `heroPhoto` → `generateMetadata()` pipeline already wired into `app/projects/[slug]/page.tsx`; only the source image path changed.
+
 ## [1.3.1] — 2026-04-12
 
 ### Added — Light Brahma estimate field note (OpenAI GPT-5.4)
