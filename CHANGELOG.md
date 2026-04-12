@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [Unreleased] — handoff note 2026-04-12 (Claude Opus 4.6)
+
+Session ended before implementation. Mark wants the Guardian page rebuilt with **manual PTZ controls** (pan/tilt by degrees, preset recall, preset save, spotlight/siren) and the **detection-pipeline UI stripped entirely** (detections table, tracks panel, deterrent panel, eBird panel, summary). No backend changes — every endpoint needed is already in Guardian v2.15.0.
+
+Full plan, API reference, past-mistakes list, and verification steps: **`docs/12-Apr-2026-guardian-ptz-controls-plan.md`**. Read that plus `farm-guardian/AGENTS_CAMERA.md` and `farm-guardian/docs/08-Apr-2026-absolute-ptz-investigation.md` before touching anything. PTZ has been written in and ripped out multiple times in this repo; the plan doc exists so the next session doesn't make the same investigations again.
+
 ## [1.3.2] — 2026-04-12
 
 ### Changed — Guardian share image now uses fresh-hatch Birdadette (OpenAI GPT-5.4)
