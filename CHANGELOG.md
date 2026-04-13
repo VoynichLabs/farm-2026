@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.4.4] — 2026-04-13
+
+### Changed — Site nav restyled + outbound link to markbarney.net (Claude Opus 4.6)
+
+Replaced the solid forest-green nav bar (which read as a bit heavy and repo-named) with a sticky, translucent cream bar that matches the pill-style nav idiom used on markbarney.net. Brand text changed from the repo name "Farm 2026" to "Hampton Farm". Appended an external link back to markbarney.net after a divider so the farm site is reachable as part of the personal-brand network without formally integrating the two codebases.
+
+**Changed**
+- `app/layout.tsx` nav markup — sticky, `bg-cream/85` with `backdrop-blur-md`, 1px `border-forest/10` bottom, pill-style links with hover fill, serif brand wordmark.
+- Brand text: `Farm 2026` → `Hampton Farm`.
+
+**Added**
+- External `<a href="https://markbarney.net">Mark Barney ↗</a>` after a thin divider.
+
+**Why**
+- "Farm 2026" is the repo name, not a public brand — Boss runs this cycle every year.
+- Consistent visual feel across markbarney.net and farm.markbarney.net without sharing components or integrating stacks.
+
+**How**
+- Styling only; no new deps, no theme system, no mobile menu component. Nav row scrolls horizontally on narrow viewports.
+
+## [1.4.3] — 2026-04-13
+
+### Added — Birdadette day-8 keyboard photo (Claude Opus 4.6)
+
+Added a new gallery entry showing Birdadette back on the laptop, one week after hatching. Bookends the existing `birdadette-fresh-hatch` photo from day 1. The screen behind her is the Guardian brooder camera — she's the only chick from her clutch that made it, and she's watching the Cackle Hatchery arrivals live.
+
+**Added**
+- `public/photos/april-2026/birdadette-day8-keyboard.jpg` (2000px, pulled from iPhone IMG_2155, taken 2026-04-13 14:09).
+- New entry `birdadette-day8-keyboard` in `content/gallery.json`, placed immediately after `birdadette-hatch` to read as a then/now pair.
+
 ## [1.4.2] — 2026-04-13
 
 ### Fixed — Guardian camera tiles now show connecting and reconnecting states (OpenAI Codex GPT-5.4)

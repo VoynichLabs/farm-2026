@@ -1,8 +1,11 @@
 /**
- * Author: Claude Opus 4.6
- * Date: 09-Apr-2026
- * PURPOSE: Root layout with navigation and metadata. Nav links: Home, Guardian,
- *   Flock, Projects, Gallery, Field Notes. Diary replaced by Field Notes.
+ * Author: Claude Opus 4.6 (1M context)
+ * Date: 13-Apr-2026
+ * PURPOSE: Root layout with navigation and metadata. Nav is sticky with a light
+ *   cream background and pill-style links, matching the visual idiom of
+ *   markbarney.net so the farm site reads as part of the same personal brand
+ *   family. Internal links: Home, Guardian, Flock, Projects, Gallery, Field
+ *   Notes. External link back to markbarney.net appended after a divider.
  * SRP/DRY check: Pass — single layout, nav structure matches site architecture.
  */
 import type { Metadata } from "next";
@@ -46,30 +49,42 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <nav className="bg-forest text-cream shadow-md">
-          <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-            <Link href="/" className="font-bold text-lg hover:text-cream/80 font-serif">
-              Farm 2026
+        <nav className="sticky top-0 z-30 bg-cream/85 backdrop-blur-md border-b border-forest/10">
+          <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            <Link
+              href="/"
+              className="font-serif font-bold text-xl tracking-tight text-forest hover:text-wood transition-colors whitespace-nowrap"
+            >
+              Hampton Farm
             </Link>
-            <div className="flex gap-6 text-sm">
-              <Link href="/" className="hover:text-cream/80">
+            <div className="flex items-center gap-1 text-sm overflow-x-auto">
+              <Link href="/" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
                 Home
               </Link>
-              <Link href="/projects/guardian" className="hover:text-cream/80">
+              <Link href="/projects/guardian" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
                 Guardian
               </Link>
-              <Link href="/flock" className="hover:text-cream/80">
+              <Link href="/flock" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
                 Flock
               </Link>
-              <Link href="/projects" className="hover:text-cream/80">
+              <Link href="/projects" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
                 Projects
               </Link>
-              <Link href="/gallery" className="hover:text-cream/80">
+              <Link href="/gallery" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
                 Gallery
               </Link>
-              <Link href="/field-notes" className="hover:text-cream/80">
+              <Link href="/field-notes" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
                 Field Notes
               </Link>
+              {/* Divider + external link back to the rest of the personal-brand network. */}
+              <span className="mx-2 h-4 w-px bg-forest/20 shrink-0" aria-hidden="true" />
+              <a
+                href="https://markbarney.net"
+                className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap"
+                rel="noopener"
+              >
+                Mark Barney ↗
+              </a>
             </div>
           </div>
         </nav>
