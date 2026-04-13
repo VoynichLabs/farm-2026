@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.4.2] — 2026-04-13
+
+### Fixed — Guardian camera tiles now show connecting and reconnecting states (OpenAI Codex GPT-5.4)
+
+The Guardian page looked broken on first load because each tile rendered `OFFLINE` before the first frame had even arrived. That made normal startup latency through the tunnel feel like a dead camera.
+
+**Fixed**
+- `app/components/guardian/GuardianCameraFeed.tsx` now distinguishes `CONNECTING`, `LIVE`, `RECONNECTING`, and `OFFLINE` states instead of collapsing everything into a hard offline badge.
+- Initial page load shows a spinner and `CONNECTING…` while waiting for the first frame.
+- Temporary snapshot failures now keep the last good frame visible with a `RECONNECTING…` overlay before falling back to a true offline state.
+
+**Why**
+- First-load tunnel latency is expected; it should not look like a dead feed.
+- Short polling hiccups should feel like recovery, not failure.
+
+**How**
+- Added frontend-only state handling in `GuardianCameraFeed.tsx` with separate thresholds for reconnecting vs true offline.
+- Kept the change entirely in `farm-2026`; no Guardian backend/API changes were required.
+
 ## [1.4.1] — 2026-04-12
 
 ### Fixed — Guardian camera feeds no longer blank on shared status hiccups (Claude Opus 4.6)
