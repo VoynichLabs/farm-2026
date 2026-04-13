@@ -57,7 +57,7 @@ export default function GuardianHomeSection() {
             <div className="text-guardian-muted text-[0.7rem] leading-snug space-y-0.5">
               {CAMERAS.map((cam, i) => (
                 <div key={cam.name}>
-                  Cam {i + 1}: <span className="text-slate-300">{cam.device}</span> — {cam.location}
+                  Cam {i + 1}: <span className="text-slate-300">{cam.device}</span>
                 </div>
               ))}
             </div>

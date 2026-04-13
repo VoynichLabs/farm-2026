@@ -17,19 +17,19 @@ The Mac Mini M4 Pro sits on the desk next to the chick brooder. Its waste heat h
 
 One machine. Incubator warmer, hawk watcher, code writer, bird guardian.
 
-## The Eyes
+## The Hardware
 
-Five cameras, each with a different job:
+Five cameras — named for the hardware, never for where they happen to be pointed. The devices stay; the angles change.
 
-| Camera | Model | What it watches |
-|--------|-------|-----------------|
-| house-yard | Reolink E1 Outdoor Pro | The yard and sky — 4K PTZ, spotlight, siren. Patrols 11 positions or locks onto sky-watch for hawks. |
-| s7-cam | Samsung Galaxy S7 | Mobile — wherever it's needed. RTSP via IP Webcam app. |
-| usb-cam | USB webcam on Mac Mini | The brooder. Pointed into the box where 22 chicks are growing up. |
-| mba-cam | MacBook Air 2013 webcam | A second brooder angle. 720p built-in FaceTime HD, ffmpeg + MediaMTX → RTSP. |
-| gwtc | Gateway laptop webcam | The coop — 720p via ffmpeg + MediaMTX RTSP. |
+| Camera | Hardware | Capabilities |
+|--------|----------|--------------|
+| house-yard | Reolink E1 Outdoor Pro | 4K PTZ with spotlight + siren. 11-position patrol, sky-watch lock, HTTP snapshot polling via reolink_aio. The only unit with deterrents. |
+| s7-cam | Samsung Galaxy S7 running the IP Webcam app | RTSP over WiFi (UDP). Fixed — the tripod moves, the stream endpoint doesn't. |
+| usb-cam | USB webcam on the Mac Mini | AVFoundation local capture, 1920×1080, snapshot polling with auto white-balance and autofocus warmup. |
+| mba-cam | MacBook Air 2013 built-in FaceTime HD webcam | 720p via ffmpeg + MediaMTX RTSP bridge on the laptop itself. |
+| gwtc | Gateway laptop built-in webcam | 720p via ffmpeg + MediaMTX RTSP on Windows; services auto-start via Shawl. |
 
-The Reolink is the only one with deterrents — a spotlight that hits 100% brightness and a siren loud enough to scatter a hawk mid-dive. When it detects something, it can escalate through four levels: log, light, light+sound, light+siren+sound.
+The Reolink is the only one with deterrents — spotlight to 100% brightness and a siren loud enough to scatter a hawk mid-dive. When it detects something it can escalate through four levels: log, light, light+sound, light+siren+sound.
 
 ## How It Watches
 
