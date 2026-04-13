@@ -1,16 +1,17 @@
 /**
  * Author: Claude Opus 4.6
- * Date: 12-Apr-2026
+ * Date: 13-Apr-2026
  * PURPOSE: Single source of truth for Guardian cameras. Names, labels,
  *   devices, locations, and native aspect ratios live here so UI layout
  *   can size containers to match each feed (no cropping, no letterboxing).
  *   Consumed by `GuardianCameraStage`, homepage system panel, and the
  *   live `/projects/guardian` dashboard.
  * SRP/DRY check: Pass — replaces hardcoded camera literals in page.tsx,
- *   GuardianDashboard.tsx, and GuardianCameraStage.tsx.
+ *   GuardianDashboard.tsx, and GuardianCameraStage.tsx. mba-cam added
+ *   13-Apr-2026 to match farm-guardian v2.22.1 (fifth camera).
  */
 
-export type CameraName = "house-yard" | "s7-cam" | "usb-cam" | "gwtc";
+export type CameraName = "house-yard" | "s7-cam" | "usb-cam" | "gwtc" | "mba-cam";
 
 export interface CameraMeta {
   name: CameraName;
@@ -29,6 +30,14 @@ export const CAMERAS: CameraMeta[] = [
     shortLabel: "Brooder",
     device: "USB webcam",
     location: "Desk brooder (Birdadette + Cackle chicks)",
+    aspectRatio: "16 / 9",
+  },
+  {
+    name: "mba-cam",
+    label: "mba-cam — MacBook Air 2013",
+    shortLabel: "MBA brooder",
+    device: "MacBook Air 2013 webcam (FaceTime HD)",
+    location: "Brooder (currently)",
     aspectRatio: "16 / 9",
   },
   {

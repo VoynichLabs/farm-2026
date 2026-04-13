@@ -1,9 +1,12 @@
 "use client";
 // Author: Claude Opus 4.6
-// Date: 11-Apr-2026
+// Date: 13-Apr-2026
 // PURPOSE: Small client component for the homepage Guardian section status bar.
 //          Fetches /api/status once on mount (no polling) and renders real values.
-//          Falls back to static text if Guardian is offline.
+//          Falls back to static text if Guardian is offline. Offline fallback text
+//          updated 13-Apr-2026: now says "5 cameras · snapshot polling" (was
+//          "4 cameras · HLS streaming · snapshot polling" — mba-cam added, and
+//          HLS was removed from the backend in farm-guardian v2.18.0).
 // SRP/DRY check: Pass — reuses GUARDIAN_API and GuardianStatus from types.ts.
 
 import { useEffect, useState } from "react";
@@ -69,7 +72,7 @@ export default function GuardianHomeBadge() {
         <>
           <span className="text-guardian-hover">|</span>
           <span className="text-guardian-muted">
-            4 cameras · HLS streaming · snapshot polling
+            5 cameras · snapshot polling
           </span>
         </>
       )}

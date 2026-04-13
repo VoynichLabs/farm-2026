@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.5.0] — 2026-04-13
+
+### Added — mba-cam is the fifth camera + camera-wiring audit (Claude Opus 4.6)
+
+Backend Guardian has been running five cameras since farm-guardian v2.22.1 (MacBook Air 2013 webcam via MediaMTX → `rtsp://192.168.0.50:8554/mba-cam`, polled by Guardian to serve JPEGs at `/api/cameras/mba-cam/frame`). The frontend was still advertising four. This release closes that gap and sweeps every hardcoded "four cameras" copy string I could find against backend v2.22.1 reality.
+
+**Added**
+- `lib/cameras.ts` — `"mba-cam"` added to the `CameraName` union and inserted at index 1 of `CAMERAS` (right after `usb-cam`), so the brooder angles cluster at the front of the stage. Metadata: device = `MacBook Air 2013 webcam (FaceTime HD)`, location = `Brooder (currently)`, 16:9. Device-based naming (not location) per the rule Boss re-stated twice on 13-Apr.
+- `content/projects/guardian/index.mdx` — new `mba-cam` row in the camera roster table ("A second brooder angle. 720p built-in FaceTime HD, ffmpeg + MediaMTX → RTSP").
+- `docs/13-Apr-2026-mba-cam-and-camera-audit-plan.md` — plan doc for this change (supersedes the earlier handoff plan).
+
+**Changed**
+- `content/projects/guardian/index.mdx` — "Four cameras" → "Five cameras" in frontmatter description, body intro, and "Live snapshot feeds from all four cameras" → "…all five cameras".
+- `app/page.tsx` hero hardware row — `"4 cameras · M4 Pro 64GB"` → `"5 cameras · M4 Pro 64GB"`.
+- `app/components/guardian/GuardianHomeBadge.tsx` offline-fallback caption — `"4 cameras · HLS streaming · snapshot polling"` → `"5 cameras · snapshot polling"`. Dropped the stale `HLS streaming` claim — the backend removed video pipelines in farm-guardian v2.15/v2.18 in favor of pure snapshot polling.
+
+**Audit result (no drift found)**
+- Existing four cameras (`house-yard`, `s7-cam`, `usb-cam`, `gwtc`) device/label/location strings all still match farm-guardian `config.json`. No corrections needed.
+- `DEFAULT_FEATURED = "usb-cam"` (homepage) vs. `defaultFeatured="house-yard"` (dashboard) is intentional — homepage leads with the brooder, dashboard leads with the PTZ. Kept both.
+
+**Why**
+- Boss pushed the fifth camera into Guardian on 13-Apr and asked the frontend to catch up. The site should reflect what Guardian is actually watching.
+- While I was in there, sweeping "four cameras" strings prevents the stat block and offline badge from lying about the system.
+
+**How**
+- Single-source-of-truth pattern (`lib/cameras.ts`) already existed — new cameras flow through to the stage, thumbs, homepage panel, and dashboard via the array, with zero component changes. `GuardianCameraFeed.tsx` and `GuardianCameraStage.tsx` stayed untouched.
+- No new dependencies, no API shape changes, no backend coordination needed (Guardian endpoint is live).
+
+**Verification**
+- `npm run lint` — pass.
+- `npm run build` — pass.
+- Local dev: `/projects/guardian` shows five thumbs; `mba-cam` in the second slot; click promotes to the stage.
+- Network tab: `GET https://guardian.markbarney.net/api/cameras/mba-cam/frame` returns 200 with a ~100–150 KB JPEG every ~1.2 s.
+
 ## [1.4.4] — 2026-04-13
 
 ### Changed — Site nav restyled + outbound link to markbarney.net (Claude Opus 4.6)

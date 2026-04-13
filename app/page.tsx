@@ -1,9 +1,10 @@
 /**
  * Author: Claude Opus 4.6
- * Date: 12-Apr-2026
+ * Date: 13-Apr-2026
  * PURPOSE: Homepage — hero (rotates weekly with latest field note cover),
  *   stats bar, Guardian live section, latest field note feature, flock preview,
  *   projects, Instagram, and footer. Guardian is the flagship project.
+ *   13-Apr-2026: hardware row bumped from "4 cameras" to "5 cameras" (mba-cam).
  * SRP/DRY check: Pass — reuses content loaders, Guardian components, InstagramFeed.
  */
 import Link from "next/link";
@@ -185,7 +186,7 @@ export default function Home() {
               <tbody>
                 <tr>
                   <td className="px-2 py-1 text-slate-300">Snapshot polling (OpenCV)</td>
-                  <td className="px-2 py-1 text-slate-300">4 cameras · M4 Pro 64GB</td>
+                  <td className="px-2 py-1 text-slate-300">5 cameras · M4 Pro 64GB</td>
                   <td className="px-2 py-1 text-slate-300">Discord + 4K Snapshots</td>
                   <td className="px-2 py-1 text-right">
                     <Link href="/projects/guardian" className="text-blue-400 hover:text-blue-300 text-[0.7rem]">
