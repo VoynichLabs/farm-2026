@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.6.0] — 2026-04-13
+
+### Refactored — frontend SRP/DRY rewrite + de-fluff (Claude Opus 4.6)
+
+The mba-cam sweep in v1.5.0 exposed a structural failure: a single camera addition required edits in four separate layout files, all re-stating the camera count as hand-written prose. That pattern was everywhere on the site — eight birds hardcoded on the homepage while `flock-profiles.json` was right there; stale "v2.15" backend strings; a marketing-template hero-stats shape grafted onto a farm log; Boss's name and "every line built by Claude" self-promotion scattered across public copy. This release is the cleanup.
+
+**Plan:** `docs/13-Apr-2026-frontend-srp-dry-rewrite-plan.md` — the spec of record for this rewrite, trimmed down after advisor review from 8 phases to 5.
+
+**Contract:** `docs/FRONTEND-ARCHITECTURE.md` (new) — the working contract for the next dev (human or AI): the SSoT table, naming rules, primitive-extraction threshold, how to add a camera/bird/field-note/project, and the "no hardcoded counts, no re-stated data, no SaaS template" rules. `CLAUDE.md` now points to it.
+
+**Changed — structure (Phases 1–2)**
+- Split the 394-line `app/page.tsx` monolith into seven single-responsibility section components under `app/components/home/`: `Hero`, `GuardianHomeSection`, `LatestFieldNote`, `FlockPreviewStrip`, `ActiveProjects`, `InstagramSection`, `SiteFooter`. `page.tsx` is now ~30 lines of composition.
+- Extracted two primitives under `app/components/primitives/`: `SectionHeader` (deduped four near-identical title + subtitle + trailing-link blocks) and `BirdCard` (shared between the homepage strip and slated for `/flock`). No other primitives extracted — per the "third duplicate" threshold in the architecture doc.
+
+**Changed — data-driven (Phase 3)**
+- `FlockPreviewStrip` now reads `content/flock-profiles.json` via `getFlockProfiles()`. The 8-item inline bird array is deleted; active birds with photos flow through automatically (up to 8 tiles).
+- Camera counts now derive inline: `{CAMERAS.length}` replaces every hardcoded "5 cameras" in `GuardianHomeSection` and `GuardianHomeBadge`. Adding a camera to `lib/cameras.ts` updates every count on the site with no grep-sweep.
+
+**Changed — camera naming (sidecar fix, commit `ea1de41`)**
+- Boss caught three cameras all labeled "brooder" in the UI today (the `shortLabel` and `location` fields were encoding location-as-identity). The device-not-location naming rule now applies to every UI string on a camera, not just the primary name. Removed the `location` field from `CameraMeta` entirely. Rewrote every `label` and `shortLabel` to identify the hardware only (`"USB"`, `"MBA"`, `"S7"`, `"GWTC"`, `"Reolink"`). The `lib/cameras.ts` file header now encodes the rule. Memory (`feedback_camera_naming.md`) updated so future agents know the rule covers labels and UI strings, not just primary names.
+
+**Removed — de-fluff (Phase 4)**
+- Owner name: `SiteFooter` no longer says "© {year} Mark Barney"; the nav external-link-back text is now `markbarney.net ↗` instead of "Mark Barney ↗". The link destination is unchanged.
+- Self-promotion: dropped the "Hampton, CT — every line built by Claude" footer tagline, the whole `## Built by Claude` section at the end of the Guardian MDX (four paragraphs including stale "v2.15.0" and "Fifteen Python modules" boasts), and the `"Every line of code built by Claude"` string from `app/projects/page.tsx` metadata.
+- Stale counts: every "three cameras" / "four cameras" / "22 reinforcements" string in layout prose (`app/layout.tsx` OG + Twitter descriptions, `app/projects/page.tsx` "Why We Build", `content/projects/guardian/index.mdx` intro) replaced with durable phrasing that doesn't drift week-to-week.
+- Stale backend facts: the system panel's `v2.15` version badge (stale for a week) and `Refresh: ~10s via Cloudflare tunnel` line (was never quite right, and nobody needed to know) are gone. Duplicated `M4 Pro 64GB` removed from the bottom pipeline row (already on the Hardware row). Guardian MDX "every ten seconds" replaced with "steady cadence".
+- Flock page: `app/flock/page.tsx` metadata's "22 reinforcements in the brooder" softened to "current brooder cohort" (no drift-prone count). Unused `getEggColorClass` deleted (ESLint had been flagging it since its logic was inlined).
+
+**Why**
+- The frontend was built piecemeal off a SaaS-template mental model that doesn't fit a farm log. Every new piece of reality (a camera, a bird, a week) required prose edits in multiple files that drifted between them.
+- Boss's memory rules on naming and editorializing were being violated in several places; those violations were in code for days because the rules hadn't been documented in the repo itself. They are now.
+
+**Verification**
+- `npm run build` passes after each phase.
+- Grep for `\b[0-9]+\s+(camera|bird|chick|breed)` in `app/` returns zero matches outside code comments.
+- Grep for `mark barney|built by claude|every line` in `app/` + `content/projects/` returns only a source-code comment documenting the removal.
+- Dev-server smoke test: homepage renders the 7 active birds from `flock-profiles.json`, system panel shows `{CAMERAS.length}` derived count, footer has no name, no "built by Claude" tagline.
+
+**Parallel-dev coordination**
+- Five commits (`docs: plan`, Phase 1, camera-label fix sidecar, Phase 2, Phase 3, Phase 4, this final doc/CHANGELOG push). Each standalone, each pushed to `main` so the other dev could see progress and avoid stepping on the diffs.
+
 ## [1.5.0] — 2026-04-13
 
 ### Added — mba-cam is the fifth camera + camera-wiring audit (Claude Opus 4.6)

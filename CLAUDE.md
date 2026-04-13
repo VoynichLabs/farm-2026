@@ -24,6 +24,8 @@ No test suite exists. Deployment targets Railway.app using the standalone Next.j
 
 ## Architecture
 
+**Read `docs/FRONTEND-ARCHITECTURE.md` first.** It's the working contract for this codebase — SSoT table, naming rules, how to add a camera/bird/field-note/project, and the "no hardcoded counts, no re-stated data, no SaaS template" rules the 13-Apr-2026 rewrite put in place.
+
 **Next.js 16 App Router** hobby farm website for a property in Hampton, CT. Content is MDX-driven and loaded server-side via `lib/content.ts` using `gray-matter`.
 
 ### Content sources
@@ -48,7 +50,7 @@ No test suite exists. Deployment targets Railway.app using the standalone Next.j
 - `/field-notes/[slug]` — Individual field note with cover image, MDX content, photo gallery, prev/next nav
 - `/flock` — Bird roster (active / In Memoriam sections) + breed reference guide
 - `/projects` — Project listing with status badges (planning/active/complete/shelved)
-- `/projects/guardian` — **Live dashboard**: 4 camera feeds via snapshot polling (house-yard, s7-cam, usb-cam, gwtc), detection table, patrol/deterrent/track status, eBird sightings. Rendered by `GuardianDashboard.tsx` above MDX project docs.
+- `/projects/guardian` — **Live dashboard**: camera feeds driven by `lib/cameras.ts` (SSoT), PTZ controls on the Reolink, MDX project docs below. Rendered by `GuardianDashboard.tsx`. Camera count is always `{CAMERAS.length}` — never hardcoded.
 - `/projects/[slug]` — MDX project detail with materials table and diary timeline
 - `/gallery` — Lightbox photo gallery (April 2026 + historical)
 - `/diary` — Redirects to `/field-notes`
