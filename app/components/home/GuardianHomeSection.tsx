@@ -46,7 +46,7 @@ export default function GuardianHomeSection() {
               </div>
               <div>
                 <div className="font-semibold text-slate-100 text-sm leading-tight">Farm Guardian</div>
-                <div className="text-guardian-muted text-[0.65rem]">Watching over the flock — v2.15</div>
+                <div className="text-guardian-muted text-[0.65rem]">Watching over the flock</div>
               </div>
             </div>
 
@@ -69,7 +69,6 @@ export default function GuardianHomeSection() {
             <div className="text-guardian-muted text-[0.7rem] leading-snug space-y-0.5">
               <div>Mode: <span className="text-slate-300">Snapshot polling</span> (all cams)</div>
               <div>Capture: <span className="text-slate-300">OpenCV</span> — no ffmpeg, no HLS</div>
-              <div>Refresh: <span className="text-slate-300">~10s</span> via Cloudflare tunnel</div>
             </div>
 
             <div className="border-t border-guardian-border my-0.5" />
@@ -97,7 +96,7 @@ export default function GuardianHomeSection() {
             <tbody>
               <tr>
                 <td className="px-2 py-1 text-slate-300">Snapshot polling (OpenCV)</td>
-                <td className="px-2 py-1 text-slate-300">{CAMERAS.length} cameras · M4 Pro 64GB</td>
+                <td className="px-2 py-1 text-slate-300">{CAMERAS.length} cameras</td>
                 <td className="px-2 py-1 text-slate-300">Discord + 4K Snapshots</td>
                 <td className="px-2 py-1 text-right">
                   <Link href="/projects/guardian" className="text-blue-400 hover:text-blue-300 text-[0.7rem]">

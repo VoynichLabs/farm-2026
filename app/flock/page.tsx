@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "The Flock",
-  description: "Heritage breeds, Easter Eggers, turkey poults, and 22 reinforcements in the brooder. Hampton, CT.",
+  description: "Heritage breeds, Easter Eggers, turkey poults, and the current brooder cohort. Hampton, CT.",
 };
 
 const eggColorBadgeColors: Record<string, string> = {
@@ -17,10 +17,6 @@ const eggColorBadgeColors: Record<string, string> = {
   "Blue or green": "bg-sky-500 text-white",
   Blue: "bg-sky-500 text-white",
   "N/A (rooster)": "bg-gray-400 text-white",
-};
-
-const getEggColorClass = (eggColor: string): string => {
-  return eggColorBadgeColors[eggColor] || "bg-gray-500 text-white";
 };
 
 const isRooster = (eggColor: string) => eggColor === "N/A (rooster)";

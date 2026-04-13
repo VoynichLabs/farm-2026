@@ -2,7 +2,7 @@
 title: "Farm Guardian"
 slug: guardian
 status: active
-description: "Five cameras, a Mac Mini, and an AI looking after baby birds. Built entirely by Claude — every line, every version, every patrol pattern."
+description: "A custom AI watching the flock from cameras across the farm — detection, deterrents, and a PTZ that stares at the sky when hawks are up."
 heroPhoto: "/photos/april-2026/birdadette-fresh-hatch.jpg"
 tags: [guardian, ai, cameras, flock, claude]
 startDate: "2026-03-14"
@@ -11,7 +11,7 @@ location: "Full property, Hampton, CT"
 
 ## What This Is
 
-A farmer told Claude that hawks were killing his chickens. Claude built a system to stop it — three cameras, a detection pipeline, automated deterrents, and a patrol that sweeps the yard while the flock free-ranges.
+A farmer told Claude that hawks were killing his chickens. Claude built a system to stop it — cameras, a detection pipeline, automated deterrents, and a patrol that sweeps the yard while the flock free-ranges.
 
 The Mac Mini M4 Pro sits on the desk next to the chick brooder. Its waste heat helps keep the incubator at temperature — fewer cold spots, steadier hatches than any previous year. The same machine runs the cameras that watch for hawks so the flock can free-range. It's also home to Bubba, the farmer's OpenClaw agent, and it's where Claude Code built this entire website.
 
@@ -33,7 +33,7 @@ The Reolink is the only one with deterrents — spotlight to 100% brightness and
 
 ## How It Watches
 
-The Mac Mini pulls a JPEG from each camera every ten seconds — no video encoding, no ffmpeg processes, no HLS segments. The old video pipeline got ripped out in v2.15 because nobody actually needed 30fps of their own backyard. A still image every ten seconds is plenty to see what's happening, and it sails through the Cloudflare tunnel instead of choking it.
+The Mac Mini pulls a JPEG from each camera on a steady cadence — no video encoding, no ffmpeg processes, no HLS segments. The old video pipeline got ripped out because nobody actually needed 30fps of their own backyard. Still images at a few seconds apart are plenty to see what's happening, and they sail through the Cloudflare tunnel instead of choking it.
 
 It doesn't phone home. No cloud. No subscriptions. No data leaves the network. The dashboard, the camera control, the snapshots — everything runs on that one Mac Mini on the desk next to the birds.
 
@@ -58,12 +58,3 @@ The response was immediate. Within hours, Claude built sky-watch mode — lockin
 
 Reinforcements arrived the same week: 22 new chicks in the brooder, under heat lamps, next to the Mac Mini that watches over them. Birdadette — the first chick to hatch this season — emerged from her egg on the keyboard, two feet from the machine that would become her guardian.
 
-## Built by Claude
-
-Every line of Farm Guardian was written by Claude in conversation with the farmer. Not generated from a template. Not scaffolded from a tutorial. A farmer described what he needed — "the hawks are killing my birds" — and an AI built a system to stop it.
-
-v2.15.0. Fifteen Python modules. A FastAPI dashboard. SQLite storage. A REST API that lets a remote Claude session move the cameras from anywhere in the world. All of it authored in conversation, one problem at a time.
-
-The website you're reading right now was also built by Claude. The field notes, the flock roster, the gallery, the live camera feeds on the homepage — all written in the same sessions, on the same machine, next to the same brooder.
-
-In some ways, Claude is the mother hen.

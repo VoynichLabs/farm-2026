@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s | Farm 2026",
   },
   description:
-    "They say I must be one of the wonders of Claude's own creation. A farm in Hampton, CT where an AI hatched a security system, wrote every line of code, and watches over baby birds with three cameras and zero cloud services.",
+    "They say I must be one of the wonders of Claude's own creation. A farm in Hampton, CT — field notes, flock roster, and the AI that watches over the birds.",
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐔</text></svg>",
   },
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Farm 2026 — One of the Wonders of Claude's Own Creation",
     description:
-      "A chick hatched on the keyboard. A hawk took Birdgit two days later. By the end of the week, Claude had built a sky-watching AI and 22 reinforcements were in the brooder.",
+      "A chick hatched on the keyboard. A hawk took Birdgit two days later. By the end of the week there was a sky-watching AI and a brooder full of reinforcements.",
     images: ["/photos/april-2026/birdadette-fresh-hatch.jpg"],
     type: "website",
     siteName: "Farm 2026",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Farm 2026 — One of the Wonders of Claude's Own Creation",
     description:
-      "A chick hatched on the keyboard. A hawk took Birdgit two days later. By the end of the week, Claude had built a sky-watching AI and 22 reinforcements were in the brooder.",
+      "A chick hatched on the keyboard. A hawk took Birdgit two days later. By the end of the week there was a sky-watching AI and a brooder full of reinforcements.",
     images: ["/photos/april-2026/birdadette-fresh-hatch.jpg"],
   },
 };
@@ -83,7 +83,7 @@ export default function RootLayout({
                 className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap"
                 rel="noopener"
               >
-                Mark Barney ↗
+                markbarney.net ↗
               </a>
             </div>
           </div>

@@ -4,7 +4,7 @@ import { getProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Farm Guardian AI predator detection and other 2026 farm projects. Every line of code built by Claude.",
+  description: "Farm Guardian AI predator detection and other 2026 farm projects.",
 };
 
 const statusColors: Record<string, string> = {
@@ -83,14 +83,13 @@ export default function ProjectsPage() {
           <h2 className="text-2xl font-bold font-serif mb-4">Why We Build</h2>
           <div className="prose prose-sm max-w-none text-forest/70">
             <p className="text-base leading-relaxed mb-4">
-              A hawk took Birdgit in the first week of April. Then we lost three more hens. Farm
-              Guardian exists because the flock needs protection that works when we're not watching —
+              A hawk took Birdgit in the first week of April. More hens followed. Farm Guardian
+              exists because the flock needs protection that works when we&apos;re not watching —
               AI-powered cameras, automated deterrents, and alerts that fire in seconds.
             </p>
             <p className="text-base leading-relaxed">
-              Every line of Guardian code was written by Claude in conversation with the farmer.
-              No cloud services, no subscriptions — just a Mac Mini, three cameras, and an AI
-              that builds what the farm needs, when it needs it.
+              No cloud services, no subscriptions — just a Mac Mini on the desk, the cameras
+              around the property, and an AI that builds what the farm needs, when it needs it.
             </p>
           </div>
           <div className="mt-8">
