@@ -97,7 +97,7 @@ export default function GuardianHomeSection() {
             <tbody>
               <tr>
                 <td className="px-2 py-1 text-slate-300">Snapshot polling (OpenCV)</td>
-                <td className="px-2 py-1 text-slate-300">5 cameras · M4 Pro 64GB</td>
+                <td className="px-2 py-1 text-slate-300">{CAMERAS.length} cameras · M4 Pro 64GB</td>
                 <td className="px-2 py-1 text-slate-300">Discord + 4K Snapshots</td>
                 <td className="px-2 py-1 text-right">
                   <Link href="/projects/guardian" className="text-blue-400 hover:text-blue-300 text-[0.7rem]">
