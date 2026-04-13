@@ -3,9 +3,8 @@
  * Date: 13-Apr-2026
  * PURPOSE: Homepage Guardian section — live status badge, camera stage, and a
  *   right-hand system info panel that enumerates cameras from the lib/cameras.ts
- *   SSoT. Extracted from app/page.tsx during Phase 1 of the frontend SRP/DRY
- *   rewrite. Phase 3 will swap the remaining hardcoded "5 cameras" string for
- *   a derived value.
+ *   SSoT. The camera count in the bottom pipeline row is derived from
+ *   CAMERAS.length — no hardcoded "N cameras" literal anywhere in this file.
  * SRP/DRY check: Pass — one job: render the homepage Guardian block. Cameras
  *   enumerated via CAMERAS.map (SSoT). See
  *   docs/13-Apr-2026-frontend-srp-dry-rewrite-plan.md.

@@ -8,17 +8,6 @@ export const metadata: Metadata = {
   description: "Heritage breeds, Easter Eggers, turkey poults, and the current brooder cohort. Hampton, CT.",
 };
 
-const eggColorBadgeColors: Record<string, string> = {
-  "Brown to dark brown": "bg-amber-700 text-white",
-  Brown: "bg-amber-700 text-white",
-  "Brown (large)": "bg-amber-700 text-white",
-  "Tan to light brown": "bg-yellow-600 text-white",
-  "Blue, green, or pink (highly variable)": "bg-sky-500 text-white",
-  "Blue or green": "bg-sky-500 text-white",
-  Blue: "bg-sky-500 text-white",
-  "N/A (rooster)": "bg-gray-400 text-white",
-};
-
 const isRooster = (eggColor: string) => eggColor === "N/A (rooster)";
 
 export default function FlockPage() {
@@ -100,7 +89,7 @@ export default function FlockPage() {
       {deceasedBirds.length > 0 && (
         <section className="max-w-6xl mx-auto px-4 py-8 pb-16">
           <h2 className="text-2xl font-bold font-serif mb-2">In Memoriam</h2>
-          <p className="text-forest/60 mb-8 text-sm">Lost in the first week of April 2026. The flock rebuilds, but they're remembered.</p>
+          <p className="text-forest/60 mb-8 text-sm">Lost in the first week of April 2026. The flock rebuilds, but they&apos;re remembered.</p>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {deceasedBirds.map((bird, idx) => (
               <BirdCard key={idx} bird={bird} breedProfile={getBreedProfile(bird.breed)} deceased />
@@ -271,7 +260,7 @@ function BirdCard({
 
         {/* Personality */}
         {bird.temperament && (
-          <p className="text-sm text-forest/70 mb-3 italic">"{bird.temperament}"</p>
+          <p className="text-sm text-forest/70 mb-3 italic">&ldquo;{bird.temperament}&rdquo;</p>
         )}
 
         {/* Color description */}
