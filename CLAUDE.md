@@ -61,7 +61,7 @@ The Guardian page (`/projects/guardian`) is a live interactive dashboard, not a 
 
 - **Client components** in `app/components/guardian/` — `GuardianDashboard` (orchestrator), `GuardianStatusBar`, `GuardianCameraFeed`, `GuardianDetections`, `GuardianInfoPanels`, `GuardianHomeBadge`, `types.ts`
 - **API base**: `https://guardian.markbarney.net` (Cloudflare tunnel to Mac Mini port 6530)
-- **Four cameras** (v2.12 names): `house-yard` (Reolink 4K PTZ), `s7-cam` (Samsung S7 RTSP), `usb-cam` (USB brooder), `gwtc` (Gateway laptop webcam via MediaMTX). Names are device-based, not location-based.
+- **Five cameras** (v2.22 names): `house-yard` (Reolink 4K PTZ), `s7-cam` (Samsung S7 RTSP), `usb-cam` (USB brooder), `gwtc` (Gateway laptop webcam via MediaMTX), `mba-cam` (MacBook Air 2013 webcam via MediaMTX → `rtsp://192.168.0.50:8554/mba-cam`). Names are device-based, not location-based — `mba-cam` is named after the MacBook Air, not the brooder it's currently aimed at.
 - **Snapshot polling feeds**: `GuardianCameraFeed` fetches a JPEG from `/api/cameras/{name}/frame` every ~1.2s via `fetch()` + `createObjectURL()`. Replaced persistent MJPEG streaming (v1.1.0) because browsers cap HTTP/1.1 connections at ~6 per domain — 4 MJPEG streams + API polling starved connections through the Cloudflare tunnel.
 - **Polling**: fast (5s: status, detections, tracks, deterrent), slow (60s: summary, effectiveness), glacial (5min: eBird)
 - **Offline handling**: per-camera offline state with label. System-level offline via `GuardianHomeBadge`.
@@ -79,6 +79,19 @@ Defined in `app/globals.css`:
 - `--color-wood` / `--color-wood-light` — accent/links
 - `--color-guardian-*` — Guardian dashboard palette (`bg` #0f172a, `card` #1e293b, `border` #334155, `hover` #475569, `muted` #64748b, `text` #e2e8f0, `accent` #059669)
 - Headings use Georgia serif; body uses system font stack
+
+## Multi-Machine Claude Orchestration
+
+Boss has Claude Code installed on multiple machines on the farm LAN (Mac Mini "Bubba", MacBook Air at `192.168.0.50`, GWTC laptop, Larry's MSI). When a task needs hands on a specific box — granting a TCC permission, running a GUI app, reading a file you can't `scp`, anything where being-on-that-box matters — **don't ask Boss to copy-paste your prompt into a session he's sitting in front of**. Spawn a fresh headless Claude on the target machine over SSH:
+
+```bash
+ssh -i ~/.ssh/id_ed25519 markb@192.168.0.50 'c -p "Self-contained task description. The remote Claude has no context from your conversation."'
+```
+
+`c` is the standard alias on every farm machine for `claude --dangerously-skip-permissions`. `-p` is print mode (non-interactive). Output comes back as the SSH command's stdout.
+
+Full orchestration guide and per-machine quick-reference table is in `farm-guardian/CLAUDE.md` under "Multi-Machine Claude Orchestration". Don't re-document it here — read it there.
+
 # Mark's Coding Standards
 
 ## Non-negotiables
