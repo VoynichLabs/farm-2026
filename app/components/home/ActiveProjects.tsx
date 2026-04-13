@@ -10,6 +10,7 @@
  */
 import Link from "next/link";
 import { getProjects } from "@/lib/content";
+import SectionHeader from "@/app/components/primitives/SectionHeader";
 
 const statusColors: Record<string, string> = {
   planning: "bg-yellow-600",
@@ -30,15 +31,12 @@ export default function ActiveProjects() {
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-16">
-      <div className="flex items-end justify-between mb-8">
-        <div>
-          <h2 className="text-3xl font-bold font-serif">2026 Projects</h2>
-          <p className="text-forest/60 mt-2">What we&apos;re building — and what Claude is building for us.</p>
-        </div>
-        <Link href="/projects" className="text-wood hover:underline text-sm font-medium">
-          All projects →
-        </Link>
-      </div>
+      <SectionHeader
+        title="2026 Projects"
+        subtitle="What we're building — and what Claude is building for us."
+        linkHref="/projects"
+        linkLabel="All projects →"
+      />
       <div className="grid gap-6 md:grid-cols-2">
         {projects.map((p) => (
           <Link

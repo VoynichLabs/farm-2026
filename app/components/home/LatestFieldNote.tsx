@@ -11,6 +11,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getAllFieldNotes } from "@/lib/content";
+import SectionHeader from "@/app/components/primitives/SectionHeader";
 
 export default function LatestFieldNote() {
   const fieldNotes = getAllFieldNotes();
@@ -21,15 +22,12 @@ export default function LatestFieldNote() {
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-16">
-      <div className="flex items-end justify-between mb-8">
-        <div>
-          <h2 className="text-3xl font-bold font-serif">Latest from the Farm</h2>
-          <p className="text-forest/60 mt-2">Weekly updates — what happened, what hatched, what Claude built.</p>
-        </div>
-        <Link href="/field-notes" className="text-wood hover:underline text-sm font-medium">
-          All field notes →
-        </Link>
-      </div>
+      <SectionHeader
+        title="Latest from the Farm"
+        subtitle="Weekly updates — what happened, what hatched, what Claude built."
+        linkHref="/field-notes"
+        linkLabel="All field notes →"
+      />
 
       {/* Featured note */}
       <Link href={`/field-notes/${latestNote.slug}`} className="block group mb-8">

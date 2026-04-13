@@ -9,15 +9,16 @@
  */
 import InstagramFeed from "@/app/components/InstagramFeed";
 import instagramPosts from "@/content/instagram-posts.json";
+import SectionHeader from "@/app/components/primitives/SectionHeader";
 
 export default function InstagramSection() {
   return (
     <section className="bg-cream-dark">
       <div className="max-w-6xl mx-auto px-4 py-16">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold font-serif">Follow the Farm</h2>
-          <p className="text-forest/60 mt-2">More photos, more birds, more behind-the-scenes on Instagram.</p>
-        </div>
+        <SectionHeader
+          title="Follow the Farm"
+          subtitle="More photos, more birds, more behind-the-scenes on Instagram."
+        />
         <InstagramFeed posts={instagramPosts} />
       </div>
     </section>
