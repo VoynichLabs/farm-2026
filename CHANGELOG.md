@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [Unreleased] — 2026-04-14
+
+### Docs — cross-repo plan: expose the Guardian image archive on farm-2026 (Claude Opus 4.6)
+
+farm-guardian shipped v2.23.0 on 2026-04-13 with a continuous multi-camera image curation pipeline that writes structured metadata + tiered JPEGs to SQLite every few minutes. The dataset is large, growing hourly, and **not visible from this codebase** — the next developer (human or AI) will not know it exists unless it's documented aggressively in this repo.
+
+**New:** `docs/14-Apr-2026-image-archive-dataset-and-frontend-plan.md` — the authoritative long-form reference for:
+
+- What the dataset is, where it lives on the Mac Mini, the full `image_archive` SQLite schema, the `data/gems/` and `data/private/` hardlinked views.
+- Observed GLM 4.6v-flash quirks and calibration notes (sharpness judgment, bird-count noise, caption repetition).
+- The three non-negotiable rules: never leak `has_concerns=1` to public endpoints, never put the owner name in captions, camera labels stay hardware-only.
+- A detailed four-layer plan to expose the dataset: new `/api/v1/images/*` endpoints in `farm-guardian/api.py`, TypeScript types extending `app/components/guardian/types.ts`, frontend components under `app/components/gems/`, and a Boss-only review UI at `/review`.
+- Four public surfaces specified: `/gallery/gems`, homepage `LatestFlockFrames` rail, `/flock/birdadette` retrospective, Instagram autofeed (v0.3 only; documented, not built).
+- Full request/response contracts for every endpoint including the review surface with bearer-token auth, the `image_archive_edits` audit table, and the `caption_overrides` override table.
+- Failure-modes catalog, query catalog, scale/evolution discussion.
+
+**Also updated:** `docs/FRONTEND-ARCHITECTURE.md` — added the "Curated image archive" row to the SSoT table, bolded to make sure nobody misses it.
+
+**Status:** Plan is draft; approval pending. Backend work has not started. Frontend work blocked until `/api/v1/images/*` lands on guardian.markbarney.net. Do not pre-build against mocks.
+
 ## [1.6.0] — 2026-04-13
 
 ### Refactored — frontend SRP/DRY rewrite + de-fluff (Claude Opus 4.6)

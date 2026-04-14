@@ -16,8 +16,9 @@ If you are about to type a number, a breed, a camera name, or a hardware string 
 | Bird roster + breed reference | `content/flock-profiles.json` | `/flock` page, homepage `FlockPreviewStrip` |
 | Field notes (weekly updates) | `content/field-notes/*.mdx` | `/field-notes` feed + slug pages, homepage `LatestFieldNote` |
 | Projects | `content/projects/*/index.mdx` | `/projects` list, `/projects/[slug]`, homepage `ActiveProjects` |
-| Gallery photos | `content/gallery.json` | `/gallery` |
+| Gallery photos (static) | `content/gallery.json` | `/gallery` |
 | Instagram embeds | `content/instagram-posts.json` | homepage `InstagramSection` |
+| **Curated image archive (Guardian pipeline)** | **`farm-guardian` SQLite → REST via `guardian.markbarney.net/api/v1/images/*` → `lib/gems.ts`** | **`/gallery/gems`, homepage `LatestFlockFrames`, `/flock/birdadette` retrospective.** See **`docs/14-Apr-2026-image-archive-dataset-and-frontend-plan.md`** — the dataset is large, growing hourly, and NOT obvious from the codebase. Read that plan before touching any curated-photo surface. |
 
 All content loaders live in `lib/content.ts`. Use them. Do not re-implement `fs.readFileSync` in a page file.
 
