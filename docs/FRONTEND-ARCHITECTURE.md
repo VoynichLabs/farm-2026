@@ -56,6 +56,15 @@ New folder under `content/projects/<slug>/` with `index.mdx`. Frontmatter: `titl
 
 Create a server component under `app/components/home/`. Consume data via `lib/content.ts`. Compose from `SectionHeader` and any applicable primitives. Add one `<NewSection />` line to `app/page.tsx`.
 
+### A gallery section that uses the curated image archive
+
+The image archive (`guardian.markbarney.net/api/v1/images/*`) already has a frontend surface under `app/components/gems/` — read `docs/14-Apr-2026-frontend-gems-implementation-plan.md` first, then:
+
+1. Fetch via `lib/gems.ts` helpers (`fetchGems` / `fetchGem` / `fetchRecent` / `fetchImageStats`). Never call `fetch()` against the tunnel directly — it gets you past the `apparent_age_days = -1 → null` normalisation and the typed error handling for free.
+2. Format via `lib/gems-format.ts` (`cameraLabel`, `activityLabel`, `sceneLabel`, `individualLabel`, `relativeTime`, `absoluteTime`, `ageBucket`). Never hard-code a label string for a backend enum; add it here if missing.
+3. Render via the gems component set. `GemCard` has `variant="default"` (card with caption) or `variant="compact"` (thumb-only; hover badges overlay). `GemsGrid` has `variant="gallery"` (responsive grid) or `variant="rail"` (horizontal scroll). The homepage rail `LatestFlockFrames` composes grid-rail + card-compact; the gallery composes grid-gallery + card-default. A new surface composes whichever fits.
+4. Boss-sensitive rules are enforced in types + components already (no `has_concerns` field, draft-caption affordance in `GemCaption`, hardware-only labels via `CAMERAS` SSoT). Don't work around them.
+
 ### A reusable primitive
 
 Only if the pattern shows up at least three times and the extraction reduces code, not just moves it. Put it in `app/components/primitives/`. Typed props, no side effects, no data fetching.

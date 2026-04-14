@@ -3,7 +3,35 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
-## [Unreleased] — 2026-04-14
+## [1.7.0] — 2026-04-14
+
+### Added — curated image archive on farm-2026 (Claude Opus 4.6 (1M context))
+
+Ships the frontend surface for farm-guardian's image-archive REST layer (v2.25.0, commit 6f69306 on `farm-guardian`). The pipeline has been producing scored + tiered frames since v2.23.0 on 2026-04-13; this release makes them visible on the public site.
+
+**New route — `/gallery/gems`:** responsive grid of curated "strong"-tier frames with URL-driven filters (camera / activity / individual / date-range), cursor-paginated load-more, and a native-`<dialog>` lightbox with keyboard navigation. Server-renders the first page so the URL is deep-linkable and SEO-crawlable.
+
+**Homepage rail — "Latest from the Flock":** horizontal scroll strip of six recent strong/decent frames sitting between the flock preview and projects section. Silently hides on tunnel-drop so the homepage never crashes.
+
+**Footer stat widget:** discreet "N gems in the last 7 days" line linking to the gallery. A visible signal that the pipeline is alive.
+
+**Modularity contract:** thirteen small components under `app/components/gems/` — `GemCard` (variant: default / compact), `GemsGrid` (variant: gallery / rail), `GemCardBadges`, `GemCaption`, `GemMetaTable`, `GemLightbox`, `GemFilters`, `GemsLoadMore`, `GemsGallery`, `GemsGalleryClient`, `GemsEmpty`, `GemsError`, `GemsStatFooter`. `GemCard` + `GemsGrid` are reused by the gallery and the homepage rail with zero duplication. All I/O lives in `lib/gems.ts`; all formatting lives in `lib/gems-format.ts` (both pure). Full plan + rationale: `docs/14-Apr-2026-frontend-gems-implementation-plan.md`.
+
+**Rules enforced in code:**
+
+- `has_concerns=1` rows are filtered at the backend, absent from `GemRow`, and never rendered — three-layer defense per the cross-repo plan.
+- Camera labels come from `lib/cameras.ts` SSoT (hardware-only strings).
+- Captions are rendered with a "Draft caption:" affordance via `GemCaption`; never styled as finished editorial copy.
+- `apparent_age_days = -1` sentinel normalised to `null` at the `lib/gems.ts` boundary; UI never renders "-1 days old."
+- No owner name in any gems-path source file or rendered HTML (verified by grep on both the tree and the production build).
+
+**Types:** `app/components/guardian/types.ts` extended with `GemRow`, `RecentRow`, `ImageListResponse<T>`, `ImageStats`, `ImageApiError`, and the `Scene` / `Activity` / `Lighting` / `Composition` / `ImageQuality` / `ShareWorth` / `IndividualTag` enums. Banner comment points at the parent plan.
+
+**Base URL:** `NEXT_PUBLIC_GUARDIAN_BASE` env var override; defaults to `https://guardian.markbarney.net`. `next: { revalidate: 300 }` on every fetcher.
+
+**Out of this release (scheduled for v0.2+):** Birdadette day-of-life retrospective (planned separately, backend already supports it), Boss-only `/review` UI (Finder browse works for now), Instagram autofeed, caption overrides.
+
+## [Unreleased-docs] — 2026-04-14
 
 ### Docs — cross-repo plan: expose the Guardian image archive on farm-2026 (Claude Opus 4.6)
 
