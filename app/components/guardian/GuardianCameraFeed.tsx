@@ -10,8 +10,13 @@
  *   one camera at a time. Snapshot polling uses short-lived requests that work with
  *   HTTP/2 multiplexing and don't hold connections open. The feed stays visible
  *   unless its own snapshot polling fails; shared `/api/status` hiccups should not
- *   blank healthy camera frames. v1.4.2 adds explicit connecting/reconnecting/offline
- *   states so first-load latency no longer looks like a dead camera.
+ *   blank healthy camera frames. v1.4.2 added explicit connecting/reconnecting/
+ *   offline states so first-load latency no longer looks like a dead camera.
+ *   13-Apr-2026 tweak: the reconnecting state no longer blackouts the image with
+ *   a centered modal — it shows a thin bottom strip so the last good frame stays
+ *   visible. It also no longer flips on a single missed snapshot — a threshold
+ *   of a few consecutive failures must pass before the strip appears, so normal
+ *   one-off tunnel hiccups don't flicker the UI.
  * SRP/DRY check: Pass — single responsibility: camera feed display for any camera.
  */
 
@@ -20,7 +25,12 @@ import { GUARDIAN_API } from "./types";
 
 // How often to fetch a new snapshot (ms)
 const POLL_INTERVAL = 1200;
+// Misses before giving up on a not-yet-live camera and showing OFFLINE.
 const RECONNECT_THRESHOLD = 3;
+// Consecutive misses on a live feed before we show the "reconnecting" strip.
+// One hiccup is normal; we don't want the overlay flickering on and off.
+const RECONNECT_SHOW_THRESHOLD = 3;
+// Misses before we give up on a live feed and go full OFFLINE.
 const OFFLINE_THRESHOLD = 10;
 
 type FeedState = "connecting" | "live" | "reconnecting" | "offline";
@@ -78,10 +88,14 @@ export default function GuardianCameraFeed({
           return;
         }
 
+        // Stay on "live" through small hiccups so the UI doesn't flicker; only
+        // surface "reconnecting" after several consecutive failures.
         setFeedState(
           consecutiveErrors.current >= OFFLINE_THRESHOLD
             ? "offline"
-            : "reconnecting",
+            : consecutiveErrors.current >= RECONNECT_SHOW_THRESHOLD
+              ? "reconnecting"
+              : "live",
         );
       }
     };
@@ -168,11 +182,10 @@ export default function GuardianCameraFeed({
       )}
 
       {showFeed && isReconnecting && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="bg-black/65 border border-amber-400/30 rounded px-3 py-1.5 text-center">
-            <div className="text-amber-300 text-[0.72rem] font-mono">RECONNECTING…</div>
-            <div className="text-slate-400 text-[0.65rem]">holding last good frame</div>
-          </div>
+        <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-2 py-1 text-center pointer-events-none">
+          <span className="text-amber-300 text-[0.65rem] font-mono tracking-wider">
+            RECONNECTING · holding last good frame
+          </span>
         </div>
       )}
 
