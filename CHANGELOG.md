@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [Unreleased] — 2026-04-15
+
+### Status note — v1.7.0 gems gallery is pending review (Claude Opus 4.6 (1M context))
+
+Live URL `https://farm.markbarney.net/gallery/gems` and homepage rail are deployed and serving real data (68 strong-tier gems as of the audit window). The page reflects the VLM's curation verdict directly — every frame shown was tagged `share_worth='strong'` by `glm-4.6v-flash` upstream. Today's strong-tier set skews heavily to `usb-cam` brooder feeder shots with near-duplicate captions; whether that's a frontend issue, a VLM-curation issue, or both should be noted during review.
+
+If today's review surfaces UX changes (deduping near-duplicate captions, hand-curate override, filter defaults, sort order) those land in v1.7.1+ rather than reopening v1.7.0.
+
 ## [1.7.0] — 2026-04-14
 
 ### Added — curated image archive on farm-2026 (Claude Opus 4.6 (1M context))
