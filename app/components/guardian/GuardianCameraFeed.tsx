@@ -1,7 +1,7 @@
 "use client";
 /**
- * Author: OpenAI Codex GPT-5.4
- * Date: 13-April-2026
+ * Author: Claude Opus 4.6 (1M context)
+ * Date: 15-Apr-2026
  * PURPOSE: Reusable camera feed via snapshot polling. Fetches a single JPEG from
  *   Guardian's /api/cameras/{name}/frame endpoint every ~1s and swaps the img src.
  *   Replaced persistent MJPEG streaming because browsers limit concurrent HTTP/1.1
@@ -17,6 +17,10 @@
  *   visible. It also no longer flips on a single missed snapshot — a threshold
  *   of a few consecutive failures must pass before the strip appears, so normal
  *   one-off tunnel hiccups don't flicker the UI.
+ *   15-Apr-2026: `FeedState` is now exported and the `onStatusChange` callback
+ *   reports the full state string (not just a live boolean) so parent layouts
+ *   can distinguish "connecting" (still trying — keep visible) from "offline"
+ *   (give up — hide). See docs/15-Apr-2026-smart-camera-visibility-plan.md.
  * SRP/DRY check: Pass — single responsibility: camera feed display for any camera.
  */
 
@@ -33,7 +37,7 @@ const RECONNECT_SHOW_THRESHOLD = 3;
 // Misses before we give up on a live feed and go full OFFLINE.
 const OFFLINE_THRESHOLD = 10;
 
-type FeedState = "connecting" | "live" | "reconnecting" | "offline";
+export type FeedState = "connecting" | "live" | "reconnecting" | "offline";
 
 export default function GuardianCameraFeed({
   cameraName,
@@ -44,7 +48,7 @@ export default function GuardianCameraFeed({
   cameraName: string;
   label: string;
   online: boolean | null;
-  onStatusChange?: (cameraName: string, isLive: boolean) => void;
+  onStatusChange?: (cameraName: string, state: FeedState) => void;
 }) {
   const [frameUrl, setFrameUrl] = useState<string | null>(null);
   const [feedState, setFeedState] = useState<FeedState>("connecting");
@@ -127,7 +131,7 @@ export default function GuardianCameraFeed({
   const isOffline = feedState === "offline";
 
   useEffect(() => {
-    onStatusChange?.(cameraName, feedState === "live");
+    onStatusChange?.(cameraName, feedState);
   }, [feedState, cameraName, onStatusChange]);
 
   const indicatorClass =

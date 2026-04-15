@@ -5,6 +5,10 @@ Format: [SemVer](https://semver.org/) — what / why / how.
 
 ## [Unreleased] — 2026-04-15
 
+### Added — smart camera visibility on the Guardian stage (Claude Opus 4.6 (1M context))
+
+The shared `GuardianCameraStage` (used by the homepage and `/projects/guardian`) now leads with cameras that are actually online and hides ones that aren't. Per-camera `FeedState` (already detected internally by `GuardianCameraFeed`) is collected via a new `useCameraStatuses` hook. Cameras whose state is `"offline"` drop out of the visible thumbnail grid; they stay mounted in a hidden container so their snapshot polling continues and they reappear automatically when they recover. If the featured camera goes offline and any other camera is live, the stage auto-promotes to the first live camera in canonical (`lib/cameras.ts`) order — done as a derived `useMemo` value rather than a setState chain, so there's no extra effect or render churn. The thumbnail grid scales to visible-thumb count (1 → full width, 2 → 2-col, 3+ → 3-col), and an empty-state panel shows when zero cameras are reachable, so the layout never collapses. `GuardianCameraFeed`'s `onStatusChange` callback was widened from `(name, isLive: boolean)` to `(name, state: FeedState)` and `FeedState` is now exported. SRP/DRY: layout decisions live in one stage component serving both surfaces; adding/removing a camera is still a one-line change in `lib/cameras.ts` (0..N supported). Plan + behavior matrix: `docs/15-Apr-2026-smart-camera-visibility-plan.md`.
+
 ### Status note — v1.7.0 gems gallery is pending review (Claude Opus 4.6 (1M context))
 
 Live URL `https://farm.markbarney.net/gallery/gems` and homepage rail are deployed and serving real data (68 strong-tier gems as of the audit window). The page reflects the VLM's curation verdict directly — every frame shown was tagged `share_worth='strong'` by `glm-4.6v-flash` upstream. Today's strong-tier set skews heavily to `usb-cam` brooder feeder shots with near-duplicate captions; whether that's a frontend issue, a VLM-curation issue, or both should be noted during review.
