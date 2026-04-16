@@ -50,7 +50,7 @@ No test suite exists. Deployment targets Railway.app using the standalone Next.j
 - `/field-notes/[slug]` — Individual field note with cover image, MDX content, photo gallery, prev/next nav
 - `/flock` — Bird roster (active / In Memoriam sections) + breed reference guide
 - `/projects` — Project listing with status badges (planning/active/complete/shelved)
-- `/projects/guardian` — **Live dashboard**: camera feeds driven by `lib/cameras.ts` (SSoT), PTZ controls on the Reolink, MDX project docs below. Rendered by `GuardianDashboard.tsx`. Camera count is always `{CAMERAS.length}` — never hardcoded.
+- `/projects/guardian` — **Live dashboard**: camera roster fetched at runtime from Guardian's `/api/cameras` via `lib/guardian-roster.ts`; PTZ controls on the Reolink; MDX project docs below. Rendered by `GuardianDashboard.tsx`. Camera count reflects whatever the backend currently reports — never hardcoded.
 - `/projects/[slug]` — MDX project detail with materials table and diary timeline
 - `/gallery` — Lightbox photo gallery (April 2026 + historical)
 - `/diary` — Redirects to `/field-notes`
@@ -61,9 +61,9 @@ No test suite exists. Deployment targets Railway.app using the standalone Next.j
 
 The Guardian page (`/projects/guardian`) is a live interactive dashboard, not a static MDX page. Key architecture:
 
-- **Client components** in `app/components/guardian/` — `GuardianDashboard` (orchestrator), `GuardianStatusBar`, `GuardianCameraFeed`, `GuardianDetections`, `GuardianInfoPanels`, `GuardianHomeBadge`, `types.ts`
+- **Client components** in `app/components/guardian/` — `GuardianDashboard` (orchestrator), `GuardianStatusBar`, `GuardianCameraFeed`, `GuardianCameraStage`, `GuardianDetections`, `GuardianInfoPanels`, `GuardianHomeBadge`, `types.ts`
 - **API base**: `https://guardian.markbarney.net` (Cloudflare tunnel to Mac Mini port 6530)
-- **Five cameras** (v2.22 names): `house-yard` (Reolink 4K PTZ), `s7-cam` (Samsung S7 RTSP), `usb-cam` (USB brooder), `gwtc` (Gateway laptop webcam via MediaMTX), `mba-cam` (MacBook Air 2013 webcam via MediaMTX → `rtsp://192.168.0.50:8554/mba-cam`). Names are device-based, not location-based — `mba-cam` is named after the MacBook Air, not the brooder it's currently aimed at.
+- **Camera roster is DATA, not a static list.** `lib/guardian-roster.ts` (`useGuardianRoster()`) fetches Guardian's `/api/cameras` every 30s; whatever the backend returns is what the site renders. Adding a camera to Guardian's `config.json` makes it appear on the site within 30s. Unplugging one makes it show an offline indicator, then disappear on the next roster refresh. Camera names are device-based, not location-based. `lib/cameras.ts` holds an *optional* UI metadata overlay (pretty label, short label, aspect ratio) keyed by camera name — if a camera appears in the backend but has no overlay entry, it renders with sensible defaults. The overlay is also used by the historical gem filter chips in `/gallery/gems`.
 - **Snapshot polling feeds**: `GuardianCameraFeed` fetches a JPEG from `/api/cameras/{name}/frame` every ~1.2s via `fetch()` + `createObjectURL()`. Replaced persistent MJPEG streaming (v1.1.0) because browsers cap HTTP/1.1 connections at ~6 per domain — 4 MJPEG streams + API polling starved connections through the Cloudflare tunnel.
 - **Polling**: fast (5s: status, detections, tracks, deterrent), slow (60s: summary, effectiveness), glacial (5min: eBird)
 - **Offline handling**: per-camera offline state with label. System-level offline via `GuardianHomeBadge`.

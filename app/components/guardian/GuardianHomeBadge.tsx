@@ -1,17 +1,16 @@
 "use client";
-// Author: Claude Opus 4.6
-// Date: 13-Apr-2026
+// Author: Claude Opus 4.7 (1M context)
+// Date: 16-Apr-2026
 // PURPOSE: Small client component for the homepage Guardian section status bar.
 //          Fetches /api/status once on mount (no polling) and renders real
-//          values. Falls back to static text if Guardian is offline; the
-//          camera count in the fallback is derived from CAMERAS.length (SSoT)
-//          so adding/removing a camera in lib/cameras.ts updates the caption
-//          automatically — no hardcoded "N cameras" string to drift.
-// SRP/DRY check: Pass — reuses GUARDIAN_API, GuardianStatus, and CAMERAS.
+//          values. When Guardian is offline the fallback caption is just
+//          "snapshot polling" — the camera count comes from /api/status,
+//          never from a hardcoded frontend list (see lib/guardian-roster.ts
+//          for the live roster rule).
+// SRP/DRY check: Pass — reuses GUARDIAN_API and GuardianStatus.
 
 import { useEffect, useState } from "react";
 import { GUARDIAN_API, GuardianStatus } from "./types";
-import { CAMERAS } from "@/lib/cameras";
 
 export default function GuardianHomeBadge() {
   const [status, setStatus] = useState<GuardianStatus | null>(null);
@@ -72,9 +71,7 @@ export default function GuardianHomeBadge() {
       {!status && online === false && (
         <>
           <span className="text-guardian-hover">|</span>
-          <span className="text-guardian-muted">
-            {CAMERAS.length} cameras · snapshot polling
-          </span>
+          <span className="text-guardian-muted">Snapshot polling</span>
         </>
       )}
       <div className="ml-auto flex items-center gap-1.5">

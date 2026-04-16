@@ -12,7 +12,8 @@ If you are about to type a number, a breed, a camera name, or a hardware string 
 
 | Fact | Lives in | Consumed by |
 |---|---|---|
-| Camera roster, labels, devices, aspect ratios | `lib/cameras.ts` (`CAMERAS`) | `GuardianCameraStage`, `GuardianHomeBadge`, `GuardianHomeSection`, anything else that counts or lists cameras |
+| **Live camera roster (what's actually connected right now)** | **Guardian backend `/api/cameras` via `lib/guardian-roster.ts` (`useGuardianRoster()`)** | **`GuardianCameraStage`, `GuardianHomeSection`, anything rendering the live rail. NOT a static TS file — adding/removing a camera on the backend flows through within 30s, no redeploy.** |
+| Camera display metadata (UI-only overlay) | `lib/cameras.ts` (`CAMERAS`) — **overlay, not a roster** | `lib/gems-format.ts`, `GemFilters.tsx` — historical labels for cameras in the gem archive. Also a fallback for the live rail when a backend camera has no overlay entry, in which case defaults are used. |
 | Bird roster + breed reference | `content/flock-profiles.json` | `/flock` page, homepage `FlockPreviewStrip` |
 | Field notes (weekly updates) | `content/field-notes/*.mdx` | `/field-notes` feed + slug pages, homepage `LatestFieldNote` |
 | Projects | `content/projects/*/index.mdx` | `/projects` list, `/projects/[slug]`, homepage `ActiveProjects` |
@@ -37,8 +38,8 @@ All content loaders live in `lib/content.ts`. Use them. Do not re-implement `fs.
 ### A camera
 
 1. Backend: add to `farm-guardian/config.json`, bring the stream up, confirm `https://guardian.markbarney.net/api/cameras/<name>/frame` returns JPEG.
-2. Frontend: one edit to `lib/cameras.ts` — add to the `CameraName` union and append a `CameraMeta` entry. Fields are **hardware only** (see rule 3). No location words.
-3. That's it. Homepage thumb, stage chooser, offline-badge count, system panel all update from the registry.
+2. That's it. The live rail (`useGuardianRoster()`) picks it up within 30s. Homepage thumb, stage chooser, system panel, pipeline summary row — all update automatically with no frontend code change.
+3. (Optional) If you want a pretty label instead of the raw camera name, add a `CameraMeta` entry to `CAMERAS` in `lib/cameras.ts`. Fields are **hardware only** (see rule 3). No location words. The overlay entry will also make the camera filterable in the `/gallery/gems` filter chips if it has gems in the archive.
 
 ### A bird
 

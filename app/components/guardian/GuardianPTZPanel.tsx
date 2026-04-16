@@ -87,7 +87,12 @@ export default function GuardianPTZPanel() {
 
   useEffect(() => {
     mountedRef.current = true;
-    refreshPosition();
+    // Initial data load — setState stays inside .then callbacks so the
+    // React-19 `set-state-in-effect` rule doesn't flag us. The onClick
+    // "refresh" handler still uses `refreshPosition` above.
+    getPosition().then((p) => {
+      if (mountedRef.current && p) setPosition(p);
+    });
     getPresets().then((p) => {
       if (mountedRef.current && p) setPresets(p);
     });
@@ -96,7 +101,7 @@ export default function GuardianPTZPanel() {
       // Safety net — if the user navigates away mid-burst, stop the camera.
       postJSON("/ptz", { action: "stop" }).catch(() => {});
     };
-  }, [refreshPosition]);
+  }, []);
 
   // Single burst at speed 5. Schedules the stop on the same tick as the
   // start so browser event-loop delay doesn't extend the burst.

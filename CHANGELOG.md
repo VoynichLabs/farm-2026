@@ -3,7 +3,29 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
-## [Unreleased] — 2026-04-15
+## [Unreleased] — 2026-04-16
+
+### Changed — camera roster is now derived from Guardian backend, not a hardcoded list (Claude Opus 4.7 (1M context))
+
+The frontend camera roster is no longer a static TypeScript array. Boss's rule: cameras come and go on the farm (phones plugged/unplugged, laptops repurposed, new hardware added) and the website must deal with that without a code change or redeploy. Previously, `lib/cameras.ts`'s `CAMERAS` array was the single source of truth; a camera being absent from it meant it didn't render, and a camera being in it but offline in Guardian meant the grid showed stuck-in-`CONNECTING` tiles.
+
+**What changed:**
+
+- **New `lib/guardian-roster.ts`:** client hook `useGuardianRoster()` fetches Guardian's `/api/cameras` endpoint every 30s and returns `{ cameras: CameraMeta[], ready }`. Each backend entry is run through `resolveCameraMeta(name)` so it arrives at the UI with full display metadata — either from the static overlay in `lib/cameras.ts` or a sensible default derived from the camera name. Fetch errors keep the last good roster (or the fallback overlay) visible rather than blinking to empty.
+- **`lib/cameras.ts` — repurposed from "the roster" to "optional display overlay":** the `CAMERAS` array is now documented as a metadata overlay for cameras that have ever been on the farm, used for labels/aspect ratios when those cameras appear in the live roster or in historical gem data. `CameraName` is now `string` (not a literal union) because the backend can name any camera whatever it wants. `isCameraName` accepts any non-empty string. New `resolveCameraMeta(name)` always returns a usable `CameraMeta` — either the overlay entry or a `{ name, label: name, shortLabel: name, device: name, aspectRatio: "16 / 9" }` default. Old semantics preserved: do NOT delete entries from here when a camera goes offline; the overlay is intentionally "sticky" so historical gem filter chips keep their labels.
+- **`GuardianCameraStage.tsx`:** types loosened to `string` for `defaultFeatured`, `CameraName` import removed. Featured-fallback improved: if the user's stored/URL-pinned camera is not in the current roster, fall back to `cameras[0]` instead of rendering an empty stage. Empty-state copy updated to say "Guardian's /api/cameras returned no cameras yet" (old text pointed at `lib/cameras.ts`, which is no longer authoritative).
+- **`GuardianDashboard.tsx`:** stops passing hardcoded `CAMERAS` into the stage; uses `useGuardianRoster()` instead. Refactored the `/api/status` poller to put `setState` inside `.then` callbacks (fixes React-19 `react-hooks/set-state-in-effect` lint).
+- **`GuardianHomeSection.tsx`:** converted to `"use client"` so it can consume the roster hook. The system info panel's "Cameras" list now enumerates the live roster (was previously hardcoded from `CAMERAS`), as does the pipeline summary row's camera count.
+- **`GuardianHomeBadge.tsx`:** removed the `{CAMERAS.length}` fallback string — the live count comes from `/api/status`; when Guardian is unreachable we just say "Snapshot polling" rather than print a stale number.
+- **`GuardianPTZPanel.tsx`:** effect refactored to put `setState` inside `.then` callbacks (React-19 lint fix, same as GuardianDashboard).
+- **`GuardianCameraFeed.tsx`:** added a targeted `// eslint-disable-next-line @next/next/no-img-element` with a comment explaining why blob-URL snapshot polling intentionally bypasses `next/image`.
+
+**What did not change:**
+
+- `lib/gems-format.ts` and `app/components/gems/GemFilters.tsx` still import `CAMERAS` — intentionally. The gem filter chips are historical (they filter gems already in the archive), so they want the full "known hardware" list even when a camera is currently offline.
+- The `content/projects/guardian/index.mdx` hardware table is narrative documentation and was left untouched.
+
+**Lint + build:** `npm run lint` is now 0 errors / 0 warnings (down from 3 errors + 1 warning that were pre-existing baseline). `npm run build` succeeds cleanly for all 18 routes. Full plan: `docs/16-Apr-2026-dynamic-camera-roster-plan.md`.
 
 ### Added — smart camera visibility on the Guardian stage (Claude Opus 4.6 (1M context))
 

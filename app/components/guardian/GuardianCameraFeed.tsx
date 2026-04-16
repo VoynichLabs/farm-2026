@@ -163,6 +163,11 @@ export default function GuardianCameraFeed({
       style={{ background: "#0a0f1e" }}
     >
       {showFeed ? (
+        // Plain <img> is intentional: frameUrl is a blob: URL created from
+        // createObjectURL every ~1.2s. next/image expects stable remote
+        // sources it can optimize at the CDN; routing every snapshot through
+        // its optimization pipeline would just add overhead for no gain.
+        // eslint-disable-next-line @next/next/no-img-element -- blob: URL from snapshot polling, not CDN-optimizable
         <img
           src={frameUrl!}
           alt={`Live farm camera — ${label}`}

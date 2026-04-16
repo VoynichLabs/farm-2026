@@ -1,64 +1,58 @@
 "use client";
 /**
- * Author: Claude Opus 4.6
- * Date: 12-Apr-2026
+ * Author: Claude Opus 4.7 (1M context)
+ * Date: 16-Apr-2026
  * PURPOSE: Guardian live dashboard — LIVE STREAMS + MANUAL CONTROLS.
  *   Renders the camera stage (one featured, others as thumbs; click to
  *   promote) and the PTZ control panel for the house-yard Reolink. All
- *   detection-pipeline UI (detections table, tracks, deterrent, summary,
- *   eBird) was removed in v1.4.0 because the detection pipeline is not
- *   currently feeding frames — the cards rendered empty and looked broken.
- *   The only poll loop left is /api/status, for the online indicator and
- *   cameras-online count.
+ *   detection-pipeline UI was removed in v1.4.0; the only poll loop left
+ *   is /api/status for the online indicator and cameras-online count.
+ *   The camera roster for the stage is fetched live from Guardian's
+ *   `/api/cameras` via `useGuardianRoster` — adding/removing cameras on
+ *   the backend reflects on the page without a code change.
  * SRP/DRY check: Pass — orchestrator delegates to GuardianStatusBar,
- *   GuardianCameraStage, and GuardianPTZPanel. Camera list from
- *   lib/cameras.ts (SSoT). Detection components still exist in the repo
- *   for possible future reuse on a separate "intel" page, but are no
- *   longer imported here.
+ *   GuardianCameraStage, and GuardianPTZPanel. Roster comes from a
+ *   dedicated hook, not a hardcoded list.
  */
 
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import { GUARDIAN_API, GuardianStatus } from "./types";
 import GuardianStatusBar from "./GuardianStatusBar";
 import GuardianCameraStage from "./GuardianCameraStage";
 import GuardianPTZPanel from "./GuardianPTZPanel";
-import { CAMERAS } from "@/lib/cameras";
+import { useGuardianRoster } from "@/lib/guardian-roster";
 
-async function fetchJSON<T>(path: string): Promise<T | null> {
-  try {
-    const res = await fetch(`${GUARDIAN_API}${path}`);
-    if (!res.ok) return null;
-    return (await res.json()) as T;
-  } catch {
-    return null;
-  }
+function fetchStatus(): Promise<GuardianStatus | null> {
+  return fetch(`${GUARDIAN_API}/api/status`)
+    .then((res) => (res.ok ? (res.json() as Promise<GuardianStatus>) : null))
+    .catch(() => null);
 }
 
 export default function GuardianDashboard() {
   const [online, setOnline] = useState<boolean | null>(null);
   const [status, setStatus] = useState<GuardianStatus | null>(null);
-
-  const mountedRef = useRef(true);
+  const { cameras } = useGuardianRoster();
 
   // Single poll loop: only /api/status. Drives the online dot and the
-  // "Cameras N/M online" readout. All detection-pipeline fetches removed.
-  const fetchStatus = useCallback(async () => {
-    if (!mountedRef.current) return;
-    const s = await fetchJSON<GuardianStatus>("/api/status");
-    if (!mountedRef.current) return;
-    setOnline(s?.online ?? false);
-    setStatus(s);
-  }, []);
-
+  // "Cameras N/M online" readout. setState runs inside the .then callback
+  // (not synchronously in the effect body) so React's new
+  // `set-state-in-effect` rule is satisfied.
   useEffect(() => {
-    mountedRef.current = true;
-    fetchStatus();
-    const id = setInterval(fetchStatus, 10000);
+    let cancelled = false;
+    const apply = (s: GuardianStatus | null) => {
+      if (cancelled) return;
+      setOnline(s?.online ?? false);
+      setStatus(s);
+    };
+    fetchStatus().then(apply);
+    const id = setInterval(() => {
+      fetchStatus().then(apply);
+    }, 10000);
     return () => {
-      mountedRef.current = false;
+      cancelled = true;
       clearInterval(id);
     };
-  }, [fetchStatus]);
+  }, []);
 
   return (
     <div className="bg-guardian-bg text-guardian-text rounded-lg overflow-hidden border border-guardian-border mb-8">
@@ -68,7 +62,7 @@ export default function GuardianDashboard() {
       {/* === LIVE CAMERA FEEDS — modular stage: click a thumb to promote it === */}
       <div className="p-2">
         <GuardianCameraStage
-          cameras={CAMERAS}
+          cameras={cameras}
           defaultFeatured="house-yard"
           storageKey="farm2026.guardian.featured.dashboard"
           online={online}

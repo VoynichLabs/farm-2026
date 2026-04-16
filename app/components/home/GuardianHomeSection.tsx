@@ -1,20 +1,25 @@
+"use client";
 /**
- * Author: Claude Opus 4.6
- * Date: 13-Apr-2026
+ * Author: Claude Opus 4.7 (1M context)
+ * Date: 16-Apr-2026
  * PURPOSE: Homepage Guardian section — live status badge, camera stage, and a
- *   right-hand system info panel that enumerates cameras from the lib/cameras.ts
- *   SSoT. The camera count in the bottom pipeline row is derived from
- *   CAMERAS.length — no hardcoded "N cameras" literal anywhere in this file.
- * SRP/DRY check: Pass — one job: render the homepage Guardian block. Cameras
- *   enumerated via CAMERAS.map (SSoT). See
- *   docs/13-Apr-2026-frontend-srp-dry-rewrite-plan.md.
+ *   right-hand system info panel that enumerates the live camera roster
+ *   fetched from Guardian's `/api/cameras`. The roster is data, not a
+ *   hardcoded list: adding or removing a camera on the backend updates the
+ *   stage AND the system panel AND the pipeline summary row automatically.
+ * SRP/DRY check: Pass — one job: render the homepage Guardian block.
+ *   Roster + metadata come from `useGuardianRoster()`; display metadata
+ *   fallback lives in `lib/cameras.ts`.
  */
 import Link from "next/link";
 import GuardianHomeBadge from "@/app/components/guardian/GuardianHomeBadge";
 import GuardianCameraStage from "@/app/components/guardian/GuardianCameraStage";
-import { CAMERAS, DEFAULT_FEATURED } from "@/lib/cameras";
+import { DEFAULT_FEATURED } from "@/lib/cameras";
+import { useGuardianRoster } from "@/lib/guardian-roster";
 
 export default function GuardianHomeSection() {
+  const { cameras } = useGuardianRoster();
+
   return (
     <section className="bg-guardian-bg text-guardian-text">
       {/* Live status bar — fetches real data from Guardian API */}
@@ -27,7 +32,7 @@ export default function GuardianHomeSection() {
           {/* Camera feeds — modular stage: click a thumb to promote it */}
           <div className="flex-[55] min-w-0">
             <GuardianCameraStage
-              cameras={CAMERAS}
+              cameras={cameras}
               defaultFeatured={DEFAULT_FEATURED}
               storageKey="farm2026.guardian.featured.home"
               online={null}
@@ -54,11 +59,15 @@ export default function GuardianHomeSection() {
             {/* Cameras */}
             <div className="text-[0.65rem] uppercase tracking-wider text-guardian-hover font-semibold">Cameras</div>
             <div className="text-guardian-muted text-[0.7rem] leading-snug space-y-0.5">
-              {CAMERAS.map((cam, i) => (
-                <div key={cam.name}>
-                  Cam {i + 1}: <span className="text-slate-300">{cam.device}</span>
-                </div>
-              ))}
+              {cameras.length === 0 ? (
+                <div>Roster loading…</div>
+              ) : (
+                cameras.map((cam, i) => (
+                  <div key={cam.name}>
+                    Cam {i + 1}: <span className="text-slate-300">{cam.device}</span>
+                  </div>
+                ))
+              )}
             </div>
 
             <div className="border-t border-guardian-border my-0.5" />
@@ -95,7 +104,7 @@ export default function GuardianHomeSection() {
             <tbody>
               <tr>
                 <td className="px-2 py-1 text-slate-300">Snapshot polling (OpenCV)</td>
-                <td className="px-2 py-1 text-slate-300">{CAMERAS.length} cameras</td>
+                <td className="px-2 py-1 text-slate-300">{cameras.length > 0 ? `${cameras.length} cameras` : "—"}</td>
                 <td className="px-2 py-1 text-slate-300">Discord + 4K Snapshots</td>
                 <td className="px-2 py-1 text-right">
                   <Link href="/projects/guardian" className="text-blue-400 hover:text-blue-300 text-[0.7rem]">

@@ -1,37 +1,48 @@
 /**
- * Author: Claude Opus 4.6
- * Date: 13-Apr-2026
- * PURPOSE: Single source of truth for Guardian cameras. Names, labels,
- *   devices, and native aspect ratios live here so UI layout can size
- *   containers to match each feed. Consumed by `GuardianCameraStage`,
- *   the homepage system panel, and the live `/projects/guardian` dashboard.
+ * Author: Claude Opus 4.7 (1M context)
+ * Date: 16-Apr-2026
+ * PURPOSE: Camera UI metadata overlay — NOT a roster. The authoritative list
+ *   of live cameras is fetched at runtime from Guardian's `/api/cameras`
+ *   endpoint (see `lib/guardian-roster.ts`). This file carries optional
+ *   display metadata (nice label, shortLabel, device description, aspect
+ *   ratio) for every camera that has ever been on the farm, so the UI can
+ *   render a pleasant label when a camera name shows up in the live roster
+ *   or in historical data (gems, filters).
  *
- *   NAMING RULE: every string here — `label`, `shortLabel`, `device` — MUST
- *   identify the hardware, never the location. Cameras move. Locations
- *   change. The hardware doesn't. No "brooder", "nestbox", "coop", or
- *   "yard" in any field on this struct. If you're tempted to write where
- *   a camera is pointed, write that somewhere else (a field note) — not
- *   here.
+ *   Rules:
+ *   - DO NOT treat this array as "the camera list." A camera being absent
+ *     here just means no one has written metadata for it; it should still
+ *     render with sensible defaults (see `resolveCameraMeta`).
+ *   - DO NOT delete entries from here just because a camera is currently
+ *     offline or missing from Guardian's config. Cameras come and go on
+ *     this farm; the frontend must not prune the historical roster.
+ *   - NAMING RULE: every `label`, `shortLabel`, `device` must identify the
+ *     hardware, never the location. Cameras move; hardware doesn't.
  *
- *   The `name` keys (`house-yard`, etc.) are API keys from farm-guardian's
- *   config.json — they can't be renamed unilaterally from the frontend. The
- *   `house-yard` key is legacy-location-named; a rename needs coordinated
- *   backend change. UI-facing strings (label/shortLabel/device) follow the
- *   hardware-only rule today.
- * SRP/DRY check: Pass — single source, consumed by all camera UI.
+ *   Consumers:
+ *   - `lib/guardian-roster.ts` — merges live `/api/cameras` with this
+ *     overlay so the stage gets full metadata for each camera.
+ *   - `lib/gems-format.ts`, `app/components/gems/GemFilters.tsx` —
+ *     historical gem filter chips use this metadata to label cameras whose
+ *     gems are in the archive (even if the camera is offline today).
+ *
+ * SRP/DRY check: Pass — single job: map camera name → display metadata,
+ *   with a graceful default for unknown names.
  */
 
-export type CameraName = "house-yard" | "s7-cam" | "usb-cam" | "gwtc" | "mba-cam";
+export type CameraName = string;
 
 export interface CameraMeta {
   name: CameraName;
-  label: string;         // full display label — used on the stage overlay — HARDWARE ONLY
-  shortLabel: string;    // compact label — used on thumbnails — HARDWARE ONLY
-  device: string;        // hardware description — used in system panel — HARDWARE ONLY
+  label: string;         // full display label — HARDWARE ONLY
+  shortLabel: string;    // compact label — HARDWARE ONLY
+  device: string;        // hardware description — HARDWARE ONLY
   aspectRatio: string;   // CSS aspect-ratio value, e.g. "16 / 9"
 }
 
-// Ordered: thumbs render in this order; the featured cam is pulled out.
+// Order is historical / presentation — newly-added cameras should be
+// appended, not inserted, so existing localStorage `featured` keys remain
+// meaningful. This array does NOT decide which cameras render.
 export const CAMERAS: CameraMeta[] = [
   {
     name: "usb-cam",
@@ -70,12 +81,34 @@ export const CAMERAS: CameraMeta[] = [
   },
 ];
 
+// Preferred featured camera for the homepage rail. The stage falls back to
+// the first camera in the live roster if this name isn't present.
 export const DEFAULT_FEATURED: CameraName = "usb-cam";
 
+const BY_NAME: Map<string, CameraMeta> = new Map(CAMERAS.map((c) => [c.name, c]));
+
 export function getCamera(name: string): CameraMeta | undefined {
-  return CAMERAS.find((c) => c.name === name);
+  return BY_NAME.get(name);
 }
 
-export function isCameraName(name: string): name is CameraName {
-  return CAMERAS.some((c) => c.name === name);
+// Always returns a CameraMeta — known cameras get their overlay, unknown
+// cameras get sensible defaults (name as label, 16/9) so the UI renders
+// something reasonable for any camera the backend returns.
+export function resolveCameraMeta(name: string): CameraMeta {
+  const hit = BY_NAME.get(name);
+  if (hit) return hit;
+  return {
+    name,
+    label: name,
+    shortLabel: name,
+    device: name,
+    aspectRatio: "16 / 9",
+  };
+}
+
+// Accepts any non-empty string as a valid camera identifier. The backend
+// roster defines what's actually live; UI code should not gate on a static
+// union.
+export function isCameraName(name: unknown): name is CameraName {
+  return typeof name === "string" && name.length > 0;
 }
