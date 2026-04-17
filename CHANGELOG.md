@@ -3,7 +3,23 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
-## [Unreleased] — 2026-04-16
+## [Unreleased] — 2026-04-17
+
+### Added — /yard route + daily yard-diary capture pipeline (Claude Opus 4.7 (1M context))
+
+One-frame-a-day record of the yard pulled from the Reolink (`house-yard`) at noon local. Exists because the curated gems pipeline, by design, only promotes frames that score `share_worth='strong'` — and the seasonal story Boss wants (cherry bloom, leaf-out, fall colour, snow) is a scheduled-cadence story, not a stochastic-curation one. The daily frame is guaranteed to land regardless of what the VLM thinks.
+
+**Capture (on the Mini, in farm-guardian):**
+
+- `scripts/yard-diary-capture.sh` pulls a 4K snapshot from Guardian's local `/api/v1/cameras/house-yard/snapshot`, stores the master under `farm-guardian/data/yard-diary/{YYYY-MM-DD}.jpg`, resizes to 1920px via `sips` into this repo's `public/photos/yard-diary/`, then commits + pushes so Railway redeploys with the new frame baked into the static build.
+- `~/Library/LaunchAgents/com.voynichlabs.yard-diary-capture.plist` fires it at 12:00 local every day. Idempotent: re-running on the same day overwrites.
+- Logs to `farm-guardian/data/pipeline-logs/yard-diary.log`. Suspiciously small snapshots (< 50 KB) are rejected rather than overwriting a good frame with garbage.
+
+**Publish path is deliberate.** The diary is served from Railway's CDN — not the Cloudflare tunnel to the Mini, unlike the gems gallery. Rationale: this is a slow-cadence curated record that should stay visible even if the Mini is offline for a day. Git-committed JPEGs are immutable, CDN-cached, and survive tunnel drops. Trade-off: each capture triggers a Railway redeploy; one deploy/day is fine.
+
+**Frontend:** `app/yard/page.tsx` — server component reads `public/photos/yard-diary/` at build time, renders today's frame as the hero + prior days in a reverse-chron 3-col grid. Uses `next/image` (unlike the gems rail) because the files are local to the build. No client JS, no tunnel dependency.
+
+**First entry:** 2026-04-17 (captured manually during setup; automation takes over from tomorrow's noon run).
 
 ### Changed — camera roster is now derived from Guardian backend, not a hardcoded list (Claude Opus 4.7 (1M context))
 
