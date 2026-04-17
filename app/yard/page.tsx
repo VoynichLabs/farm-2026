@@ -1,16 +1,24 @@
 /**
  * Author: Claude Opus 4.7 (1M context)
  * Date: 17-Apr-2026
- * PURPOSE: /yard route — daily yard-diary grid. One frame per day pulled
- *   from the Reolink (house-yard) at noon by the farm-guardian launchd
- *   job (~/Library/LaunchAgents/com.voynichlabs.yard-diary-capture.plist),
- *   committed to public/photos/yard-diary/{YYYY-MM-DD}.jpg and served
- *   from Railway's own CDN. No Cloudflare tunnel dependency at view time.
- *   Today's frame is the hero; previous days fall into a reverse-chron
- *   grid. Captures seasonal change — cherry bloom, summer, fall colour,
- *   snow — on a predictable daily cadence.
- * SRP/DRY check: Pass — single responsibility: enumerate daily frames
- *   from disk and render. No API I/O, no client state.
+ * PURPOSE: /yard route — thrice-daily yard-diary gallery. Frames are
+ *   captured by farm-guardian's yard-diary-capture.py at 07:00 / 12:00 /
+ *   16:00 local and committed into public/photos/yard-diary/ as
+ *   {YYYY-MM-DD}-{morning|noon|evening}.jpg. Each JPEG has the date
+ *   (DD-Mon-YYYY, Boss's standard format) burned into the image itself
+ *   so the year-end retrospective reads as a single labelled artifact
+ *   per frame — no reliance on HTML captions, alt text, or any runtime
+ *   metadata that could get stripped if the image is ever reused
+ *   elsewhere (print, slideshow, re-share).
+ *
+ *   Layout: latest frame as hero, then one row per day with up to three
+ *   thumbs (morning / noon / evening) in chronological slot order, most
+ *   recent date first. The whole thing is a server component — no
+ *   client JS, no API calls at view time, no Cloudflare tunnel
+ *   dependency. Railway serves the JPEGs from its own CDN and
+ *   re-prerenders the page on each daily commit.
+ * SRP/DRY check: Pass — single responsibility: enumerate frames from
+ *   disk and render grouped by day. No I/O beyond readdirSync.
  */
 import type { Metadata } from "next";
 import fs from "node:fs";
@@ -20,42 +28,84 @@ import Image from "next/image";
 export const metadata: Metadata = {
   title: "Yard Diary",
   description:
-    "One frame of the yard, every day. Pulled from the Reolink at noon. The seasons roll through the tree line.",
+    "Three frames of the yard every day — morning, noon, evening. Pulled from the Reolink. The seasons roll through the tree line.",
 };
 
-interface DiaryEntry {
-  date: string;
+type Slot = "morning" | "noon" | "evening";
+const SLOT_ORDER: readonly Slot[] = ["morning", "noon", "evening"] as const;
+const SLOT_LABEL: Record<Slot, string> = {
+  morning: "Morning",
+  noon: "Noon",
+  evening: "Evening",
+};
+
+interface Frame {
+  date: string; // YYYY-MM-DD
+  slot: Slot;
   src: string;
 }
 
-function getEntries(): DiaryEntry[] {
-  const diaryDir = path.join(process.cwd(), "public", "photos", "yard-diary");
-  if (!fs.existsSync(diaryDir)) return [];
-  const files = fs
-    .readdirSync(diaryDir)
-    .filter((f) => /^\d{4}-\d{2}-\d{2}\.jpg$/.test(f))
-    .sort()
-    .reverse();
-  return files.map((f) => ({
-    date: f.replace(/\.jpg$/, ""),
-    src: `/photos/yard-diary/${f}`,
-  }));
+interface DayGroup {
+  date: string;
+  frames: Frame[]; // ordered morning → noon → evening
 }
 
-function formatDate(iso: string): string {
+function readFrames(): Frame[] {
+  const dir = path.join(process.cwd(), "public", "photos", "yard-diary");
+  if (!fs.existsSync(dir)) return [];
+  const pattern = /^(\d{4}-\d{2}-\d{2})-(morning|noon|evening)\.jpg$/;
+  return fs
+    .readdirSync(dir)
+    .flatMap((f) => {
+      const m = pattern.exec(f);
+      if (!m) return [];
+      return [
+        {
+          date: m[1],
+          slot: m[2] as Slot,
+          src: `/photos/yard-diary/${f}`,
+        },
+      ];
+    });
+}
+
+function groupByDay(frames: Frame[]): DayGroup[] {
+  const byDate = new Map<string, Frame[]>();
+  for (const f of frames) {
+    const bucket = byDate.get(f.date) ?? [];
+    bucket.push(f);
+    byDate.set(f.date, bucket);
+  }
+  const groups: DayGroup[] = [];
+  for (const [date, bucket] of byDate) {
+    bucket.sort(
+      (a, b) => SLOT_ORDER.indexOf(a.slot) - SLOT_ORDER.indexOf(b.slot),
+    );
+    groups.push({ date, frames: bucket });
+  }
+  groups.sort((a, b) => (a.date < b.date ? 1 : -1));
+  return groups;
+}
+
+function latestFrame(groups: DayGroup[]): Frame | undefined {
+  const today = groups[0];
+  if (!today) return undefined;
+  return today.frames[today.frames.length - 1];
+}
+
+function formatBossDate(iso: string): string {
   const d = new Date(`${iso}T12:00:00`);
-  return d.toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
+  return d.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
     year: "numeric",
-  });
+  }).replace(/ /g, "-");
 }
 
 export default function YardDiaryPage() {
-  const entries = getEntries();
-  const hero = entries[0];
-  const rest = entries.slice(1);
+  const frames = readFrames();
+  const groups = groupByDay(frames);
+  const hero = latestFrame(groups);
 
   return (
     <main className="min-h-screen bg-cream">
@@ -65,15 +115,15 @@ export default function YardDiaryPage() {
             Yard Diary
           </h1>
           <p className="text-forest/70 max-w-2xl">
-            One frame of the yard, captured from the Reolink at noon every
-            day. The tree line does what tree lines do — bud, bloom, leaf out,
-            burn, drop, gather snow. This is the slow-cadence record.
+            Three frames of the yard every day — morning, noon, evening —
+            pulled from the Reolink. One long seasonal record: tree line
+            budding, cherry blossoms, summer green, autumn burn, snow.
           </p>
         </header>
 
         {!hero ? (
           <div className="rounded-2xl border border-forest/10 bg-white p-12 text-center text-forest/60">
-            No frames captured yet. The first will land today at noon.
+            No frames captured yet.
           </div>
         ) : (
           <>
@@ -81,7 +131,7 @@ export default function YardDiaryPage() {
               <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-forest/10 shadow-sm">
                 <Image
                   src={hero.src}
-                  alt={`Yard on ${formatDate(hero.date)}`}
+                  alt={`Yard on ${formatBossDate(hero.date)}, ${SLOT_LABEL[hero.slot]}`}
                   fill
                   priority
                   sizes="(max-width: 768px) 100vw, 1152px"
@@ -89,37 +139,39 @@ export default function YardDiaryPage() {
                 />
               </div>
               <figcaption className="mt-3 text-sm text-forest/60 font-serif">
-                {formatDate(hero.date)}
+                {formatBossDate(hero.date)} · {SLOT_LABEL[hero.slot]}
               </figcaption>
             </figure>
 
-            {rest.length > 0 && (
-              <>
-                <h2 className="text-xl font-semibold font-serif text-forest mb-4">
-                  Earlier
-                </h2>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {rest.map((entry) => (
-                    <li key={entry.date}>
-                      <figure>
-                        <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden border border-forest/10">
-                          <Image
-                            src={entry.src}
-                            alt={`Yard on ${formatDate(entry.date)}`}
-                            fill
-                            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                            className="object-cover"
-                          />
-                        </div>
-                        <figcaption className="mt-2 text-xs text-forest/60 font-serif">
-                          {formatDate(entry.date)}
-                        </figcaption>
-                      </figure>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
+            <ol className="space-y-10">
+              {groups.map((day) => (
+                <li key={day.date}>
+                  <h2 className="text-lg font-semibold font-serif text-forest mb-3">
+                    {formatBossDate(day.date)}
+                  </h2>
+                  <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {day.frames.map((frame) => (
+                      <li key={frame.slot}>
+                        <figure>
+                          <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden border border-forest/10">
+                            <Image
+                              src={frame.src}
+                              alt={`Yard on ${formatBossDate(frame.date)}, ${SLOT_LABEL[frame.slot]}`}
+                              fill
+                              sizes="(max-width: 640px) 100vw, 33vw"
+                              className="object-cover"
+                            />
+                          </div>
+                          <figcaption className="mt-1.5 text-xs text-forest/60 font-serif tracking-wide">
+                            {SLOT_LABEL[frame.slot]}
+                          </figcaption>
+                        </figure>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ol>
           </>
         )}
       </section>

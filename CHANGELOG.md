@@ -5,21 +5,23 @@ Format: [SemVer](https://semver.org/) — what / why / how.
 
 ## [Unreleased] — 2026-04-17
 
-### Added — /yard route + daily yard-diary capture pipeline (Claude Opus 4.7 (1M context))
+### Added — /yard route + thrice-daily dated yard-diary pipeline (Claude Opus 4.7 (1M context))
 
-One-frame-a-day record of the yard pulled from the Reolink (`house-yard`) at noon local. Exists because the curated gems pipeline, by design, only promotes frames that score `share_worth='strong'` — and the seasonal story Boss wants (cherry bloom, leaf-out, fall colour, snow) is a scheduled-cadence story, not a stochastic-curation one. The daily frame is guaranteed to land regardless of what the VLM thinks.
+Seasonal record of the yard built for a year-end retrospective. Shipped within hours of Boss asking because the cherry tree is blooming right now. Exists alongside the VLM-curated gems pipeline rather than replacing it — gems = stochastic "strong chicken moments", yard-diary = guaranteed thrice-daily seasonal artifact.
 
-**Capture (on the Mini, in farm-guardian):**
+**Capture schedule:** 07:00 (morning), 12:00 (noon), 16:00 (evening) local, daily. All three fire from one launchd plist (`com.farmguardian.yard-diary-capture`); the Python script derives its slot from the current hour.
 
-- `scripts/yard-diary-capture.sh` pulls a 4K snapshot from Guardian's local `/api/v1/cameras/house-yard/snapshot`, stores the master under `farm-guardian/data/yard-diary/{YYYY-MM-DD}.jpg`, resizes to 1920px via `sips` into this repo's `public/photos/yard-diary/`, then commits + pushes so Railway redeploys with the new frame baked into the static build.
-- `~/Library/LaunchAgents/com.voynichlabs.yard-diary-capture.plist` fires it at 12:00 local every day. Idempotent: re-running on the same day overwrites.
-- Logs to `farm-guardian/data/pipeline-logs/yard-diary.log`. Suspiciously small snapshots (< 50 KB) are rejected rather than overwriting a good frame with garbage.
+**Date burned into the pixels.** Every published JPEG has `DD-Mon-YYYY` — Boss's standard date format — rendered bottom-right in a rounded translucent pill (HelveticaNeue via Pillow). The retrospective artifact is self-describing: print it, slideshow it, repost it, the date comes along.
 
-**Publish path is deliberate.** The diary is served from Railway's CDN — not the Cloudflare tunnel to the Mini, unlike the gems gallery. Rationale: this is a slow-cadence curated record that should stay visible even if the Mini is offline for a day. Git-committed JPEGs are immutable, CDN-cached, and survive tunnel drops. Trade-off: each capture triggers a Railway redeploy; one deploy/day is fine.
+**Filenames:** `{YYYY-MM-DD}-{morning|noon|evening}.jpg` under `public/photos/yard-diary/`. 4K masters live indefinitely on the Mini; published copies are 1920px long-edge with the date overlay, committed into this repo so Railway serves them from its own CDN.
 
-**Frontend:** `app/yard/page.tsx` — server component reads `public/photos/yard-diary/` at build time, renders today's frame as the hero + prior days in a reverse-chron 3-col grid. Uses `next/image` (unlike the gems rail) because the files are local to the build. No client JS, no tunnel dependency.
+**Publish path is deliberate.** JPEGs land in farm-2026's `public/` rather than behind a new Guardian API endpoint, so the diary is served from Railway's CDN with zero Cloudflare-tunnel dependency at view time. Tunnel drops don't affect the surface. Trade-off: three Railway redeploys/day, acceptable.
 
-**First entry:** 2026-04-17 (captured manually during setup; automation takes over from tomorrow's noon run).
+**Frontend:** `app/yard/page.tsx` parses `{date}-{slot}.jpg` filenames, groups by day, renders the latest slot as hero and one triptych row per day below (morning / noon / evening in chronological order, newest day first). Slot labels come from HTML; dates come from the image itself. Server component, no client JS, no API calls at view time.
+
+**First dated frame:** `2026-04-17-noon.jpg`. Automation takes over from 16:00 today for the evening slot.
+
+Capture implementation lives in `farm-guardian/scripts/yard-diary-capture.py` (Python, Pillow, stdlib urllib + subprocess for git); installed at `~/bin/yard-diary-capture.py` to avoid macOS TCC denies on `~/Documents/` execution. Full writeup: `farm-guardian/docs/17-Apr-2026-yard-diary-capture-plan.md`.
 
 ### Changed — camera roster is now derived from Guardian backend, not a hardcoded list (Claude Opus 4.7 (1M context))
 
