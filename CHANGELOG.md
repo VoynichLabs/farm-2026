@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [Unreleased] — 2026-04-18
+
+### Docs — yard-diary purpose re-clarified + cross-links between gallery surfaces (Claude Opus 4.7 (1M context))
+
+Boss flagged two discoverability problems after reviewing the 17-Apr-2026 yard-diary ship:
+
+1. **No visible link from `/gallery` to `/gallery/gems`.** The gems wall — the live VLM-curated output of the farm-guardian image pipeline — was reachable only by typing the URL. The top nav `Gallery` link landed on the hand-curated `content/gallery.json` archive, which is the *quietest* of the three surfaces, and from there a visitor had no way to reach the live feed.
+2. **Yard-diary's purpose was under-documented.** The 17-Apr-2026 entry explained the mechanics (thrice-daily, dated, committed to the repo) but buried the *why*: these frames are raw stockpile for a year-end timelapse reel (cherry bloom → summer green → autumn burn → snow). Individual frames are boring on purpose; the sequence is the artifact. A future Claude reading the codebase could reasonably conclude "boring daily content" and propose retiring the pipeline.
+
+**What changed:**
+
+- **`/gallery`:** Added two prominent sibling cards directly below the hero — **Gems** (live, machine-curated) and **Yard Diary** (stockpile, dated). Both link to their own surfaces. The `content/gallery.json`-driven archive sections sit below.
+- **`/gallery/gems`:** Added a small mono-font sibling nav below the hero linking back to `/gallery` (curated archive) and forward to `/yard` (timelapse stockpile).
+- **`/yard`:** Added matching sibling nav, plus a second paragraph in the page header copy stating the reel-for-year-end purpose out loud so even a visitor (not just a future Claude) knows this isn't meant to be a museum-grade daily gallery.
+- **`app/yard/page.tsx` file header:** Rewritten to lead with the timelapse-raw-material purpose; explicit warning not to redesign the page "more gallery-like" because the design is already correct.
+- **`docs/FRONTEND-ARCHITECTURE.md`:** New row in the SSoT table for `public/photos/yard-diary/` with a "do not delete, do not stop capture" directive.
+- **No code changes to the yard-diary capture pipeline itself.** Schedule, master path, publish path, commit behavior all unchanged.
+
+The `content/gallery.json` static archive is intentionally kept — Boss said "don't destroy anything, just create." Old hand-curated photos stay addressable; they just no longer front for the live pipeline.
+
+**Companion writeup:** `farm-guardian` CHANGELOG has the matching Python-side docs pass + the `com.farmguardian.yard-diary-capture` LaunchAgent invariant added to `farm-guardian/CLAUDE.md`. Auto-memory entry `project_yard_diary_pipeline.md` saved so future sessions start with the timelapse-purpose context.
+
 ## [Unreleased] — 2026-04-17
 
 ### Added — /yard route + thrice-daily dated yard-diary pipeline (Claude Opus 4.7 (1M context))

@@ -1,13 +1,17 @@
 /**
- * Author: Claude Opus 4.6 (1M context)
- * Date: 14-Apr-2026
+ * Author: Claude Opus 4.6 (1M context), edited by Claude Opus 4.7 18-Apr-2026
+ * Date: 14-Apr-2026 (edited 18-Apr-2026 to add sibling-gallery nav)
  * PURPOSE: Route entry for /gallery/gems — the curated wall of gems
  *   produced by the farm-guardian image pipeline. Parses search params
  *   (filter state lives in the URL) and defers the heavy lifting to
- *   GemsGallery (server) + GemsGalleryClient (client).
+ *   GemsGallery (server) + GemsGalleryClient (client). Sibling gallery
+ *   surfaces (curated archive at /gallery, yard-diary stockpile at
+ *   /yard) are linked inline below the hero so a visitor can hop
+ *   between the three without going back to the nav.
  * SRP/DRY check: Pass — thin wrapper only.
  */
 import type { Metadata } from "next";
+import Link from "next/link";
 import GemsGallery from "@/app/components/gems/GemsGallery";
 
 export const metadata: Metadata = {
@@ -31,6 +35,15 @@ export default async function GemsPage({ searchParams }: PageProps) {
           best ones indefinitely. Everything below is one of those frames.
           Captions are machine-drafted and unedited.
         </p>
+        <nav className="mt-5 flex items-center justify-center gap-3 text-xs font-mono text-cream/60">
+          <Link href="/gallery" className="hover:text-cream transition-colors">
+            ← Curated archive
+          </Link>
+          <span className="text-cream/30">·</span>
+          <Link href="/yard" className="hover:text-cream transition-colors">
+            Yard diary (timelapse stockpile) →
+          </Link>
+        </nav>
       </section>
 
       <section className="max-w-6xl mx-auto px-4 py-10">

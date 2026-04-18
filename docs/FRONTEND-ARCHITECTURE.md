@@ -20,6 +20,7 @@ If you are about to type a number, a breed, a camera name, or a hardware string 
 | Gallery photos (static) | `content/gallery.json` | `/gallery` |
 | Instagram embeds | `content/instagram-posts.json` | homepage `InstagramSection` |
 | **Curated image archive (Guardian pipeline)** | **`farm-guardian` SQLite → REST via `guardian.markbarney.net/api/v1/images/*` → `lib/gems.ts`** | **`/gallery/gems`, homepage `LatestFlockFrames`, `/flock/birdadette` retrospective.** See **`docs/14-Apr-2026-image-archive-dataset-and-frontend-plan.md`** — the dataset is large, growing hourly, and NOT obvious from the codebase. Read that plan before touching any curated-photo surface. |
+| **Yard-diary stockpile (thrice-daily yard frames, dates burned in)** | **`public/photos/yard-diary/{YYYY-MM-DD}-{morning\|noon\|evening}.jpg`** — auto-populated by `farm-guardian/scripts/yard-diary-capture.py` fired by `com.farmguardian.yard-diary-capture` LaunchAgent at 07:00 / 12:00 / 16:00 | **`/yard` page.** Purpose is **raw material for a year-end timelapse reel**, not curated daily content. Do not delete frames or stop the capture — the stockpile must keep accruing. 4K masters live on the Mini at `farm-guardian/data/yard-diary/`. Plan: **`farm-guardian/docs/17-Apr-2026-yard-diary-capture-plan.md`**. |
 
 All content loaders live in `lib/content.ts`. Use them. Do not re-implement `fs.readFileSync` in a page file.
 

@@ -1,15 +1,25 @@
 /**
  * Author: Claude Opus 4.7 (1M context)
- * Date: 17-Apr-2026
- * PURPOSE: /yard route — thrice-daily yard-diary gallery. Frames are
- *   captured by farm-guardian's yard-diary-capture.py at 07:00 / 12:00 /
- *   16:00 local and committed into public/photos/yard-diary/ as
+ * Date: 17-Apr-2026 (purpose re-clarified 18-Apr-2026)
+ * PURPOSE: /yard route — secondary browse surface for the yard-diary
+ *   stockpile. Frames are captured by farm-guardian's
+ *   yard-diary-capture.py at 07:00 / 12:00 / 16:00 local and committed
+ *   into public/photos/yard-diary/ as
  *   {YYYY-MM-DD}-{morning|noon|evening}.jpg. Each JPEG has the date
  *   (DD-Mon-YYYY, Boss's standard format) burned into the image itself
- *   so the year-end retrospective reads as a single labelled artifact
- *   per frame — no reliance on HTML captions, alt text, or any runtime
- *   metadata that could get stripped if the image is ever reused
- *   elsewhere (print, slideshow, re-share).
+ *   so the final artifact reads as self-describing — no reliance on
+ *   HTML captions, alt text, or any runtime metadata that could get
+ *   stripped when the image is reused (print, slideshow, reel).
+ *
+ *   *** PRIMARY PURPOSE IS NOT THIS PAGE ***
+ *   The yard-diary exists to produce a YEAR-END TIMELAPSE REEL
+ *   (cherry bloom → summer green → autumn burn → snow). The /yard
+ *   page is a secondary affordance so the stockpile is browsable,
+ *   not the reason the stockpile exists. Individual frames are boring
+ *   on purpose. Do not redesign this page to make the frames look
+ *   more "gallery-like" — they are already correct. See
+ *   farm-guardian/docs/17-Apr-2026-yard-diary-capture-plan.md and the
+ *   auto-memory entry project_yard_diary_pipeline.md for the why.
  *
  *   Layout: latest frame as hero, then one row per day with up to three
  *   thumbs (morning / noon / evening) in chronological slot order, most
@@ -24,6 +34,7 @@ import type { Metadata } from "next";
 import fs from "node:fs";
 import path from "node:path";
 import Image from "next/image";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Yard Diary",
@@ -114,11 +125,26 @@ export default function YardDiaryPage() {
           <h1 className="text-4xl md:text-5xl font-bold font-serif text-forest mb-3">
             Yard Diary
           </h1>
-          <p className="text-forest/70 max-w-2xl">
+          <p className="text-forest/70 max-w-2xl mb-3">
             Three frames of the yard every day — morning, noon, evening —
             pulled from the Reolink. One long seasonal record: tree line
             budding, cherry blossoms, summer green, autumn burn, snow.
           </p>
+          <p className="text-forest/55 max-w-2xl text-sm italic">
+            These frames are stockpile for a year-end timelapse reel. The
+            date is burned into each image so it survives any re-crop,
+            re-share, or re-render. Individual frames are a little boring
+            on purpose — the sequence is the artifact.
+          </p>
+          <nav className="mt-5 flex items-center gap-3 text-xs font-mono text-forest/60">
+            <Link href="/gallery" className="hover:text-forest transition-colors">
+              ← Curated archive
+            </Link>
+            <span className="text-forest/30">·</span>
+            <Link href="/gallery/gems" className="hover:text-forest transition-colors">
+              Live gems →
+            </Link>
+          </nav>
         </header>
 
         {!hero ? (

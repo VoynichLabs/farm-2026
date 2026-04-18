@@ -1,10 +1,17 @@
 'use client';
 /**
- * Author: Claude Opus 4.6
- * Date: 09-Apr-2026
+ * Author: Claude Opus 4.6, edited by Claude Opus 4.7 (1M context) 18-Apr-2026
+ * Date: 09-Apr-2026 (edited 18-Apr-2026 to surface sibling galleries)
  * PURPOSE: Photo gallery with lightbox. Data-driven from content/gallery.json —
  *   add photos by editing the JSON, no code changes needed.
- * SRP/DRY check: Pass — reads from gallery.json, single lightbox component.
+ *
+ *   The curated section below is the *archive* of farm photography. The live
+ *   feeds — the VLM-curated Gems and the thrice-daily Yard Diary stockpile —
+ *   are linked at the top as their own surfaces. Boss flagged (18-Apr-2026)
+ *   that Gems had no discoverable entry point from this page; the top nav
+ *   pointed at /gallery but the live pipeline wasn't surfaced from here.
+ * SRP/DRY check: Pass — reads from gallery.json, single lightbox component,
+ *   sibling galleries linked (not duplicated).
  */
 
 import { useState } from 'react';
@@ -39,6 +46,45 @@ export default function Gallery() {
         <p className="text-cream/70 text-lg max-w-xl mx-auto">
           Photos from the farm — what it looks like when an AI raises chickens.
         </p>
+      </section>
+
+      {/* Sibling gallery surfaces — the live pipeline outputs. Kept up here so
+          they're the first thing a visitor sees; the curated archive sits below. */}
+      <section className="max-w-6xl mx-auto px-4 pt-10 pb-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Link
+            href="/gallery/gems"
+            className="group block rounded-xl border border-forest/15 bg-white p-5 hover:border-forest/40 hover:shadow-md transition-all"
+          >
+            <p className="text-xs font-mono text-forest/40 tracking-wide mb-1">
+              LIVE · updates as frames are curated
+            </p>
+            <h2 className="text-xl font-bold font-serif text-forest group-hover:text-wood transition-colors">
+              Gems →
+            </h2>
+            <p className="text-sm text-forest/70 mt-1 leading-snug">
+              Every frame the multi-camera pipeline scored &ldquo;strong&rdquo;.
+              Chicks, hawks, the daily life of the flock. Captions are
+              machine-drafted and unedited.
+            </p>
+          </Link>
+          <Link
+            href="/yard"
+            className="group block rounded-xl border border-forest/15 bg-white p-5 hover:border-forest/40 hover:shadow-md transition-all"
+          >
+            <p className="text-xs font-mono text-forest/40 tracking-wide mb-1">
+              STOCKPILE · three frames a day, dated
+            </p>
+            <h2 className="text-xl font-bold font-serif text-forest group-hover:text-wood transition-colors">
+              Yard Diary →
+            </h2>
+            <p className="text-sm text-forest/70 mt-1 leading-snug">
+              Morning / noon / evening from the Reolink, every day.
+              Raw material for a year-end timelapse reel — cherry
+              bloom through snow.
+            </p>
+          </Link>
+        </div>
       </section>
 
       {/* Sections from gallery.json */}
