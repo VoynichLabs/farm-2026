@@ -77,6 +77,8 @@ Railway deploy is a fallback, not a blocker: `farm.markbarney.net/photos/...` ev
 
 **Don't add tokens to this repo.** If a future task asks to add an `IG_ACCESS_TOKEN` env var to Railway, push back — the posting runs on the Mini, not Railway, and the token lives in keychain. Full docs: `~/Documents/GitHub/farm-guardian/docs/19-Apr-2026-instagram-posting-plan.md`.
 
+**Auto-posting is live (as of 2026-04-20).** Farm Guardian's capture-cycle hook (`tools/pipeline/orchestrator.py → _maybe_post_to_ig()`) fires whenever a strong+sharp gem is detected, commits the JPEG into this repo, pushes, and posts to `@pawel_and_pawleen`. That means this repo's `main` branch will grow a steady stream of commits from the Mac Mini — each one adds one file under `public/photos/brooder/` (or yard-diary, coop, flock). Commit messages follow the pattern `public/photos/<subdir>: <gem-id> <short descriptor>`. Do not squash or rewrite these commits — the IG media_id is stable on the URL at that commit's HEAD, so history-rewriting could theoretically break past post URLs if IG ever re-fetches. **End-to-end architecture (what feeds what, where the secrets live, how the pipeline decides what to post):** `~/Documents/GitHub/farm-guardian/docs/HOW_IT_ALL_FITS.md`.
+
 **Separate follow-up (not wired yet):** `content/instagram-posts.json` currently embeds `@markbarney121` only. After the first few @pawel_and_pawleen posts land, consider adding those to the embed list on the homepage.
 
 ### Guardian integration
