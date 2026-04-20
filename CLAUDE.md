@@ -57,6 +57,28 @@ No test suite exists. Deployment targets Railway.app using the standalone Next.j
 - `/sitemap.xml` — Dynamic sitemap for SEO
 - `/robots.txt` — Crawler directives
 
+### Instagram posting (image-hosting side)
+
+The farm's Instagram account **@pawel_and_pawleen** posts via Meta Graph API from the Mac Mini — tokens live in that machine's keychain, **NOT in this repo** and **NOT in any Railway env var**. This repo's only role in that pipeline is **image hosting**.
+
+`public/photos/` is the staging directory for IG source URLs. When Farm Guardian (or a Claude agent on the Mini) wants to post a curated gem, it:
+
+1. Copies the JPEG to `public/photos/<subdir>/<name>.jpg` (convention: `brooder/`, `yard-diary/`, `flock/`, etc.).
+2. Commits + pushes.
+3. Uses the GitHub raw URL **immediately** as the `image_url` for the IG Graph API call:
+   ```
+   https://raw.githubusercontent.com/VoynichLabs/farm-2026/main/public/photos/<subdir>/<name>.jpg
+   ```
+   (IG fetches the image once at container-create time and caches it on Meta's CDN — the raw URL is only touched during ingestion.)
+
+Railway deploy is a fallback, not a blocker: `farm.markbarney.net/photos/...` eventually serves the same file ~2–5 min later, but IG posts don't need to wait for that.
+
+**Why this repo, not `guardian.markbarney.net`?** IG's media fetcher rejects URLs that don't end in `.jpg`/`.png` — Guardian's `/api/v1/images/gems/{id}/image?size=1920` trips the heuristic and fails. Railway-served static assets with clean extensions work. This is the same reason `scripts/yard-diary-capture.py` in farm-guardian commits photos here instead of exposing them through Guardian's tunnel.
+
+**Don't add tokens to this repo.** If a future task asks to add an `IG_ACCESS_TOKEN` env var to Railway, push back — the posting runs on the Mini, not Railway, and the token lives in keychain. Full docs: `~/Documents/GitHub/farm-guardian/docs/19-Apr-2026-instagram-posting-plan.md`.
+
+**Separate follow-up (not wired yet):** `content/instagram-posts.json` currently embeds `@markbarney121` only. After the first few @pawel_and_pawleen posts land, consider adding those to the embed list on the homepage.
+
 ### Guardian integration
 
 The Guardian page (`/projects/guardian`) is a live interactive dashboard, not a static MDX page. Key architecture:
