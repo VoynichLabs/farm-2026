@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
-## [Unreleased] — 2026-04-21
+## [1.8.2] — 2026-04-21
 
 ### Docs — FB cross-post is LIVE; record it here so no future assistant tries to "help" (Claude Opus 4.7 (1M context))
 
@@ -13,7 +13,7 @@ Farm Guardian now dual-posts every successful Instagram publish to the linked Fa
 
 Full source-of-truth for the FB capability lives in farm-guardian (v2.35.0 shipped the module, v2.35.1 confirmed go-live) and `~/bubba-workspace/skills/farm-facebook-crosspost/SKILL.md`.
 
-## [Unreleased] — 2026-04-18
+## [1.8.1] — 2026-04-18
 
 ### Docs — yard-diary purpose re-clarified + cross-links between gallery surfaces (Claude Opus 4.7 (1M context))
 
@@ -35,7 +35,7 @@ The `content/gallery.json` static archive is intentionally kept — Boss said "d
 
 **Companion writeup:** `farm-guardian` CHANGELOG has the matching Python-side docs pass + the `com.farmguardian.yard-diary-capture` LaunchAgent invariant added to `farm-guardian/CLAUDE.md`. Auto-memory entry `project_yard_diary_pipeline.md` saved so future sessions start with the timelapse-purpose context.
 
-## [Unreleased] — 2026-04-17
+## [1.8.0] — 2026-04-17
 
 ### Added — /yard route + thrice-daily dated yard-diary pipeline (Claude Opus 4.7 (1M context))
 
@@ -115,7 +115,7 @@ Ships the frontend surface for farm-guardian's image-archive REST layer (v2.25.0
 
 **Out of this release (scheduled for v0.2+):** Birdadette day-of-life retrospective (planned separately, backend already supports it), Boss-only `/review` UI (Finder browse works for now), Instagram autofeed, caption overrides.
 
-## [Unreleased-docs] — 2026-04-14
+## [1.6.1] — 2026-04-14
 
 ### Docs — cross-repo plan: expose the Guardian image archive on farm-2026 (Claude Opus 4.6)
 
