@@ -79,6 +79,23 @@ Railway deploy is a fallback, not a blocker: `farm.markbarney.net/photos/...` ev
 
 **Auto-posting is live (as of 2026-04-20).** Farm Guardian's capture-cycle hook (`tools/pipeline/orchestrator.py → _maybe_post_to_ig()`) fires whenever a strong+sharp gem is detected, commits the JPEG into this repo, pushes, and posts to `@pawel_and_pawleen`. That means this repo's `main` branch will grow a steady stream of commits from the Mac Mini — each one adds one file under `public/photos/brooder/` (or yard-diary, coop, flock). Commit messages follow the pattern `public/photos/<subdir>: <gem-id> <short descriptor>`. Do not squash or rewrite these commits — the IG media_id is stable on the URL at that commit's HEAD, so history-rewriting could theoretically break past post URLs if IG ever re-fetches. **End-to-end architecture (what feeds what, where the secrets live, how the pipeline decides what to post):** `~/Documents/GitHub/farm-guardian/docs/HOW_IT_ALL_FITS.md`.
 
+### Facebook cross-posting (LIVE since 2026-04-21, v2.35.1)
+
+Every successful IG post also dual-posts to the linked Facebook Page **"Yorkies App"** (`page_id=614607655061302`). **All four lanes — photo, carousel, story, reel — are wired and verified live.** FB re-uses the exact same `raw.githubusercontent.com/VoynichLabs/farm-2026/main/public/photos/...` URLs IG already accepted, so this repo's role is unchanged: host the JPEG/MP4, commit, push, and both platforms pull from the same URL.
+
+**Don't do anything differently in this repo for FB.** No new directories, no new URL scheme, no new commits. The only thing FB adds is that each pushed photo now lands on two social surfaces instead of one.
+
+**Token posture (so no future agent tries to "help" by adding anything to Railway):**
+
+- **Tokens live on the Mac Mini**, not in this repo, not in Railway. Same rule as IG.
+- **Full publish permissions are granted** on a non-expiring Page token: `pages_manage_posts` + dependencies + full IG suite. Nothing to enable, nothing to review.
+- **Don't add `FB_PAGE_TOKEN`, `LONG_LIVED_PAGE_TOKEN`, or any Meta credential to this repo or Railway env vars.** Publishing runs from the Mini.
+- If a future task claims FB cross-post needs new permissions or a new Meta app config, **it doesn't** — push back and point at `~/bubba-workspace/skills/farm-facebook-crosspost/SKILL.md` or `~/Documents/GitHub/farm-guardian/CHANGELOG.md` v2.35.1. The capability is settled; don't let the next assistant hallucinate a recipe.
+
+**Where the FB post lands:** photos go to the Page feed, stories to the 24h Page stories surface, reels post as a Page "Video" (visually identical to a reel, skips Meta's resumable-upload dance for our 5-15MB clips — acceptable tradeoff, documented as such). Carousels render as FB photo-grid posts. Captions, hashtags, and image URLs are identical to the IG post.
+
+**Deep dive:** `~/bubba-workspace/skills/farm-facebook-crosspost/SKILL.md`. Source: `~/Documents/GitHub/farm-guardian/tools/pipeline/fb_poster.py`.
+
 **Separate follow-up (not wired yet):** `content/instagram-posts.json` currently embeds `@markbarney121` only. After the first few @pawel_and_pawleen posts land, consider adding those to the embed list on the homepage.
 
 ### Guardian integration

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [Unreleased] — 2026-04-21
+
+### Docs — FB cross-post is LIVE; record it here so no future assistant tries to "help" (Claude Opus 4.7 (1M context))
+
+Farm Guardian now dual-posts every successful Instagram publish to the linked Facebook Page "Yorkies App" (`page_id=614607655061302`). All four lanes — photo, carousel, story, reel — are wired and verified live as of 2026-04-21. This repo's role is unchanged (host the JPEG/MP4, commit, push — both IG and FB pull from the same `raw.githubusercontent.com/...` URL), but the CLAUDE.md now documents the FB posture explicitly so a future agent doesn't propose adding Meta credentials to Railway or this repo.
+
+**Why a docs-only change lands in this repo's changelog:** the FB capability is a cross-repo settled state that a future assistant working on farm-2026 could easily misunderstand ("we should add FB_PAGE_TOKEN to Railway" — no). The CLAUDE.md addition pre-buries that wrong answer. No site code or content changed.
+
+Full source-of-truth for the FB capability lives in farm-guardian (v2.35.0 shipped the module, v2.35.1 confirmed go-live) and `~/bubba-workspace/skills/farm-facebook-crosspost/SKILL.md`.
+
 ## [Unreleased] — 2026-04-18
 
 ### Docs — yard-diary purpose re-clarified + cross-links between gallery surfaces (Claude Opus 4.7 (1M context))
