@@ -37,6 +37,7 @@ const ACTIVITY_LABELS: Record<Activity, string> = {
   sparring: "sparring",
   alert: "alert",
   "none-visible": "resting",
+  unknown: "unknown",
   other: "other",
 };
 

@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.9.0] — 2026-04-22
+
+### Changed — Living homepage: rotating hero + farm-pulse stats band (Claude Opus 4.7 (1M context))
+
+The homepage had been surfacing about 1% of the live image archive — a frozen Birdadette-fresh-hatch hero, a 6-item gems rail, and a weekly field note. Meanwhile the Guardian pipeline had accumulated 13,000+ rows in the last seven days (377 strong-tier, 190 Birdadette sightings, 8,900+ brooder frames). The site looked static even though the farm was flowing. This release flips that for the two top-of-page slots.
+
+**Changed — `Hero.tsx`**
+
+The hero is now an async server component. It fetches the latest strong-tier gem via `fetchGems({ limit: 1 })` and uses `rows[0].full_url` as the background image. `/photos/april-2026/birdadette-fresh-hatch.jpg` is retained as the fallback for tunnel drops or an empty result. Layout, vignettes, text blocks, and nav links are unchanged. The `lib/gems.ts` fetcher already layers `{ revalidate: 300 }`, so the hero image refreshes every five minutes at most.
+
+Portrait frames from `s7-cam` (1080×1920 since v2.35.2 yesterday) letterbox cleanly against the forest background with the vignette still keeping the top-left title and bottom-bar copy legible.
+
+**Added — `FarmPulse.tsx`**
+
+New server-async component inserted between `Hero` and `GuardianHomeSection` on `app/page.tsx`. A thin forest-backgrounded mono-font band that pulls `/api/v1/images/stats` and surfaces five live cells:
+
+- Window label — `PAST {N} DAYS`, derived from the stats range.
+- `{birdadette_sightings} Birdadette sightings`.
+- `top activity: {activity} ({count})` — skipping `none-visible`, `unknown`, and `other` so the band always names something interesting (huddling, foraging, eating, etc.).
+- `busiest camera: {camera_id} ({count})` — raw device names per the camera-naming rule.
+- `{strong + decent} gems saved` — total archived frames regardless of tier.
+
+Renders `null` on any non-ok response — same graceful-failure pattern `LatestFlockFrames` uses. The homepage never crashes on a Guardian outage. Band scrolls horizontally on narrow viewports.
+
+**Fixed — `Activity` type drift**
+
+The API has been returning `"unknown"` in `by_activity` since v2.28.x but the TypeScript `Activity` union didn't include it, so `Record<Activity, number>` on `ImageStats.by_activity` was silently wrong. Added `"unknown"` to the `Activity` type in `app/components/guardian/types.ts` and a matching entry in `lib/gems-format.ts`'s `ACTIVITY_LABELS`. `GemFilters`'s `ACTIVITY_CHOICES` intentionally still omits `"unknown"` — it's a noise bucket, not a filter users want to pick.
+
+**What did not change**
+
+- Hero tagline stays as-is ("…wonders of Claude's own creation…"). Rewrite is a separate content call.
+- OpenGraph / share-card image is still the static Birdadette-hatch JPG — rotating the OG image would break previously-shared links.
+- No changes to `GuardianHomeSection`, `LatestFieldNote`, `FlockPreviewStrip`, `LatestFlockFrames`, `ActiveProjects`, `InstagramSection`, `SiteFooter`.
+- No new npm dependencies.
+
+**Plan:** `docs/22-Apr-2026-living-homepage-hero-and-stats-plan.md`.
+
+**Verification**
+
+- `npm run build` — static prerender of `/` succeeds; revalidate window picked up as 5 minutes per the gems fetcher.
+- `npm run lint` — 0 errors / 0 warnings.
+- Local dev smoke: hero renders a live gem URL (`/api/v1/images/gems/16715/image?size=1920`), not the static JPG; FarmPulse shows `PAST 7 DAYS · 187 Birdadette sightings · top activity: huddling (5,581) · busiest camera: s7-cam (5,543) · 7,182 gems saved`.
+- With the tunnel unreachable, hero falls back to the static JPG and FarmPulse renders nothing — homepage stays intact.
+
+**Follow-ups (out of scope here)**
+
+- `/flock/birdadette` day-of-life retrospective — queued next; the backend tagging is already in place (`individuals_visible=["birdadette"]` + `apparent_age_days`).
+- Stories-style portrait rail dedicated to `s7-cam` 9:16 gems.
+- Retiring or repurposing the hand-curated `/gallery` surface.
+
 ## [1.8.2] — 2026-04-21
 
 ### Docs — FB cross-post is LIVE; record it here so no future assistant tries to "help" (Claude Opus 4.7 (1M context))

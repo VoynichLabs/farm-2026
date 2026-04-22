@@ -1,21 +1,36 @@
 /**
- * Author: Claude Opus 4.6
- * Date: 13-Apr-2026
- * PURPOSE: Homepage hero — Birdadette photo on a dark canvas, title + tagline
- *   top-left, body paragraph + location + nav links bottom. Extracted verbatim
- *   from app/page.tsx during Phase 1 of the frontend SRP/DRY rewrite.
- * SRP/DRY check: Pass — single responsibility (render the hero). No data fetch,
- *   no side effects. See docs/13-Apr-2026-frontend-srp-dry-rewrite-plan.md.
+ * Author: Claude Opus 4.7 (1M context)
+ * Date: 22-Apr-2026 (rotating-hero rewrite; originally 13-Apr-2026 by Opus 4.6)
+ * PURPOSE: Homepage hero — dark forest canvas with a rotating background
+ *   image pulled from Guardian's latest strong-tier gem. Falls back to the
+ *   known-good Birdadette-fresh-hatch JPG on tunnel drop or empty result.
+ *   Top-left title + tagline, bottom-left body, bottom-right location + nav
+ *   links. Vignette gradients keep text legible over any frame (portrait
+ *   from s7-cam letterboxes against the forest bg; landscape from the other
+ *   cameras centers cleanly).
+ * SRP/DRY check: Pass — single responsibility (render the hero). Image
+ *   selection is the only new side effect, wrapped in fetchGems which
+ *   already handles tunnel drops via its FetchResult type.
+ *   See docs/22-Apr-2026-living-homepage-hero-and-stats-plan.md.
  */
 import Link from "next/link";
+import { fetchGems } from "@/lib/gems";
 
-const HERO_IMAGE = "/photos/april-2026/birdadette-fresh-hatch.jpg";
+// Fallback — used when Guardian is unreachable or has no strong gems yet.
+// Kept as an asset in this repo so the hero is always renderable.
+const HERO_FALLBACK_IMAGE = "/photos/april-2026/birdadette-fresh-hatch.jpg";
 
-export default function Hero() {
+export default async function Hero() {
+  const result = await fetchGems({ limit: 1 });
+  const heroImage =
+    result.ok && result.data.rows.length > 0
+      ? result.data.rows[0].full_url
+      : HERO_FALLBACK_IMAGE;
+
   return (
     <section
       className="relative min-h-[80vh] bg-contain bg-center bg-no-repeat bg-forest"
-      style={{ backgroundImage: `url(${HERO_IMAGE})` }}
+      style={{ backgroundImage: `url(${heroImage})` }}
     >
       {/* Subtle vignette — heavier at edges, light in center so the bird shows through */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/70" />

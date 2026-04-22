@@ -134,6 +134,7 @@ export type Activity =
   | "sparring"
   | "alert"
   | "none-visible"
+  | "unknown"
   | "other";
 
 export type Lighting =
