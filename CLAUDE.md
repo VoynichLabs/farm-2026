@@ -79,6 +79,14 @@ Railway deploy is a fallback, not a blocker: `farm.markbarney.net/photos/...` ev
 
 **Auto-posting is live (as of 2026-04-20).** Farm Guardian's capture-cycle hook (`tools/pipeline/orchestrator.py → _maybe_post_to_ig()`) fires whenever a strong+sharp gem is detected, commits the JPEG into this repo, pushes, and posts to `@pawel_and_pawleen`. That means this repo's `main` branch will grow a steady stream of commits from the Mac Mini — each one adds one file under `public/photos/brooder/` (or yard-diary, coop, flock). Commit messages follow the pattern `public/photos/<subdir>: <gem-id> <short descriptor>`. Do not squash or rewrite these commits — the IG media_id is stable on the URL at that commit's HEAD, so history-rewriting could theoretically break past post URLs if IG ever re-fetches. **End-to-end architecture (what feeds what, where the secrets live, how the pipeline decides what to post):** `~/Documents/GitHub/farm-guardian/docs/HOW_IT_ALL_FITS.md`.
 
+### s7-cam is PORTRAIT (v2.35.2, 2026-04-21)
+
+Gems from the Samsung Galaxy S7 phone camera (`s7-cam` in the Guardian roster) arrive as **1080×1920 portrait JPEGs** as of 2026-04-21. This is a deliberate choice on the farm-guardian side — s7-cam's primary content destination is Instagram stories + reels (native 9:16) and FB stories, so portrait frames fill the 9:16 surface instead of getting center-cropped from a landscape shot. Every camera in the roster still arrives at its native sensor aspect; `s7-cam` is the one that's now portrait-native instead of landscape-native.
+
+**Impact on this repo:** `public/photos/brooder/` (and wherever else s7-cam gems land) will grow portrait JPEGs in the file mix, alongside landscape ones from `house-yard`, `usb-cam`, `gwtc`. The gallery components (`app/gallery/...`, `app/gallery/gems/...`) already handle mixed aspect ratios — Tailwind's `object-cover` on the thumbnail + a lightbox that respects the native dimensions. No frontend work needed. If you see a layout regression where thumbnails look wrong, **don't** blame the portrait s7-cam gems; first check the shared `GemsThumbnail` / `PhotoGrid` component for a new hardcoded aspect ratio.
+
+**Deep dive on how portrait is achieved:** `farm-guardian/docs/skills-s7-adb-operations.md` → "Orientation" section. `farm-guardian/HARDWARE_INVENTORY.md` has the abbreviated version.
+
 ### Facebook cross-posting (LIVE since 2026-04-21, v2.35.1)
 
 Every successful IG post also dual-posts to the linked Facebook Page **"Yorkies App"** (`page_id=614607655061302`). **All four lanes — photo, carousel, story, reel — are wired and verified live.** FB re-uses the exact same `raw.githubusercontent.com/VoynichLabs/farm-2026/main/public/photos/...` URLs IG already accepted, so this repo's role is unchanged: host the JPEG/MP4, commit, push, and both platforms pull from the same URL.
