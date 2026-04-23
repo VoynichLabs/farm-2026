@@ -3,6 +3,73 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.11.0] — 2026-04-23
+
+### Changed — Web-presence tightening: retire static gallery, kill Birdadette retrospective, unify social CTA (Claude Opus 4.7 (1M context))
+
+Boss clarified the website's role relative to the broadcast surfaces: Instagram (`@pawel_and_pawleen`) and Facebook (Yorkies App) are where daily content lands; the pipeline auto-posts to both from the Mac Mini. This website's unique value is what IG/FB *don't* do — live multi-camera Guardian dashboard, searchable gem archive, flock roster, long-form field notes, retrospectives, yard-diary stockpile. Three things were either duplicating the broadcast surfaces or actively lying; this release removes them.
+
+**Removed — `/flock/birdadette` (yesterday's v1.10.0)**
+
+The retrospective was built on `individuals_visible=["birdadette"]`, a VLM tag that turns out to be unreliable — Boss confirmed the 18 "strong-tier birdadette" frames were mostly other chicks, not her. A page that says "here's Birdadette" while rendering other chicks is worse than no page. Deleted:
+
+- `app/flock/birdadette/page.tsx`
+- `lib/birdadette.ts`
+- The "Retrospective · Birdadette: day by day →" card on `/flock`
+
+The plan doc (`docs/23-Apr-2026-birdadette-retrospective-plan.md`) is preserved so the retrospective can be rebuilt quickly once the backend can reliably identify her — that requires either a `confirmed_individuals` field populated by human review, a VLM fine-tune, or a hand-curation admin route. All three are backend/data work, not frontend. Memory note (`feedback_vlm_birdadette_false_positives.md`) records the failure mode.
+
+**Retired — `/gallery` static archive**
+
+`app/gallery/page.tsx` is now a thin server component that calls `redirect("/gallery/gems")`. The live VLM-curated gem surface is the canonical gallery; a hand-maintained `content/gallery.json` alongside it was dead weight and forced a visitor who clicked the top-nav "Gallery" link into the *quietest* of the three surfaces. Redirect means old bookmarks / IG-bio links / cross-references from field notes keep working.
+
+- `content/gallery.json` → deleted (no remaining consumers after the page rewrite).
+- Every `href="/gallery"` in the codebase → repointed directly to `/gallery/gems` (layout nav, footer, hero nav, yard sibling-nav, gems sibling-nav). The footer previously listed both "Gallery" and "Gems" — collapsed to one "Gallery" link.
+- The `/gallery/gems` and `/yard` sibling-nav widgets used to link back to `/gallery` as "← Curated archive" — that link is gone since there is no curated archive anymore.
+
+**Changed — `SocialSection` replaces `InstagramSection` + `InstagramFeed`**
+
+The homepage's "Follow the Farm" block was a curated-embeds affordance that had never been populated (the `content/instagram-posts.json` had one stub entry from 09-Apr) and it still hardcoded the stale `@markbarney121` handle — the farm account is `@pawel_and_pawleen`. Also: no Facebook CTA despite FB cross-posting being live since 2026-04-21.
+
+New `app/components/home/SocialSection.tsx` is a pure server component with two external-link cards:
+
+- **Instagram — @pawel_and_pawleen** → `https://www.instagram.com/pawel_and_pawleen/`
+- **Facebook — Yorkies App** → `https://www.facebook.com/614607655061302/`
+
+Same cream-dark section background, same `SectionHeader`, no `embed.js`, no client code, no curated-posts JSON to maintain. The website's job here is to *point out* to the broadcast surfaces, not mirror them.
+
+Deleted:
+- `app/components/home/InstagramSection.tsx`
+- `app/components/InstagramFeed.tsx` (client component that loaded Instagram's `embed.js`)
+- `content/instagram-posts.json`
+
+**What did not change**
+
+- Hero rotation (v1.9.0), FarmPulse (v1.9.0), Guardian live dashboard, LatestFieldNote, FlockPreviewStrip, LatestFlockFrames rail, ActiveProjects, SiteFooter — all unchanged.
+- No pipeline changes, no auto-post commits affected, no FB/IG tokens touched.
+- `content/flock-profiles.json` and all field-note MDX preserved.
+- The `/flock` page returns to its exact pre-v1.10 shape.
+
+**CLAUDE.md updated:** Pages section now lists `/gallery` as a redirect and adds explicit entries for `/gallery/gems` and `/yard`; Content sources table no longer lists the two retired JSON files; homepage description updated to reflect the current section order.
+
+**Verification**
+
+- `npm run build` — 0 errors, all 19 routes prerender.
+- `npm run lint` — 0/0.
+- `curl -I /gallery` → 307 to `/gallery/gems`.
+- `curl -I /flock/birdadette` → 404.
+- Homepage HTML contains `pawel_and_pawleen`, `Yorkies App`, and `facebook.com/614607655061302`; no `@markbarney121`.
+- `/flock` HTML no longer contains "Birdadette: day by day" or "Retrospective".
+- `grep -rE 'href="/gallery"' app/` returns zero matches.
+
+**Plan:** `docs/23-Apr-2026-web-presence-tightening-plan.md`.
+
+**Follow-ups (not this pass)**
+
+- `/yard` as an actual playable timelapse reel (video or auto-scroll) instead of a grid.
+- Stories-style portrait rail for s7-cam 9:16 gems *only if* it adds a surface `LatestFlockFrames` doesn't already cover.
+- Rebuild the Birdadette retrospective once the backend can reliably identify her (gated on one of the three backend options above).
+
 ## [1.10.0] — 2026-04-23
 
 ### Added — /flock/birdadette day-by-day retrospective (Claude Opus 4.7 (1M context))

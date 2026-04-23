@@ -70,7 +70,7 @@ export default function RootLayout({
               <Link href="/projects" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
                 Projects
               </Link>
-              <Link href="/gallery" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
+              <Link href="/gallery/gems" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
                 Gallery
               </Link>
               <Link href="/field-notes" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">

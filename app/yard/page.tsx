@@ -137,10 +137,6 @@ export default function YardDiaryPage() {
             on purpose — the sequence is the artifact.
           </p>
           <nav className="mt-5 flex items-center gap-3 text-xs font-mono text-forest/60">
-            <Link href="/gallery" className="hover:text-forest transition-colors">
-              ← Curated archive
-            </Link>
-            <span className="text-forest/30">·</span>
             <Link href="/gallery/gems" className="hover:text-forest transition-colors">
               Live gems →
             </Link>

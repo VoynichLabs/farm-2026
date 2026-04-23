@@ -81,7 +81,7 @@ export default async function Hero() {
             </Link>
             <span className="text-white/30">|</span>
             <Link
-              href="/gallery"
+              href="/gallery/gems"
               className="text-white/70 hover:text-white underline underline-offset-4 transition-colors"
             >
               Gallery

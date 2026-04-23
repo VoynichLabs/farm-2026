@@ -36,10 +36,6 @@ export default async function GemsPage({ searchParams }: PageProps) {
           Captions are machine-drafted and unedited.
         </p>
         <nav className="mt-5 flex items-center justify-center gap-3 text-xs font-mono text-cream/60">
-          <Link href="/gallery" className="hover:text-cream transition-colors">
-            ← Curated archive
-          </Link>
-          <span className="text-cream/30">·</span>
           <Link href="/yard" className="hover:text-cream transition-colors">
             Yard diary (timelapse stockpile) →
           </Link>

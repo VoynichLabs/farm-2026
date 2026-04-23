@@ -38,21 +38,22 @@ No test suite exists. Deployment targets Railway.app using the standalone Next.j
 | `content/projects/[slug]/entries/*.mdx` | Per-project diary entries (frontmatter: date, title, tags) |
 | `content/projects/[slug]/materials.json` | Bill of materials (item, qty, unit, cost) |
 | `content/diary/*.mdx` | Raw developer notes (not published — source material for field notes) |
-| `content/instagram-posts.json` | Curated Instagram post URLs for embed component |
-| `public/photos/` | All site photos — `april-2026/`, `birds/`, `coop/`, `history/`, `enclosure/`, `guardian-detections/` |
+| `public/photos/` | All site photos — `april-2026/`, `birds/`, `coop/`, `history/`, `enclosure/`, `guardian-detections/`, plus pipeline-populated `brooder/`, `yard-diary/`, `stories/` |
 
-**Note:** `content/flock.json` is deprecated. `content/flock-profiles.json` is the single source of truth for bird data.
+**Note:** `content/flock.json` is deprecated. `content/flock-profiles.json` is the single source of truth for bird data. `content/gallery.json` and `content/instagram-posts.json` were retired on 2026-04-23 (v1.11.0) — see CHANGELOG for the reasoning.
 
 ### Pages
 
-- `/` — Hero (Birdadette), Guardian live camera feeds + system panel, latest field note, flock preview, projects, Instagram
+- `/` — Rotating hero (latest strong-tier gem), FarmPulse stats band, Guardian live camera feeds + system panel, latest field note, flock preview, gems rail, projects, Social CTA (IG + FB)
 - `/field-notes` — Photo-forward weekly update feed (replaces diary)
 - `/field-notes/[slug]` — Individual field note with cover image, MDX content, photo gallery, prev/next nav
 - `/flock` — Bird roster (active / In Memoriam sections) + breed reference guide
 - `/projects` — Project listing with status badges (planning/active/complete/shelved)
 - `/projects/guardian` — **Live dashboard**: camera roster fetched at runtime from Guardian's `/api/cameras` via `lib/guardian-roster.ts`; PTZ controls on the Reolink; MDX project docs below. Rendered by `GuardianDashboard.tsx`. Camera count reflects whatever the backend currently reports — never hardcoded.
 - `/projects/[slug]` — MDX project detail with materials table and diary timeline
-- `/gallery` — Lightbox photo gallery (April 2026 + historical)
+- `/gallery` — Retired 2026-04-23; now a server-side redirect to `/gallery/gems`. Do not rebuild the hand-curated static archive — the live pipeline surface is the canonical gallery.
+- `/gallery/gems` — Live VLM-curated gem archive with camera / activity / individual / date-range filters
+- `/yard` — Thrice-daily Reolink yard-diary timelapse stockpile
 - `/diary` — Redirects to `/field-notes`
 - `/sitemap.xml` — Dynamic sitemap for SEO
 - `/robots.txt` — Crawler directives

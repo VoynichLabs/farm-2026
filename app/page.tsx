@@ -8,6 +8,8 @@
  *     and ActiveProjects.
  *   - 22-Apr-2026: FarmPulse stats band inserted between Hero and
  *     GuardianHomeSection (living-homepage pass).
+ *   - 23-Apr-2026: InstagramSection → SocialSection (dual IG+FB CTA;
+ *     retired the curated-embed path that was never populated).
  * SRP/DRY check: Pass — composition only, no data fetch, no layout logic.
  *   See docs/13-Apr-2026-frontend-srp-dry-rewrite-plan.md,
  *   docs/14-Apr-2026-frontend-gems-implementation-plan.md, and
@@ -20,7 +22,7 @@ import LatestFieldNote from "@/app/components/home/LatestFieldNote";
 import FlockPreviewStrip from "@/app/components/home/FlockPreviewStrip";
 import LatestFlockFrames from "@/app/components/home/LatestFlockFrames";
 import ActiveProjects from "@/app/components/home/ActiveProjects";
-import InstagramSection from "@/app/components/home/InstagramSection";
+import SocialSection from "@/app/components/home/SocialSection";
 import SiteFooter from "@/app/components/home/SiteFooter";
 
 export default function Home() {
@@ -33,7 +35,7 @@ export default function Home() {
       <FlockPreviewStrip />
       <LatestFlockFrames />
       <ActiveProjects />
-      <InstagramSection />
+      <SocialSection />
       <SiteFooter />
     </main>
   );

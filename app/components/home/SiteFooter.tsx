@@ -25,8 +25,7 @@ export default function SiteFooter() {
           <Link href="/projects/guardian" className="hover:text-cream/80">Guardian</Link>
           <Link href="/flock" className="hover:text-cream/80">Flock</Link>
           <Link href="/projects" className="hover:text-cream/80">Projects</Link>
-          <Link href="/gallery" className="hover:text-cream/80">Gallery</Link>
-          <Link href="/gallery/gems" className="hover:text-cream/80">Gems</Link>
+          <Link href="/gallery/gems" className="hover:text-cream/80">Gallery</Link>
           <Link href="/field-notes" className="hover:text-cream/80">Field Notes</Link>
         </nav>
         <p>© {new Date().getFullYear()}</p>

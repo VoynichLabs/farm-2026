@@ -1,13 +1,10 @@
 /**
- * Author: Claude Opus 4.7 (1M context) (edited 23-Apr-2026)
+ * Author: Claude Opus 4.7 (1M context)
  * Date: 23-Apr-2026
  * PURPOSE: /flock — active/deceased bird roster + breed reference guide.
  *   Data source is content/flock-profiles.json via lib/content.
- *   23-Apr-2026 edit: inserted a retrospective card directly after the
- *   hero linking to /flock/birdadette (the day-by-day pipeline
- *   retrospective).
  * SRP/DRY check: Pass — pure composition of BirdCard primitives against
- *   flock-profiles data. See docs/23-Apr-2026-birdadette-retrospective-plan.md.
+ *   flock-profiles data.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -74,30 +71,8 @@ export default function FlockPage() {
         </div>
       </section>
 
-      {/* Retrospective card — surfaces the /flock/birdadette day-by-day view */}
-      <section className="max-w-6xl mx-auto px-4 pt-16">
-        <Link
-          href="/flock/birdadette"
-          className="block border border-forest/20 rounded-sm bg-cream-dark hover:border-forest/40 hover:bg-cream transition-colors px-5 py-4 md:px-6 md:py-5"
-        >
-          <div className="flex items-baseline justify-between gap-4">
-            <div>
-              <p className="font-mono text-[10px] text-forest/50 uppercase tracking-widest mb-1">
-                Retrospective
-              </p>
-              <h2 className="font-serif text-xl md:text-2xl text-forest">
-                Birdadette: day by day →
-              </h2>
-              <p className="text-forest/60 text-sm mt-1">
-                Every strong-tier frame the pipeline has tagged of her, grouped by day of life.
-              </p>
-            </div>
-          </div>
-        </Link>
-      </section>
-
       {/* Roosters section */}
-      <section className="max-w-6xl mx-auto px-4 pt-10 pb-8">
+      <section className="max-w-6xl mx-auto px-4 pt-16 pb-8">
         <h2 className="text-2xl font-bold font-serif mb-2">The Roosters</h2>
         <p className="text-forest/60 mb-8 text-sm">These two run the yard.</p>
         <div className="grid gap-6 md:grid-cols-2">
