@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.10.0] — 2026-04-23
+
+### Added — /flock/birdadette day-by-day retrospective (Claude Opus 4.7 (1M context))
+
+Guardian has been tagging Birdadette's appearances via `individuals_visible=["birdadette"]` for about two weeks — 18 strong-tier frames across 7 distinct days as of today. That's enough content for a dedicated retrospective surface instead of letting it dissolve into the general gems wall. This release ships the page and links to it from `/flock`. A memory entry (`project_birdadette_retrospective_curation.md`) has been standing since mid-April asking for exactly this.
+
+**New — `/flock/birdadette`**
+
+Server-rendered retrospective page. One section per day of life (newest first), each section leading with the most recent strong frame from that day + its VLM caption and a mono meta line (camera · activity · birds-in-frame). Supplementary frames from the same day render as a two-column grid below the primary, caption-free, to keep the narrative tight. Days without any strong frames simply don't appear — the page shows what the pipeline saw, not what it didn't.
+
+- Hatch date (`2026-04-06`) comes from `content/flock-profiles.json` and is mirrored as `BIRDADETTE_HATCH_DATE` in `lib/birdadette.ts`.
+- Day of life is computed from `ts - hatch` in calendar math. The pipeline's per-frame `apparent_age_days` field (VLM guess) is not used here — it underestimates by several days on the same frame (a day-14 frame came back as `apparent_age_days: 8`).
+- Prerenders as a static page with the standard 5-minute revalidate; next IG post + next strong Birdadette frame flow in automatically.
+- Portrait s7-cam frames (1080×1920 since v2.35.2) letterbox against the cream body with a faint forest wash; landscape frames fill cleanly.
+- Empty state ("the pipeline hasn't tagged Birdadette in a strong frame yet — check back in a day or two") handles the case where the archive is empty or freshly deployed.
+- Graceful error card on Guardian unreachable — same failure posture as the rest of the site.
+- Footer links back to `/flock` and forward to `/gallery/gems?individual=birdadette` for the unfiltered archive view.
+
+**New — `lib/birdadette.ts`**
+
+Wraps `fetchGems` with the birdadette-individual filter, pages through the cursor (hard-capped at 10 pages × 100 rows = 1000 frames of runway — years of content before that bound matters), groups rows by calendar day (UTC), sorts days newest-first and rows newest-first within each day. Exports `BIRDADETTE_HATCH_DATE`, `computeAge()`, `dayOfLife()`, `formatDateLabel()`, `fetchBirdadetteRetrospective()`.
+
+**Changed — `/flock`**
+
+Added a retrospective card directly under the hero, above the roosters grid. Quiet forest-bordered card on the cream-dark background, reads "Retrospective · Birdadette: day by day →". Nothing else on `/flock` moves.
+
+**Out of scope (planned follow-ups)**
+
+- Merging hand-curated day-0..day-7 hatch photos (`content/gallery.json`, field-note covers) into the timeline. The pipeline only started tagging her by name around day 8; days 0-7 exist on the site but not on this page.
+- Decent-tier fallback for empty days. Strong-tier only keeps the bar high.
+- Same surface for other named birds once the VLM tags them individually (Henrietta, etc.).
+- Auto-generated weekly summary posts from each 7-day window.
+
+**Verification**
+
+- `npm run build` — static prerender of `/flock/birdadette` succeeds with the 5-min revalidate window.
+- `npm run lint` — 0 errors / 0 warnings.
+- Local dev smoke: `/flock/birdadette` renders 7 day sections (Day 8 through Day 14), each with at least one frame; total of 16 unique gem IDs across all sections. Hero says "Day 17 today" derived from the hatch-date constant.
+- `/flock` shows the retrospective card as a link; clicking it lands on `/flock/birdadette`.
+
+**Plan:** `docs/23-Apr-2026-birdadette-retrospective-plan.md`.
+
 ## [1.9.0] — 2026-04-22
 
 ### Changed — Living homepage: rotating hero + farm-pulse stats band (Claude Opus 4.7 (1M context))
