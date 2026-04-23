@@ -93,6 +93,10 @@ There is a parallel automation under `farm-guardian/tools/ig-engage/` that scrol
 
 **Zero frontend impact on this repo.** Heads-up here only so a future farm-2026 agent doesn't duplicate or build a conflicting feature. If asked to "add engagement" to the website — don't; point the requester at `farm-guardian/tools/ig-engage/`. Canonical reference: `~/bubba-workspace/skills/farm-instagram-engage/SKILL.md`. Plan: `farm-guardian/docs/23-Apr-2026-ig-engage-plan.md`. Local announce note: `docs/23-Apr-2026-ig-engage-announce.md`.
 
+### Nextdoor automation (planned 2026-04-23, build in progress)
+
+Same architectural pattern as the IG engagement automation, extended to Boss's Hampton CT Nextdoor neighborhood. Two lanes: inbound engagement (like/comment on neighbors' posts) and outbound cross-posting (one farm-content post per week, Sunday mornings, reaction-gated). Code will live under `farm-guardian/tools/nextdoor/`. **Same zero-frontend-impact rule as IG engagement** — the website doesn't need anything, don't add a Nextdoor embed component or env var. Canonical reference: `~/bubba-workspace/skills/farm-nextdoor-engage/SKILL.md`. Plan: `farm-guardian/docs/23-Apr-2026-nextdoor-plan.md`. Local announce note: `docs/23-Apr-2026-nextdoor-announce.md`.
+
 ### Facebook cross-posting (LIVE since 2026-04-21, v2.35.1)
 
 Every successful IG post also dual-posts to the linked Facebook Page **"Yorkies App"** (`page_id=614607655061302`). **All four lanes — photo, carousel, story, reel — are wired and verified live.** FB re-uses the exact same `raw.githubusercontent.com/VoynichLabs/farm-2026/main/public/photos/...` URLs IG already accepted, so this repo's role is unchanged: host the JPEG/MP4, commit, push, and both platforms pull from the same URL.
