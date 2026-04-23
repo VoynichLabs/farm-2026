@@ -87,6 +87,12 @@ Gems from the Samsung Galaxy S7 phone camera (`s7-cam` in the Guardian roster) a
 
 **Deep dive on how portrait is achieved:** `farm-guardian/docs/skills-s7-adb-operations.md` → "Orientation" section. `farm-guardian/HARDWARE_INVENTORY.md` has the abbreviated version.
 
+### IG engagement automation (separate from posting, 2026-04-23 onward)
+
+There is a parallel automation under `farm-guardian/tools/ig-engage/` that scrolls Instagram as `@pawel_and_pawleen`, likes targeted posts, reacts to friends' stories, and leaves short VLM-written contextual comments on other accounts' content. This is **Boss's substitute for scrolling Instagram himself** — it's not a growth hack, it's a reciprocity-builder for an older, local, bird-and-dog audience.
+
+**Zero frontend impact on this repo.** Heads-up here only so a future farm-2026 agent doesn't duplicate or build a conflicting feature. If asked to "add engagement" to the website — don't; point the requester at `farm-guardian/tools/ig-engage/`. Canonical reference: `~/bubba-workspace/skills/farm-instagram-engage/SKILL.md`. Plan: `farm-guardian/docs/23-Apr-2026-ig-engage-plan.md`. Local announce note: `docs/23-Apr-2026-ig-engage-announce.md`.
+
 ### Facebook cross-posting (LIVE since 2026-04-21, v2.35.1)
 
 Every successful IG post also dual-posts to the linked Facebook Page **"Yorkies App"** (`page_id=614607655061302`). **All four lanes — photo, carousel, story, reel — are wired and verified live.** FB re-uses the exact same `raw.githubusercontent.com/VoynichLabs/farm-2026/main/public/photos/...` URLs IG already accepted, so this repo's role is unchanged: host the JPEG/MP4, commit, push, and both platforms pull from the same URL.
