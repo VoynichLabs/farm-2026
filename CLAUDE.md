@@ -11,6 +11,17 @@ This project is part of a two-repo system:
 
 The Guardian components in this repo (`app/components/guardian/`) consume farm-guardian's REST API. The TypeScript interfaces in `types.ts` must stay in sync with the API response shapes in farm-guardian's `api.py` and `dashboard.py`.
 
+## Social-posting pipelines that write into this repo
+
+Two independent pipelines on the Mac Mini commit photos here and use the raw GitHub URLs to feed Instagram (`@pawel_and_pawleen`) and the linked Facebook Page (*Yorkies App*). Commits arrive asynchronously — **don't revert them, don't rename their destination subdirs, don't add them to any CI / lint gate**.
+
+| Pipeline | Source on farm-guardian | Destination in this repo | LaunchAgent(s) | Quality gate |
+|---|---|---|---|---|
+| **Gem lane** — live cameras → Discord reactions → IG+FB | `tools/pipeline/` | `public/photos/stories/`, `public/photos/carousel/`, `public/photos/brooder/` | `com.farmguardian.ig-2hr-story` (every 2h), `com.farmguardian.ig-daily-carousel` (daily 18:00), `com.farmguardian.ig-weekly-reel` (Sun 19:00), plus `discord-reaction-sync` every 30 min | Boss's reactions on `#farm-2026` (Discord) — the single human-in-the-loop filter. Every reacted gem eventually publishes (backstop: `select_all_unposted_story_gems`, no time window). |
+| **Archive lane** — historical iPhone → FB+IG stories | `tools/on_this_day/` | `public/photos/on-this-day/YYYY-MM-DD/stories/` | `com.farmguardian.on-this-day` (every 90 min) | Qwen-catalog scoring (farm/pet content, hawks/receipts rejected). No Discord; `data/on-this-day/posted.json` ensures no dupes. Posts today's calendar matches from 2022/2024/2025, falls back to back-catalog. |
+
+Canonical readmes live in farm-guardian: the gem lane is documented inline across `tools/pipeline/*.py` plus `docs/20-Apr-2026-ig-scheduled-posting-architecture.md`; the archive lane is in [`tools/on_this_day/README.md`](https://github.com/VoynichLabs/farm-guardian/blob/main/tools/on_this_day/README.md). Shared FB/IG tokens live at `/Users/macmini/bubba-workspace/secrets/farm-guardian-meta.env` (mirrored from keychain, never committed). The gem lane's state is in `farm-guardian/data/image_archive.db`; the archive lane's state is in `farm-guardian/data/on-this-day/`.
+
 ## Commands
 
 ```bash
