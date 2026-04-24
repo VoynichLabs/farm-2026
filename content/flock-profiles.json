@@ -128,12 +128,14 @@
       "breed": "Rhode Island Red (likely)",
       "age": "Unknown",
       "age_note": "Adult rooster",
-      "status": "active",
+      "status": "deceased",
       "egg_color": "N/A (rooster)",
       "temperament": "Protective, active, attentive flock manager",
       "color_description": "Deep auburn/red",
       "photo": null,
-      "notes": "Primary rooster; father of Birdadonna. Photo TBD — current file is mislabeled (shows old flock brooder shot)"
+      "notes": "Primary rooster; father of Birdadonna. Photo TBD — current file is mislabeled (shows old flock brooder shot)",
+      "deceased_date": "2026-04-24",
+      "cause_of_death": "Predator attack"
     },
     {
       "name": "Whitey Red Legs",
