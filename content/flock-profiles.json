@@ -80,6 +80,24 @@
       "cold_hardiness": "Excellent — pea comb resists frostbite, heavy feathering insulates well, bred for northern climates",
       "typical_lifespan": "5-8 years",
       "fun_fact": "Brahmas can weigh over 12 pounds and were the primary meat breed in the US from the 1850s to the 1930s."
+    },
+    "Bronze Broad-Breasted Turkey": {
+      "description": "Large commercial turkey breed with iridescent bronze plumage. Heavier and darker than the White Broad-Breasted variety; raised primarily for meat with striking traditional appearance.",
+      "egg_color": "Cream to light brown (seasonal)",
+      "eggs_per_year": "50-80",
+      "temperament": "Curious, social, can imprint on handlers when raised from poults",
+      "cold_hardiness": "Moderate — need shelter from wind and wet, but tolerate cold if dry",
+      "typical_lifespan": "2-5 years (heritage strains longer)",
+      "fun_fact": "Bronze Broad-Breasted turkeys were the dominant commercial breed in the US until the 1960s, when the White Broad-Breasted took over for cleaner plucking."
+    },
+    "Barred Plymouth Rock": {
+      "description": "American breed with distinctive black-and-white horizontal barring. Hardy dual-purpose chicken, friendly and reliable layer of brown eggs.",
+      "egg_color": "Brown",
+      "eggs_per_year": "200-280",
+      "temperament": "Calm, friendly, good foragers, tolerant of confinement",
+      "cold_hardiness": "Excellent — handles cold New England winters well",
+      "typical_lifespan": "6-8 years",
+      "fun_fact": "Barred Rocks were the most popular breed in the US through the early 20th century — the bird every backyard farm had."
     }
   },
   "flock_birds": [
@@ -242,6 +260,62 @@
       "photo": null,
       "notes": "4 chicks from Tractor Supply, straight run (unsexed). Brahma or Cream Leghorn — breed uncertain. May be males. Moved to the nesting box with the turkey poults.",
       "location": "nesting-box"
+    },
+    {
+      "name": "Birdadotta",
+      "breed": "Easter Egger × RIR cross",
+      "age": "0 days",
+      "hatch_date": "2026-04-25",
+      "age_note": "Hatched April 25, 2026 in incubator from Birdadonna's egg",
+      "status": "active",
+      "egg_color": "TBD (too young)",
+      "temperament": "Alert — fresh hatch, fluffing up",
+      "color_description": "Brown-and-cream striped down, small orange beak, big dark eye",
+      "photo": "april-2026/birdadotta-fluffy.jpg",
+      "notes": "Birdadonna's offspring. Egg laid 03-April-2026 and placed into incubator the same day. Hatched on the day-22 mark. Continues the Birdgit → Birdadette → Birdadonna → Birdadotta name lineage.",
+      "location": "desk-brooder"
+    },
+    {
+      "name": "Bronze turkey poults (2)",
+      "breed": "Bronze Broad-Breasted Turkey",
+      "age": "Days old",
+      "hatch_date": "2026-04",
+      "age_note": "Purchased 25-April-2026 from Tractor Supply",
+      "status": "active",
+      "egg_color": "N/A (poults)",
+      "temperament": "Social, curious, imprinting on handlers",
+      "color_description": "Bronze/dark down — first bronze turkeys on the farm",
+      "photo": null,
+      "notes": "2 Bronze Broad-Breasted poults from TSC, brought home alongside the rock chicks as companions for Birdadotta. First bronze turkeys on the property.",
+      "location": "desk-brooder"
+    },
+    {
+      "name": "Barred Rock chicks (2)",
+      "breed": "Barred Plymouth Rock",
+      "age": "Days old",
+      "hatch_date": "2026-04",
+      "age_note": "Purchased 25-April-2026 from Tractor Supply",
+      "status": "active",
+      "egg_color": "TBD (too young)",
+      "temperament": "TBD",
+      "color_description": "Black down — will develop classic black-and-white barring as they feather out",
+      "photo": "april-2026/rock-chicks-tsc-arrival.jpg",
+      "notes": "2 Barred Plymouth Rock chicks from TSC, brought home as companions for Birdadotta.",
+      "location": "desk-brooder"
+    },
+    {
+      "name": "Speckled Sussex chicks (2)",
+      "breed": "Speckled Sussex",
+      "age": "Days old",
+      "hatch_date": "2026-04",
+      "age_note": "Purchased 25-April-2026 from Tractor Supply",
+      "status": "active",
+      "egg_color": "TBD (too young)",
+      "temperament": "TBD",
+      "color_description": "Black down — will develop mahogany-and-white speckled plumage as they feather out",
+      "photo": "april-2026/rock-chicks-tsc-arrival.jpg",
+      "notes": "2 Speckled Sussex chicks from TSC, brought home as companions for Birdadotta. (Boss called them 'speckled rock' at the store; Speckled Sussex is the standard breed name.)",
+      "location": "desk-brooder"
     },
     {
       "name": "Cackle Hatchery chicks (15)",
