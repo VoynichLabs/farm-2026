@@ -98,6 +98,15 @@
       "cold_hardiness": "Excellent — handles cold New England winters well",
       "typical_lifespan": "6-8 years",
       "fun_fact": "Barred Rocks were the most popular breed in the US through the early 20th century — the bird every backyard farm had."
+    },
+    "Plymouth Rock (variety TBD)": {
+      "description": "American Plymouth Rock breed, exact variety to be confirmed as the chicks feather out. Plymouth Rock varieties include Barred, White, Buff, Silver Penciled, Partridge, Columbian, Blue, and Speckled (Mottled).",
+      "egg_color": "Brown",
+      "eggs_per_year": "200-280",
+      "temperament": "Calm, friendly, good foragers, tolerant of confinement",
+      "cold_hardiness": "Excellent — handles cold New England winters well",
+      "typical_lifespan": "6-8 years",
+      "fun_fact": "All Plymouth Rock varieties share the same body type and temperament — only plumage color varies. The breed originated in Massachusetts in the 1860s."
     }
   },
   "flock_birds": [
@@ -284,8 +293,8 @@
       "status": "active",
       "egg_color": "N/A (poults)",
       "temperament": "Social, curious, imprinting on handlers",
-      "color_description": "Bronze/dark down — first bronze turkeys on the farm",
-      "photo": null,
+      "color_description": "Brown-and-tan striped down with a small beak and large dark eye — first bronze turkeys on the farm",
+      "photo": "april-2026/bronze-turkey-poult-in-hand.jpg",
       "notes": "2 Bronze Broad-Breasted poults from TSC, brought home alongside the rock chicks as companions for Birdadotta. First bronze turkeys on the property.",
       "location": "desk-brooder"
     },
@@ -304,17 +313,17 @@
       "location": "desk-brooder"
     },
     {
-      "name": "Speckled Sussex chicks (2)",
-      "breed": "Speckled Sussex",
+      "name": "Plymouth Rock chicks (2)",
+      "breed": "Plymouth Rock (variety TBD)",
       "age": "Days old",
       "hatch_date": "2026-04",
       "age_note": "Purchased 25-April-2026 from Tractor Supply",
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "TBD",
-      "color_description": "Black down — will develop mahogany-and-white speckled plumage as they feather out",
+      "color_description": "Black down — Plymouth Rock variety, exact sub-variety to be confirmed as they feather out (Speckled/Mottled, Partridge, or other)",
       "photo": "april-2026/rock-chicks-tsc-arrival.jpg",
-      "notes": "2 Speckled Sussex chicks from TSC, brought home as companions for Birdadotta. (Boss called them 'speckled rock' at the store; Speckled Sussex is the standard breed name.)",
+      "notes": "2 Plymouth Rock chicks from TSC alongside the Barred Rocks. Boss noted they are a Plymouth Rock variety, not Speckled Sussex. Sub-variety will be confirmed as adult plumage develops.",
       "location": "desk-brooder"
     },
     {

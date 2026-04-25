@@ -14,19 +14,20 @@ This continues the Birdgit → Birdadette → Birdadonna → Birdadotta name lin
 ## Companions From Tractor Supply
 The boss made a TSC run to round out the brooder so Birdadotta wouldn't be growing up alone. Six new birds:
 
-- **2x Bronze Broad-Breasted Turkey poults** — first bronze turkeys on the farm. Bigger and darker than the White Broad-Breasted poults from earlier in April.
+- **2x Bronze Broad-Breasted Turkey poults** — first bronze turkeys on the farm. Brown-and-tan striped down.
 - **2x Barred Plymouth Rock chicks** — black down, classic Barred Rock breed
-- **2x Speckled Sussex chicks** — black down, will develop the trademark mahogany-and-white speckled plumage as they feather out
+- **2x Plymouth Rock chicks (variety TBD)** — black down, some Plymouth Rock variety (sub-variety to be confirmed as they feather out)
 
 **Photos:**
-- `april-2026/rock-chicks-tsc-arrival.jpg` — four black chicks (the two Barred Rock + two Speckled Sussex) huddled together in a cardboard transport box
+- `april-2026/rock-chicks-tsc-arrival.jpg` — four black chicks (the two Barred Rocks + two other Plymouth Rocks) huddled together in a cardboard transport box
 - `april-2026/new-arrival-brooder-2.jpg` — additional brooder shot of new arrivals settling in
+- `april-2026/bronze-turkey-poult-in-hand.jpg` — one of the bronze turkey poults held in hand by a window, brown-and-tan striped down
 
 ## Brooder Roster (as of 25-April-2026)
 - Birdadotta (Easter Egger × RIR cross — Birdadonna's offspring)
 - 2x Bronze Broad-Breasted Turkey poults
 - 2x Barred Plymouth Rock chicks
-- 2x Speckled Sussex chicks
+- 2x Plymouth Rock chicks (variety TBD)
 - (plus existing brooder population)
 
 Total in the brooder per the boss's count: 18 birds before today's additions.
