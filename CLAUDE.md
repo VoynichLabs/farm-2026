@@ -13,6 +13,8 @@ The Guardian components in this repo (`app/components/guardian/`) consume farm-g
 
 ## Social-posting pipelines that write into this repo
 
+> **For the surface-by-surface map** (every social platform the farm publishes to or reads from, code path, LaunchAgent, cadence, trust signal) → [`docs/SOCIAL_MEDIA_MAP.md`](docs/SOCIAL_MEDIA_MAP.md). That doc is the answer to "where does X get posted from?" / "why did Y end up on Instagram/Facebook/Nextdoor?" Read it before adding any social-related component.
+
 Two independent pipelines on the Mac Mini commit photos here and use the raw GitHub URLs to feed Instagram (`@pawel_and_pawleen`) and the linked Facebook Page (*Yorkies App*). Commits arrive asynchronously — **don't revert them, don't rename their destination subdirs, don't add them to any CI / lint gate**.
 
 | Pipeline | Source on farm-guardian | Destination in this repo | LaunchAgent(s) | Quality gate |
