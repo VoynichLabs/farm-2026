@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.11.1] — 2026-04-29
+
+### Changed — Birdadette at three weeks (OpenAI Codex gpt-5.4-mini)
+
+Added a new field note and refreshed Birdadette's roster portrait to the current three-week brooder shot.
+
+- `content/field-notes/2026-04-29-birdadette-three-weeks.mdx`
+- `content/flock-profiles.json` → Birdadette now points at `/photos/april-2026/birdadette-3weeks-b.jpg`
+- `public/photos/april-2026/birdadette-3weeks-a.jpg`
+- `public/photos/april-2026/birdadette-3weeks-b.jpg`
+
+The field note captions Birdadette clearly and keeps the spring flower shot as a plain secondary photo. Homepage `/` now picks up the new note automatically; `/flock` shows the three-week portrait.
+
 ## [1.11.0] — 2026-04-23
 
 ### Changed — Web-presence tightening: retire static gallery, kill Birdadette retrospective, unify social CTA (Claude Opus 4.7 (1M context))
