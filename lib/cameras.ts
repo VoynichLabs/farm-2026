@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.7 (1M context)
- * Date: 16-Apr-2026
+ * Author: Claude Sonnet 4.6 (updated 30-Apr-2026; originally Claude Opus 4.7 16-Apr-2026)
+ * Date: 30-Apr-2026
  * PURPOSE: Camera UI metadata overlay — NOT a roster. The authoritative list
  *   of live cameras is fetched at runtime from Guardian's `/api/cameras`
  *   endpoint (see `lib/guardian-roster.ts`). This file carries optional
@@ -46,24 +46,24 @@ export interface CameraMeta {
 export const CAMERAS: CameraMeta[] = [
   {
     name: "usb-cam",
-    label: "usb-cam — USB webcam on Mac Mini",
+    label: "usb-cam — USB webcam on GWTC laptop",
     shortLabel: "USB",
-    device: "USB webcam (Mac Mini, AVFoundation)",
+    device: "USB webcam (GWTC Gateway laptop, Windows/OpenCV)",
     aspectRatio: "16 / 9",
   },
   {
     name: "mba-cam",
     label: "mba-cam — MacBook Air 2013 webcam",
     shortLabel: "MBA",
-    device: "MacBook Air 2013 FaceTime HD webcam (RTSP via MediaMTX)",
+    device: "MacBook Air 2013 FaceTime HD (HTTP snapshot via usb-cam-host)",
     aspectRatio: "16 / 9",
   },
   {
     name: "s7-cam",
     label: "s7-cam — Samsung Galaxy S7",
     shortLabel: "S7",
-    device: "Samsung Galaxy S7 (IP Webcam app, RTSP)",
-    aspectRatio: "16 / 9",
+    device: "Samsung Galaxy S7 (IP Webcam app, portrait 9:16)",
+    aspectRatio: "9 / 16",
   },
   {
     name: "gwtc",
