@@ -50,6 +50,37 @@ It doesn't phone home. No cloud. No subscriptions. No data leaves the network. T
 - YOLOv8 + GLM-4V automated detection. The plumbing is all in `farm-guardian`, but it's not running against live frames right now. The cameras are watching; the farmer is watching the cameras. Good enough while the chicks are in the brooder.
 - Automated patrol and deterrent escalation. Both have been written and rewritten; for now the farmer drives the camera directly.
 
+## Under the Hood
+
+The system is distributed across the property — there isn't one box doing everything. The Mac Mini is the brain: it polls each camera's frame endpoint, runs the dashboard API, archives the curated frames, and pushes everything out through a Cloudflare tunnel. The cameras themselves do their own publishing. The Reolink serves HTTP snapshots from its own firmware. The Samsung S7 phone runs the IP Webcam app. The USB and laptop cameras are published by small Python services on whichever host they're plugged into. Add a camera to Guardian's config on the Mini, restart, and it shows up on this page within thirty seconds — no website redeploy.
+
+The Cloudflare tunnel is outbound-only. There's no port forwarding, no opening of router firewalls, no static IP. The Mac Mini reaches out to Cloudflare's edge network, and `guardian.markbarney.net` reaches back through that tunnel. If the home internet drops, the tunnel goes dark and reconnects when it comes back; nothing is exposed in the meantime.
+
+Snapshot polling — JPEG every second-and-change — replaced an earlier video pipeline. Browsers cap concurrent HTTP connections at six per domain, and four MJPEG streams plus the API polling burned through that budget the moment anyone opened the live page. Snapshots are short-lived requests that work cleanly with HTTP/2 multiplexing. They also let the Cloudflare tunnel breathe: 4K JPEGs are large, but a one-shot transfer is easier to plan around than a connection held open for hours.
+
+Detection — YOLO for objects, a vision-language model for refinement — is plumbed in but currently quiet. The pipeline ships its own SQLite catalog of "gems": frames the model thought were worth keeping, with draft captions and quality scores. Deterrents (spotlight, siren, sound playback) are scripted to escalate from log-only through "throw light at it" to "make noise," but escalation is manual right now. The cameras are watching; the farmer is watching the cameras.
+
+The website is [Next.js](https://nextjs.org/) 16 on [Railway](https://railway.app/), deployed on every push to `main`. It pulls live data from the Mac Mini's API; static content lives in MDX files in the repo. The whole thing — both the backend that runs the cameras and this website — was written end-to-end with [Claude Code](https://claude.ai/code) on the same Mac Mini that sits next to the brooder.
+
+## When Things Break
+
+The Mac Mini is the single point of failure. If it reboots — power blip, OS update, kernel panic — the live feeds and the gems pipeline go dark until the processes come back up. The Cloudflare tunnel auto-restarts and so do the per-host camera services, but the central Guardian process itself is currently a manually launched daemon. That's the largest reliability gap and it's tracked in the dev notes for cleanup.
+
+Sub-host failures recover or don't, depending on the host. The Gateway laptop has a watchdog service that catches the post-reboot Windows-DirectShow-zombie pattern and restarts the publisher. The S7's IP Webcam app drifts its orientation settings whenever it's killed; another watchdog re-applies them every ten minutes. The MacBook Air had no watchdog when it was an active node, and it's being recommissioned right now with that gap closed. The USB camera is a small service that runs wherever it's plugged in and rejoins the fleet automatically when it comes back online.
+
+When a camera goes down, this page notices. The dashboard above filters to cameras the backend reports as currently producing frames, so a frozen phone or a dead laptop disappears from the grid until it recovers — instead of showing a black tile pretending to be live. A camera that the Mac Mini can still see but this page briefly can't reach (because the tunnel hiccupped) shows a thin amber "RECONNECTING" strip and holds its last good frame so the page doesn't blink.
+
+Disk space is finite. The gems archive grows continuously, and there's no off-site backup yet — another known dev gap. If the Mini's drive fails tomorrow, the catalog of curated frames goes with it. The cameras and the live feeds would be fine; the curated history wouldn't.
+
+## Where the Code Lives
+
+Both repos are public on GitHub:
+
+- **[farm-guardian](https://github.com/VoynichLabs/farm-guardian)** — the backend. Camera capture, detection, deterrents, the API this page consumes, the gems pipeline, and the social-media posters that push to [Instagram](https://www.instagram.com/pawel_and_pawleen/) and [Facebook](https://www.facebook.com/614607655061302/) from the Mac Mini.
+- **[farm-2026](https://github.com/VoynichLabs/farm-2026)** — this website. Field notes, the flock roster, the live Guardian dashboard above, and the gem gallery.
+
+Both were written end-to-end with Claude Code. The current state of the engineering, including the rough edges, is in the [system review and gap analysis](https://github.com/VoynichLabs/farm-2026/blob/main/docs/02-May-2026-system-review-and-gap-analysis.md).
+
 ## The Story
 
 This started because hawks were taking chickens. In the first week of April 2026, we lost four birds — including Birdgit, a Speckled Sussex who followed you around like a dog. A hawk took her on April 8th.
