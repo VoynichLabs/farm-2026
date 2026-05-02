@@ -1,8 +1,10 @@
 /**
  * Author: Claude Opus 4.7 (1M context)
- * Date: 23-Apr-2026
+ * Date: 02-May-2026
  * PURPOSE: /flock — active/deceased bird roster + breed reference guide.
- *   Data source is content/flock-profiles.json via lib/content.
+ *   Data source is content/flock-profiles.json via lib/content. The roosters
+ *   section is conditional on count so the page degrades gracefully when no
+ *   active roosters are on the property.
  * SRP/DRY check: Pass — pure composition of BirdCard primitives against
  *   flock-profiles data.
  */
@@ -71,16 +73,22 @@ export default function FlockPage() {
         </div>
       </section>
 
-      {/* Roosters section */}
-      <section className="max-w-6xl mx-auto px-4 pt-16 pb-8">
-        <h2 className="text-2xl font-bold font-serif mb-2">The Roosters</h2>
-        <p className="text-forest/60 mb-8 text-sm">These two run the yard.</p>
-        <div className="grid gap-6 md:grid-cols-2">
-          {roosters.map((bird, idx) => (
-            <BirdCard key={idx} bird={bird} breedProfile={getBreedProfile(bird.breed)} isRooster />
-          ))}
-        </div>
-      </section>
+      {/* Roosters section — only when at least one rooster is on the property */}
+      {roosters.length > 0 && (
+        <section className="max-w-6xl mx-auto px-4 pt-16 pb-8">
+          <h2 className="text-2xl font-bold font-serif mb-2">
+            {roosters.length === 1 ? "The Rooster" : "The Roosters"}
+          </h2>
+          <p className="text-forest/60 mb-8 text-sm">
+            {roosters.length === 1 ? "Runs the yard." : `${roosters.length} run the yard.`}
+          </p>
+          <div className="grid gap-6 md:grid-cols-2">
+            {roosters.map((bird, idx) => (
+              <BirdCard key={idx} bird={bird} breedProfile={getBreedProfile(bird.breed)} isRooster />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Hens section */}
       <section className="max-w-6xl mx-auto px-4 py-8 pb-16">
@@ -97,7 +105,7 @@ export default function FlockPage() {
       {deceasedBirds.length > 0 && (
         <section className="max-w-6xl mx-auto px-4 py-8 pb-16">
           <h2 className="text-2xl font-bold font-serif mb-2">In Memoriam</h2>
-          <p className="text-forest/60 mb-8 text-sm">Lost in the first week of April 2026. The flock rebuilds, but they&apos;re remembered.</p>
+          <p className="text-forest/60 mb-8 text-sm">Lost this season. The flock rebuilds, but they&apos;re remembered.</p>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {deceasedBirds.map((bird, idx) => (
               <BirdCard key={idx} bird={bird} breedProfile={getBreedProfile(bird.breed)} deceased />

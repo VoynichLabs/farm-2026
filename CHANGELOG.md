@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.11.2] — 2026-05-02
+
+### Changed — Roster update; /flock degrades gracefully when no active roosters (Claude Opus 4.7)
+
+- `content/flock-profiles.json`: Whitey Red Legs marked deceased (2026-05-01).
+- `app/flock/page.tsx`: "The Roosters" section now renders only when `roosters.length > 0`, with subtitle adapting to the count. Previously the section header rendered with no cards beneath it once both active roosters were gone.
+- `app/flock/page.tsx`: In Memoriam subtitle generalised — the "first week of April 2026" qualifier no longer matched the data.
+- Homepage `FlockPreviewStrip` automatically drops Whitey via its `status === "active"` filter; no code change there.
+
 ## [1.11.1] — 2026-04-29
 
 ### Changed — Birdadette at three weeks (OpenAI Codex gpt-5.4-mini)

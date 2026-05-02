@@ -169,12 +169,14 @@
       "breed": "Easter Egger × Rhode Island Red cross (rooster)",
       "age": "Unknown",
       "age_note": "Adult rooster",
-      "status": "active",
+      "status": "deceased",
       "egg_color": "N/A (rooster)",
       "temperament": "Calm, friendly",
       "color_description": "White body with black-barred tail, yellow legs, likely male EE × RIR cross",
       "photo": "birds/whitey-red-legs.jpg",
-      "notes": "Secondary rooster; large single comb; mixed breed background"
+      "notes": "Secondary rooster; large single comb; mixed breed background. Disappeared 01-May-2026.",
+      "deceased_date": "2026-05-01",
+      "cause_of_death": "Disappeared without trace; presumed predation"
     },
     {
       "name": "EE hen 1",
