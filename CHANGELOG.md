@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.12.1] — 2026-05-02
+
+### Changed — small follow-ups to 1.12.0 (Claude Opus 4.7)
+
+Three low-risk improvements off the back of the system review in `docs/02-May-2026-system-review-and-gap-analysis.md`. All shipped as separate commits so each is reviewable on its own.
+
+- **Guardian project MDX no longer claims a fixed camera count.** The "Five cameras" line in the Hardware section and the "all five cameras" line in What's Working were both wrong while `mba-cam` was decommissioned (2026-04-15) and would be wrong again any time the fleet shifts. Prose now defers to the live dashboard for "what's online right now"; the hardware table is still a useful long-running reference. Partial fix for gap B1; full fix (rendering the table from `/api/cameras`) is still open.
+- **`GUARDIAN_API` reads from `NEXT_PUBLIC_GUARDIAN_API` env var.** Default unchanged so prod is unaffected. Override via Railway env var, `.env.local`, or shell to point at a staging tunnel or a LAN URL during dev. Closes gap B4.
+- **Hero rotates across the latest 10 strong gems by hour.** Was fetching exactly one and pinning it. Now picks deterministically by hour-of-epoch so the hero shifts through the day without new content landing. SSR cache stays warm — every visitor in the same hour sees the same hero. Closes gap B6.
+
 ## [1.12.0] — 2026-05-02
 
 ### Changed — Guardian camera roster gates on backend `is_live`; stage drops hidden-thumb container (Claude Opus 4.7)
