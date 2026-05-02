@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.13.0] — 2026-05-02
+
+### Added — Guardian project page documents the system honestly (Claude Opus 4.7)
+
+Closes gap C1 from `docs/02-May-2026-system-review-and-gap-analysis.md`. Previously the Guardian project page told the story (hawks, sky-watch mode, Birdadette next to the Mac Mini) and named the hardware, but didn't actually explain how the system works or what depends on what. Visitors who clicked through past the live dashboard hit a charming-but-shallow story.
+
+Three new sections sit between "How It Watches" and "The Story":
+
+- **Under the Hood** — distributed architecture (Mini coordinates, sub-hosts publish), Cloudflare tunnel rationale (outbound-only, no port forwarding), why snapshot polling replaced video (browser HTTP/1.1 connection limits), what detection / gems / deterrents actually do today, the frontend stack (Next.js 16 + Tailwind + Railway), and that the whole system was written end-to-end with Claude Code.
+- **When Things Break** — honest about the SPOFs. Mac Mini reboot leaves Guardian dark until manually relaunched; per-host watchdog coverage is uneven (Gateway laptop has one, S7 has one for orientation drift, MBA being recommissioned with one); offline cameras disappear from the grid cleanly rather than showing dead tiles; no off-site backup yet for the gems archive.
+- **Where the Code Lives** — links to `farm-guardian` and `farm-2026` on GitHub plus the gap-analysis doc, so curious visitors can read the actual code and the actual rough edges.
+
+Voice matches the existing prose. The Story section still closes the page. No bird-loss content was added — recent losses stay in the In Memoriam section on `/flock` per Boss's earlier instruction.
+
 ## [1.12.1] — 2026-05-02
 
 ### Changed — small follow-ups to 1.12.0 (Claude Opus 4.7)
