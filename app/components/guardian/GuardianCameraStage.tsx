@@ -1,7 +1,7 @@
 "use client";
 /**
  * Author: Claude Opus 4.7 (1M context)
- * Date: 16-Apr-2026
+ * Date: 02-May-2026
  * PURPOSE: Modular camera viewer — one featured feed big, the rest as live
  *   thumbnails. Click any thumbnail to promote it to the stage. Selection
  *   persists in localStorage and can be deep-linked via `?cam=<name>`.
@@ -10,27 +10,33 @@
  *   roster).
  *
  *   Camera roster is DATA, not a static list. The `cameras` prop is the
- *   live roster — typically sourced via `useGuardianRoster()` which
- *   fetches Guardian's `/api/cameras` every 30s. Adding/removing a camera
- *   on the backend flows through without any code change here.
+ *   live roster — sourced via `useGuardianRoster()`, which itself filters
+ *   /api/cameras to entries the backend reports as live (`is_live: true`).
+ *   So every camera that arrives here should be a camera the user wants
+ *   to see, and the stage's job is just to render them.
  *
- *   Smart visibility: per-camera FeedState is collected via
- *   `useCameraStatuses` (each GuardianCameraFeed reports its own state).
- *   Cameras whose state is "offline" are hidden from the thumbnail grid
- *   but kept mounted in a hidden container so their poll loops continue
- *   and they reappear automatically when they recover. If the featured
- *   camera goes "offline" and any other camera is "live", the stage
- *   auto-promotes to the first live cam in canonical order. Once promoted,
- *   we don't reshuffle. The grid scales to visible-thumb count (1/2/3+).
- *   Empty state when zero cameras are reachable.
+ *   2026-05-02 simplification: the prior "smart visibility" hidden-thumb
+ *   container is gone. It was hiding tiles whose per-feed snapshot poll
+ *   had failed 10+ times in a row (~12s of failures), which was the root
+ *   cause of "the website only shows the Reolink." The roster-level
+ *   is_live gate now handles "this camera is dead"; per-tile state inside
+ *   GuardianCameraFeed handles transient frame-fetch failures with its
+ *   own connecting/reconnecting/offline indicator. Each tile speaks for
+ *   itself.
+ *
+ *   Auto-promote: if the user's chosen featured tile is reporting offline
+ *   (transient snapshot failure), promote the first tile that's reporting
+ *   "live" so the big stage isn't a dead frame. The user's pick is
+ *   restored once it recovers. This is per-tile state, not roster state.
  *
  *   Featured fallback: if `defaultFeatured` isn't present in the current
- *   roster (e.g. that camera was never set up, or was unplugged), we use
- *   the first roster entry so the stage never renders a dead slot.
+ *   roster (camera not online right now, or never configured), use the
+ *   first roster entry so the stage never renders a dead slot.
+ *
  * SRP/DRY check: Pass — composes GuardianCameraFeed (rendering) and
- *   useCameraStatuses (state). Camera roster arrives as a prop from the
- *   parent's live fetch. Grid-column class selection lives in one helper.
- *   Layout decisions live here once and serve every consumer.
+ *   useCameraStatuses (per-tile FeedState aggregation for auto-promote).
+ *   Roster arrives pre-filtered as a prop. Grid-column class selection
+ *   lives in one helper. Layout decisions live here once.
  */
 import { useEffect, useMemo, useState } from "react";
 import GuardianCameraFeed from "./GuardianCameraFeed";
@@ -118,22 +124,19 @@ export default function GuardianCameraStage({
     [cameras, featured],
   );
 
-  // Partition non-featured cameras into visible (anything not "offline") and
-  // hidden (offline) so hidden ones keep polling and rejoin the grid on recovery.
-  const { visibleThumbs, hiddenThumbs } = useMemo(() => {
-    const others = cameras.filter((c) => c.name !== featured);
-    return {
-      visibleThumbs: others.filter((c) => statuses[c.name] !== "offline"),
-      hiddenThumbs: others.filter((c) => statuses[c.name] === "offline"),
-    };
-  }, [cameras, featured, statuses]);
+  // Every camera in the roster gets a tile. The roster is already filtered
+  // upstream (useGuardianRoster -> is_live), so anything that arrives here is
+  // a camera we want to render. Per-tile connecting/reconnecting/offline
+  // states are shown by GuardianCameraFeed itself.
+  const thumbs = useMemo(
+    () => cameras.filter((c) => c.name !== featured),
+    [cameras, featured],
+  );
 
-  // Empty state: no cameras configured, or every camera (including the one
-  // we're trying to feature) is offline.
-  const everyCameraOffline =
-    cameras.length > 0 &&
-    cameras.every((c) => statuses[c.name] === "offline");
-  const showEmptyState = cameras.length === 0 || (!featuredCam) || everyCameraOffline;
+  // Empty state: no cameras online right now (roster is empty, or the chosen
+  // featured doesn't resolve). Same copy in both cases — from the visitor's
+  // point of view the page is empty for the same reason.
+  const showEmptyState = cameras.length === 0 || !featuredCam;
 
   if (showEmptyState) {
     return (
@@ -144,29 +147,13 @@ export default function GuardianCameraStage({
         >
           <div>
             <div className="text-guardian-muted text-sm uppercase tracking-widest mb-1">
-              {cameras.length === 0 ? "No cameras configured" : "No cameras online"}
+              No cameras online
             </div>
             <div className="text-guardian-muted text-[0.7rem]">
-              {cameras.length === 0
-                ? "Guardian's /api/cameras returned no cameras yet."
-                : "Feeds will reappear automatically when they recover."}
+              Cameras will reappear automatically when Guardian reports them live.
             </div>
           </div>
         </div>
-        {/* Keep offline cameras polling so the page can self-heal. */}
-        {cameras.length > 0 && (
-          <div className="hidden" aria-hidden="true">
-            {cameras.map((cam) => (
-              <GuardianCameraFeed
-                key={cam.name}
-                cameraName={cam.name}
-                label={cam.shortLabel}
-                online={online}
-                onStatusChange={onStatusChange}
-              />
-            ))}
-          </div>
-        )}
       </div>
     );
   }
@@ -189,10 +176,10 @@ export default function GuardianCameraStage({
         />
       </div>
 
-      {/* Thumbnail picker — only cameras that aren't fully offline. */}
-      {visibleThumbs.length > 0 && (
-        <div className={`grid ${gridColsForCount(visibleThumbs.length)} gap-1.5`}>
-          {visibleThumbs.map((cam) => (
+      {/* Thumbnail picker — every other camera in the live roster. */}
+      {thumbs.length > 0 && (
+        <div className={`grid ${gridColsForCount(thumbs.length)} gap-1.5`}>
+          {thumbs.map((cam) => (
             <button
               key={cam.name}
               type="button"
@@ -213,22 +200,6 @@ export default function GuardianCameraStage({
               </div>
               <div className="pointer-events-none absolute inset-0 rounded ring-1 ring-transparent group-hover:ring-emerald-400/60 transition" />
             </button>
-          ))}
-        </div>
-      )}
-
-      {/* Offline cameras — kept mounted off-screen so polling continues and
-          they re-enter the visible grid the moment a snapshot succeeds. */}
-      {hiddenThumbs.length > 0 && (
-        <div className="hidden" aria-hidden="true">
-          {hiddenThumbs.map((cam) => (
-            <GuardianCameraFeed
-              key={cam.name}
-              cameraName={cam.name}
-              label={cam.shortLabel}
-              online={online}
-              onStatusChange={onStatusChange}
-            />
           ))}
         </div>
       )}
