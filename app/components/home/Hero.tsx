@@ -1,17 +1,23 @@
 /**
  * Author: Claude Opus 4.7 (1M context)
- * Date: 22-Apr-2026 (rotating-hero rewrite; originally 13-Apr-2026 by Opus 4.6)
+ * Date: 02-May-2026
  * PURPOSE: Homepage hero — dark forest canvas with a rotating background
- *   image pulled from Guardian's latest strong-tier gem. Falls back to the
+ *   image pulled from Guardian's latest strong-tier gems. Falls back to the
  *   known-good Birdadette-fresh-hatch JPG on tunnel drop or empty result.
  *   Top-left title + tagline, bottom-left body, bottom-right location + nav
  *   links. Vignette gradients keep text legible over any frame (portrait
  *   from s7-cam letterboxes against the forest bg; landscape from the other
  *   cameras centers cleanly).
+ *
+ *   Rotation (2026-05-02): fetches up to 10 strong-tier gems and selects one
+ *   by hour-of-epoch so the hero changes through the day even when no new
+ *   gems land in the archive. Deterministic — every visitor in the same
+ *   hour sees the same hero — so the SSR cache stays warm. Falls back to a
+ *   static asset if Guardian is unreachable.
+ *
  * SRP/DRY check: Pass — single responsibility (render the hero). Image
- *   selection is the only new side effect, wrapped in fetchGems which
- *   already handles tunnel drops via its FetchResult type.
- *   See docs/22-Apr-2026-living-homepage-hero-and-stats-plan.md.
+ *   selection is the only side effect, wrapped in fetchGems which already
+ *   handles tunnel drops via its FetchResult type.
  */
 import Link from "next/link";
 import { fetchGems } from "@/lib/gems";
@@ -20,11 +26,15 @@ import { fetchGems } from "@/lib/gems";
 // Kept as an asset in this repo so the hero is always renderable.
 const HERO_FALLBACK_IMAGE = "/photos/april-2026/birdadette-fresh-hatch.jpg";
 
+const HERO_POOL_SIZE = 10;
+const ONE_HOUR_MS = 3_600_000;
+
 export default async function Hero() {
-  const result = await fetchGems({ limit: 1 });
+  const result = await fetchGems({ limit: HERO_POOL_SIZE });
+  const rows = result.ok ? result.data.rows : [];
   const heroImage =
-    result.ok && result.data.rows.length > 0
-      ? result.data.rows[0].full_url
+    rows.length > 0
+      ? rows[Math.floor(Date.now() / ONE_HOUR_MS) % rows.length].full_url
       : HERO_FALLBACK_IMAGE;
 
   return (
