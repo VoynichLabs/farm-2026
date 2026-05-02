@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.12.0] — 2026-05-02
+
+### Changed — Guardian camera roster gates on backend `is_live`; stage drops hidden-thumb container (Claude Opus 4.7)
+
+Boss reported that the public site "only shows the Reolink" — the other cameras (S7, GWTC, USB) almost never appeared even when they were online on the LAN dashboard. Root cause: the stage's "smart visibility" rule moved any tile reporting `feedState === "offline"` (10+ consecutive frame-fetch failures, ~12s) into a hidden `div`. A camera that was simply slow on first frame would get hidden and stay hidden until its next successful poll cycle — which the user couldn't see because the tile wasn't rendered.
+
+Two-file fix:
+
+- `lib/guardian-roster.ts`: `useGuardianRoster` now consumes the `is_live` field that farm-guardian v2.37.5 added to `/api/cameras`. Cameras the backend reports as not currently producing frames are filtered out before they reach the stage. `is_live === undefined` is treated as inclusive so older backends keep working.
+- `app/components/guardian/GuardianCameraStage.tsx`: hidden-thumb container removed. Every camera in the roster gets a visible tile. Each tile continues to show its own connecting/reconnecting/offline indicator via `GuardianCameraFeed`. Auto-promote-on-featured-offline is preserved (handles transient per-tile failures distinct from roster state). Empty-state copy unified.
+
+**What this changes for visitors.** When all four cameras are live on the backend, all four show up. When the S7 phone freezes (a real, recurring failure mode), the backend flips `is_live: false` for `s7-cam` and the tile leaves the grid — cleanly, not silently. When the S7 recovers, the tile reappears within the next 30s roster refresh.
+
+**What this doesn't change.** Per-tile snapshot polling, indicator UI, auto-promote behavior, deep-link `?cam=` handling, localStorage persistence of the user's chosen featured camera.
+
+Addresses gaps B2 and B3 in `docs/02-May-2026-system-review-and-gap-analysis.md`.
+
 ## [1.11.2] — 2026-05-02
 
 ### Changed — Roster update; /flock degrades gracefully when no active roosters (Claude Opus 4.7)
