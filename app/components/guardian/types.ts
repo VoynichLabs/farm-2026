@@ -1,17 +1,21 @@
-// Author: Claude Opus 4.6 (1M context)
-// Date: 14-Apr-2026
+// Author: Claude Opus 4.7 (1M context)
+// Date: 02-May-2026
 // PURPOSE: TypeScript interfaces for Farm Guardian API responses.
-//          Maps to endpoints at guardian.markbarney.net. Detection-pipeline
-//          types (Detection, DeterrentStatus, ActiveTrack, DailySummary,
+//          Maps to endpoints at guardian.markbarney.net by default;
+//          override with NEXT_PUBLIC_GUARDIAN_API for staging / preview /
+//          local dev (Next inlines NEXT_PUBLIC_* at build, so this works
+//          on both server and client paths). Detection-pipeline types
+//          (Detection, DeterrentStatus, ActiveTrack, DailySummary,
 //          DeterrentEffectiveness, EBirdSighting) are retained for future
-//          reuse even though the live Guardian page no longer renders them
-//          (v1.4.0 strip). PTZ types added for the GuardianPTZPanel.
+//          reuse even though the live Guardian page no longer renders
+//          them (v1.4.0 strip). PTZ types added for the GuardianPTZPanel.
 //          Image-archive types appended 14-Apr-2026 for farm-guardian
 //          v2.25.0 /api/v1/images/* surface — see
 //          docs/14-Apr-2026-image-archive-dataset-and-frontend-plan.md.
 // SRP/DRY check: Pass — single file for all Guardian API types.
 
-export const GUARDIAN_API = "https://guardian.markbarney.net";
+export const GUARDIAN_API =
+  process.env.NEXT_PUBLIC_GUARDIAN_API ?? "https://guardian.markbarney.net";
 
 export interface GuardianStatus {
   online: boolean;
