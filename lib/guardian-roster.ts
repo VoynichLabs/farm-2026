@@ -1,21 +1,27 @@
 "use client";
 /**
  * Author: Claude Opus 4.7 (1M context)
- * Date: 16-Apr-2026
+ * Date: 02-May-2026
  * PURPOSE: Client hook that owns the live camera roster. Fetches
- *   `/api/cameras` from the Guardian backend every 30s so cameras
- *   plugged in (or unplugged) on the Mac Mini flow through to the
- *   website without a redeploy. Each backend entry is run through
- *   `resolveCameraMeta` so it arrives at the UI with a label/device
- *   string — either from the static overlay in `lib/cameras.ts` or a
- *   sensible default derived from the camera name.
+ *   `/api/cameras` from the Guardian backend every 30s and filters to
+ *   currently-online cameras only, so the stage renders exactly what
+ *   the backend reports as live — no hand-curated fleet list, and no
+ *   tiles for cameras whose source host is dead.
  *
  *   Boss's rule (2026-04-16): the frontend must treat the roster as
  *   data, not as a hardcoded list. Adding a camera to Guardian's
  *   config should be enough to make it appear on the site. Unplugging
- *   one should just show an offline indicator, not require a code
- *   change. This hook is the single client-side entry point for that
- *   rule.
+ *   one should mean it disappears from the site without a code change.
+ *
+ *   Liveness gate (2026-05-02): farm-guardian v2.37.5 added `is_live`
+ *   to `/api/cameras` — true when a frame was captured within
+ *   max(30s, 3 * snapshot_interval). That is the authoritative signal
+ *   for "this camera is producing frames right now." We filter on it
+ *   here so the per-feed snapshot poller never has to wait through
+ *   ~12s of failed polls before the UI agrees the camera is dead. If
+ *   the field is absent (older backend), entries are kept (defensive
+ *   default — better to show a tile that fails to render than to hide
+ *   a working camera).
  *
  *   Why a fallback: before the first /api/cameras response arrives
  *   (and if that request fails), we render from the static `CAMERAS`
@@ -24,7 +30,7 @@
  *   list, not an authoritative roster — see `lib/cameras.ts` header.
  *
  * SRP/DRY check: Pass — single responsibility: own the roster record
- *   and keep it fresh. No rendering, no policy.
+ *   and keep it fresh. No rendering, no policy beyond the is_live gate.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { GUARDIAN_API } from "@/app/components/guardian/types";
@@ -32,10 +38,14 @@ import { CAMERAS, CameraMeta, resolveCameraMeta } from "./cameras";
 
 type RawCamera = {
   name: string;
-  // Guardian returns other fields (ip, type, online, capturing, rtsp_url,
-  // supports_motion) — we only need the name here. Per-camera liveness is
-  // tracked independently by GuardianCameraFeed via snapshot polling, so
-  // `online` from /api/cameras is not authoritative for the rail UI.
+  // `is_live` is the backend's authoritative liveness flag (v2.37.5+).
+  // Optional in the type to stay compatible with older backends, where
+  // we'd see undefined and treat it as "include." Other fields the
+  // backend returns (ip, type, online, capturing, rtsp_url,
+  // supports_motion, last_frame_age_seconds, stale_after_seconds) are
+  // not consumed by this hook — per-feed JPEG polling handles the
+  // rest of the per-tile state.
+  is_live?: boolean;
 };
 
 const REFRESH_MS = 30_000;
@@ -54,12 +64,18 @@ export function useGuardianRoster(): {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const raw = (await res.json()) as RawCamera[];
       if (!mountedRef.current) return;
-      if (Array.isArray(raw) && raw.length > 0) {
-        setCameras(raw.map((c) => resolveCameraMeta(c.name)));
+      if (Array.isArray(raw)) {
+        // Filter to currently-live cameras. Treat `is_live === undefined` as
+        // inclusive so older backends keep working. An empty result here is
+        // real state ("nothing is online right now") and the stage's empty
+        // state will render accordingly.
+        const live = raw.filter((c) => c.is_live !== false);
+        setCameras(live.map((c) => resolveCameraMeta(c.name)));
       }
     } catch {
-      // Keep whatever we had (fallback overlay or last good response) so the
-      // rail doesn't blink to "no cameras" every time the tunnel hiccups.
+      // Network/tunnel failure: keep whatever we had so the rail doesn't blink
+      // to "no cameras" every time the tunnel hiccups. The catch path is
+      // distinct from a 200 response with zero live cameras.
     } finally {
       if (mountedRef.current) setReady(true);
     }
