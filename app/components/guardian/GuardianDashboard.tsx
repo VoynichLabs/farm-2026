@@ -17,6 +17,7 @@
 
 import { useEffect, useState } from "react";
 import { GUARDIAN_API, GuardianStatus } from "./types";
+import GuardianConnectivityBanner from "./GuardianConnectivityBanner";
 import GuardianStatusBar from "./GuardianStatusBar";
 import GuardianCameraStage from "./GuardianCameraStage";
 import GuardianPTZPanel from "./GuardianPTZPanel";
@@ -56,6 +57,9 @@ export default function GuardianDashboard() {
 
   return (
     <div className="bg-guardian-bg text-guardian-text rounded-lg overflow-hidden border border-guardian-border mb-8">
+      {/* Connectivity banner — only renders when the site can't reach Guardian */}
+      <GuardianConnectivityBanner online={online} />
+
       {/* Status bar */}
       <GuardianStatusBar status={status} online={online} />
 
