@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.14.1] — 2026-05-03
+
+### Fixed — connectivity banner and per-tile RECONNECTING strip flapping every few seconds (Claude Opus 4.7)
+
+Boss reported the dashboard was visibly churning between "Site disconnected" and reconnecting/live states every few seconds. Two sources of flicker on a jittery Cloudflare tunnel; both fixed with hysteresis.
+
+- **`GuardianDashboard`** now requires two consecutive failed `/api/status` polls (~20s) before flipping `online` to false. A single success resets the streak immediately. So the banner only appears for sustained outages, not transient hiccups.
+- **`GuardianCameraFeed`** bumps `RECONNECT_SHOW_THRESHOLD` from 3 to 5 (~6s of consecutive misses before the strip shows) and adds a 4-second minimum dwell on the "reconnecting" state. Once the strip appears, it stays at least four seconds even if a frame succeeds — the visible image still updates with every successful fetch, only the state flip is held. After the dwell, the next success snaps back to live cleanly.
+
+Per-tile recovery on parent `online` flipping back to true is preserved (resets the dwell timer too).
+
 ## [1.14.0] — 2026-05-03
 
 ### Added — top-level S7 alongside Reolink, connectivity banner, contract check (Claude Opus 4.7)
