@@ -33,9 +33,17 @@ const POLL_INTERVAL = 1200;
 const RECONNECT_THRESHOLD = 3;
 // Consecutive misses on a live feed before we show the "reconnecting" strip.
 // One hiccup is normal; we don't want the overlay flickering on and off.
-const RECONNECT_SHOW_THRESHOLD = 3;
+// 5 misses ≈ 6 seconds — long enough to avoid bursty-jitter flapping but
+// short enough to communicate a real problem promptly.
+const RECONNECT_SHOW_THRESHOLD = 5;
 // Misses before we give up on a live feed and go full OFFLINE.
 const OFFLINE_THRESHOLD = 10;
+// Minimum time (ms) the "reconnecting" strip stays visible once shown,
+// even if a frame fetch succeeds. Prevents flicker when failures arrive in
+// bursts: 5 misses → strip shown → 1 success → strip would otherwise
+// disappear → 5 more misses → strip shown again. Holding the strip for a
+// few seconds smooths that into a single visible "reconnecting" period.
+const RECONNECT_MIN_VISIBLE_MS = 4000;
 
 export type FeedState = "connecting" | "live" | "reconnecting" | "offline";
 
@@ -55,6 +63,10 @@ export default function GuardianCameraFeed({
   const consecutiveErrors = useRef(0);
   const mountedRef = useRef(true);
   const hadFrameRef = useRef(false);
+  // Tracks when the tile last entered "reconnecting" so a single post-streak
+  // success doesn't immediately flip it back to "live" — see
+  // RECONNECT_MIN_VISIBLE_MS.
+  const reconnectingShownAt = useRef<number | null>(null);
 
   // Poll for snapshots
   useEffect(() => {
@@ -78,6 +90,21 @@ export default function GuardianCameraFeed({
         });
         hadFrameRef.current = true;
         consecutiveErrors.current = 0;
+
+        // If we recently flipped to "reconnecting", hold that state until the
+        // dwell window has elapsed. A frame just landed (the underlying
+        // tunnel is actually working), but flipping immediately back to
+        // "live" causes flicker when failures come in bursts. After the
+        // dwell, the next success snaps back to "live".
+        if (reconnectingShownAt.current !== null) {
+          const heldFor = Date.now() - reconnectingShownAt.current;
+          if (heldFor < RECONNECT_MIN_VISIBLE_MS) {
+            // Stay on "reconnecting" — but the frame *did* update so the
+            // visible image is fresh.
+            return;
+          }
+          reconnectingShownAt.current = null;
+        }
         setFeedState("live");
       } catch {
         if (!mountedRef.current) return;
@@ -94,13 +121,16 @@ export default function GuardianCameraFeed({
 
         // Stay on "live" through small hiccups so the UI doesn't flicker; only
         // surface "reconnecting" after several consecutive failures.
-        setFeedState(
-          consecutiveErrors.current >= OFFLINE_THRESHOLD
-            ? "offline"
-            : consecutiveErrors.current >= RECONNECT_SHOW_THRESHOLD
-              ? "reconnecting"
-              : "live",
-        );
+        if (consecutiveErrors.current >= OFFLINE_THRESHOLD) {
+          setFeedState("offline");
+          reconnectingShownAt.current = null;
+        } else if (consecutiveErrors.current >= RECONNECT_SHOW_THRESHOLD) {
+          if (reconnectingShownAt.current === null) {
+            reconnectingShownAt.current = Date.now();
+          }
+          setFeedState("reconnecting");
+        }
+        // else: stay on whatever we were (typically "live"); below threshold.
       }
     };
 
@@ -111,6 +141,7 @@ export default function GuardianCameraFeed({
       mountedRef.current = false;
       clearInterval(interval);
       hadFrameRef.current = false;
+      reconnectingShownAt.current = null;
       setFrameUrl((prev) => {
         if (prev) URL.revokeObjectURL(prev);
         return null;
@@ -121,6 +152,7 @@ export default function GuardianCameraFeed({
   useEffect(() => {
     if (online === true && feedState === "offline") {
       consecutiveErrors.current = 0;
+      reconnectingShownAt.current = null;
       setFeedState(frameUrl ? "live" : "connecting");
     }
   }, [online, feedState, frameUrl]);

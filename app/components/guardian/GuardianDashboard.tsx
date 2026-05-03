@@ -1,7 +1,7 @@
 "use client";
 /**
  * Author: Claude Opus 4.7 (1M context)
- * Date: 16-Apr-2026
+ * Date: 03-May-2026
  * PURPOSE: Guardian live dashboard — LIVE STREAMS + MANUAL CONTROLS.
  *   Renders the camera stage (one featured, others as thumbs; click to
  *   promote) and the PTZ control panel for the house-yard Reolink. All
@@ -10,18 +10,32 @@
  *   The camera roster for the stage is fetched live from Guardian's
  *   `/api/cameras` via `useGuardianRoster` — adding/removing cameras on
  *   the backend reflects on the page without a code change.
+ *
+ *   Hysteresis (2026-05-03): a single failed /api/status poll used to
+ *   flip `online` to false, which made the connectivity banner flap on
+ *   every transient hiccup of the Cloudflare tunnel. The poll loop now
+ *   requires `STATUS_FAILURE_THRESHOLD` consecutive failures before
+ *   declaring the site disconnected. A single success resets the counter
+ *   and clears the disconnected state immediately.
+ *
  * SRP/DRY check: Pass — orchestrator delegates to GuardianStatusBar,
  *   GuardianCameraStage, and GuardianPTZPanel. Roster comes from a
  *   dedicated hook, not a hardcoded list.
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GUARDIAN_API, GuardianStatus } from "./types";
 import GuardianConnectivityBanner from "./GuardianConnectivityBanner";
 import GuardianStatusBar from "./GuardianStatusBar";
 import GuardianCameraStage from "./GuardianCameraStage";
 import GuardianPTZPanel from "./GuardianPTZPanel";
 import { useGuardianRoster } from "@/lib/guardian-roster";
+
+const STATUS_POLL_MS = 10_000;
+// Two consecutive failed status polls (~20s of no response) before we declare
+// the site disconnected. Below this, transient tunnel jitter is invisible to
+// the visitor — the banner only appears for sustained outages.
+const STATUS_FAILURE_THRESHOLD = 2;
 
 function fetchStatus(): Promise<GuardianStatus | null> {
   return fetch(`${GUARDIAN_API}/api/status`)
@@ -33,6 +47,7 @@ export default function GuardianDashboard() {
   const [online, setOnline] = useState<boolean | null>(null);
   const [status, setStatus] = useState<GuardianStatus | null>(null);
   const { cameras } = useGuardianRoster();
+  const consecutiveFailuresRef = useRef(0);
 
   // Single poll loop: only /api/status. Drives the online dot and the
   // "Cameras N/M online" readout. setState runs inside the .then callback
@@ -42,13 +57,27 @@ export default function GuardianDashboard() {
     let cancelled = false;
     const apply = (s: GuardianStatus | null) => {
       if (cancelled) return;
-      setOnline(s?.online ?? false);
-      setStatus(s);
+      if (s?.online) {
+        // Success — clear the failure streak and update visible state.
+        consecutiveFailuresRef.current = 0;
+        setOnline(true);
+        setStatus(s);
+        return;
+      }
+      // Failure (network error, non-OK response, or `online: false` body).
+      consecutiveFailuresRef.current += 1;
+      setStatus(null);
+      if (consecutiveFailuresRef.current >= STATUS_FAILURE_THRESHOLD) {
+        setOnline(false);
+      }
+      // else: keep the previous `online` value. A single bad poll between
+      // good polls leaves the banner hidden — only a sustained streak flips
+      // the disconnected state.
     };
     fetchStatus().then(apply);
     const id = setInterval(() => {
       fetchStatus().then(apply);
-    }, 10000);
+    }, STATUS_POLL_MS);
     return () => {
       cancelled = true;
       clearInterval(id);
