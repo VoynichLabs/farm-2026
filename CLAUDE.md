@@ -27,10 +27,13 @@ Canonical readmes live in farm-guardian: the gem lane is documented inline acros
 ## Commands
 
 ```bash
-npm run dev      # Start development server
-npm run build    # Production build
-npm run start    # Start production server
-npm run lint     # Run ESLint
+npm run dev              # Start development server
+npm run build            # Production build
+npm run start            # Start production server
+npm run lint             # Run ESLint
+npm run check:contract   # Probe live Guardian API; assert response shapes
+                         #   match types.ts. Override target with
+                         #   GUARDIAN_API=<url>. Exit code 1 on drift.
 ```
 
 No test suite exists. Deployment targets Railway.app using the standalone Next.js output.

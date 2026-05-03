@@ -9,7 +9,8 @@
     "dev": "next dev",
     "build": "next build && cp -r .next/static .next/standalone/.next/static && cp -r public .next/standalone/public",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:contract": "node scripts/check-guardian-contract.mjs"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
