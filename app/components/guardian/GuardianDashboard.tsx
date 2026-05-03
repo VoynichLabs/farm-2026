@@ -64,6 +64,7 @@ export default function GuardianDashboard() {
         <GuardianCameraStage
           cameras={cameras}
           defaultFeatured="house-yard"
+          secondaryFeatured="s7-cam"
           storageKey="farm2026.guardian.featured.dashboard"
           online={online}
         />

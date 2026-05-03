@@ -53,11 +53,19 @@ function gridColsForCount(count: number): string {
 export default function GuardianCameraStage({
   cameras,
   defaultFeatured,
+  secondaryFeatured,
   storageKey,
   online,
 }: {
   cameras: CameraMeta[];
   defaultFeatured: string;
+  // Optional pinned second stage. When set AND present in the live roster
+  // AND distinct from the primary, the top of the stage renders as a
+  // side-by-side pair (mobile: stacked) instead of a single tile. Used by
+  // the dashboard to put house-yard and s7-cam at top-level prominence
+  // (2026-05-02). Other consumers (homepage) leave this unset and keep the
+  // single-tile behavior.
+  secondaryFeatured?: string;
   storageKey: string;
   online: boolean | null;
 }) {
@@ -124,13 +132,24 @@ export default function GuardianCameraStage({
     [cameras, featured],
   );
 
+  // If `secondaryFeatured` is configured, resolve it against the live roster.
+  // Skip when missing from the roster (camera not currently online) or when
+  // it collides with the primary (e.g., auto-promote landed on it). When
+  // resolved, it pins as the second top-level tile.
+  const secondaryCam: CameraMeta | null = useMemo(() => {
+    if (!secondaryFeatured) return null;
+    if (secondaryFeatured === featured) return null;
+    return cameras.find((c) => c.name === secondaryFeatured) ?? null;
+  }, [cameras, featured, secondaryFeatured]);
+
   // Every camera in the roster gets a tile. The roster is already filtered
   // upstream (useGuardianRoster -> is_live), so anything that arrives here is
   // a camera we want to render. Per-tile connecting/reconnecting/offline
-  // states are shown by GuardianCameraFeed itself.
+  // states are shown by GuardianCameraFeed itself. Thumbs exclude both top
+  // slots so the same camera never renders twice.
   const thumbs = useMemo(
-    () => cameras.filter((c) => c.name !== featured),
-    [cameras, featured],
+    () => cameras.filter((c) => c.name !== featured && c.name !== secondaryCam?.name),
+    [cameras, featured, secondaryCam],
   );
 
   // Empty state: no cameras online right now (roster is empty, or the chosen
@@ -160,21 +179,51 @@ export default function GuardianCameraStage({
 
   return (
     <div className="flex flex-col gap-1.5">
-      {/* Stage — featured camera, sized by its native aspect ratio */}
-      <div
-        className="w-full mx-auto"
-        style={{
-          aspectRatio: featuredCam.aspectRatio,
-          maxHeight: "65vh",
-        }}
-      >
-        <GuardianCameraFeed
-          cameraName={featuredCam.name}
-          label={featuredCam.label}
-          online={online}
-          onStatusChange={onStatusChange}
-        />
-      </div>
+      {/* Top stage — single primary tile, OR primary + secondary side-by-side
+          when `secondaryFeatured` is configured and resolves. The secondary
+          path uses fixed-height tiles on md+ so each cam keeps its native
+          aspect ratio without one swallowing the row. Mobile stacks. */}
+      {secondaryCam ? (
+        <div className="flex flex-col md:flex-row gap-1.5 md:items-start md:justify-center">
+          <div
+            className="w-full md:w-auto md:h-[50vh]"
+            style={{ aspectRatio: featuredCam.aspectRatio }}
+          >
+            <GuardianCameraFeed
+              cameraName={featuredCam.name}
+              label={featuredCam.label}
+              online={online}
+              onStatusChange={onStatusChange}
+            />
+          </div>
+          <div
+            className="w-full md:w-auto md:h-[50vh]"
+            style={{ aspectRatio: secondaryCam.aspectRatio }}
+          >
+            <GuardianCameraFeed
+              cameraName={secondaryCam.name}
+              label={secondaryCam.label}
+              online={online}
+              onStatusChange={onStatusChange}
+            />
+          </div>
+        </div>
+      ) : (
+        <div
+          className="w-full mx-auto"
+          style={{
+            aspectRatio: featuredCam.aspectRatio,
+            maxHeight: "65vh",
+          }}
+        >
+          <GuardianCameraFeed
+            cameraName={featuredCam.name}
+            label={featuredCam.label}
+            online={online}
+            onStatusChange={onStatusChange}
+          />
+        </div>
+      )}
 
       {/* Thumbnail picker — every other camera in the live roster. */}
       {thumbs.length > 0 && (
