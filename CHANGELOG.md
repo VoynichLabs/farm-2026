@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.14.0] — 2026-05-03
+
+### Added — top-level S7 alongside Reolink, connectivity banner, contract check (Claude Opus 4.7)
+
+Three user-visible improvements off the back of the gap analysis. Each shipped as its own commit so they're individually reviewable.
+
+**Two-up primary stage on `/projects/guardian`.** `GuardianCameraStage` learned an optional `secondaryFeatured` prop. When set and the named camera is in the live roster (and distinct from the primary), the top of the stage renders as a side-by-side pair instead of one big tile — with each tile keeping its native aspect ratio (16:9 yard, 9:16 phone) at a fixed desktop height. Mobile stacks. Thumbs exclude both top slots. The dashboard now passes `secondaryFeatured="s7-cam"` so the Reolink yard camera and the S7 phone share top billing; usb-cam, gwtc, and any recommissioned cams (mba-cam) sit below as thumbnails. Homepage `GuardianHomeSection` is unchanged — single-tile brooder layout preserved.
+
+**Site-connectivity banner distinct from per-camera state.** New `GuardianConnectivityBanner` component renders a clear "Site disconnected — can't reach Guardian on the Mac Mini" banner whenever `/api/status` reports `online === false`. Hidden during the initial connecting state so it doesn't flash before the first response. The point: when the Cloudflare tunnel drops or Guardian is down, *every* camera tile fails for the same reason — the banner attributes that to the right cause instead of leaving visitors to guess from a sea of OFFLINE tiles. Wired into the dashboard above the existing status bar.
+
+**`npm run check:contract`.** New `scripts/check-guardian-contract.mjs` probes `/api/status`, `/api/cameras`, and `/api/v1/images/recent` and asserts response shapes match the TypeScript interfaces in `app/components/guardian/types.ts` and `lib/guardian-roster.ts`. Reports drift with file:line refs. Exit code 0/1 — CI-friendly. Override target with `GUARDIAN_API=<url>`. Smoke-tested against prod (5 cameras configured, 4 live).
+
+Closes gaps B2 (further), B3 (further), C-related (connectivity surface), and D3 (cheap version) in `docs/02-May-2026-system-review-and-gap-analysis.md`. The OpenAPI-driven version of D3 still depends on backend gap E8 (re-enable `/docs`).
+
 ## [1.13.0] — 2026-05-02
 
 ### Added — Guardian project page documents the system honestly (Claude Opus 4.7)
