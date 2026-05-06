@@ -38,6 +38,13 @@ npm run check:contract   # Probe live Guardian API; assert response shapes
 
 No test suite exists. Deployment targets Railway.app using the standalone Next.js output.
 
+### Deployment & healthcheck (don't undo)
+
+- **Railway healthcheck path is `/api/health`, NOT `/`** (`railway.json`). The endpoint is a dedicated route handler at `app/api/health/route.ts` returning `200 {ok:true}` with zero imports outside Next — no env reads, no `lib/` imports, no Guardian calls. It must stay independent of the Cloudflare tunnel and the Mac Mini.
+- **Why this matters:** the homepage Server Components (`Hero`, `FarmPulse`, `LatestFlockFrames`) each `await` a Guardian-tunnel fetch during SSR. Pointing the healthcheck at `/` made every cold-cache homepage render ride on the tunnel's worst-case latency; tunnel hangs cycled the container under `restartPolicyType: ON_FAILURE`. See `docs/06-May-2026-healthcheck-and-ssr-timeout-plan.md` for the full root-cause walk.
+- **`lib/gems.ts` has a hard 3s `AbortSignal.timeout()` on every Guardian fetch.** Don't remove it. Abort errors land in the existing `network_unavailable` `FetchResult` path, which every consumer already renders as a fallback (Hero swaps to `HERO_FALLBACK_IMAGE`; FarmPulse and LatestFlockFrames render empty/error states). The timeout is the safety net that keeps SSR latency bounded when the tunnel hiccups — without it, `/` can hang indefinitely even though the healthcheck no longer cares.
+- **Per-tile frame polling (1.2s) is loud on the tunnel but is *not* what makes the site go down.** It loads `guardian.markbarney.net`, not `farm.markbarney.net`. Don't slow it down without a real measurement showing tunnel saturation.
+
 ## Architecture
 
 **Read `docs/FRONTEND-ARCHITECTURE.md` first.** It's the working contract for this codebase — SSoT table, naming rules, how to add a camera/bird/field-note/project, and the "no hardcoded counts, no re-stated data, no SaaS template" rules the 13-Apr-2026 rewrite put in place.

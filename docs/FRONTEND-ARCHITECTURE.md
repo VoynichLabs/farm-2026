@@ -82,6 +82,8 @@ Every TypeScript / JavaScript / Python file must start with the header block doc
 - Don't hand-maintain backend truths on the frontend. The stale "v2.15" version tag in the system panel was stale *because* it was a hand-maintained constant. If a backend fact matters, fetch it from `/api/status`; if it doesn't matter, don't display it.
 - Don't build a `<CameraRoster />` MDX component for a table that changes quarterly. Hand-written documentation is fine when it doesn't drift in between.
 - Don't add a stat bar with hand-crafted numbers. This is a farm log, not a SaaS landing page.
+- Don't point Railway's healthcheck back at `/`. The homepage `await`s three Guardian-tunnel fetches in SSR (`Hero`, `FarmPulse`, `LatestFlockFrames`); a slow tunnel times out the healthcheck and Railway cycles the container. Healthcheck lives at `/api/health` (`app/api/health/route.ts`) — independent of Guardian, the Mini, env, and `lib/`. See `06-May-2026-healthcheck-and-ssr-timeout-plan.md`.
+- Don't drop the `AbortSignal.timeout()` from `lib/gems.ts:request()`. Even with the healthcheck off `/`, the homepage itself still needs bounded latency or it hangs visitors during tunnel jitter. Abort errors map to `network_unavailable` and every consumer already has a fallback render for that branch.
 
 ## History
 
