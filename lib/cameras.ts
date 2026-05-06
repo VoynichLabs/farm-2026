@@ -1,6 +1,6 @@
 /**
- * Author: Claude Sonnet 4.6 (updated 30-Apr-2026; originally Claude Opus 4.7 16-Apr-2026)
- * Date: 30-Apr-2026
+ * Author: Claude Opus 4.7 (1M context) (updated 06-May-2026; previously Claude Sonnet 4.6 30-Apr-2026; originally Claude Opus 4.7 16-Apr-2026)
+ * Date: 06-May-2026
  * PURPOSE: Camera UI metadata overlay — NOT a roster. The authoritative list
  *   of live cameras is fetched at runtime from Guardian's `/api/cameras`
  *   endpoint (see `lib/guardian-roster.ts`). This file carries optional
@@ -77,6 +77,13 @@ export const CAMERAS: CameraMeta[] = [
     label: "house-yard — Reolink E1 Pro 4K PTZ",
     shortLabel: "Reolink",
     device: "Reolink E1 Outdoor Pro 4K PTZ",
+    aspectRatio: "16 / 9",
+  },
+  {
+    name: "dominator-cam",
+    label: "dominator-cam — MSI Dominator GT72 webcam (manual)",
+    shortLabel: "Dominator",
+    device: "BisonCam NB Pro on MSI Dominator GT72 6QD (HTTP snapshot, manually started)",
     aspectRatio: "16 / 9",
   },
 ];
