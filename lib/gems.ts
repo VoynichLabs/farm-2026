@@ -1,5 +1,5 @@
-// Author: Claude Opus 4.6 (1M context)
-// Date: 14-Apr-2026
+// Author: Claude Opus 4.7 (1M context) (orig Opus 4.6, 14-Apr-2026)
+// Date: 06-May-2026
 // PURPOSE: Typed fetchers for farm-guardian's /api/v1/images/* surface
 //          (v2.25.0). Single I/O layer for every gems / recent / stats
 //          call. Handles URL assembly, Next revalidation window, error
@@ -20,6 +20,15 @@
 //   - Never throw raw fetch errors to components — every function returns
 //     a typed Result so UI can render a friendly GemsError state instead
 //     of a crashed page on tunnel drops.
+//   - Hard 3s ceiling on every fetch (06-May-2026): SSR uses these from
+//     Hero / FarmPulse / LatestFlockFrames, which await sequentially to
+//     produce the homepage HTML. With no timeout, a hung Cloudflare tunnel
+//     keeps SSR awaiting indefinitely → the homepage hangs → Railway's
+//     healthcheck flags the container unhealthy. AbortSignal.timeout()
+//     bounds the worst case; the existing catch maps the abort to
+//     `network_unavailable`, which every consumer already handles with
+//     a fallback render. See
+//     docs/06-May-2026-healthcheck-and-ssr-timeout-plan.md.
 
 import type {
   GemRow,
@@ -31,6 +40,10 @@ import { GUARDIAN_API } from "@/app/components/guardian/types";
 
 const BASE = process.env.NEXT_PUBLIC_GUARDIAN_BASE ?? GUARDIAN_API;
 const REVALIDATE_SECONDS = 300;
+// Hard ceiling on a single Guardian round-trip. Normal Cloudflare → Mac Mini
+// latency is 100–300 ms; 3 s is ~10× headroom for jitter while keeping
+// cold-cache SSR bounded so the homepage healthcheck can't hang on the tunnel.
+const REQUEST_TIMEOUT_MS = 3000;
 
 export interface GemsQuery {
   camera?: string[];
@@ -83,6 +96,7 @@ async function request<T>(url: string): Promise<FetchResult<T>> {
     const res = await fetch(url, {
       next: { revalidate: REVALIDATE_SECONDS },
       headers: { accept: "application/json" },
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
     if (!res.ok) {
       const body = await res.text();

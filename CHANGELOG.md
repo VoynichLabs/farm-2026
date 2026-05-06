@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.14.2] — 2026-05-06
+
+### Fixed — Railway healthcheck restart loop + bounded SSR Guardian fetches (Claude Opus 4.7 (1M context))
+
+Boss reported `farm.markbarney.net` was visibly flicking down for a few seconds and recovering, repeatedly. Root cause was inside this repo, not Guardian: `railway.json` had `healthcheckPath: "/"`, which is the heaviest page in the app — three Server Components (`Hero`, `FarmPulse`, `LatestFlockFrames`) each `await` a Guardian-tunnel fetch during SSR with no timeout. Every cold-cache homepage render was riding on the Cloudflare tunnel's worst-case latency; when the tunnel hung, the healthcheck timed out and `restartPolicyType: ON_FAILURE` cycled the container. The 1.14.0/1.14.1 hysteresis fixes only smoothed the dashboard banner — they couldn't keep the Next.js process alive.
+
+Two-file fix shipped as two commits.
+
+- **`app/api/health/route.ts` (new) + `railway.json`.** Dedicated liveness endpoint that returns `200 {ok:true}` with no upstream calls, no env reads, no `lib/` imports — independent of Guardian, the Mac Mini, and content loading by design. `dynamic = "force-dynamic"` so the response proves the live Next.js server actually answered. `railway.json` now points `healthcheckPath` at `/api/health`. `restartPolicyType: ON_FAILURE` is unchanged so a genuinely-stuck process still restarts.
+- **`lib/gems.ts`.** New `REQUEST_TIMEOUT_MS = 3000` constant attached to every Guardian fetch via `AbortSignal.timeout()`. Normal Cloudflare → Mac Mini round-trip is 100–300 ms, so 3 s is ~10× headroom for jitter while bounding cold-cache SSR. Abort errors land in the existing `catch` and map to the `network_unavailable` `FetchResult`, which every consumer (Hero → `HERO_FALLBACK_IMAGE`, FarmPulse + LatestFlockFrames → empty/error states) already renders as a fallback. Cache-warm renders are unaffected because Next serves from the data cache without touching `fetch`.
+
+Plan: `docs/06-May-2026-healthcheck-and-ssr-timeout-plan.md`. Per-tile frame polling (1.2 s) is unchanged — it loads `guardian.markbarney.net`, not `farm.markbarney.net`, and was a co-conspirator (loud on the tunnel) rather than the trigger.
+
 ## [1.14.1] — 2026-05-03
 
 ### Fixed — connectivity banner and per-tile RECONNECTING strip flapping every few seconds (Claude Opus 4.7)
