@@ -5,7 +5,7 @@
   },
   "deploy": {
     "startCommand": "node .next/standalone/server.js",
-    "healthcheckPath": "/",
+    "healthcheckPath": "/api/health",
     "restartPolicyType": "ON_FAILURE"
   },
   "nixpacks": {
