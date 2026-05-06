@@ -107,6 +107,24 @@
       "cold_hardiness": "Excellent — handles cold New England winters well",
       "typical_lifespan": "6-8 years",
       "fun_fact": "All Plymouth Rock varieties share the same body type and temperament — only plumage color varies. The breed originated in Massachusetts in the 1860s."
+    },
+    "Cream Legbar": {
+      "description": "British autosexing breed developed in the 1930s by crossing Brown Leghorns, Barred Plymouth Rocks, and Araucanas. Crested with a distinctive head tuft. Known for blue/green eggs and chicks that can be sexed by down pattern at hatch.",
+      "egg_color": "Blue to blue-green",
+      "eggs_per_year": "180-200",
+      "temperament": "Active, alert, good foragers, friendly but flighty",
+      "cold_hardiness": "Good — moderate single comb, copes with cold if dry",
+      "typical_lifespan": "5-8 years",
+      "fun_fact": "Cream Legbars are one of the only true autosexing breeds — newly hatched females have a clear chipmunk stripe down the head, males are paler and less defined."
+    },
+    "Blue Laced Red Wyandotte": {
+      "description": "Wyandotte variety with deep red ground color and blue (slate-gray) lacing on each feather. Same compact rose-comb body as the Golden and Silver Laced Wyandottes — bred for cold climates and reliable winter laying.",
+      "egg_color": "Brown",
+      "eggs_per_year": "200-220",
+      "temperament": "Hardy, independent, calm, can go broody",
+      "cold_hardiness": "Excellent — rose comb resists frostbite, compact muscular body",
+      "typical_lifespan": "5-7 years",
+      "fun_fact": "Blue is a dilution gene — pairing two BLRs together will produce roughly 50% blue-laced, 25% black-laced, and 25% splash-laced offspring."
     }
   },
   "flock_birds": [
@@ -206,15 +224,13 @@
       "name": "Birdadonna",
       "breed": "Easter Egger × RIR cross",
       "age": "1 year",
-      "age_note": "Hatched April 2, 2025 — almost exactly 1 year old",
-      "status": "deceased",
+      "age_note": "Hatched April 2, 2025 — second-generation farm-hatched hen",
+      "status": "active",
       "egg_color": "Blue",
       "temperament": "Friendly, active",
       "color_description": "Blue-gray body with golden auburn hackle",
       "photo": "birds/birdadonna-2.jpg",
-      "notes": "Hatched in incubator on boss's desk; dam: EE hen 1, sire: Little Big Red Junior. Lost in early April 2026.",
-      "deceased_date": "2026-04-09",
-      "cause_of_death": "Predator losses — first week of April 2026"
+      "notes": "Hatched in incubator on boss's desk; dam: EE hen 1, sire: Little Big Red Junior. Survived the early-April 2026 predator wave that took Birdgit, Birdatha, and the Black Australorp. Laid the egg (03-April-2026) that hatched as Birdadotta on 25-April-2026."
     },
     {
       "name": "Black Australorp hen",
@@ -233,77 +249,77 @@
     {
       "name": "Birdadette",
       "breed": "Easter Egger",
-      "age": "3 weeks",
+      "age": "About one month",
       "hatch_date": "2026-04-06",
-      "age_note": "About three weeks old in the brooder",
+      "age_note": "Hatched 06-April-2026 — about a month old as of early May",
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Alert, curious — still learning the world one peck at a time",
       "color_description": "Gray-brown downy plumage, yellow legs",
       "photo": "april-2026/birdadette-3weeks-b.jpg",
-      "notes": "First successful incubator hatch of 2026. Hatched from a blue egg (set 16-March, ~21 day incubation). Named after Birdgit who was lost to a hawk two days later. Current portrait shows Birdadette at about three weeks old in the brooder; the first keyboard hatch remains in the field notes.",
-      "location": "desk-brooder"
+      "notes": "First successful incubator hatch of 2026. Hatched from a blue egg (set 16-March, ~21 day incubation). Named after Birdgit who was lost to a hawk two days later. Now in the nesting box with the Cackle Hatchery batch and the Bronze turkey poults — the older of the two indoor cohorts.",
+      "location": "nesting-box"
     },
     {
       "name": "Turkey poults (3)",
       "breed": "White Broad-Breasted Turkey",
-      "age": "~1 week",
+      "age": "~5 weeks",
       "hatch_date": "2026-03-31",
-      "age_note": "Purchased 07-April-2026 from local source, estimated ~1 week old at purchase",
+      "age_note": "Purchased 07-April-2026 from local source — estimated ~5 weeks old as of early May",
       "status": "active",
       "egg_color": "N/A (poults)",
       "temperament": "Social, curious, imprinting on handlers",
-      "color_description": "Yellow downy plumage",
+      "color_description": "Yellow downy plumage transitioning to white juvenile feathers",
       "photo": "april-2026/turkey-poult-in-hand.jpg",
-      "notes": "3 White Broad-Breasted turkey poults, about 1 week old when purchased. First turkeys on the farm. Moved to the nesting box.",
-      "location": "nesting-box"
+      "notes": "3 White Broad-Breasted turkey poults. First turkeys on the farm. Graduated to the coop with the rest of the flock.",
+      "location": "coop"
     },
     {
       "name": "Tractor Supply chicks (4)",
-      "breed": "Brahma or Cream Leghorn (uncertain)",
-      "age": "~1.5 weeks",
+      "breed": "Brahma or Cream Legbar (uncertain)",
+      "age": "~5-6 weeks",
       "hatch_date": "2026-03-27",
-      "age_note": "Purchased 07-April-2026 from Tractor Supply, straight run, estimated ~1.5 weeks old at purchase",
+      "age_note": "Purchased 07-April-2026 from Tractor Supply, straight run — about 5-6 weeks old as of early May",
       "status": "active",
       "egg_color": "TBD",
       "temperament": "Active, alert",
-      "color_description": "Varied chick down",
+      "color_description": "Varied chick down feathering out",
       "photo": null,
-      "notes": "4 chicks from Tractor Supply, straight run (unsexed). Brahma or Cream Leghorn — breed uncertain. May be males. Moved to the nesting box with the turkey poults.",
-      "location": "nesting-box"
+      "notes": "4 chicks from Tractor Supply, straight run (unsexed). Brahma or Cream Legbar — breed uncertain. Graduated to the coop with the white turkey poults and the older juveniles.",
+      "location": "coop"
     },
     {
       "name": "Birdadotta",
       "breed": "Easter Egger × RIR cross",
-      "age": "0 days",
+      "age": "~11 days",
       "hatch_date": "2026-04-25",
-      "age_note": "Hatched April 25, 2026 in incubator from Birdadonna's egg",
+      "age_note": "Hatched April 25, 2026 in incubator from Birdadonna's egg — about a week and a half old",
       "status": "active",
       "egg_color": "TBD (too young)",
-      "temperament": "Alert — fresh hatch, fluffing up",
-      "color_description": "Brown-and-cream striped down, small orange beak, big dark eye",
+      "temperament": "Alert, growing fast",
+      "color_description": "Brown-and-cream striped down feathering out, small orange beak",
       "photo": "april-2026/birdadotta-fluffy.jpg",
-      "notes": "Birdadonna's offspring. Egg laid 03-April-2026 and placed into incubator the same day. Hatched on the day-22 mark. Continues the Birdgit → Birdadette → Birdadonna → Birdadotta name lineage.",
-      "location": "desk-brooder"
+      "notes": "Birdadonna's offspring. Egg laid 03-April-2026 and placed into incubator the same day. Hatched on the day-22 mark. Continues the Birdgit → Birdadette → Birdadonna → Birdadotta name lineage. Lives in the brooder with the four April-25 Plymouth Rocks and the six newest Tractor Supply chicks.",
+      "location": "brooder"
     },
     {
       "name": "Bronze turkey poults (2)",
       "breed": "Bronze Broad-Breasted Turkey",
-      "age": "Days old",
+      "age": "~10-11 days",
       "hatch_date": "2026-04",
       "age_note": "Purchased 25-April-2026 from Tractor Supply",
       "status": "active",
       "egg_color": "N/A (poults)",
       "temperament": "Social, curious, imprinting on handlers",
-      "color_description": "Brown-and-tan striped down with a small beak and large dark eye — first bronze turkeys on the farm",
+      "color_description": "Brown-and-tan striped down — first bronze turkeys on the farm",
       "photo": "april-2026/bronze-turkey-poult-in-hand.jpg",
-      "notes": "2 Bronze Broad-Breasted poults from TSC, brought home alongside the rock chicks as companions for Birdadotta. First bronze turkeys on the property.",
-      "location": "desk-brooder"
+      "notes": "2 Bronze Broad-Breasted poults from TSC. First bronze turkeys on the property. Living in the nesting box with Birdadette and the Cackle Hatchery batch.",
+      "location": "nesting-box"
     },
     {
       "name": "Barred Rock chicks (2)",
       "breed": "Barred Plymouth Rock",
-      "age": "Days old",
+      "age": "~10-11 days",
       "hatch_date": "2026-04",
       "age_note": "Purchased 25-April-2026 from Tractor Supply",
       "status": "active",
@@ -311,13 +327,13 @@
       "temperament": "TBD",
       "color_description": "Black down — will develop classic black-and-white barring as they feather out",
       "photo": "april-2026/rock-chicks-tsc-arrival.jpg",
-      "notes": "2 Barred Plymouth Rock chicks from TSC, brought home as companions for Birdadotta.",
-      "location": "desk-brooder"
+      "notes": "2 Barred Plymouth Rock chicks from TSC. Living in the brooder with Birdadotta, the two TBD-variety Plymouth Rocks, and the six newest TSC chicks.",
+      "location": "brooder"
     },
     {
       "name": "Plymouth Rock chicks (2)",
       "breed": "Plymouth Rock (variety TBD)",
-      "age": "Days old",
+      "age": "~10-11 days",
       "hatch_date": "2026-04",
       "age_note": "Purchased 25-April-2026 from Tractor Supply",
       "status": "active",
@@ -325,22 +341,22 @@
       "temperament": "TBD",
       "color_description": "Black down — Plymouth Rock variety, exact sub-variety to be confirmed as they feather out (Speckled/Mottled, Partridge, or other)",
       "photo": "april-2026/rock-chicks-tsc-arrival.jpg",
-      "notes": "2 Plymouth Rock chicks from TSC alongside the Barred Rocks. Boss noted they are a Plymouth Rock variety, not Speckled Sussex. Sub-variety will be confirmed as adult plumage develops.",
-      "location": "desk-brooder"
+      "notes": "2 Plymouth Rock chicks from TSC alongside the Barred Rocks. Plymouth Rock variety, not Speckled Sussex. Sub-variety will be confirmed as adult plumage develops. Living in the brooder.",
+      "location": "brooder"
     },
     {
       "name": "Cackle Hatchery chicks (15)",
       "breed": "Mixed — Exotic Island Fowl Special (5) + Rare Chick Special (10)",
-      "age": "1 day",
+      "age": "~4 weeks",
       "hatch_date": "2026-04-08",
-      "age_note": "Shipped 08-April-2026 from Cackle Hatchery, Lebanon MO (Order #519118), hatched day of shipment",
+      "age_note": "Shipped 08-April-2026 from Cackle Hatchery, Lebanon MO (Order #519118), hatched day of shipment — about 4 weeks old as of early May",
       "status": "active",
       "egg_color": "TBD (assorted breeds)",
-      "temperament": "TBD — just arrived",
+      "temperament": "Active, feathering out — breeds becoming identifiable",
       "color_description": "Varied — assortment of rare and exotic breeds",
       "photo": "april-2026/cackle-hatchery-arrival.jpg",
-      "notes": "15 chicks from Cackle Hatchery: 5 Exotic Island Fowl Special + 10 Rare Chick Special. Reinforcements after losing Birdgit. Likely mostly males — the cheap ones from hatchery specials. These birds would have been culled otherwise. Exact breeds TBD as they feather out. Total order: $122.80 shipped USPS Priority. Currently in the desk brooder.",
-      "location": "desk-brooder",
+      "notes": "Cackle Hatchery batch from the 08-April-2026 arrival: Exotic Island Fowl Special + Rare Chick Special. Reinforcements after losing Birdgit. Likely mostly males — the cheap ones from hatchery specials. These birds would have been culled otherwise. Exact breeds TBD as they feather out. Total order: $122.80 shipped USPS Priority. Living in the nesting box with Birdadette and the Bronze turkey poults.",
+      "location": "nesting-box",
       "breed_identification": {
         "status": "preliminary — based on day-old chick photos, needs confirmation as they feather out",
         "assessment_date": "2026-04-10",
@@ -374,6 +390,34 @@
           "note": "Reviewers consistently report Cochins are the most commonly included breed in Rare Chick Special orders"
         }
       }
+    },
+    {
+      "name": "March juveniles (6)",
+      "breed": "1 Easter Egger + 2 Blue Laced Red Wyandotte + 3 Cream Legbar",
+      "age": "~10 weeks",
+      "hatch_date": "2026-02-26",
+      "age_note": "Purchased early March 2026 from Tractor Supply, ~1 week old at purchase — about 10 weeks old as of early May",
+      "status": "active",
+      "egg_color": "Mixed (blue/green from EE + Cream Legbar; brown from BLR Wyandotte)",
+      "temperament": "Active juveniles, well integrated",
+      "color_description": "Varied — feathering complete; Cream Legbars autosex (gold/buff females, paler males), BLR Wyandottes show blue lacing on red ground, EE chick maturing into adult plumage",
+      "photo": null,
+      "notes": "The first juvenile cohort of 2026: 1 Easter Egger, 2 Blue Laced Red Wyandotte, 3 Cream Legbar. Started in the March nesting-box setup, graduated to the coop. Cream Legbars are likely 2 females + 1 male based on auto-sex down patterns at chick stage.",
+      "location": "coop"
+    },
+    {
+      "name": "Tractor Supply chicks — May batch (6)",
+      "breed": "TBD",
+      "age": "Days old",
+      "hatch_date": "2026-05",
+      "age_note": "Purchased ~02-May-2026 from Tractor Supply (one week after the 25-April Bronze turkey + Plymouth Rock haul)",
+      "status": "active",
+      "egg_color": "TBD (too young)",
+      "temperament": "TBD",
+      "color_description": "TBD — breeds to be confirmed as they feather out",
+      "photo": null,
+      "notes": "Six additional Tractor Supply chicks brought home approximately one week after the 25-April haul. Living in the brooder with Birdadotta and the four 25-April Plymouth Rocks. Brings the indoor brooder cohort to 11 birds total.",
+      "location": "brooder"
     }
   ]
 }

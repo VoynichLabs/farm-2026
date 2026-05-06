@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.14.3] — 2026-05-06
+
+### Fixed — flock-profiles.json: Birdadonna alive, Whitey lost, locations + new arrivals (Claude Opus 4.7 (1M context))
+
+Boss did a verbal flock walkthrough with Bubba and called out drift in `content/flock-profiles.json`. Public `/flock` page was showing Birdadonna in the In Memoriam section when she's alive and well — she survived the early-April predator wave despite an earlier batch update that lumped her in with Birdgit / Birdatha / the Black Australorp. Several other entries had stale ages, stale locations, or were missing entirely. Roster reconciled to today's truth.
+
+Specific edits to `content/flock-profiles.json`:
+
+- **Birdadonna** flipped from `deceased` to `active`. Removed `deceased_date` and `cause_of_death`. Updated notes to reflect that she survived the early-April losses and laid the egg that hatched as Birdadotta on 25-April-2026. This is the visible bug — she should reappear in the active flock section of `/flock`.
+- **Whitey Red Legs** entry untouched (already correctly `deceased` 2026-05-01); cause kept as "Disappeared without trace; presumed predation."
+- **Locations updated** to match Boss's current housing layout: indoor cohorts split between the **brooder** (youngest, 11 birds) and the **nesting box** (older indoor cohort), with the rest in the **coop**. Specifically: Birdadette + Bronze turkey poults + Cackle batch → `nesting-box`; Birdadotta + Barred Rocks + Plymouth Rocks (variety TBD) + new May TSC batch → `brooder`; White BB Turkey poults (3) + April Brahma/Cream Legbar chicks (4) → `coop`.
+- **Ages refreshed.** Birdadette ~1 month; Birdadotta ~11 days; April-7 turkeys/chicks ~5-6 weeks; Cackle batch ~4 weeks. Replaced stale "0 days / Days old / 1 day" placeholders.
+- **Two new entries.** "March juveniles (6)" — the early-March 2026 cohort (1 EE + 2 BLR Wyandotte + 3 Cream Legbar), now ~10 weeks old in the coop, was previously not represented in the JSON. "Tractor Supply chicks — May batch (6)" — the 02-May-2026 TSC haul (breeds TBD) joining the brooder, bringing brooder count to 11.
+- **Two new breed dictionary entries** to support the additions: **Cream Legbar** (British autosexing breed, blue-green eggs) and **Blue Laced Red Wyandotte** (cold-hardy variant with blue lacing on red ground).
+- **Cackle Hatchery (15)** notes rewritten to drop the "Currently in the desk brooder" line and reflect the move to the nesting box. Survivor count left as 15 — Boss explicitly said don't fuss the exact number; Cackle ships extras and the math evens out.
+
+No frontend edits. The /flock page reads this JSON directly; In Memoriam now shows 5 entries (Birdatha, Birdgit, Black Australorp, Little Big Red Junior, Whitey Red Legs). Active roster reflects 4 hens + 6 group/named-chick entries on the indoor side + 3 group entries in the coop.
+
 ## [1.14.2] — 2026-05-06
 
 ### Fixed — Railway healthcheck restart loop + bounded SSR Guardian fetches (Claude Opus 4.7 (1M context))
