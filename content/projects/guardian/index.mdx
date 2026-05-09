@@ -2,20 +2,31 @@
 title: "Farm Guardian"
 slug: guardian
 status: active
-description: "A custom AI watching the flock from cameras across the farm — detection, deterrents, and a PTZ that stares at the sky when hawks are up."
+description: "A multi-camera system running on OpenClaw — watching the flock, scoring frames with VLMs, curating the best moments through Discord to Instagram and Facebook."
 heroPhoto: "/photos/april-2026/birdadette-fresh-hatch.jpg"
-tags: [guardian, ai, cameras, flock, claude]
+tags: [guardian, openclaw, vlm, pipeline, cameras, flock]
 startDate: "2026-03-14"
 location: "Full property, Hampton, CT"
 ---
 
 ## What This Is
 
-A farmer told Claude that hawks were killing his chickens. Claude built a system to stop it — cameras, a detection pipeline, automated deterrents, and a patrol that sweeps the yard while the flock free-ranges.
+A camera system built with OpenClaw and AI tools, watching the flock across a 13.6-acre hobby farm in Hampton, CT. The Mac Mini M4 Pro sits on the desk next to the chick brooder — its waste heat helps keep the incubator at temperature. The same machine runs every camera feed, scores frames with vision-language models, archives the best moments, and pushes them to Instagram and Facebook.
 
-The Mac Mini M4 Pro sits on the desk next to the chick brooder. Its waste heat helps keep the incubator at temperature — fewer cold spots, steadier hatches than any previous year. The same machine runs the cameras that watch for hawks so the flock can free-range. It's also home to Bubba, the farmer's OpenClaw agent, and it's where Claude Code built this entire website.
+One machine. Incubator warmer, frame judge, gem curator, bird guardian.
 
-One machine. Incubator warmer, hawk watcher, code writer, bird guardian.
+The headline feature isn't predator detection — that was built but is paused. The headline is the **VLM image pipeline**: cameras watching the birds around the clock, a local model judging every frame, Discord as the human review table, and the best moments reaching the public as gems.
+
+## The Pipeline
+
+This is the system that runs every day:
+
+1. **Cameras see the birds.** Five cameras across the property pull frames on a steady cadence — no video encoding, no ffmpeg, just clean JPEGs at a few seconds apart.
+2. **Mac Mini judges the frames.** Bubba (the OpenClaw agent on the Mac Mini) runs vision-language models against every frame — scoring for composition, activity, lighting, and share-worthiness. Strong frames get flagged as gems.
+3. **Discord becomes the review table.** The best gems land in the `#farm-2026` channel. Boss reacts to the ones worth sharing — the single human-in-the-loop filter. Every reacted gem eventually publishes.
+4. **The best moments reach the public.** Reacted gems post to [@pawel_and_pawleen](https://www.instagram.com/pawel_and_pawleen/) on Instagram and the [Yorkies App](https://www.facebook.com/614607655061302/) Facebook Page. Stories, carousels, and reels — all from the same pipeline.
+
+The pipeline has posted hundreds of gems since it went live. The archive grows every day as the chicks grow up — what was a palm-sized fluffball a month ago fills the frame now.
 
 ## The Hardware
 
@@ -24,68 +35,65 @@ Cameras across the property — named for the hardware, never for where they hap
 | Camera | Hardware | Capabilities |
 |--------|----------|--------------|
 | house-yard | Reolink E1 Outdoor Pro | 4K PTZ with spotlight + siren. 11-position patrol, sky-watch lock, HTTP snapshot polling via reolink_aio. The only unit with deterrents. |
-| s7-cam | Samsung Galaxy S7 running the IP Webcam app | RTSP over WiFi (UDP). Fixed — the tripod moves, the stream endpoint doesn't. |
+| s7-cam | Samsung Galaxy S7 running the IP Webcam app | Portrait 1080×1920 — optimized for Instagram stories and reels. Fixed tripod, stream endpoint stable. |
 | usb-cam | USB webcam on the Mac Mini | AVFoundation local capture, 1920×1080, snapshot polling with auto white-balance and autofocus warmup. |
 | mba-cam | MacBook Air 2013 built-in FaceTime HD webcam | 720p via ffmpeg + MediaMTX RTSP bridge on the laptop itself. |
 | gwtc | Gateway laptop built-in webcam | 720p via ffmpeg + MediaMTX RTSP on Windows; services auto-start via Shawl. |
 
-The Reolink is the only one with deterrents — spotlight to 100% brightness and a siren loud enough to scatter a hawk mid-dive. When it detects something it can escalate through four levels: log, light, light+sound, light+siren+sound.
+The Reolink is the only one with deterrents — spotlight to 100% brightness and a siren loud enough to scatter a hawk mid-dive.
 
 ## How It Watches
 
-The Mac Mini pulls a JPEG from each camera on a steady cadence — no video encoding, no ffmpeg processes, no HLS segments. The old video pipeline got ripped out because nobody actually needed 30fps of their own backyard. Still images at a few seconds apart are plenty to see what's happening, and they sail through the Cloudflare tunnel instead of choking it.
+The Mac Mini pulls a JPEG from each camera on a steady cadence — no video encoding, no ffmpeg processes, no HLS segments. Still images at a few seconds apart are plenty to see what's happening, and they sail through the Cloudflare tunnel instead of choking it.
 
 It doesn't phone home. No cloud. No subscriptions. No data leaves the network. The dashboard, the camera control, the snapshots — everything runs on that one Mac Mini on the desk next to the birds.
 
-**What's working right now:**
+**What's running right now:**
 - Live snapshot feeds from every camera Guardian currently sees, visible here and on the homepage
+- VLM scoring pipeline — every frame gets judged, strong ones get archived as gems
+- Automated posting to Instagram and Facebook via the gem pipeline
 - Manual PTZ on the Reolink — pan/tilt by approximate degrees, or jump to a named preset in one tap
 - Five on-camera presets: yard-center, coop-approach, fence-line, sky-watch, driveway
 - Spotlight and siren as on-demand deterrents from the web UI
-- 4K HTTP snapshots for Discord alerts when something matters
-- Full REST API exposed via Cloudflare tunnel — the farmer can reposition the camera from his phone on cellular
-- eBird integration polls Cornell Lab for raptor sightings within 15km
+- Full REST API exposed via Cloudflare tunnel
 
 **Paused, on the bench:**
-- YOLOv8 + GLM-4V automated detection. The plumbing is all in `farm-guardian`, but it's not running against live frames right now. The cameras are watching; the farmer is watching the cameras. Good enough while the chicks are in the brooder.
+- YOLOv8 + GLM-4V automated detection. The plumbing is all in `farm-guardian`, but it's not running against live frames right now. The cameras are watching; the farmer is watching the cameras.
 - Automated patrol and deterrent escalation. Both have been written and rewritten; for now the farmer drives the camera directly.
 
 ## Under the Hood
 
-The system is distributed across the property — there isn't one box doing everything. The Mac Mini is the brain: it polls each camera's frame endpoint, runs the dashboard API, archives the curated frames, and pushes everything out through a Cloudflare tunnel. The cameras themselves do their own publishing. The Reolink serves HTTP snapshots from its own firmware. The Samsung S7 phone runs the IP Webcam app. The USB and laptop cameras are published by small Python services on whichever host they're plugged into. Add a camera to Guardian's config on the Mini, restart, and it shows up on this page within thirty seconds — no website redeploy.
+The system is distributed across the property. The Mac Mini (Bubba) is the brain: it polls each camera's frame endpoint, runs the VLM scoring, serves the dashboard API, archives curated gems, and pushes everything out through a Cloudflare tunnel. A second machine — Larry, an MSI Dominator near the coop — handles gateway camera services and provides compute close to the birds.
 
-The Cloudflare tunnel is outbound-only. There's no port forwarding, no opening of router firewalls, no static IP. The Mac Mini reaches out to Cloudflare's edge network, and `guardian.markbarney.net` reaches back through that tunnel. If the home internet drops, the tunnel goes dark and reconnects when it comes back; nothing is exposed in the meantime.
+The cameras themselves do their own publishing. The Reolink serves HTTP snapshots from its own firmware. The Samsung S7 runs the IP Webcam app. The USB and laptop cameras are published by small Python services on whichever host they're plugged into. Add a camera to Guardian's config on the Mini, restart, and it shows up on this page within thirty seconds — no website redeploy.
 
-Snapshot polling — JPEG every second-and-change — replaced an earlier video pipeline. Browsers cap concurrent HTTP connections at six per domain, and four MJPEG streams plus the API polling burned through that budget the moment anyone opened the live page. Snapshots are short-lived requests that work cleanly with HTTP/2 multiplexing. They also let the Cloudflare tunnel breathe: 4K JPEGs are large, but a one-shot transfer is easier to plan around than a connection held open for hours.
+The Cloudflare tunnel is outbound-only. There's no port forwarding, no opening of router firewalls, no static IP. The Mac Mini reaches out to Cloudflare's edge network, and `guardian.markbarney.net` reaches back through that tunnel.
 
-Detection — YOLO for objects, a vision-language model for refinement — is plumbed in but currently quiet. The pipeline ships its own SQLite catalog of "gems": frames the model thought were worth keeping, with draft captions and quality scores. Deterrents (spotlight, siren, sound playback) are scripted to escalate from log-only through "throw light at it" to "make noise," but escalation is manual right now. The cameras are watching; the farmer is watching the cameras.
+Snapshot polling — JPEG every second-and-change — replaced an earlier video pipeline. Browsers cap concurrent HTTP connections at six per domain, and four MJPEG streams plus the API polling burned through that budget the moment anyone opened the live page. Snapshots are short-lived requests that work cleanly with HTTP/2 multiplexing.
 
-The website is [Next.js](https://nextjs.org/) 16 on [Railway](https://railway.app/), deployed on every push to `main`. It pulls live data from the Mac Mini's API; static content lives in MDX files in the repo. The whole thing — both the backend that runs the cameras and this website — was written end-to-end with [Claude Code](https://claude.ai/code) on the same Mac Mini that sits next to the brooder.
+The website is [Next.js](https://nextjs.org/) 16 on [Railway](https://railway.app/), deployed on every push to `main`. It pulls live data from the Mac Mini's API; static content lives in MDX files in the repo.
 
 ## When Things Break
 
-The Mac Mini is the single point of failure. If it reboots — power blip, OS update, kernel panic — the live feeds and the gems pipeline go dark until the processes come back up. The Cloudflare tunnel auto-restarts and so do the per-host camera services, but the central Guardian process itself is currently a manually launched daemon. That's the largest reliability gap and it's tracked in the dev notes for cleanup.
+The Mac Mini is the single point of failure. If it reboots — power blip, OS update, kernel panic — the live feeds and the gems pipeline go dark until the processes come back up. The Cloudflare tunnel auto-restarts and so do the per-host camera services, but the central Guardian process itself is currently a manually launched daemon.
 
-Sub-host failures recover or don't, depending on the host. The Gateway laptop has a watchdog service that catches the post-reboot Windows-DirectShow-zombie pattern and restarts the publisher. The S7's IP Webcam app drifts its orientation settings whenever it's killed; another watchdog re-applies them every ten minutes. The MacBook Air had no watchdog when it was an active node, and it's being recommissioned right now with that gap closed. The USB camera is a small service that runs wherever it's plugged in and rejoins the fleet automatically when it comes back online.
+Sub-host failures recover or don't, depending on the host. The Gateway laptop has a watchdog service that catches the post-reboot Windows-DirectShow-zombie pattern and restarts the publisher. The S7's IP Webcam app drifts its orientation settings whenever it's killed; another watchdog re-applies them every ten minutes.
 
-When a camera goes down, this page notices. The dashboard above filters to cameras the backend reports as currently producing frames, so a frozen phone or a dead laptop disappears from the grid until it recovers — instead of showing a black tile pretending to be live. A camera that the Mac Mini can still see but this page briefly can't reach (because the tunnel hiccupped) shows a thin amber "RECONNECTING" strip and holds its last good frame so the page doesn't blink.
-
-Disk space is finite. The gems archive grows continuously, and there's no off-site backup yet — another known dev gap. If the Mini's drive fails tomorrow, the catalog of curated frames goes with it. The cameras and the live feeds would be fine; the curated history wouldn't.
+When a camera goes down, this page notices. The dashboard above filters to cameras the backend reports as currently producing frames, so a frozen phone or a dead laptop disappears from the grid until it recovers. A camera that the Mac Mini can still see but this page briefly can't reach shows a thin amber "RECONNECTING" strip and holds its last good frame.
 
 ## Where the Code Lives
 
 Both repos are public on GitHub:
 
-- **[farm-guardian](https://github.com/VoynichLabs/farm-guardian)** — the backend. Camera capture, detection, deterrents, the API this page consumes, the gems pipeline, and the social-media posters that push to [Instagram](https://www.instagram.com/pawel_and_pawleen/) and [Facebook](https://www.facebook.com/614607655061302/) from the Mac Mini.
+- **[farm-guardian](https://github.com/VoynichLabs/farm-guardian)** — the backend. Camera capture, VLM scoring, the gems pipeline, the API this page consumes, and the social-media posters that push to [Instagram](https://www.instagram.com/pawel_and_pawleen/) and [Facebook](https://www.facebook.com/614607655061302/) from the Mac Mini.
 - **[farm-2026](https://github.com/VoynichLabs/farm-2026)** — this website. Field notes, the flock roster, the live Guardian dashboard above, and the gem gallery.
 
-Both were written end-to-end with Claude Code. The current state of the engineering, including the rough edges, is in the [system review and gap analysis](https://github.com/VoynichLabs/farm-2026/blob/main/docs/02-May-2026-system-review-and-gap-analysis.md).
+Built with OpenClaw and AI tools — Claude, GPT, and others, coordinated through the same platform that runs the farm.
 
 ## The Story
 
 This started because hawks were taking chickens. In the first week of April 2026, we lost four birds — including Birdgit, a Speckled Sussex who followed you around like a dog. A hawk took her on April 8th.
 
-The response was immediate. Within hours, Claude built sky-watch mode — locking the PTZ camera onto a fixed overhead position. Alert images were upgraded from blurry 1080p RTSP frames to sharp 4K snapshots. The camera doesn't just patrol anymore — it can hold still and stare at the sky.
+The response was immediate. Within hours, sky-watch mode was built — locking the PTZ camera onto a fixed overhead position. Alert images were upgraded from blurry 1080p RTSP frames to sharp 4K snapshots. The camera doesn't just patrol anymore — it can hold still and stare at the sky.
 
 Reinforcements arrived the same week: 22 new chicks in the brooder, under heat lamps, next to the Mac Mini that watches over them. Birdadette — the first chick to hatch this season — emerged from her egg on the keyboard, two feet from the machine that would become her guardian.
-

@@ -13,7 +13,7 @@ import { getAllFieldNotes } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Field Notes",
-  description: "Weekly updates from the farm — what happened, what hatched, what Claude built.",
+  description: "Weekly updates from the farm — what happened, what hatched, what we built.",
 };
 
 export default function FieldNotesPage() {
@@ -31,7 +31,7 @@ export default function FieldNotesPage() {
 
       <h1 className="text-4xl font-bold mb-2 font-serif">Field Notes</h1>
       <p className="text-forest-light/60 mb-10">
-        Weekly updates from the farm — what happened, what hatched, what broke, what Claude built.
+        Weekly updates from the farm — what happened, what hatched, what broke, what we built.
       </p>
 
       {/* Featured latest note */}

@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.15.0] — 2026-05-09
+
+### Changed — OpenClaw rebrand + homepage redesign (Claude Opus 4.6)
+
+Site-wide rebrand from "built with Claude" to "built with OpenClaw" and a homepage redesign that replaces dead-weight stats panels with the VLM image pipeline story.
+
+**Rebrand:**
+- Site title/meta changed from "One of the Wonders of Claude's Own Creation" to "OpenClaw on the Farm" (`app/layout.tsx`)
+- Hero tagline and body rewritten — Mark as farmer-operator, OpenClaw as coordination layer (`Hero.tsx`)
+- Section subtitles updated: "what Claude built" → "what we built" (`LatestFieldNote.tsx`, `ActiveProjects.tsx`)
+- Field-notes and projects page copy updated (`field-notes/page.tsx`, `projects/page.tsx`)
+- Guardian MDX fully rewritten — pipeline-first narrative, predator detection described as paused-not-headline (`content/projects/guardian/index.mdx`)
+
+**Removed:**
+- `FarmPulse.tsx` deleted — Birdadette sighting counts confirmed inaccurate (system can't distinguish individual chickens)
+- `GuardianInfoPanels.tsx` deleted — all four panels (Active Tracks, Deterrent, Today summary, eBird) showed data from dead/paused features
+- `GuardianDetections.tsx` deleted — detection feed UI for feature not running
+- Detection/alert counters stripped from `GuardianStatusBar.tsx`
+
+**Added:**
+- `ImagePipeline.tsx` — four-step pipeline visualization: cameras → VLM scoring → Discord review → Instagram/Facebook
+- `FarmTopology.tsx` — Mark's farm infrastructure cards (Bubba, Larry, camera fleet)
+- `content/farm-topology.json` — SSoT for machine/camera data rendered by FarmTopology
+
+**Reworked:**
+- `GuardianHomeSection.tsx` — stripped system-internals panel (hardware specs, streaming mode, device list) and summary table; camera stage now full-width with simple dashboard link
+- `app/page.tsx` — FarmPulse removed, ImagePipeline and FarmTopology added to section ordering
+
+**Why:** The site was crediting Claude specifically when Mark uses every AI model via OpenClaw. Detection stats were from dead features. FarmPulse data was inaccurate. The actually impressive part — the VLM image pipeline — was invisible to visitors.
+
 ## [1.14.4] — 2026-05-09
 
 ### Added — OpenClaw farm-ops narrative/design documents (OpenAI Codex GPT-5.5 / Bubba)

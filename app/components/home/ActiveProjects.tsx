@@ -33,7 +33,7 @@ export default function ActiveProjects() {
     <section className="max-w-6xl mx-auto px-4 py-16">
       <SectionHeader
         title="2026 Projects"
-        subtitle="What we're building — and what Claude is building for us."
+        subtitle="What we're building with OpenClaw and AI tools."
         linkHref="/projects"
         linkLabel="All projects →"
       />

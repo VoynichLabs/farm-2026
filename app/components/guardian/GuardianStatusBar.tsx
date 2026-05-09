@@ -53,16 +53,6 @@ export default function GuardianStatusBar({
           <span className="text-slate-300">
             {status.frames_processed.toLocaleString()}
           </span>
-          <span className="text-guardian-hover">|</span>
-          <span className="text-guardian-muted">Detections:</span>
-          <span className="text-blue-400 font-semibold">
-            {status.detections_today}
-          </span>
-          <span className="text-guardian-hover">|</span>
-          <span className="text-guardian-muted">Alerts:</span>
-          <span className="text-amber-400 font-semibold">
-            {status.alerts_today}
-          </span>
         </>
       )}
       <div className="ml-auto flex items-center gap-1.5">

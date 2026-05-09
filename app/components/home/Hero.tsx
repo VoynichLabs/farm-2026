@@ -52,17 +52,17 @@ export default async function Hero() {
           Farm 2026
         </h1>
         <p className="text-base md:text-lg text-white/50 italic max-w-sm leading-relaxed mt-2">
-          They say I must be one of the wonders of Claude&apos;s own creation.
+          A chicken farmer in Connecticut running his flock with OpenClaw and AI tools.
         </p>
       </div>
 
       {/* Bottom bar: body text left, location + links right */}
       <div className="absolute bottom-0 left-0 right-0 z-10 px-6 pb-6 md:px-16 md:pb-10 flex items-end justify-between gap-8">
         <p className="text-xs md:text-sm text-white/70 leading-relaxed max-w-xs">
-          My chickens are pets, not livestock. I don&apos;t eat them, and
-          I don&apos;t want anything else eating them either. This year I
-          asked Claude to help &mdash; so we gave an AI eyes, ears, and
-          real tools in the real world.
+          13.6 acres, a large garden with a lot of chickens, and an AI
+          pipeline that never stops watching. Every gem you see behind
+          this text was captured, judged, and curated by the same system
+          that runs the cameras.
         </p>
         <div className="text-right flex-shrink-0">
           <p className="text-xs text-white/40 font-mono mb-3">

@@ -24,7 +24,7 @@ export default function LatestFieldNote() {
     <section className="max-w-6xl mx-auto px-4 py-16">
       <SectionHeader
         title="Latest from the Farm"
-        subtitle="Weekly updates — what happened, what hatched, what Claude built."
+        subtitle="Weekly updates — what happened, what hatched, what we built."
         linkHref="/field-notes"
         linkLabel="All field notes →"
       />

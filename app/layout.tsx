@@ -14,17 +14,17 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Farm 2026 — One of the Wonders of Claude's Own Creation",
+    default: "Farm 2026 — OpenClaw on the Farm",
     template: "%s | Farm 2026",
   },
   description:
-    "They say I must be one of the wonders of Claude's own creation. A farm in Hampton, CT — field notes, flock roster, and the AI that watches over the birds.",
+    "A chicken farmer in Hampton, CT using OpenClaw and AI tools to keep the flock safe, the cameras rolling, and the farm diary writing itself.",
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐔</text></svg>",
   },
   metadataBase: new URL("https://farm.markbarney.net"),
   openGraph: {
-    title: "Farm 2026 — One of the Wonders of Claude's Own Creation",
+    title: "Farm 2026 — OpenClaw on the Farm",
     description:
       "A chick hatched on the keyboard. A hawk took Birdgit two days later. By the end of the week there was a sky-watching AI and a brooder full of reinforcements.",
     images: ["/photos/april-2026/birdadette-fresh-hatch.jpg"],
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Farm 2026 — One of the Wonders of Claude's Own Creation",
+    title: "Farm 2026 — OpenClaw on the Farm",
     description:
       "A chick hatched on the keyboard. A hawk took Birdgit two days later. By the end of the week there was a sky-watching AI and a brooder full of reinforcements.",
     images: ["/photos/april-2026/birdadette-fresh-hatch.jpg"],

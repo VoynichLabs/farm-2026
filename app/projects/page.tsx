@@ -34,7 +34,7 @@ export default function ProjectsPage() {
           </p>
           <h1 className="text-5xl font-bold font-serif mb-4">2026 Projects</h1>
           <p className="text-cream/70 text-lg max-w-2xl">
-            Farm Guardian is the flagship — an AI predator detection system protecting the flock with cameras, YOLO, and Claude-built code. Every version built in conversation.
+            Farm Guardian is the flagship — a camera system watching the flock with OpenClaw, VLM scoring, and AI tools. The pipeline captures, judges, and curates the best moments for Instagram and Facebook.
           </p>
         </div>
       </section>
