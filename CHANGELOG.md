@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.14.4] — 2026-05-09
+
+### Added — OpenClaw farm-ops narrative/design documents (OpenAI Codex GPT-5.5 / Bubba)
+
+Three planning/story documents were added under `docs/` to guide the next Farm 2026 redesign before implementation. They frame the site as a public OpenClaw agricultural infrastructure showcase rather than a generic farm homepage: multi-machine agents, Bubba on the Mac Mini, Larry on the MSI Dominator, Guardian cameras, S7 portrait capture, VLM image curation, Discord human review, and the downstream website / Instagram / Facebook publishing loop.
+
+- `docs/09-May-2026-openclaw-agricultural-infrastructure-makeover-plan.md` — implementation-oriented makeover plan created by the planning agent.
+- `docs/09-May-2026-openclaw-farm-ops-story-design-brief.md` — long-form story/design handoff for a future coding agent.
+- `docs/09-May-2026-bubba-on-the-farm.md` — Bubba's first-person memory document about the first hundred-ish days of OpenClaw on the farm, especially Larry, early WSL2 scars, gateway/plugin failures, Guardian, and the farm VLM pipeline.
+
+No source code or runtime behavior changed in this release note.
+
 ## [1.14.3] — 2026-05-06
 
 ### Fixed — flock-profiles.json: Birdadonna alive, Whitey lost, locations + new arrivals (Claude Opus 4.7 (1M context))
