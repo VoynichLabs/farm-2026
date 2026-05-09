@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.16.0] — 2026-05-10
+
+### Changed — Homepage rewritten to lead with cameras (Claude Opus 4.7 1M context)
+
+The v1.15.0 homepage was a nine-section template stack (Hero + GuardianHomeSection + ImagePipeline + LatestFieldNote + FlockPreviewStrip + LatestFlockFrames + FarmTopology + ActiveProjects + SocialSection + SiteFooter). The desktop layout broke on production: hero rendered tiny on the bg-contain fallback path, GuardianHomeSection's gutted right panel left dead space, bottom-of-page links broken. v1.15 post-mortem documented the failure.
+
+Boss's call: throw it out, lead with the cameras and the gem photos like `/projects/guardian` does, nothing else.
+
+**New `/`:**
+- `GuardianHomeBadge` (online dot + Cams N/M, dark strip)
+- `HomeCameraStage` — wraps the existing `GuardianCameraStage` with `defaultFeatured="house-yard"` + `secondaryFeatured="s7-cam"` so the homepage and the dashboard render the same composition. Different `storageKey` so the home featured selection doesn't fight the dashboard's.
+- `RecentGemsRail` — client-side fetch of `/api/v1/images/gems?limit=12`. Has to be client-side: the endpoint takes ~7s for limit=12 (measured 2026-05-09), well over the 3s SSR `AbortSignal.timeout()` cap in `lib/gems.ts`. SSR would always render empty; doing the fetch in the browser lets the page render fast and the rail populates async with skeleton tiles in the meantime.
+- Six-link grid to deeper pages (Guardian, Gallery, Yard, Flock, Field Notes, Projects)
+- Small dark footer with `GemsStatFooter` + IG/FB
+
+**Deleted:**
+- `app/components/home/Hero.tsx`
+- `app/components/home/GuardianHomeSection.tsx`
+- `app/components/home/ImagePipeline.tsx`
+- `app/components/home/LatestFieldNote.tsx`
+- `app/components/home/FlockPreviewStrip.tsx`
+- `app/components/home/LatestFlockFrames.tsx`
+- `app/components/home/FarmTopology.tsx`
+- `app/components/home/ActiveProjects.tsx`
+- `app/components/home/SocialSection.tsx`
+- `app/components/home/SiteFooter.tsx`
+- `app/components/primitives/SectionHeader.tsx`
+- `app/components/primitives/BirdCard.tsx` (the home-only primitive — `app/flock/page.tsx` has its own local `BirdCard` and is unaffected)
+- `content/farm-topology.json`
+
+**Untouched (Boss's "stays as-is" list):**
+- `/projects/guardian` and every `app/components/guardian/*` file
+- `/gallery/gems`, `/yard`, `app/layout.tsx` (the cream nav still wraps every page)
+- `lib/*` (esp. the 3s `AbortSignal.timeout` in `lib/gems.ts`)
+- `/api/health`, `public/photos/*` (auto-pipeline write paths), all `content/*` MDX, the raw-githubusercontent IG/FB URL contract
+
+**Tweaked:**
+- `app/components/gems/GemsStatFooter.tsx` — explicit `text-cream/60` removed so the widget inherits color from its parent, which lets it render on both the cream legacy surfaces and the new dark guardian footer.
+
+**Verification done before push (the step v1.15.0 skipped):**
+1. `npm run lint` clean
+2. `npm run build` clean — all 20 routes prerender, no `TimeoutError` on Guardian fetches during the build
+3. `npm run dev` — `/` rendered at 1440×900 and 375×812. CORS errors in dev are localhost-only (Guardian whitelists `farm.markbarney.net`, not localhost) — the camera stage and the gems rail correctly fall through to their empty/fallback states and the page composition holds. Production CORS is unaffected.
+4. Post-deploy: verify on `farm.markbarney.net` at desktop width before declaring done.
+
 ## [1.15.1] — 2026-05-09
 
 ### Added — Lobster emojis + Bubba/Larry thanks (Claude Opus 4.6)
