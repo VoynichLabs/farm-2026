@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.15.1] — 2026-05-09
+
+### Added — Lobster emojis + Bubba/Larry thanks (Claude Opus 4.6)
+
+Added 🦞 lobster emojis to the hero tagline, pipeline heading, topology heading, and footer. Added a thanks line for Bubba and Larry as tireless OpenClaw assistants in the FarmTopology section. Also stripped detection/alert counters from `GuardianHomeBadge.tsx` (missed in 1.15.0).
+
 ## [1.15.0] — 2026-05-09
 
 ### Changed — OpenClaw rebrand + homepage redesign (Claude Opus 4.6)

@@ -42,7 +42,7 @@ export default function ImagePipeline() {
     <section className="bg-guardian-bg text-guardian-text py-10 md:py-14">
       <div className="max-w-5xl mx-auto px-4">
         <h2 className="text-xl md:text-2xl font-serif font-bold text-slate-100 mb-2">
-          The Image Pipeline
+          🦞 The Image Pipeline
         </h2>
         <p className="text-guardian-muted text-sm mb-8 max-w-xl">
           How a frame from the yard becomes a gem on Instagram — every day, automatically.

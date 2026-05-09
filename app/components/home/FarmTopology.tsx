@@ -13,10 +13,13 @@ export default function FarmTopology() {
   return (
     <section className="max-w-6xl mx-auto px-4 py-14">
       <h2 className="text-2xl font-serif font-bold mb-1">
-        Mark&apos;s Farm Infrastructure
+        🦞 Mark&apos;s Farm Infrastructure
       </h2>
       <p className="text-forest-light/60 text-sm mb-8 max-w-lg">
         A former game developer&apos;s AI farm hands — two machines, five cameras, one Cloudflare tunnel.
+      </p>
+      <p className="text-forest-light/50 text-xs italic mb-8">
+        Thanks to Bubba and Larry — tireless OpenClaw assistants who keep the cameras rolling, the gems flowing, and the chickens safe. 🦞
       </p>
 
       {/* Machines */}

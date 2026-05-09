@@ -52,7 +52,7 @@ export default async function Hero() {
           Farm 2026
         </h1>
         <p className="text-base md:text-lg text-white/50 italic max-w-sm leading-relaxed mt-2">
-          A chicken farmer in Connecticut running his flock with OpenClaw and AI tools.
+          🦞 A chicken farmer in Connecticut running his flock with OpenClaw and AI tools.
         </p>
       </div>
 

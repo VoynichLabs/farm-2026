@@ -17,7 +17,7 @@ export default function SiteFooter() {
     <footer className="bg-forest text-cream/50 py-10">
       <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
         <div>
-          <p className="font-serif font-bold text-cream/80 text-base mb-1">Farm 2026</p>
+          <p className="font-serif font-bold text-cream/80 text-base mb-1">Farm 2026 🦞</p>
           <p>Hampton, CT</p>
           <GemsStatFooter />
         </div>
