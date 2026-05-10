@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.16.1] — 2026-05-10
+
+### Changed — SEO refresh + camera tile cold-load fix (Claude Opus 4.7 1M context)
+
+**SEO** (`app/layout.tsx`):
+- Title default rewritten from "Farm 2026 — OpenClaw on the Farm" (internal jargon to a stranger) to "Farm 2026 — Live chicken cameras in Hampton, CT" (describes what the page actually is, indexes for "live chicken cameras"). Title template (`%s | Farm 2026`) unchanged so subpages still suffix with the brand.
+- Description / OG description / Twitter description rewritten to match the new homepage (cameras + gem rail) instead of the prior story-driven "A chick hatched on the keyboard. A hawk took Birdgit two days later." copy.
+- OG image swapped from `/photos/april-2026/birdadette-fresh-hatch.jpg` to `/photos/og-2026-05.jpg` — a 1200×900 portrait of a young chicken under brooder heat-lamp light, with the camera + power adapter visible behind it (matches the site's "live cameras + flock" subject). New URL so Facebook / Twitter caches re-fetch instead of serving the stale April image.
+- Open Graph image now declares `width: 1200`, `height: 900`, and an alt-text — social previews can render without a HEAD probe.
+
+**Camera tile cold-load** (`app/components/guardian/GuardianCameraFeed.tsx`):
+- A camera tile that has *never* received a frame yet now stays in CONNECTING indefinitely instead of flipping to red OFFLINE after just 3 failed snapshots (~3.6s). The `/api/cameras/<name>/frame` endpoint can take 10+ seconds on a cold tunnel round-trip; under the old threshold every tile painted red on first load and the dashboard looked dead even when it was working. OFFLINE is now reserved for tiles that *had* a frame and lost it (the `OFFLINE_THRESHOLD = 10` after-live path is unchanged — that's correct evidence of a downed camera). The roster's `is_live` gate already filters dead cameras upstream, so a tile we render is one the backend said is producing frames; "still trying" is the honest state.
+- Polling now uses chained `setTimeout` instead of `setInterval` so requests don't pile up faster than they complete when the tunnel is slow. Each fetch carries an `AbortController` capped at 12s so a hung fetch can't block the chain forever.
+- Connecting state is more reassuring: bigger spinner, font-mono "CONNECTING…" label, and a one-line explainer ("First frame can take a few seconds — the snapshot travels through the Cloudflare tunnel back from the Mac Mini.") so a visitor on a cold load doesn't read empty + amber as broken.
+
 ## [1.16.0] — 2026-05-10
 
 ### Changed — Homepage rewritten to lead with cameras (Claude Opus 4.7 1M context)

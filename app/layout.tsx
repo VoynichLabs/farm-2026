@@ -1,43 +1,59 @@
 /**
- * Author: Claude Opus 4.6 (1M context)
- * Date: 13-Apr-2026
+ * Author: Claude Opus 4.7 (1M context) (orig Claude Opus 4.6, 13-Apr-2026)
+ * Date: 10-May-2026
  * PURPOSE: Root layout with navigation and metadata. Nav is sticky with a light
  *   cream background and pill-style links, matching the visual idiom of
  *   markbarney.net so the farm site reads as part of the same personal brand
  *   family. Internal links: Home, Guardian, Flock, Projects, Gallery, Field
  *   Notes. External link back to markbarney.net appended after a divider.
+ *
+ *   v1.16.0 (10-May-2026): SEO refresh. Title default rewritten to describe
+ *   what the page actually IS for search engines and tabs ("Live chicken
+ *   cameras in Hampton, CT") instead of internal-jargon ("OpenClaw on the
+ *   Farm"). Open Graph and Twitter descriptions rewritten to match the new
+ *   homepage (cameras + gems rail). OG image swapped from the April
+ *   Birdadette-fresh-hatch portrait to a current chick portrait in the
+ *   brooder under heat-lamp light. Image dimensions specified explicitly
+ *   so social previews can render without a HEAD request.
  * SRP/DRY check: Pass — single layout, nav structure matches site architecture.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 
+const SITE_TITLE = "Farm 2026 — Live chicken cameras in Hampton, CT";
+const SITE_DESCRIPTION =
+  "Live multi-camera feed from a 13.6-acre chicken farm in Hampton, CT, with a continuously curated archive of moments the on-farm OpenClaw + AI pipeline picks out of the stream.";
+const OG_IMAGE = {
+  url: "/photos/og-2026-05.jpg",
+  width: 1200,
+  height: 900,
+  alt: "A young chicken portrait under heat-lamp purple light in the brooder, with the USB camera and power adapter that watch the flock visible behind it.",
+};
+
 export const metadata: Metadata = {
   title: {
-    default: "Farm 2026 — OpenClaw on the Farm",
+    default: SITE_TITLE,
     template: "%s | Farm 2026",
   },
-  description:
-    "A chicken farmer in Hampton, CT using OpenClaw and AI tools to keep the flock safe, the cameras rolling, and the farm diary writing itself.",
+  description: SITE_DESCRIPTION,
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐔</text></svg>",
   },
   metadataBase: new URL("https://farm.markbarney.net"),
   openGraph: {
-    title: "Farm 2026 — OpenClaw on the Farm",
-    description:
-      "A chick hatched on the keyboard. A hawk took Birdgit two days later. By the end of the week there was a sky-watching AI and a brooder full of reinforcements.",
-    images: ["/photos/april-2026/birdadette-fresh-hatch.jpg"],
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE],
     type: "website",
     siteName: "Farm 2026",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Farm 2026 — OpenClaw on the Farm",
-    description:
-      "A chick hatched on the keyboard. A hawk took Birdgit two days later. By the end of the week there was a sky-watching AI and a brooder full of reinforcements.",
-    images: ["/photos/april-2026/birdadette-fresh-hatch.jpg"],
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE.url],
   },
 };
 

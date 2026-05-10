@@ -1,17 +1,35 @@
 "use client";
 /**
- * Author: Claude Opus 4.6 (1M context)
- * Date: 15-Apr-2026
+ * Author: Claude Opus 4.7 (1M context) (orig Claude Opus 4.6, 15-Apr-2026)
+ * Date: 10-May-2026
  * PURPOSE: Reusable camera feed via snapshot polling. Fetches a single JPEG from
- *   Guardian's /api/cameras/{name}/frame endpoint every ~1s and swaps the img src.
+ *   Guardian's /api/cameras/{name}/frame endpoint every ~1.2s and swaps the img src.
  *   Replaced persistent MJPEG streaming because browsers limit concurrent HTTP/1.1
  *   connections per domain (~6), and 4 MJPEG streams + API polling through the
  *   Cloudflare tunnel exceeded that limit — causing feeds to starve and show only
  *   one camera at a time. Snapshot polling uses short-lived requests that work with
  *   HTTP/2 multiplexing and don't hold connections open. The feed stays visible
  *   unless its own snapshot polling fails; shared `/api/status` hiccups should not
- *   blank healthy camera frames. v1.4.2 added explicit connecting/reconnecting/
- *   offline states so first-load latency no longer looks like a dead camera.
+ *   blank healthy camera frames.
+ *
+ *   v1.16.1 (10-May-2026): cold-load "looks dead" fix.
+ *     - A tile that's never had a frame yet stays in CONNECTING forever
+ *       until the first frame lands. The previous behavior flipped to
+ *       OFFLINE after just 3 failed snapshots (~3.6s) — so any cold tunnel
+ *       round-trip > ~3s painted every tile red on first load and Boss
+ *       saw the dashboard as "always offline." OFFLINE is now reserved
+ *       for tiles that *had* a frame and lost it (the OFFLINE_THRESHOLD
+ *       path is unchanged — that one is correct evidence of a downed
+ *       camera). The roster's `is_live` gate already filters out genuinely
+ *       dead cameras upstream, so a tile we render is one the backend
+ *       said is producing frames; "still trying" is the honest state for
+ *       a tile we just haven't received bytes from yet.
+ *     - Polling is now serialized via chained setTimeout instead of
+ *       setInterval, so when the tunnel is slow (frame endpoint can take
+ *       10+ s on cold start) requests don't pile up faster than they
+ *       complete. Each fetch carries its own AbortController capped at
+ *       FRAME_FETCH_TIMEOUT_MS so a hung fetch can't block the chain.
+ *
  *   13-Apr-2026 tweak: the reconnecting state no longer blackouts the image with
  *   a centered modal — it shows a thin bottom strip so the last good frame stays
  *   visible. It also no longer flips on a single missed snapshot — a threshold
@@ -27,16 +45,26 @@
 import { useEffect, useState, useRef } from "react";
 import { GUARDIAN_API } from "./types";
 
-// How often to fetch a new snapshot (ms)
+// How often to fetch a new snapshot (ms) — measured from the end of the
+// previous fetch, so requests serialize cleanly even when the tunnel is slow.
 const POLL_INTERVAL = 1200;
-// Misses before giving up on a not-yet-live camera and showing OFFLINE.
-const RECONNECT_THRESHOLD = 3;
+// Per-fetch ceiling: if a single snapshot fetch hasn't completed in this
+// long, abort it and let the next tick try fresh. Without this, a hung
+// Cloudflare tunnel can leave a fetch in flight for minutes and the chain
+// would never advance. 12s is generous for cold-start round-trips while
+// still keeping the chain responsive.
+const FRAME_FETCH_TIMEOUT_MS = 12000;
 // Consecutive misses on a live feed before we show the "reconnecting" strip.
 // One hiccup is normal; we don't want the overlay flickering on and off.
 // 5 misses ≈ 6 seconds — long enough to avoid bursty-jitter flapping but
 // short enough to communicate a real problem promptly.
 const RECONNECT_SHOW_THRESHOLD = 5;
-// Misses before we give up on a live feed and go full OFFLINE.
+// Misses before we give up on a live feed and go full OFFLINE. This path
+// only fires *after* we've had a successful frame at least once — i.e.,
+// we have positive evidence the camera was producing bytes and now isn't.
+// A tile that has never had a frame yet stays in CONNECTING indefinitely
+// (see fetchFrame's catch block) — "no bytes yet" is not the same as
+// "definitely down."
 const OFFLINE_THRESHOLD = 10;
 // Minimum time (ms) the "reconnecting" strip stays visible once shown,
 // even if a frame fetch succeeds. Prevents flicker when failures arrive in
@@ -68,17 +96,28 @@ export default function GuardianCameraFeed({
   // RECONNECT_MIN_VISIBLE_MS.
   const reconnectingShownAt = useRef<number | null>(null);
 
-  // Poll for snapshots
+  // Poll for snapshots — chained setTimeout, not setInterval, so a slow
+  // Cloudflare tunnel can't pile up requests faster than they complete.
   useEffect(() => {
     mountedRef.current = true;
     consecutiveErrors.current = 0;
     setFeedState("connecting");
 
+    let nextTick: ReturnType<typeof setTimeout> | null = null;
+
     const fetchFrame = async () => {
       if (!mountedRef.current) return;
+
+      const ac = new AbortController();
+      const abortTimer = setTimeout(
+        () => ac.abort(),
+        FRAME_FETCH_TIMEOUT_MS,
+      );
+
       try {
         const res = await fetch(
           `${GUARDIAN_API}/api/cameras/${cameraName}/frame?t=${Date.now()}`,
+          { signal: ac.signal },
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const blob = await res.blob();
@@ -111,11 +150,12 @@ export default function GuardianCameraFeed({
         consecutiveErrors.current++;
 
         if (!hadFrameRef.current) {
-          setFeedState(
-            consecutiveErrors.current >= RECONNECT_THRESHOLD
-              ? "offline"
-              : "connecting",
-          );
+          // First-load failure: stay in CONNECTING indefinitely. We have
+          // no positive evidence this camera is offline (the roster's
+          // is_live gate already vouched for it). The amber spinner is
+          // the honest "still trying" affordance; flipping to red OFFLINE
+          // here would lie to the user about what we know.
+          setFeedState("connecting");
           return;
         }
 
@@ -131,15 +171,19 @@ export default function GuardianCameraFeed({
           setFeedState("reconnecting");
         }
         // else: stay on whatever we were (typically "live"); below threshold.
+      } finally {
+        clearTimeout(abortTimer);
+        if (mountedRef.current) {
+          nextTick = setTimeout(fetchFrame, POLL_INTERVAL);
+        }
       }
     };
 
     fetchFrame();
-    const interval = setInterval(fetchFrame, POLL_INTERVAL);
 
     return () => {
       mountedRef.current = false;
-      clearInterval(interval);
+      if (nextTick) clearTimeout(nextTick);
       hadFrameRef.current = false;
       reconnectingShownAt.current = null;
       setFrameUrl((prev) => {
@@ -210,8 +254,13 @@ export default function GuardianCameraFeed({
           <div className="text-center px-4 flex flex-col items-center gap-2">
             {isConnecting && (
               <>
-                <div className="w-6 h-6 rounded-full border-2 border-amber-400/20 border-t-amber-400 animate-spin" />
-                <div className="text-amber-300 text-sm">CONNECTING…</div>
+                <div className="w-8 h-8 rounded-full border-2 border-amber-400/20 border-t-amber-400 animate-spin" />
+                <div className="text-amber-300 text-sm font-mono">CONNECTING…</div>
+                <div className="text-guardian-muted text-[0.65rem] max-w-[180px] leading-snug">
+                  First frame can take a few seconds — the snapshot
+                  travels through the Cloudflare tunnel back from the
+                  Mac Mini.
+                </div>
               </>
             )}
             {isOffline && (
