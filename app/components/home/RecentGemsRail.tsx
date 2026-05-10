@@ -62,16 +62,16 @@ export default function RecentGemsRail() {
   const showFallback = error || (rows !== null && rows.length === 0);
 
   return (
-    <section className="max-w-6xl mx-auto px-3 py-8">
-      <div className="flex items-baseline justify-between mb-4">
-        <h2 className="text-guardian-text font-serif text-xl md:text-2xl">
-          Recent gems
-        </h2>
+    <section className="max-w-7xl mx-auto px-3 py-3 font-mono text-[0.78rem]">
+      <div className="flex items-baseline justify-between mb-2">
+        <span className="text-emerald-400 tracking-wider">
+          ▸ RECENT GEMS
+        </span>
         <Link
           href="/gallery/gems"
-          className="text-emerald-400 hover:text-emerald-300 text-sm font-mono"
+          className="text-emerald-300 hover:text-emerald-200"
         >
-          All gems →
+          all gems ↗
         </Link>
       </div>
       {showSkeleton && (

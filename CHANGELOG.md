@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.16.3] — 2026-05-10
+
+### Changed — Terminal / surveillance aesthetic, kill the cream nav (Claude Opus 4.7 1M context)
+
+Boss's brief: "professional scientific terminal or surveillance/monitoring something, rather than a vibe-coded piece of shit disaster. Especially with that nav bar header. That's just junk. Get that the fuck out." Also: less padding, more story up top.
+
+**New site-wide top bar (`app/components/system/TerminalNav.tsx`):**
+- Replaces the cream pill-link nav. Two compact font-mono rows: identity strip (`[FARM-2026]` · location · build version · live UTC clock) and lowercase nav strip (`home guardian gallery yard flock notes projects ↗ markbarney.net`). Hairline borders, no rounded corners, sticky.
+- Clock is a client island that ticks every second. SSR renders `──:──:──Z` and the first interval tick replaces it; `suppressHydrationWarning` on the timestamp text. Pattern avoids React 19's `set-state-in-effect` lint rule.
+- Version pulled from `package.json` so a release bump propagates without a string edit. `package.json.version` bumped from `0.1.0` (Next scaffold default) to `1.16.3` to match the CHANGELOG release.
+
+**New homepage story strip (`app/components/home/SystemBanner.tsx`):**
+- Renders directly above the camera grid so a visitor reads what the page IS while the cameras are still connecting on cold load.
+- Four `$ `-prefixed lines describing the live pipeline (cameras → Mac Mini → YOLO+VLM → Discord queue → IG/FB; predator detections fire deterrent loops; the page mirrors the live grid + recent archive).
+- ASCII data-flow diagram below the prose (hidden on narrow viewports).
+
+**Homepage tightened (`app/page.tsx`):**
+- Containers widened from `max-w-6xl` to `max-w-7xl` and vertical padding dropped throughout. Reads as a dashboard, not a marketing landing.
+- Deeper-links rail rebuilt as a file-listing block (`└─ guardian — live cameras + PTZ + dashboard`) instead of six rounded cards.
+- Footer collapsed to a single status line (`FARM-2026 · Hampton, CT · N gems in the last 7 days · instagram ↗ facebook ↗ © 2026`).
+- "Recent gems" heading swapped to `▸ RECENT GEMS` mono header to match the rest.
+
+**Body palette flipped (`app/globals.css`):**
+- Body bg is now `--color-guardian-bg` (#0f172a) and text is `--color-guardian-text` (#e2e8f0). Cream/forest tokens stay defined for any per-page override that wants them, but the default surface is dark so the whole site reads as one terminal.
+- Cream-styled legacy pages (`/flock`, `/field-notes`, `/projects`, etc.) still set their own backgrounds via Tailwind — the body color is only visible where a page doesn't fill the viewport. Those pages may want a separate dark-mode pass; out of scope for v1.16.3.
+
+**Untouched:** `/projects/guardian` and every `app/components/guardian/*` (the page Boss said looked right), `lib/*`, `/api/health`, `public/photos/*`, the auto-pipeline write paths, the IG/FB raw-URL contract.
+
+## [1.16.2] — 2026-05-10
+
+### Changed — OG image points at GitHub raw, not Railway (Claude Opus 4.7 1M context)
+
+Discovered after v1.16.1 deploy: `farm.markbarney.net/photos/og-2026-05.jpg` returns 404. Probing further, most of `public/photos/` also 404s on the deployed Railway container — `april-2026/birdadette-fresh-hatch.jpg`, `brooder/2026-04-20-solo-yellow.jpg`, `birds/whitey-red-legs.jpg` all present in the repo, all 404. Only very recently pushed paths (`yard-diary/2026-05-10-morning.jpg`) serve. `public/photos/` is **772 MB** across 751 files; the build script's `cp -r public .next/standalone/public` step is almost certainly hitting Railway's build/container budget and copying partially.
+
+The fix for that root cause is a separate, larger piece of work (move photos out of the deployed bundle, or front it with a CDN). For now, the OG image URL points at `raw.githubusercontent.com` — the same surface the auto-pipeline already uses for every IG/FB post, proven stable, returns HTTP 200 with `content-type: image/jpeg`. Comment in `app/layout.tsx` documents the temporary nature so the next agent can switch back to a `/photos/...` path once Railway serves the full tree again.
+
 ## [1.16.1] — 2026-05-10
 
 ### Changed — SEO refresh + camera tile cold-load fix (Claude Opus 4.7 1M context)

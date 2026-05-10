@@ -18,7 +18,6 @@
  * SRP/DRY check: Pass — single layout, nav structure matches site architecture.
  */
 import type { Metadata } from "next";
-import Link from "next/link";
 import "./globals.css";
 
 const SITE_TITLE = "Farm 2026 — Live chicken cameras in Hampton, CT";
@@ -64,6 +63,8 @@ export const metadata: Metadata = {
   },
 };
 
+import TerminalNav from "@/app/components/system/TerminalNav";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -72,45 +73,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <nav className="sticky top-0 z-30 bg-cream/85 backdrop-blur-md border-b border-forest/10">
-          <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-            <Link
-              href="/"
-              className="font-serif font-bold text-xl tracking-tight text-forest hover:text-wood transition-colors whitespace-nowrap"
-            >
-              Hampton Farm
-            </Link>
-            <div className="flex items-center gap-1 text-sm overflow-x-auto">
-              <Link href="/" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
-                Home
-              </Link>
-              <Link href="/projects/guardian" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
-                Guardian
-              </Link>
-              <Link href="/flock" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
-                Flock
-              </Link>
-              <Link href="/projects" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
-                Projects
-              </Link>
-              <Link href="/gallery/gems" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
-                Gallery
-              </Link>
-              <Link href="/field-notes" className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap">
-                Field Notes
-              </Link>
-              {/* Divider + external link back to the rest of the personal-brand network. */}
-              <span className="mx-2 h-4 w-px bg-forest/20 shrink-0" aria-hidden="true" />
-              <a
-                href="https://markbarney.net"
-                className="px-3 py-2 rounded-full text-forest/75 hover:text-forest hover:bg-forest/5 transition-colors whitespace-nowrap"
-                rel="noopener"
-              >
-                markbarney.net ↗
-              </a>
-            </div>
-          </div>
-        </nav>
+        <TerminalNav />
         {children}
       </body>
     </html>
