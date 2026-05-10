@@ -24,8 +24,15 @@ import "./globals.css";
 const SITE_TITLE = "Farm 2026 — Live chicken cameras in Hampton, CT";
 const SITE_DESCRIPTION =
   "Live multi-camera feed from a 13.6-acre chicken farm in Hampton, CT, with a continuously curated archive of moments the on-farm OpenClaw + AI pipeline picks out of the stream.";
+// Open Graph image lives on GitHub raw, not on farm.markbarney.net. Railway's
+// standalone build skips most of `public/photos/` (the 772 MB tree appears
+// to exceed the build copy budget, so files added before the most recent
+// few deploys 404) — but the auto-pipeline already relies on the raw URL
+// for every IG / FB post, so it's the proven-stable surface for social.
+// When that root cause gets fixed, switch this back to a "/photos/..." path
+// so the host matches the rest of the metadata.
 const OG_IMAGE = {
-  url: "/photos/og-2026-05.jpg",
+  url: "https://raw.githubusercontent.com/VoynichLabs/farm-2026/main/public/photos/og-2026-05.jpg",
   width: 1200,
   height: 900,
   alt: "A young chicken portrait under heat-lamp purple light in the brooder, with the USB camera and power adapter that watch the flock visible behind it.",
