@@ -68,6 +68,8 @@ export interface FlockBird {
   photo: string | null;
   notes: string;
   location?: string;
+  deceased_date?: string;
+  cause_of_death?: string;
 }
 
 /**
