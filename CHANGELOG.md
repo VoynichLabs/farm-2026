@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.16.7] — 2026-05-11
+
+### Changed — /flock surfaces the live gem archive — thousands of bird frames per cohort (Claude Opus 4.7 1M context)
+
+Boss: "I see the deployed website is beautiful and correct and has accurate photos of stuff. It shows off the absolute thousands of photos we have of the birds." The 1.16.6 page was the right framing but still showed only one hand-curated photo per bird. The Guardian VLM pipeline has been running since early April and the archive has **4,624 gems** as of today — those photos belong on /flock.
+
+Spun up two Explore subagents in parallel: one mapping farm-guardian's gem schema and the `/api/v1/images/gems` API (4,624 rows in `image_archive`, filterable by `scene`, `camera`, `individual`, etc.), one mapping how this repo already ingests gems (`lib/gems.ts` is the single I/O layer; `RecentGemsRail` is the existing client-side fetch pattern). Used the existing infrastructure — no new endpoints, no schema changes, no backend coordination.
+
+**What landed:**
+
+- **New component `app/components/flock/FlockGemStrip.tsx`** — client-side fetch from `guardian.markbarney.net/api/v1/images/gems?scene=...&limit=12`. Renders a 6-column responsive grid of compact `GemCard`s with skeletons during load, total-count label in the header, and a "browse all ↗" deep-link into `/gallery/gems` with the same scene filter applied. Follows the same client-side pattern as `RecentGemsRail` because Guardian's gem endpoint can take several seconds and exceeds the 3s SSR `AbortSignal` cap in `lib/gems.ts` (per the CLAUDE.md healthcheck-driven rule). Empty/error states render a quiet fallback line so a tunnel hiccup doesn't break the page.
+- **`app/flock/page.tsx`** — embeds three `FlockGemStrip` instances:
+  - Above the Brooder & Nestbox cards: `scenes=["brooder","nesting-box"]`, limit 12. Live count: 3,968 archived frames.
+  - Above the Coop cards: `scenes=["coop"]`, limit 12. Live count: 635 archived frames.
+  - Above the Hens cards: `scenes=["yard"]`, limit 8. The Reolink is dialed in on predator detection so yard-scene gems are sparse — `emptyHint` explains why if the strip comes back empty.
+
+**Triskaidekaphobia rule (per `memory/feedback_no_thirteen.md`):** the `yard` scene's `total_estimate` from the API is exactly 13. Caught during preview verification. `FlockGemStrip` now suppresses the "{N} frames archived" label when `total === 13` — strip still renders, just no "13" in the DOM. Verified via `/\b13\b/.test(body.innerText) === false` after the fix.
+
+**Why this is the right plumbing path:** the gem archive is already a public, paginatable, filterable HTTP API. The frontend already has a typed fetcher and a working client-side rail pattern. The only thing missing was wiring the same pattern into /flock — no new infrastructure, no new state, no new build-time ETL. Adding per-named-bird filtering (Birdadette's gems on Birdadette's card) is future scope; the VLM prompt at `farm-guardian/tools/pipeline/prompt.md` line 21 currently forbids naming individual birds, so `individuals_visible` is a small enum (`adult`, `chick`, `unknown-bird`), not a name. Cohort-by-scene is what we have today, and it surfaces the thousands of photos that exist.
+
 ## [1.16.6] — 2026-05-11
 
 ### Changed — /flock rewritten as the breeding-program memory surface (Claude Opus 4.7 1M context)

@@ -38,6 +38,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getFlockProfiles, getChickAgeLabel } from "@/lib/content";
 import Image from "next/image";
+import FlockGemStrip from "@/app/components/flock/FlockGemStrip";
 
 export const metadata: Metadata = {
   title: "The Flock",
@@ -320,11 +321,17 @@ export default function FlockPage() {
           <h2 className="text-2xl font-bold font-serif text-forest mb-2">
             In the Brooder &amp; Nestbox
           </h2>
-          <p className="text-forest/70 mb-8 text-sm max-w-3xl">
+          <p className="text-forest/70 mb-6 text-sm max-w-3xl">
             Newest hatch at the top. The desk incubator is still in service.
             Tractor Supply runs and the April Cackle Hatchery order make up
-            the rest of the cohort.
+            the rest of the cohort. Every frame below was scored by the VLM
+            pipeline against the brooder and nestbox cameras.
           </p>
+          <FlockGemStrip
+            scenes={["brooder", "nesting-box"]}
+            label="LIVE FROM THE BROODER + NESTBOX"
+            limit={12}
+          />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {nursery.map((bird, idx) => (
               <BirdCard
@@ -346,10 +353,15 @@ export default function FlockPage() {
           <h2 className="text-2xl font-bold font-serif text-forest mb-2">
             Growing Out in the Coop
           </h2>
-          <p className="text-forest/70 mb-8 text-sm max-w-3xl">
+          <p className="text-forest/70 mb-6 text-sm max-w-3xl">
             Out of the brooder, into the coop run. Not yet laying. Sorting
             out roosting order and what to do with daylight.
           </p>
+          <FlockGemStrip
+            scenes={["coop"]}
+            label="LIVE FROM THE COOP RUN"
+            limit={12}
+          />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {coopGrowing.map((bird, idx) => (
               <BirdCard
@@ -369,10 +381,16 @@ export default function FlockPage() {
             [LAYING STOCK]
           </p>
           <h2 className="text-2xl font-bold font-serif text-forest mb-2">The Hens</h2>
-          <p className="text-forest/70 mb-8 text-sm max-w-3xl">
+          <p className="text-forest/70 mb-6 text-sm max-w-3xl">
             The breeding stock. Easter Eggers, a Wyandotte, and the
             yearling that hatched on Boss&apos;s desk last spring.
           </p>
+          <FlockGemStrip
+            scenes={["yard"]}
+            label="LIVE FROM THE YARD"
+            limit={8}
+            emptyHint="The Reolink stays focused on predator detection; yard-scene gems are sparse."
+          />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {adultHens.map((bird, idx) => (
               <BirdCard
