@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.16.8] — 2026-05-11
+
+### Fixed — Lineage panel reframed honestly; incubator section scaffolded (Claude Opus 4.7 1M context)
+
+Boss flagged two things wrong with 1.16.6/1.16.7:
+
+1. **"One name has been carried forward across four birds"** — the copy claimed Birdgit's name was uniquely carried forward to Birdadette, Birdadonna, and Birdadotta. That's wrong; every bird on the farm uses the "Bird-" prefix convention (Birdatha, Birdgit, Birdadette, Birdadonna, Birdadotta — and Henrietta isn't even in the chain). The "carried forward" framing was a story I made up. Worse, Birdgit isn't genetically related to any of the others — she's Birdadette's namesake (memorial after a hawk loss), not her dam. And Birdadette has no documented genetic parent at all.
+
+2. **Birds in the incubator weren't represented.** The desk incubator is part of the breeding program by design, but the page jumped straight from "Breeding Lineage" to "In the Brooder & Nestbox" — eggs being incubated right now had nowhere to live on the surface.
+
+**What changed:**
+
+- **Lineage panel renamed and reframed.** Section is now `[BREEDING LINE]` / "First Second-Generation Hatch". The cards render the actual genetic chain only — EE hen 1, Little Big Red Junior (memoriam), Birdadonna, Birdadotta. Subtitle: "Birdadotta, hatched 25 April 2026 from a blue egg laid by Birdadonna, is the first chick on the farm with both parents in the program's own records. EE hen 1 × Little Big Red Junior → Birdadonna → Birdadotta." Birdgit and Birdadette are removed from this panel — Birdgit shows in the In Memoriam ledger; Birdadette renders with her cohort in the brooder/nestbox section (her namesake-to-Birdgit relationship still surfaces on her BirdCard instrument strip as `NAMESAKE Birdgit`, which is accurate).
+- **`LINEAGE` map purged of the made-up `chain` field.** Each entry now lists only what's actually documented in the notes: Birdadette has `namesakeOf: "Birdgit"` (memorial), Birdadonna has `dam: "EE hen 1", sire: "Little Big Red Junior"`, Birdadotta has `dam: "Birdadonna"` (sire not in records, so the field isn't asserted).
+- **New `incubating` schema on `FlockProfiles`.** `lib/content.ts` exports `IncubatorClutch { label, set_date, expected_hatch?, egg_count?, dam?, sire?, egg_color?, notes? }` and `FlockProfiles.incubating?: IncubatorClutch[]`. `content/flock-profiles.json` gets a sibling `"incubating": []` array at the top level.
+- **New `[INCUBATING] / In the Incubator` section** on `/flock`, rendering above the breeding-lineage panel when `incubating[]` is non-empty. Dark guardian-card grid showing per-clutch instrument strips: SET / DUE / EGGS / COLOR / DAM / SIRE plus free-text notes. Hidden when the array is empty, so the section ships dark without bogus data — populated as soon as Boss provides the current clutch info.
+
+The page now reads as actual breeding-program memory: what's incubating, what's the first true second-generation chick, what's in the brooder, what's in the coop, what's laying, what's been lost. No made-up name-chain narrative.
+
 ## [1.16.7] — 2026-05-11
 
 ### Changed — /flock surfaces the live gem archive — thousands of bird frames per cohort (Claude Opus 4.7 1M context)

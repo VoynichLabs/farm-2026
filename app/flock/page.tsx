@@ -36,7 +36,7 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getFlockProfiles, getChickAgeLabel } from "@/lib/content";
+import { getFlockProfiles, getChickAgeLabel, type IncubatorClutch } from "@/lib/content";
 import Image from "next/image";
 import FlockGemStrip from "@/app/components/flock/FlockGemStrip";
 
@@ -71,29 +71,31 @@ const firstSentence = (s: string): string => {
   return s.length > 140 ? s.slice(0, 140).trimEnd() + "…" : s;
 };
 
-// Local lineage map. The Hermes doc explicitly lists structured pairing /
-// lineage fields on flock-profiles.json as future scope; until then, the
-// single named chain we have is encoded here so the breeding-program story
-// can render as data rather than buried inside prose notes.
+// Local lineage map. The Hermes doc lists structured pairing/lineage fields
+// on flock-profiles.json as future scope; until then, the genetic links the
+// notes already document are encoded here so the breeding-program story can
+// render as data rather than buried inside prose. NOTE: every bird on the
+// farm uses the "Bird-" naming convention — the lineage is not about a name
+// being carried forward, it's about the actual genetic chain.
 type LineageInfo = {
   dam?: string;
   sire?: string;
   namesakeOf?: string;
-  chain?: string; // e.g. "Birdgit → Birdadette → Birdadonna → Birdadotta"
 };
 const LINEAGE: Record<string, LineageInfo> = {
   Birdadette: {
+    // No documented genetic parent — eggs were set 16-March, source not in
+    // the records. Birdgit is her namesake (memorial after hawk loss), not
+    // her dam.
     namesakeOf: "Birdgit",
-    chain: "Birdgit → Birdadette",
   },
   Birdadonna: {
     dam: "EE hen 1",
     sire: "Little Big Red Junior",
-    chain: "EE hen 1 × Little Big Red Junior → Birdadonna",
   },
   Birdadotta: {
     dam: "Birdadonna",
-    chain: "Birdadonna → Birdadotta",
+    // Sire on Birdadotta not in the records.
   },
 };
 
@@ -153,13 +155,19 @@ export default function FlockPage() {
   const nurseryCount = nursery.reduce((n, b) => n + individualCount(b.name), 0);
   const hensCount = adultHens.reduce((n, b) => n + individualCount(b.name), 0);
 
-  // For the lineage panel: pull the actual bird records we'll reference.
-  const lineageBirds = [
-    deceasedBirds.find((b) => b.name === "Birdgit"),
-    activeBirds.find((b) => b.name === "Birdadette"),
+  // For the lineage panel: pull the actual records we'll reference. The
+  // genetic chain — EE hen 1 × Little Big Red Junior → Birdadonna →
+  // Birdadotta — runs through these four. Birdadette is named after
+  // Birdgit but is genetically unrelated; she's rendered in her cohort
+  // section, not in this panel.
+  const lineageGenetic = [
+    activeBirds.find((b) => b.name === "EE hen 1"),
+    deceasedBirds.find((b) => b.name === "Little Big Red Junior"),
     activeBirds.find((b) => b.name === "Birdadonna"),
     activeBirds.find((b) => b.name === "Birdadotta"),
   ].filter((b): b is NonNullable<typeof b> => Boolean(b));
+
+  const incubating: IncubatorClutch[] = flockData.incubating ?? [];
 
   const getBreedProfile = (breedName: string) => {
     if (breeds[breedName]) return breeds[breedName];
@@ -220,29 +228,112 @@ export default function FlockPage() {
         </div>
       </section>
 
-      {/* Name lineage — the headline breeding-program story made visible.
-          Dark guardian-panel block per openclaw brief §10.2: "darker
-          instrument-panel surfaces for camera / model / pipeline sections."
-          Lineage IS the pipeline here. */}
-      {lineageBirds.length > 0 && (
+      {/* Incubator — what's in the desk incubator right now, before it
+          hatches into the brooder. Renders only when `incubating` has
+          entries in flock-profiles.json. Dark guardian-panel because this
+          is operational pipeline data, not narrative. */}
+      {incubating.length > 0 && (
+        <section className="bg-guardian-bg text-guardian-text border-b border-guardian-border">
+          <div className="max-w-6xl mx-auto px-4 py-10">
+            <p className="font-mono text-[0.7rem] uppercase tracking-widest text-guardian-accent mb-2">
+              [INCUBATING]
+            </p>
+            <h2 className="text-2xl md:text-3xl font-bold font-serif text-white mb-2">
+              In the Incubator
+            </h2>
+            <p className="text-guardian-text/70 text-sm mb-6 max-w-3xl">
+              Eggs currently set on Boss&apos;s desk. Twenty-one days at
+              99.6°F and 65–70% humidity is the chicken target; turkey
+              clutches run twenty-eight.
+            </p>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {incubating.map((c, idx) => {
+                const set = fmtDate(c.set_date);
+                const due = fmtDate(c.expected_hatch);
+                return (
+                  <div
+                    key={idx}
+                    className="bg-guardian-card border border-guardian-border rounded-lg p-5 flex flex-col gap-2"
+                  >
+                    <h3 className="text-lg font-bold font-serif text-white">
+                      {c.label}
+                    </h3>
+                    <div className="font-mono text-[0.65rem] uppercase tracking-widest text-guardian-text/70 space-y-0.5">
+                      {set && (
+                        <div>
+                          <span className="text-guardian-muted">SET</span>{" "}
+                          <span className="text-guardian-text">{set}</span>
+                        </div>
+                      )}
+                      {due && (
+                        <div>
+                          <span className="text-guardian-muted">DUE</span>{" "}
+                          <span className="text-guardian-text">{due}</span>
+                        </div>
+                      )}
+                      {typeof c.egg_count === "number" && (
+                        <div>
+                          <span className="text-guardian-muted">EGGS</span>{" "}
+                          <span className="text-guardian-text">{c.egg_count}</span>
+                        </div>
+                      )}
+                      {c.egg_color && (
+                        <div>
+                          <span className="text-guardian-muted">COLOR</span>{" "}
+                          <span className="text-guardian-text">{c.egg_color}</span>
+                        </div>
+                      )}
+                      {c.dam && (
+                        <div>
+                          <span className="text-guardian-muted">DAM</span>{" "}
+                          <span className="text-guardian-text">{c.dam}</span>
+                        </div>
+                      )}
+                      {c.sire && (
+                        <div>
+                          <span className="text-guardian-muted">SIRE</span>{" "}
+                          <span className="text-guardian-text">{c.sire}</span>
+                        </div>
+                      )}
+                    </div>
+                    {c.notes && (
+                      <p className="text-xs text-guardian-text/60 pt-2 border-t border-guardian-border/50 mt-1">
+                        {c.notes}
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Breeding lineage — the actual genetic chain that runs through the
+          program: EE hen 1 × Little Big Red Junior produced Birdadonna last
+          year, and Birdadonna produced Birdadotta last month. That makes
+          Birdadotta the first second-generation chick of the program.
+          Dark guardian-panel per openclaw brief §10.2. */}
+      {lineageGenetic.length > 0 && (
         <section className="bg-guardian-bg text-guardian-text border-b border-guardian-border">
           <div className="max-w-6xl mx-auto px-4 py-12">
             <p className="font-mono text-[0.7rem] uppercase tracking-widest text-guardian-accent mb-2">
-              [NAME LINEAGE]
+              [BREEDING LINE]
             </p>
             <h2 className="text-2xl md:text-3xl font-bold font-serif text-white mb-2">
-              Birdgit → Birdadette → Birdadonna → Birdadotta
+              First Second-Generation Hatch
             </h2>
             <p className="text-guardian-text/70 text-sm mb-8 max-w-3xl">
-              One name has been carried forward across four birds — a hawk
-              loss, an incubator hatch, a yearling who started laying, and
-              the first second-generation chick. The chain is the
-              breeding-program memory the rest of this page exists to
-              support.
+              Birdadotta, hatched 25 April 2026 from a blue egg laid by
+              Birdadonna, is the first chick on the farm with both parents
+              in the program&apos;s own records.{" "}
+              <span className="text-guardian-text/50">
+                EE hen 1 × Little Big Red Junior → Birdadonna → Birdadotta.
+              </span>
             </p>
 
             <div className="grid gap-4 md:grid-cols-4">
-              {lineageBirds.map((b) => {
+              {lineageGenetic.map((b) => {
                 const ln = LINEAGE[b.name];
                 const isLost = b.status === "deceased";
                 const dateStr = isLost
@@ -294,12 +385,6 @@ export default function FlockPage() {
                           <div>
                             <span className="text-guardian-muted">SIRE</span>{" "}
                             <span className="text-guardian-text">{ln.sire}</span>
-                          </div>
-                        )}
-                        {ln?.namesakeOf && (
-                          <div>
-                            <span className="text-guardian-muted">NAMESAKE</span>{" "}
-                            <span className="text-guardian-text">{ln.namesakeOf}</span>
                           </div>
                         )}
                       </div>

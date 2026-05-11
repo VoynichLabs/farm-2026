@@ -90,9 +90,21 @@ export function getChickAgeLabel(hatchDate?: string): string | null {
   return `${months} month${months !== 1 ? "s" : ""}`;
 }
 
+export interface IncubatorClutch {
+  label: string;             // e.g. "Clutch #3 (May 2026)"
+  set_date: string;          // ISO date the egg(s) went into the incubator
+  expected_hatch?: string;   // ISO date — usually set_date + 21 days for chickens
+  egg_count?: number;
+  dam?: string;              // hen name when known
+  sire?: string;             // rooster name when known
+  egg_color?: string;        // helps tag the cohort visually
+  notes?: string;            // short field-station note
+}
+
 export interface FlockProfiles {
   breeds: Record<string, Breed>;
   flock_birds: FlockBird[];
+  incubating?: IncubatorClutch[];
 }
 
 export interface FieldNote {
