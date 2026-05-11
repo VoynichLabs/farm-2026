@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.16.6] — 2026-05-11
+
+### Changed — /flock rewritten as the breeding-program memory surface (Claude Opus 4.7 1M context)
+
+Boss pointed out that 1.16.4 and 1.16.5 were cosmetic passes that missed the page's actual job. The strategic framing lives in the docs, not the code, and I'd shipped two redesigns without reading them:
+
+- `docs/11-May-2026-hermes-breeding-showcase-notes.md` names `app/flock/page.tsx` as "the breeding-program database" surface.
+- `docs/09-May-2026-bubba-on-the-farm.md` §13 and §27: "the website is a farm memory surface", "the flock page should show why memory matters."
+- `docs/09-May-2026-openclaw-farm-ops-story-design-brief.md` §9: "highlight hatch days, egg timelines, flock roster updates, breed-identification notes." §10.2: "warm farm surfaces for narrative sections, darker instrument-panel surfaces for camera / model / pipeline sections." §19: "treat flock profiles as memory made visible."
+- `docs/10-May-2026-homepage-rewrite.md` §105: "/flock may want the same dark guardian palette for visual coherence."
+
+Plan doc: `docs/11-May-2026-flock-page-breeding-memory-plan.md` (written before this commit, per coding-standards).
+
+**Rewrite, structurally:**
+
+- **Hero** gets a terminal-style instrument strip across the top — `[ROSTER] FLOCK-PROFILES.JSON · 29 nursery · 3 coop cohorts · 4 hens · 5 lost` — over the existing brooder hero photo. Subtitle replaced with field-station prose: "Hatch dates, names, lineage, and losses. The breeding-program record for Farm 2026 — what came out of an egg, when, and from whom."
+- **Name Lineage panel** added directly under the hero. Dark guardian-card block (per openclaw §10.2) that renders the single named chain we have today: **Birdgit → Birdadette → Birdadonna → Birdadotta**, with four photo cards showing hatch / loss / dam / sire / namesake fields per bird. This is the headline breeding-program story made visible instead of buried inside note prose. Lineage data is declared locally as a small typed `LINEAGE` map — the Hermes doc lists structured pairing/lineage fields on `flock-profiles.json` as future scope, so the JSON schema is unchanged this pass.
+- **BirdCard** gets a dark guardian-card instrument strip between the photo and the warm card body. Mono font, terminal palette. Fields render only when the bird has them: `HATCH`, `AGE`, `DAM` × `SIRE` (or just `DAM`, or `NAMESAKE`). Date formatter handles `YYYY-MM-DD`, `YYYY-MM`, and `YYYY` so partial hatch dates (May TSC batch is `"2026-05"`) render as "May 2026" instead of leaking the ISO substring.
+- **Section tags** added above each `<h2>`: `[BROODER + NESTBOX]`, `[COOP]`, `[LAYING STOCK]`, `[ROOSTER]`, `[BREEDS]`, `[LOST]`. Matches the TerminalNav aesthetic from 1.16.3.
+- **In Memoriam** moved into its own dark guardian-bg section at the foot of the page. Reframed as an operational ledger — date · name · breed · cause — not an apologetic sidebar. Field-station copy: "Predator losses are part of the program. The flock rebuilds, the record stays."
+- **Voice** rewritten throughout to field-station per openclaw §10.3 and §19. Dropped marketing phrasing like "still discovering what a worm is" — concrete observed facts instead.
+
+Aesthetic is the hybrid the openclaw brief calls for: warm cream for narrative sections (cohort intros, BirdCard bodies, Breed Notes), dark guardian-bg panels for the data layer (top instrument strip, Name Lineage block, BirdCard instrument strip, In Memoriam ledger). The contrast says "living farm above, machine layer underneath."
+
+Triskaidekaphobia rule honoured — `coopCount` is not rendered (the coop cohort count is the literal sum that would equal 13), and the hero strip uses cohort counts plus nursery and hens individuals instead. Verified `/\b13\b/.test(body.innerText) === false`.
+
+- `app/flock/page.tsx` — full rewrite (~430 lines).
+- `docs/11-May-2026-flock-page-breeding-memory-plan.md` — new plan doc.
+
+What's NOT in this pass (deliberately, per the plan doc):
+- No new structured `dam`/`sire`/`namesake_of` fields in `content/flock-profiles.json`.
+- No edit-review workflow for proposed record changes.
+- No new field notes — existing notes still drive the per-card prose.
+
 ## [1.16.5] — 2026-05-11
 
 ### Fixed — /flock visual regressions from the 1.16.4 reorg (Claude Opus 4.7 1M context)
