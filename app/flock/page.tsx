@@ -1,12 +1,22 @@
 /**
  * Author: Claude Opus 4.7 (1M context)
- * Date: 02-May-2026
- * PURPOSE: /flock — active/deceased bird roster + breed reference guide.
- *   Data source is content/flock-profiles.json via lib/content. The roosters
- *   section is conditional on count so the page degrades gracefully when no
- *   active roosters are on the property.
+ * Date: 2026-05-11
+ * PURPOSE: /flock — current-state flock roster + breed reference guide.
+ *   Data source is content/flock-profiles.json via lib/content. Active birds
+ *   are grouped by where they live RIGHT NOW (brooder & nestbox → coop
+ *   growing-out → adult hens → roosters) so visitors land on what's actively
+ *   happening on the farm — chicks hatching, poults growing, the desk
+ *   incubator turning eggs into birds. Adult hens come after the brooder
+ *   sections, not before, because the story this page tells is "the flock is
+ *   rebuilding." In Memoriam moves to a compact text-only tail; it stays
+ *   visible (the losses are real and named) but no longer competes with the
+ *   nursery for visual weight.
+ *   2026-05-11 (Claude Opus 4.7 1M): reorganised by location, individual-bird
+ *   count surfaced in hero, deceased section compressed to a small list. Was
+ *   previously a flat "Hens & Chicks" grid with In Memoriam as a peer.
  * SRP/DRY check: Pass — pure composition of BirdCard primitives against
- *   flock-profiles data.
+ *   flock-profiles data. Group filtering is local, derived from the same
+ *   `location` field used by the brooder pipeline on the Guardian side.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -15,10 +25,28 @@ import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "The Flock",
-  description: "Heritage breeds, Easter Eggers, turkey poults, and the current brooder cohort. Hampton, CT.",
+  description: "What's in the brooder, what's growing out in the coop, and which hens are laying. Hampton, CT.",
 };
 
 const isRooster = (eggColor: string) => eggColor === "N/A (rooster)";
+
+// "Turkey poults (3)" → 3; bare names → 1. Lets the hero stat count birds, not
+// roster entries, which would otherwise hide the 15-chick Cackle order behind a
+// single tile.
+const individualCount = (name: string): number => {
+  const m = name.match(/\((\d+)\)\s*$/);
+  return m ? parseInt(m[1], 10) : 1;
+};
+
+const BROODER_LOCATIONS = new Set(["brooder", "desk-brooder", "nesting-box"]);
+
+const hatchSortDesc = (a: { hatch_date?: string }, b: { hatch_date?: string }) => {
+  // Newest hatch first; entries with no hatch_date fall to the end.
+  if (!a.hatch_date && !b.hatch_date) return 0;
+  if (!a.hatch_date) return 1;
+  if (!b.hatch_date) return -1;
+  return b.hatch_date.localeCompare(a.hatch_date);
+};
 
 export default function FlockPage() {
   const flockData = getFlockProfiles();
@@ -39,8 +67,21 @@ export default function FlockPage() {
 
   const activeBirds = birds.filter((b) => b.status === "active");
   const deceasedBirds = birds.filter((b) => b.status === "deceased");
-  const hens = activeBirds.filter((b) => !isRooster(b.egg_color));
+
+  const nursery = activeBirds
+    .filter((b) => b.location && BROODER_LOCATIONS.has(b.location))
+    .sort(hatchSortDesc);
+  const coopGrowing = activeBirds
+    .filter((b) => b.location === "coop")
+    .sort(hatchSortDesc);
+  const adultHens = activeBirds.filter(
+    (b) => !b.location && !isRooster(b.egg_color)
+  );
   const roosters = activeBirds.filter((b) => isRooster(b.egg_color));
+
+  const nurseryCount = nursery.reduce((n, b) => n + individualCount(b.name), 0);
+  const coopCount = coopGrowing.reduce((n, b) => n + individualCount(b.name), 0);
+  const hensCount = adultHens.reduce((n, b) => n + individualCount(b.name), 0);
 
   const getBreedProfile = (breedName: string) => {
     if (breeds[breedName]) return breeds[breedName];
@@ -54,7 +95,7 @@ export default function FlockPage() {
 
   return (
     <main className="min-h-screen bg-cream">
-      {/* Hero section — whole photo shown (contain), dark canvas fills any gap */}
+      {/* Hero — leads with what's hatching now, not what was lost */}
       <section
         className="relative min-h-[45vh] flex items-end justify-start bg-contain bg-center bg-no-repeat bg-forest"
         style={{ backgroundImage: "url('/photos/flock-group.jpg')" }}
@@ -68,14 +109,81 @@ export default function FlockPage() {
             The Flock
           </h1>
           <p className="text-lg text-white/80">
-            {activeBirds.length} active birds. {deceasedBirds.length} lost this season. {birds.length} total. Hampton, CT.
+            {nurseryCount} chicks and poults in the brooder and nestbox.{" "}
+            {coopCount} juveniles growing out in the coop. {hensCount} hens
+            laying. Hampton, CT.
           </p>
         </div>
       </section>
 
-      {/* Roosters section — only when at least one rooster is on the property */}
-      {roosters.length > 0 && (
+      {/* Nursery — the centre of the story right now */}
+      {nursery.length > 0 && (
         <section className="max-w-6xl mx-auto px-4 pt-16 pb-8">
+          <h2 className="text-2xl font-bold font-serif mb-2">
+            In the Brooder &amp; Nestbox
+          </h2>
+          <p className="text-forest/60 mb-8 text-sm">
+            Newest hatches first. Eggs from Birdadonna keep landing in the desk
+            incubator; Tractor Supply runs and the Cackle Hatchery order fill in
+            the rest. Most of these birds are still discovering what a worm is.
+          </p>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {nursery.map((bird, idx) => (
+              <BirdCard
+                key={idx}
+                bird={bird}
+                breedProfile={getBreedProfile(bird.breed)}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Coop growing-out — juveniles that have left the brooder */}
+      {coopGrowing.length > 0 && (
+        <section className="max-w-6xl mx-auto px-4 py-8">
+          <h2 className="text-2xl font-bold font-serif mb-2">
+            Growing Out in the Coop
+          </h2>
+          <p className="text-forest/60 mb-8 text-sm">
+            Out of the brooder, into the coop run. Not yet laying, but figuring
+            out the pecking order and the roosting bars.
+          </p>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {coopGrowing.map((bird, idx) => (
+              <BirdCard
+                key={idx}
+                bird={bird}
+                breedProfile={getBreedProfile(bird.breed)}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Adult hens */}
+      {adultHens.length > 0 && (
+        <section className="max-w-6xl mx-auto px-4 py-8 pb-16">
+          <h2 className="text-2xl font-bold font-serif mb-2">The Hens</h2>
+          <p className="text-forest/60 mb-8 text-sm">
+            The laying core of the flock — Wyandotte, Easter Eggers, and the
+            yearling that hatched on Boss&apos;s desk a year ago.
+          </p>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {adultHens.map((bird, idx) => (
+              <BirdCard
+                key={idx}
+                bird={bird}
+                breedProfile={getBreedProfile(bird.breed)}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Roosters — only when at least one is on the property */}
+      {roosters.length > 0 && (
+        <section className="max-w-6xl mx-auto px-4 py-8 pb-16">
           <h2 className="text-2xl font-bold font-serif mb-2">
             {roosters.length === 1 ? "The Rooster" : "The Roosters"}
           </h2>
@@ -84,31 +192,12 @@ export default function FlockPage() {
           </p>
           <div className="grid gap-6 md:grid-cols-2">
             {roosters.map((bird, idx) => (
-              <BirdCard key={idx} bird={bird} breedProfile={getBreedProfile(bird.breed)} isRooster />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Hens section */}
-      <section className="max-w-6xl mx-auto px-4 py-8 pb-16">
-        <h2 className="text-2xl font-bold font-serif mb-2">The Hens &amp; Chicks</h2>
-        <p className="text-forest/60 mb-8 text-sm">Heritage breeds, Easter Eggers, one desk-hatched chick, turkey poults, and Cackle Hatchery reinforcements.</p>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {hens.map((bird, idx) => (
-            <BirdCard key={idx} bird={bird} breedProfile={getBreedProfile(bird.breed)} />
-          ))}
-        </div>
-      </section>
-
-      {/* In Memoriam */}
-      {deceasedBirds.length > 0 && (
-        <section className="max-w-6xl mx-auto px-4 py-8 pb-16">
-          <h2 className="text-2xl font-bold font-serif mb-2">In Memoriam</h2>
-          <p className="text-forest/60 mb-8 text-sm">Lost this season. The flock rebuilds, but they&apos;re remembered.</p>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {deceasedBirds.map((bird, idx) => (
-              <BirdCard key={idx} bird={bird} breedProfile={getBreedProfile(bird.breed)} deceased />
+              <BirdCard
+                key={idx}
+                bird={bird}
+                breedProfile={getBreedProfile(bird.breed)}
+                isRooster
+              />
             ))}
           </div>
         </section>
@@ -162,6 +251,32 @@ export default function FlockPage() {
         </div>
       </section>
 
+      {/* In Memoriam — compact, last section before the footer. Named, but not
+          competing with the brooder for screen real estate. */}
+      {deceasedBirds.length > 0 && (
+        <section className="max-w-3xl mx-auto px-4 py-12">
+          <h2 className="text-lg font-bold font-serif mb-1 text-forest/70">In Memoriam</h2>
+          <p className="text-forest/50 mb-4 text-xs">
+            Lost this season. The flock rebuilds.
+          </p>
+          <ul className="text-sm text-forest/70 space-y-1">
+            {deceasedBirds.map((bird, idx) => (
+              <li key={idx} className="flex flex-wrap gap-x-2">
+                <span className="font-medium">{bird.name}</span>
+                <span className="text-forest/50">·</span>
+                <span>{bird.breed}</span>
+                {bird.cause_of_death && (
+                  <>
+                    <span className="text-forest/50">·</span>
+                    <span className="text-forest/50 italic">{bird.cause_of_death}</span>
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {/* Footer */}
       <footer className="bg-forest text-cream/50 text-center py-8 text-sm">
         <p className="font-serif font-bold text-cream/70 mb-1">Farm 2026</p>
@@ -184,6 +299,7 @@ interface FlockBird {
   photo: string | null;
   notes: string;
   location?: string;
+  cause_of_death?: string;
 }
 
 interface BreedProfile {
@@ -200,12 +316,10 @@ function BirdCard({
   bird,
   breedProfile,
   isRooster: roosterFlag,
-  deceased,
 }: {
   bird: FlockBird;
   breedProfile: BreedProfile | null;
   isRooster?: boolean;
-  deceased?: boolean;
 }) {
   const eggColorBadgeColors: Record<string, string> = {
     "Brown to dark brown": "bg-amber-700 text-white",
@@ -219,7 +333,7 @@ function BirdCard({
   };
 
   return (
-    <div className={`bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-cream-dark flex flex-col ${deceased ? "opacity-75" : ""}`}>
+    <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-cream-dark flex flex-col">
       {/* Photo */}
       <div className="relative w-full h-56 bg-forest/10">
         {bird.photo ? (
@@ -227,21 +341,16 @@ function BirdCard({
             src={`/photos/${bird.photo}`}
             alt={bird.name}
             fill
-            className={`object-contain ${deceased ? "grayscale" : ""}`}
+            className="object-contain"
           />
         ) : (
           <div className="h-full flex items-center justify-center text-5xl text-forest/20">
             {roosterFlag ? "🐓" : "🐔"}
           </div>
         )}
-        {roosterFlag && !deceased && (
+        {roosterFlag && (
           <div className="absolute top-3 right-3">
             <span className="bg-forest text-cream text-xs font-bold px-2 py-1 rounded-full">ROOSTER</span>
-          </div>
-        )}
-        {deceased && (
-          <div className="absolute top-3 right-3">
-            <span className="bg-slate-600 text-white text-xs font-bold px-2 py-1 rounded-full">IN MEMORIAM</span>
           </div>
         )}
       </div>

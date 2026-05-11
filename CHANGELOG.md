@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.16.4] — 2026-05-11
+
+### Changed — /flock reorganised around what's hatching, not what was lost (Claude Opus 4.7 1M context)
+
+Boss: "The flock page concentrates far too much on the birds we lost and not enough on the little birds currently incubating, being hatched, and discovering the world." The previous page rendered one flat "Hens & Chicks" grid mixing adult layers with brooder chicks, then put "In Memoriam" right under it at equal weight — five deceased birds with full-size cards competing with the nursery for screen real estate. With nine more chick/poult entries having landed since the last layout pass (Birdadotta, Bronze poults, Plymouth Rocks, March juveniles, the May-batch TSC chicks), the imbalance had gotten worse.
+
+**New section order, leading with the nursery:**
+
+1. **In the Brooder & Nestbox** — every entry whose `location` is `brooder`, `desk-brooder`, or `nesting-box`, sorted by `hatch_date` descending so the youngest hatch leads. 7 entries, 29 individual birds.
+2. **Growing Out in the Coop** — entries with `location: coop`. 3 entries, 13 individual juveniles (turkey poults, the April TSC chicks, the March juveniles).
+3. **The Hens** — adult layers (no `location` field). 4 entries.
+4. **The Roosters** — conditional, currently 0.
+5. **Breed Notes** — unchanged.
+6. **In Memoriam** — now a compact text list (name · breed · cause of death) in a narrower `max-w-3xl` column. Names stay visible, the losses are still real, but the section is ~13× shorter than the brooder section by pixel height instead of competing with it.
+
+Hero subtitle reworked to count *individual birds* via a tiny `(N)` parser on entry names, so the 15-chick Cackle Hatchery order and the 6-chick Plymouth Rock juvenile group aren't hidden behind a single tile: `"29 chicks and poults in the brooder and nestbox. 13 juveniles growing out in the coop. 4 hens laying. Hampton, CT."` Replaces the old `"14 active birds. 5 lost this season. 19 total."` — which led with the death count.
+
+- `app/flock/page.tsx`: grouping logic, hero copy, In Memoriam compact list, BirdCard `deceased` branch removed (the compact list doesn't need the card props).
+
+Same data, same `BirdCard` primitive — only the page composition changed.
+
+### Fixed — All /photos/* assets 404 in production; drop `output: "standalone"` (Claude Opus 4.7 1M context)
+
+Boss reported /flock rendering as a sea of broken-image placeholders — bird names visible inside empty gray boxes, hero photo gone, every card a wireframe. Same symptom on /gallery/gems thumbs and the homepage flock strip on close inspection; the home page just hid it well because most above-the-fold content is Guardian-API-driven and renders fine.
+
+**Root cause.** `next.config.ts` set `output: "standalone"` and `railway.json` started the server with `node .next/standalone/server.js`. The standalone server runs with CWD at `.next/standalone/`, so it looks for the public directory at `.next/standalone/public/` — not the repo root's `public/`. The build script worked around this with a manual `cp -r public .next/standalone/public`, but that copy was not surviving the Nixpacks build→deploy boundary. Verified via `curl -I https://farm.markbarney.net/photos/birds/henrietta.jpg` → `HTTP 404` with `X-Nextjs-Cache: HIT` (Next.js's app-router 404 page). `/_next/image?url=...` returned `HTTP 400 "The requested resource isn't a valid image"` — the optimizer's expected failure when the upstream fetch comes back as HTML 404 instead of an image. Server-rendered HTML was correct (right `<img>` srcset, right paths); only the static asset layer was broken.
+
+**Fix.** Standalone output exists for Docker-imaged / serverless deploys where minimal disk image matters. Railway with Nixpacks is neither — it runs a normal Node container. Dropped `output: "standalone"`, simplified the build script back to plain `next build`, and switched `railway.json` to `npm start` (which runs `next start`). `next start` serves `public/` natively, no copy step, no surprises.
+
+- `next.config.ts`: removed `output: "standalone"`.
+- `package.json`: build is now `next build`. No post-build cp.
+- `railway.json`: start command `npm start`; healthcheck unchanged (`/api/health`).
+
+No behavior change for visitors beyond photos no longer being broken.
+
 ## [1.16.3] — 2026-05-10
 
 ### Changed — Terminal / surveillance aesthetic, kill the cream nav (Claude Opus 4.7 1M context)
