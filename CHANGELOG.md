@@ -22,6 +22,20 @@ Boss flagged two things wrong with 1.16.6/1.16.7:
 
 The page now reads as actual breeding-program memory: what's incubating, what's the first true second-generation chick, what's in the brooder, what's in the coop, what's laying, what's been lost. No made-up name-chain narrative.
 
+### Known follow-ups (real work outstanding, not blockers)
+
+These are open items the codebase already knows about. None blocks the current release; tracked here so they don't get lost.
+
+1. **`content/flock-profiles.json` → `incubating[]` is empty.** The schema, the section, the renderer, and the dark guardian-card grid are all in place; the array just hasn't been populated yet. As soon as a clutch is set on the desk, the section appears. No further code change needed — only data. (`app/flock/page.tsx` lines ~150 / `incubating` block, `lib/content.ts` `IncubatorClutch` interface.)
+
+2. **Per-named-bird gem feeds.** Today the `FlockGemStrip` queries by `scene` (brooder/nesting-box/coop/yard) because the VLM prompt at `farm-guardian/tools/pipeline/prompt.md` line 21 explicitly forbids naming individual birds — `individuals_visible` is the enum `{adult, chick, unknown-bird}`. Showing "Birdadotta's last 6 frames" on Birdadotta's card requires a farm-guardian-side prompt change plus a schema migration to add a `named_individuals` field. Out of scope here; tracked in `docs/11-May-2026-hermes-breeding-showcase-notes.md` as future scope.
+
+3. **Structured lineage on `flock-profiles.json`.** The `LINEAGE` constant in `app/flock/page.tsx` currently hard-codes the three known parental relationships (Birdadette's namesake, Birdadonna's dam/sire, Birdadotta's dam). The Hermes doc lists migrating `dam` / `sire` / `namesake_of` into JSON as future scope. Worth doing once the program records a fourth parental relationship — the page can then drop the inline map.
+
+4. **Cackle Hatchery breed-ID refresh.** `docs/cackle-hatchery-breed-id.md` carries preliminary day-old breed guesses dated 2026-04-10. Those chicks are now ~5 weeks old and feathering out; the document explicitly says "needs confirmation as they feather out." A second-pass assessment would let the `flock-profiles.json` entry for the 15-chick Cackle batch drop its `(uncertain)` qualifiers and the per-card `Photo coming` / TBD strings would update with real breeds.
+
+5. **Hero photo for /flock.** Currently `public/photos/brooder/2026-04-20-mixed-flock.jpg` (1920×1080, 21 days old). Fine, but the brooder cohort has shifted since — Birdadotta and the May TSC batch arrived after this frame was captured. Replace when a fresher 16:9 brooder frame lands in `public/photos/brooder/`.
+
 ## [1.16.7] — 2026-05-11
 
 ### Changed — /flock surfaces the live gem archive — thousands of bird frames per cohort (Claude Opus 4.7 1M context)
