@@ -40,6 +40,14 @@ const individualCount = (name: string): number => {
 
 const BROODER_LOCATIONS = new Set(["brooder", "desk-brooder", "nesting-box"]);
 
+// First sentence of a notes blob, or the first ~140 chars if no sentence
+// terminator lands cleanly. Keeps the card a snapshot, not a timeline.
+const firstSentence = (s: string): string => {
+  const m = s.match(/^[^.!?]+[.!?]/);
+  if (m) return m[0];
+  return s.length > 140 ? s.slice(0, 140).trimEnd() + "…" : s;
+};
+
 const hatchSortDesc = (a: { hatch_date?: string }, b: { hatch_date?: string }) => {
   // Newest hatch first; entries with no hatch_date fall to the end.
   if (!a.hatch_date && !b.hatch_date) return 0;
@@ -80,7 +88,6 @@ export default function FlockPage() {
   const roosters = activeBirds.filter((b) => isRooster(b.egg_color));
 
   const nurseryCount = nursery.reduce((n, b) => n + individualCount(b.name), 0);
-  const coopCount = coopGrowing.reduce((n, b) => n + individualCount(b.name), 0);
   const hensCount = adultHens.reduce((n, b) => n + individualCount(b.name), 0);
 
   const getBreedProfile = (breedName: string) => {
@@ -97,10 +104,10 @@ export default function FlockPage() {
     <main className="min-h-screen bg-cream">
       {/* Hero — leads with what's hatching now, not what was lost */}
       <section
-        className="relative min-h-[45vh] flex items-end justify-start bg-contain bg-center bg-no-repeat bg-forest"
-        style={{ backgroundImage: "url('/photos/flock-group.jpg')" }}
+        className="relative min-h-[45vh] flex items-end justify-start bg-cover bg-center bg-no-repeat bg-forest"
+        style={{ backgroundImage: "url('/photos/brooder/2026-04-20-mixed-flock.jpg')" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/50 to-black/30" />
         <div className="relative z-10 px-6 pb-12 md:px-16 max-w-4xl">
           <p className="text-cream/70 text-sm font-medium tracking-widest uppercase mb-2">
             Farm 2026
@@ -109,9 +116,8 @@ export default function FlockPage() {
             The Flock
           </h1>
           <p className="text-lg text-white/80">
-            {nurseryCount} chicks and poults in the brooder and nestbox.{" "}
-            {coopCount} juveniles growing out in the coop. {hensCount} hens
-            laying. Hampton, CT.
+            {nurseryCount} chicks and poults growing up indoors. A coop of
+            juveniles outside. {hensCount} hens laying. Hampton, CT.
           </p>
         </div>
       </section>
@@ -119,13 +125,13 @@ export default function FlockPage() {
       {/* Nursery — the centre of the story right now */}
       {nursery.length > 0 && (
         <section className="max-w-6xl mx-auto px-4 pt-16 pb-8">
-          <h2 className="text-2xl font-bold font-serif mb-2">
+          <h2 className="text-2xl font-bold font-serif text-forest mb-2">
             In the Brooder &amp; Nestbox
           </h2>
-          <p className="text-forest/60 mb-8 text-sm">
-            Newest hatches first. Eggs from Birdadonna keep landing in the desk
-            incubator; Tractor Supply runs and the Cackle Hatchery order fill in
-            the rest. Most of these birds are still discovering what a worm is.
+          <p className="text-forest/70 mb-8 text-sm">
+            Newest hatches first. Days-old chicks alongside four-week-olds —
+            the desk incubator keeps turning eggs into birds, and Tractor
+            Supply runs plus the Cackle Hatchery order fill out the rest.
           </p>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {nursery.map((bird, idx) => (
@@ -142,10 +148,10 @@ export default function FlockPage() {
       {/* Coop growing-out — juveniles that have left the brooder */}
       {coopGrowing.length > 0 && (
         <section className="max-w-6xl mx-auto px-4 py-8">
-          <h2 className="text-2xl font-bold font-serif mb-2">
+          <h2 className="text-2xl font-bold font-serif text-forest mb-2">
             Growing Out in the Coop
           </h2>
-          <p className="text-forest/60 mb-8 text-sm">
+          <p className="text-forest/70 mb-8 text-sm">
             Out of the brooder, into the coop run. Not yet laying, but figuring
             out the pecking order and the roosting bars.
           </p>
@@ -164,8 +170,8 @@ export default function FlockPage() {
       {/* Adult hens */}
       {adultHens.length > 0 && (
         <section className="max-w-6xl mx-auto px-4 py-8 pb-16">
-          <h2 className="text-2xl font-bold font-serif mb-2">The Hens</h2>
-          <p className="text-forest/60 mb-8 text-sm">
+          <h2 className="text-2xl font-bold font-serif text-forest mb-2">The Hens</h2>
+          <p className="text-forest/70 mb-8 text-sm">
             The laying core of the flock — Wyandotte, Easter Eggers, and the
             yearling that hatched on Boss&apos;s desk a year ago.
           </p>
@@ -184,10 +190,10 @@ export default function FlockPage() {
       {/* Roosters — only when at least one is on the property */}
       {roosters.length > 0 && (
         <section className="max-w-6xl mx-auto px-4 py-8 pb-16">
-          <h2 className="text-2xl font-bold font-serif mb-2">
+          <h2 className="text-2xl font-bold font-serif text-forest mb-2">
             {roosters.length === 1 ? "The Rooster" : "The Roosters"}
           </h2>
-          <p className="text-forest/60 mb-8 text-sm">
+          <p className="text-forest/70 mb-8 text-sm">
             {roosters.length === 1 ? "Runs the yard." : `${roosters.length} run the yard.`}
           </p>
           <div className="grid gap-6 md:grid-cols-2">
@@ -206,8 +212,8 @@ export default function FlockPage() {
       {/* Breed reference guide */}
       <section className="bg-cream-dark">
         <div className="max-w-6xl mx-auto px-4 py-16">
-          <h2 className="text-3xl font-bold font-serif mb-2">Breed Notes</h2>
-          <p className="text-forest/60 mb-10">
+          <h2 className="text-3xl font-bold font-serif text-forest mb-2">Breed Notes</h2>
+          <p className="text-forest/70 mb-10">
             What each breed brings to the flock.
           </p>
 
@@ -217,7 +223,7 @@ export default function FlockPage() {
                 key={breedName}
                 className="bg-white rounded-lg shadow p-6 border-l-4 border-wood"
               >
-                <h3 className="text-xl font-bold font-serif mb-2">{breedName}</h3>
+                <h3 className="text-xl font-bold font-serif text-forest mb-2">{breedName}</h3>
                 <p className="text-forest/70 text-sm mb-4 leading-relaxed">{profile.description}</p>
 
                 <div className="grid grid-cols-2 gap-3 text-sm mb-4">
@@ -341,11 +347,15 @@ function BirdCard({
             src={`/photos/${bird.photo}`}
             alt={bird.name}
             fill
-            className="object-contain"
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            className="object-cover"
           />
         ) : (
-          <div className="h-full flex items-center justify-center text-5xl text-forest/20">
-            {roosterFlag ? "🐓" : "🐔"}
+          <div className="h-full flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-forest/15 to-forest/5">
+            <span className="text-4xl text-forest/50">{roosterFlag ? "🐓" : "🐣"}</span>
+            <span className="text-[0.65rem] uppercase tracking-widest text-forest/50 font-medium">
+              Photo coming
+            </span>
           </div>
         )}
         {roosterFlag && (
@@ -357,7 +367,7 @@ function BirdCard({
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="text-xl font-bold font-serif mb-0.5">{bird.name}</h3>
+        <h3 className="text-xl font-bold font-serif text-forest mb-0.5">{bird.name}</h3>
         <p className="text-sm text-wood font-medium mb-3">{bird.breed}</p>
 
         {/* Badges */}
@@ -393,9 +403,13 @@ function BirdCard({
           <p className="text-xs text-forest/50 mb-3">{bird.color_description}</p>
         )}
 
-        {/* Notes */}
+        {/* Notes — first sentence only; the JSON's full prose is provenance
+            material that tends to go stale fast. Truncate to keep the card a
+            current-state snapshot, not a timeline. */}
         {bird.notes && (
-          <p className="text-xs text-forest/60 border-t border-cream-dark pt-3 mt-auto">{bird.notes}</p>
+          <p className="text-xs text-forest/60 border-t border-cream-dark pt-3 mt-auto">
+            {firstSentence(bird.notes)}
+          </p>
         )}
 
         {/* Breed fun fact */}

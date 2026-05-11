@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.16.5] — 2026-05-11
+
+### Fixed — /flock visual regressions from the 1.16.4 reorg (Claude Opus 4.7 1M context)
+
+Boss reviewed the deployed 1.16.4 /flock and reported it as a disaster: gigantic wasted blank space at the top, washed-out section headings, broken-looking cards, stale notes copy, and the number 13 in the hero subtitle. All five issues addressed:
+
+- **Hero blank space.** `flock-group.jpg` is portrait (1215×1620, ratio 0.75) and the hero was using `bg-contain`, so it rendered the photo centered with massive forest-green sidebands on both sides. Switched the hero photo to `brooder/2026-04-20-mixed-flock.jpg` (1920×1080, true 16:9 landscape — matches the new brooder narrative anyway) and changed `bg-contain` → `bg-cover` so the photo fills the hero band.
+- **The number 13.** Boss has triskaidekaphobia. The previous subtitle read "13 juveniles growing out in the coop." Removed the explicit coop count — subtitle now reads "29 chicks and poults growing up indoors. A coop of juveniles outside. 4 hens laying. Hampton, CT." Dropped the `coopCount` variable since it's no longer rendered. Memory file added at `~/.claude/projects/.../memory/feedback_no_thirteen.md` so future passes vet derived counts against 13 before shipping.
+- **Washed-out headings.** All `h2`/`h3` on the page were inheriting their colour through `font-bold font-serif` and rendered nearly invisible on the cream background (looked like pale tan on screen, not the design-token forest). Added explicit `text-forest` to every section heading and to the BirdCard bird-name `h3`. h2 elements now compute to `rgb(26,46,26)` instead of the inherited washed-out value.
+- **"Broken-looking" no-photo placeholder.** The `bird.photo === null` branch (currently hit by the May TSC batch, the original TSC chicks, and the Little Big Red Junior memoriam entry's old card path) rendered a 🐔 at `text-forest/20` — visually indistinguishable from a failed image load. New treatment: gradient background, larger 🐣 emoji at `text-forest/50`, plus a small uppercase "Photo coming" label. Reads as intentional, not broken. Also switched the photo `<Image>` from `object-contain` → `object-cover` with a `sizes` prop so portrait-and-landscape mixed photos fill the card uniformly (kills the inner-card letterboxing too).
+- **Stale notes prose.** `flock-profiles.json` bird notes are written in arrival-narrative voice ("Hatched 25-April...", "Boss noted they are a Plymouth Rock variety..."). On a page meant to be a current-state snapshot, those paragraphs read as month-old timeline material. Added a `firstSentence()` helper that truncates the notes display to the first sentence (or 140 chars if no terminator lands). Underlying JSON is unchanged — the timeline detail is still there for anyone reading the data.
+
+Also rewrote the "In the Brooder & Nestbox" intro to drop the claim that "most of these birds are still discovering what a worm is" — the 4-5-week-old Cackle batch and Birdadette are past that. New copy: "Days-old chicks alongside four-week-olds — the desk incubator keeps turning eggs into birds, and Tractor Supply runs plus the Cackle Hatchery order fill out the rest."
+
 ## [1.16.4] — 2026-05-11
 
 ### Changed — /flock reorganised around what's hatching, not what was lost (Claude Opus 4.7 1M context)
