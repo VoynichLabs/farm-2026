@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [Unreleased] — Bird tracking / breeding ledger TODO
+
+### Planned — Egg-to-hen tracking system requested by the boss
+
+The boss wants a durable bird-tracking system so future lobsters doing repo archaeology can follow a bird from egg to adult flock record instead of reconstructing lineage from Discord chaos.
+
+**Goal:** every bird gets a traceable life record:
+
+- egg collection ID: date, egg color/hen if known, clutch/batch marker, suspected sire window;
+- incubator record: set date, day-7/day-14 candling, day-18 lockdown, day-21 hatch target, actual hatch result;
+- paternity confidence: LBR likely, Whitey probable, mixed-risk, unknown, later revised by phenotype/observations;
+- hatch record: chick ID, shell/egg ID link, hatch time, first photos, down/leg/comb notes;
+- growth checkpoints: weekly photos/Guardian gem refs, visible traits, behavior, sex/breed confidence updates;
+- flock promotion: graduate chick into `content/flock-profiles.json` with lineage fields when confirmed enough.
+
+**Suggested implementation path:**
+
+- Add structured records under `content/breeding-records/` or similar.
+- Add typed loaders in `lib/content.ts` for clutches, eggs, hatch events, and bird lineage.
+- Extend `content/flock-profiles.json` or add linked lineage fields: dam, suspected sire, hatch clutch, confidence, evidence refs.
+- Add a simple route/page for breeding records once data exists.
+- Keep human-in-the-loop: agents propose updates; the boss confirms animal-care and pedigree judgments.
+
+**Seed reference:** `docs/11-May-2026-rooster-fertility-record.md` captures the current LBR Jr. / Whitey Red Legs fertility-window reasoning and should be used as the starting artifact.
+
 ## [1.16.8] — 2026-05-11
 
 ### Fixed — Lineage panel reframed honestly; incubator section scaffolded (Claude Opus 4.7 1M context)
