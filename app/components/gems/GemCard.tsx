@@ -33,7 +33,7 @@ export default function GemCard({ row, variant = "default", onOpen, priority = f
       <>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={row.thumb_url}
+          src={row.full_url || row.thumb_url}
           alt={thumbAlt}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
