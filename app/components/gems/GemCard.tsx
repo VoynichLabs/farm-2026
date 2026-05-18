@@ -76,11 +76,11 @@ export default function GemCard({ row, variant = "default", onOpen, priority = f
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-cream-dark">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={row.thumb_url}
+            src={row.full_url || row.thumb_url}
             alt={thumbAlt}
             loading={priority ? "eager" : "lazy"}
             decoding="async"
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+            className="h-full w-full object-contain transition duration-300 group-hover:brightness-110"
           />
         </div>
       </button>
