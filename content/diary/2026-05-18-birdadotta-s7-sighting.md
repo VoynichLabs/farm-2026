@@ -8,6 +8,8 @@ The S7 camera in the coop caught a clean shot of Birdadotta this morning. She's 
 - Slight rust-colored feathers in the wing area
 - Slight white tips on the wing
 
+**How to tell Birdadotta from Birdadette:** Birdadotta has slightly white feathers on her belly and a distinctive white feather on her wings; Birdadette does not.
+
 She's the daughter of Birdadonna, hatched 25-April-2026 — fourth generation in the Birdgit → Birdadette → Birdadonna → Birdadotta naming line.
 
 **Photo:**
