@@ -37,7 +37,7 @@ export default function GemCard({ row, variant = "default", onOpen, priority = f
           alt={thumbAlt}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+          className="h-full w-full object-contain transition duration-300 group-hover:brightness-110"
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-2">
           <GemCardBadges row={row} compact />
