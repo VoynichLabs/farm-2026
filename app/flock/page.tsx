@@ -206,10 +206,6 @@ export default function FlockPage() {
             <span>
               {hensCount}<span className="text-guardian-muted"> hens</span>
             </span>
-            <span className="text-guardian-muted">·</span>
-            <span>
-              {deceasedBirds.length}<span className="text-guardian-muted"> lost</span>
-            </span>
           </div>
         </div>
 

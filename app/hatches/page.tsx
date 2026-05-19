@@ -266,11 +266,6 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
             <span className="inline-block text-[0.65rem] font-mono uppercase tracking-widest bg-forest/10 text-forest px-2 py-1 rounded">
               {r.lifecycle.current_location}
             </span>
-            {r.status && r.status !== "alive" && (
-              <span className="inline-block ml-2 text-[0.65rem] font-mono uppercase tracking-widest bg-amber-100 text-amber-900 px-2 py-1 rounded">
-                {r.status}
-              </span>
-            )}
           </p>
         )}
       </div>
