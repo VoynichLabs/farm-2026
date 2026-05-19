@@ -214,12 +214,14 @@
       "breed": "Easter Egger",
       "age": "1+ years",
       "age_note": "At least 1 year old",
-      "status": "active",
+      "status": "deceased",
+      "deceased_date": "2026-05-16",
+      "cause_of_death": "Predator (presumed) — no body or feathers recovered",
       "egg_color": "Blue or green",
       "temperament": "Friendly, curious",
       "color_description": "Blue-gray plumage with yellow legs, single comb",
       "photo": "birds/ee-hen-2.jpg",
-      "notes": "Lighter of the two Easter Egger hens; good forager"
+      "notes": "Went missing ~12:30 EDT on 2026-05-16 with no overt hawk-strike evidence (no feathers, no body). Held as 'unknown' through evening roll call; Boss confirmed lost on 2026-05-19. Lighter of the two Easter Egger hens; good forager."
     },
     {
       "name": "Birdadonna",
