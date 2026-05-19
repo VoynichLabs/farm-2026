@@ -37,6 +37,7 @@ const DEEPER_LINKS: { href: string; label: string; hint: string }[] = [
   { href: "/gallery/gems", label: "gallery/gems", hint: "filterable archive of curated gems" },
   { href: "/yard", label: "yard", hint: "thrice-daily Reolink stockpile" },
   { href: "/flock", label: "flock", hint: "active birds + breed reference + In Memoriam" },
+  { href: "/hatches", label: "hatches", hint: "every 2026 incubator hatch — parentage + phenotype log" },
   { href: "/field-notes", label: "field-notes", hint: "weekly farm updates" },
   { href: "/projects", label: "projects", hint: "build logs + materials" },
 ];

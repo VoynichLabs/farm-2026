@@ -256,6 +256,161 @@ export function getAllFieldNotes(): FieldNote[] {
     .sort((a, b) => b.date.localeCompare(a.date));
 }
 
+// =============================================================
+// Hatch records — per-chick SoT from content/hatches/<year>/*.md
+// Schema: content/hatches/SCHEMA.md
+// =============================================================
+
+export interface HatchPhoto {
+  path: string;
+  confidence: string;
+  caption: string;
+}
+
+export interface HatchObservation {
+  date: string;
+  age_days?: number;
+  observed?: Record<string, unknown>;
+  prediction?: {
+    expected_adult_plumage?: string;
+    expected_sex?: string;
+    confidence?: string;
+    reasoning?: string;
+  };
+  notes?: string;
+}
+
+export interface HatchAdultOutcome {
+  date_reached_adult?: string;
+  actual_plumage?: string;
+  actual_sex?: string;
+  prediction_review?: Array<{
+    observation_date?: string;
+    plumage_match?: string;
+    sex_match?: string | boolean;
+    notes?: string;
+  }>;
+}
+
+export interface HatchLifecycle {
+  named_date?: string;
+  moved_to_brooder_date?: string;
+  moved_to_coop_date?: string;
+  current_location?: string;
+  lost_date?: string;
+  lost_cause?: string;
+}
+
+export interface HatchRecord {
+  id: string;
+  clutch_id?: string;
+  egg_id?: string;
+  hatch_date: string;
+  hatch_time?: string;
+  incubator: string;
+  egg_set_date?: string;
+  egg_color?: string;
+  breed?: string;
+  parent_hen?: string;
+  parent_rooster_window?: string;
+  parentage_confidence?: string;
+  name?: string;
+  status?: string;
+  photos: HatchPhoto[];
+  evidence: string[];
+  phenotype_observations: HatchObservation[];
+  adult_outcome?: HatchAdultOutcome;
+  lifecycle?: HatchLifecycle;
+  lifecycle_summary?: string;
+  body: string;     // free-text markdown body
+  filename: string; // for stable links / debugging
+  year: string;
+}
+
+// YAML auto-parses 2026-04-06 into a Date. Normalize back to "YYYY-MM-DD"
+// so downstream code (and the type signature) can rely on strings.
+const toISODate = (v: unknown): string => {
+  if (v == null) return "";
+  if (v instanceof Date) return v.toISOString().slice(0, 10);
+  return String(v);
+};
+
+const normalizeObservation = (o: unknown): HatchObservation => {
+  const obs = (o ?? {}) as Record<string, unknown>;
+  const observedRaw = (obs.observed ?? {}) as Record<string, unknown>;
+  const observedNorm: Record<string, unknown> = {};
+  for (const [k, val] of Object.entries(observedRaw)) {
+    observedNorm[k] = val instanceof Date ? val.toISOString().slice(0, 10) : val;
+  }
+  return {
+    date: toISODate(obs.date),
+    age_days: typeof obs.age_days === "number" ? obs.age_days : undefined,
+    observed: observedNorm,
+    prediction: obs.prediction as HatchObservation["prediction"],
+    notes: obs.notes ? String(obs.notes) : undefined,
+  };
+};
+
+const normalizeLifecycle = (lc: unknown): HatchLifecycle | undefined => {
+  if (!lc || typeof lc !== "object") return undefined;
+  const l = lc as Record<string, unknown>;
+  return {
+    named_date: l.named_date ? toISODate(l.named_date) : undefined,
+    moved_to_brooder_date: l.moved_to_brooder_date ? toISODate(l.moved_to_brooder_date) : undefined,
+    moved_to_coop_date: l.moved_to_coop_date ? toISODate(l.moved_to_coop_date) : undefined,
+    current_location: l.current_location ? String(l.current_location) : undefined,
+    lost_date: l.lost_date ? toISODate(l.lost_date) : undefined,
+    lost_cause: l.lost_cause ? String(l.lost_cause) : undefined,
+  };
+};
+
+export function getHatchRecords(year: string = "2026"): HatchRecord[] {
+  const dir = path.join(contentDir, "hatches", year);
+  if (!fs.existsSync(dir)) return [];
+
+  return fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith(".md"))
+    .map((filename) => {
+      const raw = fs.readFileSync(path.join(dir, filename), "utf-8");
+      const { data, content } = matter(raw);
+      return {
+        id: data.id ?? filename.replace(/\.md$/, ""),
+        clutch_id: data.clutch_id ? String(data.clutch_id) : undefined,
+        egg_id: data.egg_id ? String(data.egg_id) : undefined,
+        hatch_date: toISODate(data.hatch_date),
+        hatch_time: data.hatch_time ? String(data.hatch_time) : undefined,
+        incubator: data.incubator ? String(data.incubator) : "",
+        egg_set_date: data.egg_set_date ? toISODate(data.egg_set_date) : undefined,
+        egg_color: data.egg_color ? String(data.egg_color) : undefined,
+        breed: data.breed ? String(data.breed) : undefined,
+        parent_hen: data.parent_hen ? String(data.parent_hen) : undefined,
+        parent_rooster_window: data.parent_rooster_window
+          ? String(data.parent_rooster_window)
+          : undefined,
+        parentage_confidence: data.parentage_confidence
+          ? String(data.parentage_confidence)
+          : undefined,
+        name: data.name ? String(data.name) : undefined,
+        status: data.status ? String(data.status) : undefined,
+        photos: Array.isArray(data.photos) ? data.photos : [],
+        evidence: Array.isArray(data.evidence) ? data.evidence.map(String) : [],
+        phenotype_observations: Array.isArray(data.phenotype_observations)
+          ? data.phenotype_observations.map(normalizeObservation)
+          : [],
+        adult_outcome: data.adult_outcome,
+        lifecycle: normalizeLifecycle(data.lifecycle),
+        lifecycle_summary: data.lifecycle_summary
+          ? String(data.lifecycle_summary)
+          : undefined,
+        body: content,
+        filename,
+        year,
+      } as HatchRecord;
+    })
+    .sort((a, b) => b.id.localeCompare(a.id)); // newest first by id (YYYY-MM-DD-NN)
+}
+
 export function getFieldNote(slug: string): FieldNote | null {
   const filePath = path.join(contentDir, "field-notes", `${slug}.mdx`);
   if (!fs.existsSync(filePath)) return null;
