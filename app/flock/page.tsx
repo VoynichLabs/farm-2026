@@ -225,6 +225,17 @@ export default function FlockPage() {
             record for Farm 2026 — what came out of an egg, when, and from
             whom.
           </p>
+          <p className="mt-4">
+            <Link
+              href="/hatches"
+              className="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-cream/90 bg-guardian-bg/70 hover:bg-guardian-bg/90 border border-guardian-border px-3 py-2 rounded transition-colors"
+            >
+              [HATCHES 2026] →
+              <span className="text-cream/60 normal-case tracking-normal font-sans">
+                per-chick records · phenotype log · predictions
+              </span>
+            </Link>
+          </p>
         </div>
       </section>
 

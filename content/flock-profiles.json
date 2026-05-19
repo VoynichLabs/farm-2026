@@ -292,16 +292,16 @@
     {
       "name": "Birdadotta",
       "breed": "Easter Egger × RIR cross",
-      "age": "~11 days",
+      "age": "~24 days",
       "hatch_date": "2026-04-25",
-      "age_note": "Hatched April 25, 2026 in incubator from Birdadonna's egg — about a week and a half old",
+      "age_note": "Hatched April 25, 2026 in incubator from Birdadonna's egg",
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Alert, growing fast",
-      "color_description": "Brown-and-cream striped down feathering out, small orange beak",
-      "photo": "april-2026/birdadotta-fluffy.jpg",
-      "notes": "Birdadonna's offspring. Egg laid 03-April-2026 and placed into incubator the same day. Hatched on the day-22 mark. Continues the Birdgit → Birdadette → Birdadonna → Birdadotta name lineage. Lives in the brooder with the four April-25 Plymouth Rocks and the six newest Tractor Supply chicks.",
-      "location": "brooder"
+      "color_description": "Young pullet — blue eyes, distinctive coloring around the beak, slight rust on the wings, white tips on wings + belly (the key Birdadotta-vs-Birdadette discriminator)",
+      "photo": "may-2026/birdadotta-s7-2026-05-18.png",
+      "notes": "Birdadonna's offspring. Egg laid 03-April-2026, hatched day-22. Continues the Birdgit → Birdadette → Birdadonna → Birdadotta name lineage. Moved from brooder to nesting-box on 2026-05-16 when the brooder was cleared to receive the April-25 hatchlings.",
+      "location": "nesting-box"
     },
     {
       "name": "Bronze turkey poults (2)",
@@ -328,8 +328,8 @@
       "temperament": "TBD",
       "color_description": "Black down — will develop classic black-and-white barring as they feather out",
       "photo": "april-2026/rock-chicks-tsc-arrival.jpg",
-      "notes": "2 Barred Plymouth Rock chicks from TSC. Living in the brooder with Birdadotta, the two TBD-variety Plymouth Rocks, and the six newest TSC chicks.",
-      "location": "brooder"
+      "notes": "2 Barred Plymouth Rock chicks from TSC. Moved from brooder to nesting-box on 2026-05-16 with Birdadotta + the other April-25 cohort.",
+      "location": "nesting-box"
     },
     {
       "name": "Plymouth Rock chicks (2)",
@@ -342,8 +342,8 @@
       "temperament": "TBD",
       "color_description": "Black down — Plymouth Rock variety, exact sub-variety to be confirmed as they feather out (Speckled/Mottled, Partridge, or other)",
       "photo": "april-2026/rock-chicks-tsc-arrival.jpg",
-      "notes": "2 Plymouth Rock chicks from TSC alongside the Barred Rocks. Plymouth Rock variety, not Speckled Sussex. Sub-variety will be confirmed as adult plumage develops. Living in the brooder.",
-      "location": "brooder"
+      "notes": "2 Plymouth Rock chicks from TSC alongside the Barred Rocks. Plymouth Rock variety, not Speckled Sussex. Sub-variety will be confirmed as adult plumage develops. Moved to nesting-box on 2026-05-16.",
+      "location": "nesting-box"
     },
     {
       "name": "Cackle Hatchery chicks (15)",
@@ -417,7 +417,49 @@
       "temperament": "TBD",
       "color_description": "TBD — breeds to be confirmed as they feather out",
       "photo": null,
-      "notes": "Six additional Tractor Supply chicks brought home approximately one week after the 25-April haul. Living in the brooder with Birdadotta and the four 25-April Plymouth Rocks. Brings the indoor brooder cohort to 11 birds total.",
+      "notes": "Six additional Tractor Supply chicks brought home approximately one week after the 25-April haul. Moved to nesting-box on 2026-05-16 with the rest of the April-25 cohort when the brooder was cleared.",
+      "location": "nesting-box"
+    },
+    {
+      "name": "Birdthazar",
+      "breed": "Easter Egger lineage (cross TBD)",
+      "age": "Days old",
+      "hatch_date": "2026-05-16",
+      "age_note": "Hatched 06:04 EDT, 2026-05-16 from a blue egg set 2026-04-25. Provisional name pending male confirmation.",
+      "status": "active",
+      "egg_color": "TBD (too young)",
+      "temperament": "Aggressive out the gate — relocated solo from incubator at 21:22 EDT for pecking batchmates and knocking eggs around",
+      "color_description": "Buff/yellow down with a dark chipmunk stripe down the back — this stripe is the key visual ID against Chick #3 (buff but no stripe)",
+      "photo": null,
+      "notes": "First of three chicks from the April-25 clutch. Wing-feather sexing (2026-05-17 15:50 EDT) read approximately uniform single row → probable cockerel. Sire LBRJ probable per the April 25 paternity window. Currently solo in the brooder.",
+      "location": "brooder"
+    },
+    {
+      "name": "Henrietta-line chick #2",
+      "breed": "Wyandotte × RIR cross",
+      "age": "Days old",
+      "hatch_date": "2026-05-16",
+      "age_note": "Hatched ≤21:21 EDT, 2026-05-16 from a brown egg set 2026-04-25",
+      "status": "active",
+      "egg_color": "TBD (too young)",
+      "temperament": "Was vocalizing distress at 21:23 EDT while Birdthazar was harassing; settled once Birdthazar moved to brooder",
+      "color_description": "Grey-and-white down — magnificent coloring per Boss; visually distinct from the two buff siblings",
+      "photo": null,
+      "notes": "First chick of the Henrietta line. Dam confirmed: Henrietta (only brown-egg layer among the active hens — Golden Laced Wyandotte). Sire LBRJ probable per the April 25 paternity window. Currently in the brooder with Birdthazar and Chick #3. Unnamed.",
+      "location": "brooder"
+    },
+    {
+      "name": "Chick #3 — orange/buff",
+      "breed": "Easter Egger lineage (cross TBD)",
+      "age": "Days old",
+      "hatch_date": "2026-05-16",
+      "age_note": "Hatched 22:12 EDT, 2026-05-16 from a blue egg marked 4/25",
+      "status": "active",
+      "egg_color": "TBD (too young)",
+      "temperament": "Pip-to-free in ~40 min — vigorous out the shell. 'Big ol' orange dinosaur' per Boss.",
+      "color_description": "Solid uniform orange/buff across back and wings — no stripe. The 'no stripe' is the discriminator against Birdthazar.",
+      "photo": null,
+      "notes": "Third chick of the April-25 clutch. EE-lineage from blue egg; dam candidates are Birdadonna, Birdsula (EE hen 1), or EE hen 2 — none confirmed. Named-line candidate if dam turns out to be Birdadonna. Sire LBRJ probable. Currently in the brooder. Unnamed.",
       "location": "brooder"
     }
   ]
