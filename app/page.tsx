@@ -48,6 +48,13 @@ const HATCHLINGS_2026: Chick[] = [
     photo: "/photos/may-2026/birdadette-may20-held.jpg",
   },
   {
+    name: "Birdadette",
+    breed: "Easter Egger",
+    hatch: "Apr 6",
+    ageDays: 44,
+    photo: "/photos/may-2026/birdadette-may20-portrait.jpg",
+  },
+  {
     name: "Birdadotta",
     breed: "EE × RIR",
     hatch: "Apr 25",
@@ -87,7 +94,7 @@ export default function Home() {
           <div className="text-emerald-400 tracking-wider mb-3 font-mono text-[0.78rem]">
             ▸ 2026 INCUBATOR HATCH — {HATCHLINGS_2026.length} chicks
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {HATCHLINGS_2026.map((chick) => (
               <div key={chick.name} className="flex flex-col gap-1.5">
                 {chick.photo ? (
@@ -98,7 +105,7 @@ export default function Home() {
                       width={400}
                       height={500}
                       className="w-full h-full object-contain"
-                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw"
                     />
                   </div>
                 ) : (
