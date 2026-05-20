@@ -12,8 +12,9 @@
  *        the surface Boss said looked right.
  *     3. RecentGemsRail — client-side fetch of /api/v1/images/gems
  *        (server endpoint takes ~7s, would always blow the 3s SSR cap).
- *     4. A tight nav rail to the deeper pages, file-listing styled.
- *     5. A short status-line footer.
+ *     4. 2026 Hatchlings strip — static section, 5 incubator-hatched chicks.
+ *     5. A tight nav rail to the deeper pages, file-listing styled.
+ *     6. A short status-line footer.
  *
  *   v1.16.3 redesign (10-May-2026): tightened all containers from
  *   max-w-6xl to max-w-7xl, dropped vertical padding throughout,
@@ -25,6 +26,7 @@
  * SRP/DRY check: Pass — composition only. Each sub-piece owns its own
  *   data + empty states.
  */
+import Image from "next/image";
 import Link from "next/link";
 import GuardianHomeBadge from "@/app/components/guardian/GuardianHomeBadge";
 import HomeCameraStage from "@/app/components/home/HomeCameraStage";
@@ -40,6 +42,52 @@ const DEEPER_LINKS: { href: string; label: string; hint: string }[] = [
   { href: "/hatches", label: "hatches", hint: "every 2026 incubator hatch — parentage + phenotype log" },
   { href: "/field-notes", label: "field-notes", hint: "weekly farm updates" },
   { href: "/projects", label: "projects", hint: "build logs + materials" },
+];
+
+type Chick = {
+  name: string;
+  breed: string;
+  hatch: string;
+  ageDays: number;
+  photo: string | null;
+};
+
+const HATCHLINGS_2026: Chick[] = [
+  {
+    name: "Birdadette",
+    breed: "Easter Egger",
+    hatch: "Apr 6",
+    ageDays: 44,
+    photo: "/photos/april-2026/birdadette-3weeks-a.jpg",
+  },
+  {
+    name: "Birdadotta",
+    breed: "EE × RIR",
+    hatch: "Apr 25",
+    ageDays: 25,
+    photo: "/photos/april-2026/birdadotta-fluffy.jpg",
+  },
+  {
+    name: "Birdthazar",
+    breed: "EE (probable cockerel)",
+    hatch: "May 16",
+    ageDays: 4,
+    photo: null,
+  },
+  {
+    name: "Chick #2",
+    breed: "Wyandotte × RIR",
+    hatch: "May 16",
+    ageDays: 4,
+    photo: null,
+  },
+  {
+    name: "Chick #3",
+    breed: "EE lineage",
+    hatch: "May 16",
+    ageDays: 4,
+    photo: null,
+  },
 ];
 
 export default function Home() {
@@ -58,6 +106,46 @@ export default function Home() {
 
       {/* === RECENT GEMS === */}
       <RecentGemsRail />
+
+      {/* === 2026 HATCHLINGS === */}
+      <section className="border-t border-guardian-border max-w-7xl mx-auto px-3 py-4">
+        <div className="text-emerald-400 tracking-wider mb-3 font-mono text-[0.78rem]">
+          ▸ 2026 INCUBATOR HATCH — {HATCHLINGS_2026.length} chicks
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+          {HATCHLINGS_2026.map((chick) => (
+            <div
+              key={chick.name}
+              className="flex flex-col gap-1.5"
+            >
+              {chick.photo ? (
+                <div className="relative aspect-square w-full overflow-hidden border border-guardian-border">
+                  <Image
+                    src={chick.photo}
+                    alt={chick.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
+                  />
+                </div>
+              ) : (
+                <div className="aspect-square w-full border border-dashed border-guardian-border flex items-center justify-center bg-guardian-card/30">
+                  <span className="font-mono text-[0.65rem] text-guardian-muted text-center px-1">
+                    photo<br />incoming
+                  </span>
+                </div>
+              )}
+              <div className="font-mono text-[0.72rem] leading-tight">
+                <div className="text-emerald-300">{chick.name}</div>
+                <div className="text-guardian-muted">{chick.breed}</div>
+                <div className="text-guardian-muted">
+                  b. {chick.hatch} · {chick.ageDays}d
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* === DEEPER PAGES, file-listing styled === */}
       <section className="max-w-7xl mx-auto px-3 py-4 border-t border-guardian-border font-mono text-[0.78rem]">
