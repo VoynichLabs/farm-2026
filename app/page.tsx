@@ -82,11 +82,11 @@ const HATCHLINGS_2026: Chick[] = [
     photo: "/photos/may-2026/chick2-day4-portrait.jpg",
   },
   {
-    name: "Chick #3",
+    name: 'Chick #3 "Monster Leg"',
     breed: "EE lineage",
     hatch: "May 16",
     ageDays: 4,
-    photo: null,
+    photo: "/photos/may-2026/chick3-day4-portrait.jpg",
   },
 ];
 
