@@ -1,27 +1,14 @@
 /**
- * Author: Claude Opus 4.7 (1M context)
- * Date: 10-May-2026
+ * Author: Claude Opus 4.7 (1M context) / Claude Sonnet 4.6
+ * Date: 10-May-2026 / updated 20-May-2026
  * PURPOSE: Homepage — terminal / mission-control composition. From top to
  *   bottom: TerminalNav (in layout.tsx), then this page renders:
- *     1. SystemBanner — short story strip: how the live grid below is
- *        produced (cameras → Mac Mini → YOLO+VLM → Discord queue → IG/FB,
- *        plus the archive lane). Goes first so a visitor reads what the
- *        page IS while the cameras are still connecting.
- *     2. GuardianHomeBadge + HomeCameraStage — same camera composition
- *        as /projects/guardian (house-yard primary, s7-cam secondary),
- *        the surface Boss said looked right.
- *     3. RecentGemsRail — client-side fetch of /api/v1/images/gems
- *        (server endpoint takes ~7s, would always blow the 3s SSR cap).
- *     4. 2026 Hatchlings strip — static section, 5 incubator-hatched chicks.
+ *     1. 2026 Hatchlings hero — 5 incubator chicks front and center.
+ *     2. SystemBanner — short story strip about the live pipeline.
+ *     3. GuardianHomeBadge + HomeCameraStage — live camera feeds.
+ *     4. RecentGemsRail — client-side fetch of curated moments.
  *     5. A tight nav rail to the deeper pages, file-listing styled.
  *     6. A short status-line footer.
- *
- *   v1.16.3 redesign (10-May-2026): tightened all containers from
- *   max-w-6xl to max-w-7xl, dropped vertical padding throughout,
- *   replaced the rounded "card" deeper-link tiles with a dense
- *   file-listing block, and inlined a status-line footer instead of
- *   the centered three-column block. Goal is a surveillance-dashboard
- *   reading rhythm, not a marketing landing page.
  *
  * SRP/DRY check: Pass — composition only. Each sub-piece owns its own
  *   data + empty states.
@@ -93,6 +80,47 @@ const HATCHLINGS_2026: Chick[] = [
 export default function Home() {
   return (
     <main className="bg-guardian-bg text-guardian-text min-h-screen font-sans">
+
+      {/* === 2026 HATCHLINGS — hero position === */}
+      <section className="border-b border-guardian-border">
+        <div className="max-w-7xl mx-auto px-3 py-4">
+          <div className="text-emerald-400 tracking-wider mb-3 font-mono text-[0.78rem]">
+            ▸ 2026 INCUBATOR HATCH — {HATCHLINGS_2026.length} chicks
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            {HATCHLINGS_2026.map((chick) => (
+              <div key={chick.name} className="flex flex-col gap-1.5">
+                {chick.photo ? (
+                  <div className="w-full h-56 border border-guardian-border bg-guardian-card/20 flex items-center justify-center overflow-hidden">
+                    <Image
+                      src={chick.photo}
+                      alt={chick.name}
+                      width={400}
+                      height={500}
+                      className="w-full h-full object-contain"
+                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-full h-56 border border-dashed border-guardian-border flex items-center justify-center bg-guardian-card/30">
+                    <span className="font-mono text-[0.65rem] text-guardian-muted text-center px-1">
+                      photo<br />incoming
+                    </span>
+                  </div>
+                )}
+                <div className="font-mono text-[0.72rem] leading-tight">
+                  <div className="text-emerald-300">{chick.name}</div>
+                  <div className="text-guardian-muted">{chick.breed}</div>
+                  <div className="text-guardian-muted">
+                    b. {chick.hatch} · {chick.ageDays}d
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* === STORY ABOUT THE LIVE PIPELINE === */}
       <SystemBanner />
 
@@ -106,46 +134,6 @@ export default function Home() {
 
       {/* === RECENT GEMS === */}
       <RecentGemsRail />
-
-      {/* === 2026 HATCHLINGS === */}
-      <section className="border-t border-guardian-border max-w-7xl mx-auto px-3 py-4">
-        <div className="text-emerald-400 tracking-wider mb-3 font-mono text-[0.78rem]">
-          ▸ 2026 INCUBATOR HATCH — {HATCHLINGS_2026.length} chicks
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-          {HATCHLINGS_2026.map((chick) => (
-            <div
-              key={chick.name}
-              className="flex flex-col gap-1.5"
-            >
-              {chick.photo ? (
-                <div className="relative aspect-square w-full overflow-hidden border border-guardian-border">
-                  <Image
-                    src={chick.photo}
-                    alt={chick.name}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
-                  />
-                </div>
-              ) : (
-                <div className="aspect-square w-full border border-dashed border-guardian-border flex items-center justify-center bg-guardian-card/30">
-                  <span className="font-mono text-[0.65rem] text-guardian-muted text-center px-1">
-                    photo<br />incoming
-                  </span>
-                </div>
-              )}
-              <div className="font-mono text-[0.72rem] leading-tight">
-                <div className="text-emerald-300">{chick.name}</div>
-                <div className="text-guardian-muted">{chick.breed}</div>
-                <div className="text-guardian-muted">
-                  b. {chick.hatch} · {chick.ageDays}d
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* === DEEPER PAGES, file-listing styled === */}
       <section className="max-w-7xl mx-auto px-3 py-4 border-t border-guardian-border font-mono text-[0.78rem]">
