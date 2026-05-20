@@ -79,7 +79,7 @@ const HATCHLINGS_2026: Chick[] = [
     breed: "Wyandotte × RIR",
     hatch: "May 16",
     ageDays: 4,
-    photo: null,
+    photo: "/photos/may-2026/chick2-day4-portrait.jpg",
   },
   {
     name: "Chick #3",
