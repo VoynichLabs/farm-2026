@@ -45,7 +45,7 @@ const HATCHLINGS_2026: Chick[] = [
     breed: "Easter Egger",
     hatch: "Apr 6",
     ageDays: 44,
-    photo: "/photos/april-2026/birdadette-3weeks-b.jpg",
+    photo: "/photos/may-2026/birdadette-may20-held.jpg",
   },
   {
     name: "Birdadotta",
