@@ -36,11 +36,19 @@ export interface Analyst {
   name: string; title: string; img: string; rating: string;
   specialty: string; blurb: string;
 }
+export interface Position {
+  sym: string; name: string; shares: number; fill: number; weight: number;
+}
+export interface Portfolio {
+  account: string; asOf: string; thesis: string; source: string;
+  positions: Position[];
+}
 export interface MarketData {
   terminalName: string; desk: string; disclaimer: string;
   tape: Quote[]; indices: IndexRow[]; picks: Pick[]; analysts: Analyst[];
   newswire: string[]; realStocks: RealStock[]; realAsOf: string;
   benchmark?: { flock: string; spy: string };
+  portfolio?: Portfolio;
 }
 
 // deterministic pseudo-random so SSR === first client render
@@ -79,6 +87,118 @@ function clk(d: Date, utc: boolean): string {
 const PANEL = "border border-[#1f3b2e] bg-[#06120c]";
 const LABEL =
   "text-[10px] uppercase tracking-[0.22em] text-[#46a571] px-2 py-1.5 border-b border-[#1f3b2e] bg-[#0a1a11] flex items-center justify-between";
+
+// CHICKEN PICKS — the real paper portfolio. Fills are baked into picks.json;
+// last prices come live from /api/quotes (Yahoo proxy) and P&L is computed here.
+function ChickenPicks({ pf }: { pf: Portfolio }) {
+  const [live, setLive] = useState<Record<string, { price: number; prevClose: number }>>({});
+  const [asOf, setAsOf] = useState<string | null>(null);
+  const [state, setState] = useState<"loading" | "ok" | "error">("loading");
+
+  useEffect(() => {
+    let alive = true;
+    const load = async () => {
+      try {
+        const r = await fetch("/api/quotes", { cache: "no-store" });
+        const j = await r.json();
+        if (!alive) return;
+        if (j?.quotes && Object.keys(j.quotes).length) {
+          setLive(j.quotes); setAsOf(j.asOf); setState("ok");
+        } else setState("error");
+      } catch { if (alive) setState("error"); }
+    };
+    load();
+    const id = setInterval(load, 45000);
+    return () => { alive = false; clearInterval(id); };
+  }, []);
+
+  const rows = pf.positions.map((p) => {
+    const lq = live[p.sym]?.price ?? null;
+    const cost = p.shares * p.fill;
+    const mkt = lq != null ? p.shares * lq : null;
+    const pnl = mkt != null ? mkt - cost : null;
+    const pnlPct = pnl != null ? (pnl / cost) * 100 : null;
+    return { ...p, lq, cost, mkt, pnl, pnlPct };
+  });
+  const haveLive = state === "ok";
+  const totalCost = rows.reduce((a, r) => a + r.cost, 0);
+  const totalMkt = rows.reduce((a, r) => a + (r.mkt ?? r.cost), 0);
+  const totalPnl = totalMkt - totalCost;
+  const totalPct = totalCost ? (totalPnl / totalCost) * 100 : 0;
+  const usd = (n: number) => n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+  const asOfStr = asOf ? new Date(asOf).toLocaleTimeString("en-US", { hour12: false }) : "--:--:--";
+
+  return (
+    <section className={`lg:col-span-12 ${PANEL}`}>
+      <div className={LABEL}>
+        <span>◉ CHICKEN PICKS — LIVE PAPER PORTFOLIO · {pf.account}</span>
+        <span className="flex items-center gap-1" style={{ color: haveLive ? GREEN : AMBER }}>
+          <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: haveLive ? GREEN : AMBER, animation: "ppm-blink 1.1s steps(1) infinite" }} />
+          {state === "loading" ? "FETCHING" : haveLive ? `LIVE · ${asOfStr}` : "QUOTES OFFLINE"}
+        </span>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#1f3b2e]">
+        <div className="bg-[#06120c] px-3 py-2">
+          <div className="text-[9px] uppercase tracking-widest text-[#46a571]">Cost Basis</div>
+          <div className="text-[15px] font-bold text-[#e6fff0] tabular-nums">{usd(totalCost)}</div>
+        </div>
+        <div className="bg-[#06120c] px-3 py-2">
+          <div className="text-[9px] uppercase tracking-widest text-[#46a571]">Market Value</div>
+          <div className="text-[15px] font-bold text-[#e6fff0] tabular-nums">{haveLive ? usd(totalMkt) : "—"}</div>
+        </div>
+        <div className="bg-[#06120c] px-3 py-2">
+          <div className="text-[9px] uppercase tracking-widest text-[#46a571]">Open P&amp;L</div>
+          <div className="text-[15px] font-bold tabular-nums" style={{ color: haveLive ? chgColor(totalPnl) : "#94a3b8" }}>
+            {haveLive ? `${totalPnl >= 0 ? "+" : ""}${usd(totalPnl)}` : "—"}
+          </div>
+        </div>
+        <div className="bg-[#06120c] px-3 py-2">
+          <div className="text-[9px] uppercase tracking-widest text-[#46a571]">Return</div>
+          <div className="text-[15px] font-bold tabular-nums" style={{ color: haveLive ? chgColor(totalPnl) : "#94a3b8" }}>
+            {haveLive ? `${arrow(totalPnl)} ${sign(totalPct)}%` : "—"}
+          </div>
+        </div>
+      </div>
+
+      <table className="w-full text-[11px] tabular-nums">
+        <thead>
+          <tr className="text-[9px] uppercase tracking-widest text-[#46a571] border-b border-[#1f3b2e]">
+            <th className="text-left px-2 py-1">Sym</th>
+            <th className="text-left px-2 py-1">Name</th>
+            <th className="text-right px-2 py-1">Wt</th>
+            <th className="text-right px-2 py-1">Shrs</th>
+            <th className="text-right px-2 py-1">Fill</th>
+            <th className="text-right px-2 py-1">Last</th>
+            <th className="text-right px-2 py-1">Mkt Val</th>
+            <th className="text-right px-2 py-1">P&amp;L</th>
+            <th className="text-right px-2 py-1">%</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.sym} className="border-b border-[#10241a]">
+              <td className="px-2 py-1 font-bold text-[#22e06b]">${r.sym}</td>
+              <td className="px-2 py-1 text-[#9fc7b3] truncate max-w-[160px]">{r.name}</td>
+              <td className="px-2 py-1 text-right text-[#6fae8c]">{r.weight}%</td>
+              <td className="px-2 py-1 text-right text-[#9fc7b3]">{r.shares}</td>
+              <td className="px-2 py-1 text-right text-[#9fc7b3]">{r.fill.toFixed(2)}</td>
+              <td className="px-2 py-1 text-right text-[#e6fff0]">{r.lq != null ? r.lq.toFixed(2) : "—"}</td>
+              <td className="px-2 py-1 text-right text-[#e6fff0]">{r.mkt != null ? usd(r.mkt) : "—"}</td>
+              <td className="px-2 py-1 text-right" style={{ color: r.pnl != null ? chgColor(r.pnl) : "#94a3b8" }}>{r.pnl != null ? `${r.pnl >= 0 ? "+" : ""}${r.pnl.toFixed(0)}` : "—"}</td>
+              <td className="px-2 py-1 text-right" style={{ color: r.pnlPct != null ? chgColor(r.pnlPct) : "#94a3b8" }}>{r.pnlPct != null ? `${arrow(r.pnlPct)} ${sign(r.pnlPct)}%` : "—"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className="px-3 py-2 border-t border-[#1f3b2e] text-[10px] text-[#6fae8c] leading-snug">
+        <span className="text-[#46a571] uppercase tracking-widest">Thesis </span>{pf.thesis}
+        <div className="mt-1 text-[#46a571]">{pf.source} · last prices via Yahoo Finance (auto-refresh 45s)</div>
+      </div>
+    </section>
+  );
+}
 
 export default function Terminal({ data }: { data: MarketData }) {
   const [now, setNow] = useState<Date | null>(null);
@@ -188,6 +308,9 @@ export default function Terminal({ data }: { data: MarketData }) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 p-2">
+        {/* CHICKEN PICKS — live paper portfolio */}
+        {data.portfolio ? <ChickenPicks pf={data.portfolio} /> : null}
+
         {/* PICK */}
         <section className={`lg:col-span-5 ${PANEL}`}>
           <div className={LABEL}>

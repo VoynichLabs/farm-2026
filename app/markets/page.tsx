@@ -32,9 +32,9 @@ import path from "node:path";
 import Terminal, { type MarketData } from "@/app/components/markets/Terminal";
 
 export const metadata: Metadata = {
-  title: "Poultry Capital Markets — Coop Terminal",
+  title: "Chicken Picks — Coop Terminal",
   description:
-    "Daily stock and options picks issued by the flock. Read from the coop cam by computer vision. Not investment advice.",
+    "Chicken Picks: a real IBKR paper portfolio of poultry-economics stocks, tracked live against fills. Plus daily picks issued by the flock via computer vision. Not investment advice.",
 };
 
 // Re-read on every render so a freshly-committed pick shows up after deploy.
