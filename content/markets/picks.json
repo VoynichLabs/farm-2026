@@ -216,7 +216,7 @@
       "rating": "BUY",
       "omen": "Empty feeder by 07:00. Feed-cost signal. Long the commodity.",
       "frame": "",
-      "frameTime": "2026-05-22 08:43 ET (market open)",
+      "frameTime": "2026-05-22 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -224,7 +224,7 @@
         "Empty bucket — BULLISH SIGNAL on CORN"
       ],
       "mood": "Hungry. Inflationary.",
-      "realQuote": "CORN last $18.31 (-0.6%) — real, 2026-05-22"
+      "realQuote": "CORN last $18.33 (+0.16%) — real, 2026-05-22"
     },
     {
       "date": "2026-05-21",
@@ -415,29 +415,29 @@
     {
       "sym": "PPC",
       "name": "Pilgrim's Pride",
-      "px": 29.0,
-      "chg": 1.22,
+      "px": 28.7,
+      "chg": -1.03,
       "date": "2026-05-22"
     },
     {
       "sym": "ADM",
       "name": "Archer-Daniels-Midland",
-      "px": 77.12,
-      "chg": -0.55,
+      "px": 77.28,
+      "chg": 0.19,
       "date": "2026-05-22"
     },
     {
       "sym": "MOO",
       "name": "VanEck Agribusiness ETF",
-      "px": 80.46,
-      "chg": -0.73,
+      "px": 80.45,
+      "chg": 0.0,
       "date": "2026-05-22"
     },
     {
       "sym": "CORN",
       "name": "Teucrium Corn Fund",
-      "px": 18.31,
-      "chg": -0.6,
+      "px": 18.33,
+      "chg": 0.16,
       "date": "2026-05-22"
     }
   ],
