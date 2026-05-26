@@ -21,3 +21,5 @@ Bold daylight strike; coyote took her within earshot of the house. Pawel and Paw
 **Headcount:** Full evening roost headcount planned to confirm who is missing.
 
 Two Cream Legbars remain in the March cohort.
+
+**Breed verdict (Boss, 2026-05-26):** Cream Legbars flagged as incompatible with MegaBird flock culture — independent streak, not friendly, resistant to order. Do not add to gene pool. Do not reorder this breed next year.
