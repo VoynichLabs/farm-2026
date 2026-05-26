@@ -16,6 +16,8 @@ Bold daylight strike; coyote took her within earshot of the house. Pawel and Paw
 
 **Flock reaction:** Attack happened in full view of the other birds; rest of the flock spooked. Exception: the two remaining Cream Legbars went back out ranging shortly after. Cream Legbars noted as poorly suited to both confinement and free range.
 
+**Carry-off status:** Uncertain. Bird corpse remained on site after the attack — Pawel and Pawleen may have chased the coyote off before it could take the kill. Boss did not clearly see a bird in the coyote's mouth. Coyote left with an unfinished kill at the site; return likely.
+
 **Headcount:** Full evening roost headcount planned to confirm who is missing.
 
 Two Cream Legbars remain in the March cohort.
