@@ -28,6 +28,7 @@ Three Light Brahmas remain.
 - **Coyote watch:** Boss remained on property through lockup.
 - **Pawel and Pawleen:** Deployed in coyote protection vests (spiked collars + body armor). Photo `IMG_4767`.
 - **Overnight posture:** Flock locked in coop. Dogs armored.
+- **Birdadonna and Henrietta went broody** following the attack. Photo `IMG_4769`. Both primary laying hens down simultaneously.
 
 ## Correction Note
 
