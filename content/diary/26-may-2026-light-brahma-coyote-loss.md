@@ -18,9 +18,16 @@ Bold daylight strike; coyote took her within earshot of the house. Pawel and Paw
 
 **Carry-off status:** Uncertain. Bird corpse remained on site after the attack — Pawel and Pawleen may have chased the coyote off before it could take the kill. Boss did not clearly see a bird in the coyote's mouth. Coyote left with an unfinished kill at the site; return likely.
 
-**Headcount:** Full evening roost headcount planned to confirm who is missing.
+**Headcount:** Evening roost headcount ~19:00 EDT — Birdsula confirmed returned to roost. Flock locked up for the night.
 
 Three Light Brahmas remain.
+
+## Evening Update — 19:00 EDT
+
+- **Corpse status:** Still on site; Boss elected not to remove it. Monitoring to see if coyote returns tonight. State of corpse in morning will provide further forensic information.
+- **Coyote watch:** Boss remained on property through lockup.
+- **Pawel and Pawleen:** Deployed in coyote protection vests (spiked collars + body armor). Photo `IMG_4767`.
+- **Overnight posture:** Flock locked in coop. Dogs armored.
 
 ## Correction Note
 
