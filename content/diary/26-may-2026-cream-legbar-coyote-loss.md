@@ -10,6 +10,12 @@
 
 ## Notes
 
-Bold daylight strike; coyote took her within earshot of the house. This follows the April 2026 predator wave and the LBRJ coyote loss (2026-04-24).
+Bold daylight strike; coyote took her within earshot of the house. Pawel and Pawleen gave chase in full feral mode but coyote already had the bird and trotted off toward its presumed den location.
 
-Two Cream Legbar hens remain in the March cohort (exact sex composition to confirm — auto-sex leans ~2F + 1M for the 3 total, so at least one more hen likely remains).
+**Victim ID:** Believed to be the known coop-resistant rebel of the Cream Legbar trio — the bird previously identified as resisting return to the coop at lockup.
+
+**Flock reaction:** Attack happened in full view of the other birds; rest of the flock spooked. Exception: the two remaining Cream Legbars went back out ranging shortly after. Cream Legbars noted as poorly suited to both confinement and free range.
+
+**Headcount:** Full evening roost headcount planned to confirm who is missing.
+
+Two Cream Legbars remain in the March cohort.
