@@ -33,4 +33,6 @@ The boss made a TSC run to round out the brooder so Birdadotta wouldn't be growi
 Total in the brooder per the boss's count: 18 birds before today's additions.
 
 ## Same-Day Loss
-This is happening alongside losing **Little Big Red Junior** to a predator on 24-April-2026. Circle of life hitting both ends in 24 hours — one rooster gone, one new chick out of the egg.
+This is happening alongside losing **Little Big Red Junior** to a **coyote** on 24-April-2026. Circle of life hitting both ends in 24 hours — one rooster gone, one new chick out of the egg.
+
+**Notable prior:** LBRJ survived a blizzard earlier that winter, sleeping outside on the porch railing and sustaining frostbite damage to the comb tips. He recovered fully before the coyote loss.
