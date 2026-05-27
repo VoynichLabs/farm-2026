@@ -208,6 +208,25 @@
   ],
   "picks": [
     {
+      "date": "2026-05-27",
+      "ticker": "ADM",
+      "company": "Archer-Daniels-Midland Company",
+      "play": "SHARES — clip the input spread",
+      "conviction": 62,
+      "rating": "ACCUMULATE",
+      "omen": "Scatter pattern across whole floor — inputs moving. ADM clips the spread either way.",
+      "frame": "",
+      "frameTime": "2026-05-27 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "Multiple — GROUND, distributed scratch search",
+        "One hen — NESTING BOX, not relevant to thesis"
+      ],
+      "mood": "Busy. Non-directional.",
+      "realQuote": "ADM last $78.01 (+0.63%) — real, 2026-05-27"
+    },
+    {
       "date": "2026-05-26",
       "ticker": "PPC",
       "company": "Pilgrim's Pride Corporation",
@@ -427,40 +446,40 @@
     {
       "sym": "TSN",
       "name": "Tyson Foods",
-      "px": 65.05,
-      "chg": -2.14,
-      "date": "2026-05-26"
+      "px": 65.13,
+      "chg": 0.12,
+      "date": "2026-05-27"
     },
     {
       "sym": "PPC",
       "name": "Pilgrim's Pride",
-      "px": 28.07,
-      "chg": -1.37,
-      "date": "2026-05-26"
+      "px": 28.21,
+      "chg": -0.88,
+      "date": "2026-05-27"
     },
     {
       "sym": "ADM",
       "name": "Archer-Daniels-Midland",
-      "px": 77.52,
-      "chg": 0.52,
-      "date": "2026-05-26"
+      "px": 78.01,
+      "chg": 0.63,
+      "date": "2026-05-27"
     },
     {
       "sym": "MOO",
       "name": "VanEck Agribusiness ETF",
-      "px": 80.27,
-      "chg": -0.24,
-      "date": "2026-05-26"
+      "px": 80.17,
+      "chg": -0.12,
+      "date": "2026-05-27"
     },
     {
       "sym": "CORN",
       "name": "Teucrium Corn Fund",
-      "px": 18.25,
-      "chg": -0.6,
-      "date": "2026-05-26"
+      "px": 18.07,
+      "chg": -0.61,
+      "date": "2026-05-27"
     }
   ],
-  "realAsOf": "2026-05-26",
+  "realAsOf": "2026-05-27",
   "benchmark": {
     "flock": "+7.30% MTD (unaudited, imaginary)",
     "spy": "SPY $741.25 (+0.75% last session, real)"
