@@ -28,6 +28,7 @@ Three Light Brahmas remain.
 - **Coyote watch:** Boss remained on property through lockup.
 - **Pawel and Pawleen:** Deployed in coyote protection vests (spiked collars + body armor). Photo `IMG_4767`.
 - **Overnight posture:** Flock locked in coop. Dogs armored.
+- **22:23 EDT update:** Two rebel Light Brahmas found sleeping on the ground at the pen door when Boss returned from errand. Ushered in manually. All birds locked in for the night. Photo `IMG_4787` — full roost at multiple perch levels.
 - **Birdadonna and Henrietta went broody** following the attack. Photo `IMG_4769`. Both primary laying hens down simultaneously.
 
 ## Correction Note
