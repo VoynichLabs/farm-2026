@@ -4,9 +4,9 @@
 
 Photo `IMG_4925` — juveniles crowding the feeder:
 
-- **Two Buff Rangers** — buff/orange, heavy-bodied juveniles. These are part of the **Cackle Hatchery batch** (08-April-2026 arrival, Exotic Island Fowl / Rare Chick specials, breeds logged as TBD). Boss's "Buff Rangers" is the breed-ID now resolving for two of that cohort.
-- **Bronze Turkey poult** — the larger grey/brown speckled bird (one of the two Bronze Broad-Breasted poults from the TSC haul).
-- A grey barred juvenile also in frame at the feeder.
+- **Two Buff Rangers** — buff/orange, heavy-bodied juveniles. They're from the **most recent TSC batch** (the "Tractor Supply chicks — May batch (6)", purchased ~02-May-2026) — the same batch as the **Barred Rock**. Breed-ID per Boss; correcting an earlier mistaken guess that tied them to the Cackle Hatchery batch.
+- **Bronze Turkey poult** — the larger grey/brown speckled bird (one of the two Bronze Broad-Breasted poults from the 25-April TSC haul).
+- **The grey barred juvenile** in frame is the **Barred Rock** from the same May TSC batch.
 
 Boss's note: **"Monstrous little eating machines."** The Buff Rangers are putting on size fast.
 
