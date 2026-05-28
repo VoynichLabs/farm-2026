@@ -2,14 +2,18 @@
 
 ## Observation
 
-Brooder check. Three chicks pictured (`IMG_4920`): two yellow/buff chicks and one slate-grey chick (reddish beak).
+Brooder check — the April-25 clutch (`IMG_4920`): **Birdthazar**, **Birdsilla**, and **Henriella**.
 
-Boss is watching how the **two yellow chicks** color out.
+- **Birdthazar** (Chick #1) — yellow/buff with the dark chipmunk stripe down the back (the discriminator).
+- **Birdsilla** (Chick #3) — yellow/buff, no back stripe.
+- **Henriella** (Henrietta line, Chick #2) — slate-grey, reddish beak.
+
+Boss is watching how the **two yellow ones (Birdthazar + Birdsilla)** color out.
 
 ## Boss's note
 
 - **Whitey Red Legs** was a cross between an **Easter Egger** and a **Rhode Island Red**, and Boss recalls he looked much like these yellow chicks when he was young.
-- Boss wonders whether that resemblance indicates the **two yellow chicks will be males**.
+- Boss wonders whether that resemblance indicates **Birdthazar and Birdsilla will be males**.
 
 Logged as Boss's hypothesis to revisit as the chicks feather out — outcome TBD.
 
