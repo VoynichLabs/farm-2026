@@ -2,7 +2,7 @@
 
 ## Observation
 
-Brooder check — the April-25 clutch (`IMG_4920`): **Birdthazar**, **Birdsilla**, and **Henriella**.
+Brooder check — the 16-May hatch (`IMG_4920`): **Birdthazar**, **Birdsilla**, and **Henriella** (eggs set 25-Apr, hatched 2026-05-16).
 
 - **Birdthazar** (Chick #1) — yellow/buff with the dark chipmunk stripe down the back (the discriminator).
 - **Birdsilla** (Chick #3) — yellow/buff, no back stripe.
