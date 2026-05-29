@@ -6,15 +6,15 @@ A young cockerel **started making rooster noises today (28-May-2026)** — first
 
 **Appearance:** small/bantam-sized, **black-and-white mottled/spangled** plumage with some chestnut, bright red **single comb** and developing wattles.
 
-## Breed — reasoned lead: Silver Duckwing Phoenix / Yokohama
+## Breed — converged lead: spangled, single-combed game bantam (likely Spangled Old English Game Bantam)
 
-From the **Cackle "Exotic Island Fowl Special" / "Rare Chick Special" batch** (08-April-2026). Reasoning from coloring + behavior against the documented candidate pool (`docs/cackle-hatchery-breed-id.md`):
+From the **Cackle "Exotic Island Fowl Special" / "Rare Chick Special" batch** (08-April-2026). Reasoning against the documented candidate pool (`docs/cackle-hatchery-breed-id.md`):
 
-- **Upright single comb** → rules out **Silver Spangled Hamburg** (rose comb), the otherwise-obvious black/white-spangled candidate.
+- **Upright single comb** → rules out **Silver Spangled Hamburg** (rose comb), the documented black/white-spangled candidate.
 - **No crest/pouf** → rules out Mottled Houdan, Polish, Sultan, Spitzhauben, Crevecoeur.
 - **Clean (unfeathered) legs** → rules out the Cochins (batch's most common breed) and Brahma.
-- Remaining fit: the **game/ornamental** side — black-and-white/silver with chestnut shoulders, flighty, high-roosting, crowing early = **Silver Duckwing Phoenix or Yokohama**. The breed-ID doc already flagged two silver-duckwing candidates (E3, E5) in this shipment.
+- **Pattern (from the photo):** scattered white tips/flecks on a black body = true **spangling**, NOT the structured silver-hackle/black-breast/chestnut blocks of a duckwing. (My first call was Silver Duckwing Phoenix/Yokohama — corrected: the photo shows spangling, not duckwing.)
 
-**Confidence: medium.** Confirmer = tail: if it comes in long/flowing (8–12 wks) → Phoenix/Yokohama locked. Fallback: if the comb is actually a rose comb up close → Silver Spangled Hamburg. Pending Boss's confirmation.
+**Converged guess: a spangled, single-combed game bantam — most likely a Spangled Old English Game Bantam** (Horst's read, which fits the spangled pattern + single comb + bantam size). Caveat: OEGB isn't in our written Cackle pool, so it'd be a surplus mix-in. **Confidence: medium.** Tail length (8–12 wks) is the tiebreaker between a game bantam and a long-tailed ornamental. Pending Boss's confirmation.
 
 **Photo:** `IMG_4944` — cockerel perched on the coop roof.
