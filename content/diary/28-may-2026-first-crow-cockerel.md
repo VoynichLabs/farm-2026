@@ -15,6 +15,8 @@ From the **Cackle "Exotic Island Fowl Special" / "Rare Chick Special" batch** (0
 - **Clean (unfeathered) legs** → rules out the Cochins (batch's most common breed) and Brahma.
 - **Pattern (from the photo):** scattered white tips/flecks on a black body = true **spangling**, NOT the structured silver-hackle/black-breast/chestnut blocks of a duckwing. (My first call was Silver Duckwing Phoenix/Yokohama — corrected: the photo shows spangling, not duckwing.)
 
+**Cohort note (per Boss):** he's **not alone — one or two others look just like him** (same spangled coloring). A 2–3 bird set of the same type points to a deliberate hatchery inclusion, not a fluke (Cackle commonly sends breed multiples). If the lookalikes also crow, it reinforces the "cheap surplus = likely mostly males" note on this batch.
+
 **Converged guess: a spangled, single-combed game bantam — most likely a Spangled Old English Game Bantam** (Horst's read, which fits the spangled pattern + single comb + bantam size). Caveat: OEGB isn't in our written Cackle pool, so it'd be a surplus mix-in. **Confidence: medium.** Tail length (8–12 wks) is the tiebreaker between a game bantam and a long-tailed ornamental. Pending Boss's confirmation.
 
 **Photo:** `IMG_4944` — cockerel perched on the coop roof.
