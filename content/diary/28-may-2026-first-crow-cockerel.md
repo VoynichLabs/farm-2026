@@ -6,8 +6,15 @@ A young cockerel **started making rooster noises today (28-May-2026)** — first
 
 **Appearance:** small/bantam-sized, **black-and-white mottled/spangled** plumage with some chestnut, bright red **single comb** and developing wattles.
 
-## Breed
+## Breed — reasoned lead: Silver Duckwing Phoenix / Yokohama
 
-Boss doesn't recall the breed — which fits: he's almost certainly from the **Cackle Hatchery "Exotic Island Fowl Special" / "Rare Chick Special" batch** (arrived 08-April-2026), the unlabeled mystery exotics whose breeds were logged as **TBD until they feather out** (and flagged as likely mostly males). The mottled bantam look is consistent with that batch. Breed still **TBD** — pending Boss's confirmation.
+From the **Cackle "Exotic Island Fowl Special" / "Rare Chick Special" batch** (08-April-2026). Reasoning from coloring + behavior against the documented candidate pool (`docs/cackle-hatchery-breed-id.md`):
+
+- **Upright single comb** → rules out **Silver Spangled Hamburg** (rose comb), the otherwise-obvious black/white-spangled candidate.
+- **No crest/pouf** → rules out Mottled Houdan, Polish, Sultan, Spitzhauben, Crevecoeur.
+- **Clean (unfeathered) legs** → rules out the Cochins (batch's most common breed) and Brahma.
+- Remaining fit: the **game/ornamental** side — black-and-white/silver with chestnut shoulders, flighty, high-roosting, crowing early = **Silver Duckwing Phoenix or Yokohama**. The breed-ID doc already flagged two silver-duckwing candidates (E3, E5) in this shipment.
+
+**Confidence: medium.** Confirmer = tail: if it comes in long/flowing (8–12 wks) → Phoenix/Yokohama locked. Fallback: if the comb is actually a rose comb up close → Silver Spangled Hamburg. Pending Boss's confirmation.
 
 **Photo:** `IMG_4944` — cockerel perched on the coop roof.
