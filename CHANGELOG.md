@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.17.0] — 2026-06-04
+
+### Added — June 2026 clutch (season-final hatch) + named the last two unnamed May chicks (Claude Opus 4.8 (1M context))
+
+The boss asked for the farm site to show **every bird from all of this season's hatches, with its name**, including the brand-new June clutch — the last hatch of the 2026 incubator season. All facts here were reconciled from the boss-confirmed provenance memory (the "2026 incubator hatch spine," eventId `fbdbd023-…`, plus the per-bird naming events), not from chat recollection, per the no-guessing guardrail.
+
+**What changed:**
+
+- **Six new per-chick hatch records** under `content/hatches/2026/` for the June (new-incubator) clutch: `2026-06-02-01-birdimir`, `2026-06-02-02-ingebird`, `2026-06-03-01-henriessa`, `2026-06-03-03-horstabird`, `2026-06-03-04-henridotta`, `2026-06-04-01-adelbird`. **Adelbird is the last hatch of the 2026 season.** These render on `/hatches` automatically (the page reads the directory; no index is hand-maintained).
+- **Egg #6 loss record** (`2026-06-03-02-egg6-lost`): a brown Henrietta-line egg that died in shell on 2026-06-03 — the boss's first-ever assisted-hatch attempt found no life. The schema supports `status: lost`, so the loss gets a grounded record; a `lifecycle_summary` one-liner makes it read as a loss on the card (which renders neither `status` nor `lost_cause`). Not added to the `/flock` roster — it was never a live bird.
+- **Named the two previously-unnamed May-16 chicks** that the boss-confirmed spine now names: `2026-05-16-02` → **Henriella**, `2026-05-16-03` → **Birdsilla** ("Monster Leg"). Files renamed (the `id` is unchanged per SCHEMA), `name` filled, one grounded observation appended each. No prior observations were edited.
+- **`content/flock-profiles.json`:** added the six June chicks to `flock_birds` (active, brooder) so they render on `/flock`, and updated the two May display names to Henriella / Birdsilla. Roster `egg_color` stays `"TBD (too young)"` — that field is the bird's *laying* color, not its hatch-egg color.
+
+**Why / how (facts worth flagging):**
+
+- **Incubator = NI, not OI.** The clutch is unambiguously the new-incubator 18-egg set (~12 May, lockdown 30 May, paternity window Whitey Red Legs); `clutch_id` = `<incubator>-<egg_set_date>` forces `NI-2026-05-12`. The first two chicks (Birdimir, Ingebird) were *moved* into the retired OI on hatch-night as a holding spot — recorded in their bodies. The task brief's "all six in OI at hatch" refers to that move; flagged to the boss.
+- **Silver marking is recorded at LOW confidence on Henridotta**, with the prior uncertainty noted (the boss first said Henriessa, then revised — phrased as a question). Not asserted; flagged for visual confirmation before treating as final.
+- Egg colors (blue for Birdimir/Ingebird/Horstabird/Adelbird; brown for the Henrietta-line birds) and the assisted hatches (Horstabird and Adelbird both got an assist) are all source-backed.
+- Photos: left empty (best-effort only — chick-to-photo mappings were not confidently known; tracked as a follow-up).
+
+Plan doc: `docs/04-Jun-2026-june-2026-clutch-hatch-records-plan.md`.
+
 ## [Unreleased] — Bird tracking / breeding ledger TODO
 
 ### Planned — Egg-to-hen tracking system requested by the boss
