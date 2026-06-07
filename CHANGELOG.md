@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.17.1] — 2026-06-07
+
+### Fixed — June (NI) clutch site-pass: Horstabird LBRJ/pullet correction, Adelbird down + clutch photos wired (Claude Opus 4.8 (1M context))
+
+Full consistency pass over every June-2026 (NI) clutch record after the boss's 2026-06-07 ground-truth roster. The per-chick hatch records under `content/hatches/2026/` were already current (Horstabird's frontmatter already carried the LBRJ/pullet/red-rust correction and Adelbird's the dark-gray/white-spot observation); the staleness was isolated to the `/flock` roster and one diary descriptor.
+
+**What changed:**
+
+- **`content/flock-profiles.json` → Horstabird.** Was still "sire window Whitey Red Legs", down "brown with a yellow wash on the belly", no sex, no photo. Corrected to the 2026-06-07 ground truth: **a pullet sired by LBRJ** (the red rooster lost in the April predator wave), identified by the rust/red coming in on her face and throat — superseding the earlier WRL paternity window. `color_description` now records the rust tell, "no white head spot", and "a pullet"; `photo` wired to `june-2026/horstabird-IMG_5171.jpg`.
+- **`content/flock-profiles.json` → Adelbird.** Was "down color not yet recorded", no photo. Updated to **dark gray/black down with a white head spot** (confirmed 2026-06-07), with the note that she shares the white spot with Ingebird and is told apart by age/size (youngest/last to hatch). `photo` wired to `june-2026/adelbird-IMG_5184.jpg`. Sire window stays WRL (correct — only Horstabird was reattributed to LBRJ).
+- **`content/diary/2026-06-07-june-clutch-six.md`.** The line calling the five dark chicks "near-identical" flatly contradicted Horstabird's brown/rust identity. Softened to note her down is brown with the rust LBRJ tell, while explaining the mark is too subtle at this age to label her individually in the group shot — honest about the photo, consistent with the roster.
+
+**Decisions / non-changes (deliberate):**
+
+- **`egg_color` left at `"TBD (too young)"` for all six chicks.** In `flock-profiles.json` this field is the bird's *laying* color, not its hatch-egg color: the rooster entries read `"N/A (rooster)"` (a rooster hatched from an egg but lays none — only coherent if the field means "what this bird lays"), and the hens read their own lay color (Henrietta=Brown, Birdadonna=Blue). The hatch-egg color lives in the `egg_color` field of the `content/hatches/` records per SCHEMA.md. So "TBD (too young)" is correct for chicks; not touched.
+- **Hatch records unchanged** — all six June records verified current and consistent with the roster.
+- **No app/ edits** — `/flock` and `/hatches` render from JSON / the hatch directory; no bird names are hardcoded in components.
+- **Ingebird-vs-Adelbird shared white spot** left recorded as told-apart-by-age/size, no invented tiebreaker. **Henriessa-vs-Henridotta silver attribution** left unsettled/low-confidence on both records, no winner picked.
+
 ## [1.17.0] — 2026-06-04
 
 ### Added — June 2026 clutch (season-final hatch) + named the last two unnamed May chicks (Claude Opus 4.8 (1M context))
