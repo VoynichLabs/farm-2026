@@ -208,6 +208,26 @@
   ],
   "picks": [
     {
+      "date": "2026-06-08",
+      "ticker": "TSN",
+      "company": "Tyson Foods, Inc.",
+      "play": "SHARES — hold the high roost",
+      "conviction": 74,
+      "rating": "STRONG BUY",
+      "omen": "High-roost count up. Protein names lead. Tyson follows the perch.",
+      "frame": "/photos/markets/pick-tsn.jpg",
+      "frameTime": "2026-06-08 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "Dark/Black — HIGH-ROOST, top-left ledge",
+        "Tan/Brown — GROUND, back-right corner",
+        "Brown Striped — HIGH-ROOST, center"
+      ],
+      "mood": "Decisive. Feed-adjacent.",
+      "realQuote": "TSN last $58.73 (+3.25%) — real, 2026-06-08"
+    },
+    {
       "date": "2026-06-05",
       "ticker": "CORN",
       "company": "Teucrium Corn Fund",
@@ -578,40 +598,40 @@
     {
       "sym": "TSN",
       "name": "Tyson Foods",
-      "px": 56.88,
-      "chg": -0.37,
-      "date": "2026-06-05"
+      "px": 58.73,
+      "chg": 3.25,
+      "date": "2026-06-08"
     },
     {
       "sym": "PPC",
       "name": "Pilgrim's Pride",
-      "px": 29.22,
-      "chg": 0.86,
-      "date": "2026-06-05"
+      "px": 29.88,
+      "chg": 3.14,
+      "date": "2026-06-08"
     },
     {
       "sym": "ADM",
       "name": "Archer-Daniels-Midland",
-      "px": 83.37,
-      "chg": -0.88,
-      "date": "2026-06-05"
+      "px": 80.92,
+      "chg": -2.94,
+      "date": "2026-06-08"
     },
     {
       "sym": "MOO",
       "name": "VanEck Agribusiness ETF",
-      "px": 80.24,
-      "chg": 0.12,
-      "date": "2026-06-05"
+      "px": 78.78,
+      "chg": 0.22,
+      "date": "2026-06-08"
     },
     {
       "sym": "CORN",
       "name": "Teucrium Corn Fund",
-      "px": 17.15,
-      "chg": -0.46,
-      "date": "2026-06-05"
+      "px": 16.98,
+      "chg": -0.53,
+      "date": "2026-06-08"
     }
   ],
-  "realAsOf": "2026-06-05",
+  "realAsOf": "2026-06-08",
   "benchmark": {
     "flock": "+7.30% MTD (unaudited, imaginary)",
     "spy": "SPY $741.25 (+0.75% last session, real)"
