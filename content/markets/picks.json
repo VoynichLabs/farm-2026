@@ -208,6 +208,25 @@
   ],
   "picks": [
     {
+      "date": "2026-06-09",
+      "ticker": "PPC",
+      "company": "Pilgrim's Pride Corporation",
+      "play": "SHARES — follow the feeder",
+      "conviction": 68,
+      "rating": "BUY",
+      "omen": "Feed bucket traffic elevated. Pilgrim's margins holding. Flock stays long.",
+      "frame": "",
+      "frameTime": "2026-06-09 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "Black & White Speckled — GROUND, by feeder",
+        "Tan/Brown — GROUND, circling bucket"
+      ],
+      "mood": "Hungry. Constructive.",
+      "realQuote": "PPC last $29.2 (+0.07%) — real, 2026-06-09"
+    },
+    {
       "date": "2026-06-08",
       "ticker": "TSN",
       "company": "Tyson Foods, Inc.",
@@ -598,40 +617,40 @@
     {
       "sym": "TSN",
       "name": "Tyson Foods",
-      "px": 58.73,
-      "chg": 3.25,
-      "date": "2026-06-08"
+      "px": 56.99,
+      "chg": -2.96,
+      "date": "2026-06-09"
     },
     {
       "sym": "PPC",
       "name": "Pilgrim's Pride",
-      "px": 29.88,
-      "chg": 3.14,
-      "date": "2026-06-08"
+      "px": 29.2,
+      "chg": 0.07,
+      "date": "2026-06-09"
     },
     {
       "sym": "ADM",
       "name": "Archer-Daniels-Midland",
-      "px": 80.92,
-      "chg": -2.94,
-      "date": "2026-06-08"
+      "px": 80.22,
+      "chg": -0.87,
+      "date": "2026-06-09"
     },
     {
       "sym": "MOO",
       "name": "VanEck Agribusiness ETF",
-      "px": 78.78,
-      "chg": 0.22,
-      "date": "2026-06-08"
+      "px": 77.6,
+      "chg": -1.27,
+      "date": "2026-06-09"
     },
     {
       "sym": "CORN",
       "name": "Teucrium Corn Fund",
-      "px": 16.98,
-      "chg": -0.53,
-      "date": "2026-06-08"
+      "px": 17.02,
+      "chg": -0.23,
+      "date": "2026-06-09"
     }
   ],
-  "realAsOf": "2026-06-08",
+  "realAsOf": "2026-06-09",
   "benchmark": {
     "flock": "+7.30% MTD (unaudited, imaginary)",
     "spy": "SPY $741.25 (+0.75% last session, real)"
