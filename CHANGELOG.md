@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.19.0] — 2026-06-17
+
+### Changed — flock registry corrections: Birdsula formalized, Henrietta marked deceased (Claude Opus 4.8 (1M context))
+
+- **Birdsula** — the Easter Egger hen long tracked under the placeholder `EE hen 1` now carries her Boss-confirmed name. Her registry `name` is `Birdsula`; her notes preserve the old placeholder for lineage continuity and explicitly disambiguate her from the 2026 chick **Birdsilla** (a different bird, near-identical spelling). Birdadonna's dam reference was updated to `Birdsula (formerly 'EE hen 1')`.
+- **Henrietta** — matriarch and founder of the Henrietta line, marked `deceased` (Boss-confirmed 2026-06-17). Her passing had not been recorded in any system prior (flock data, diary, and git history all still showed her active); `deceased_date` and `cause_of_death` are flagged pending until the Boss provides them.
+- Roster after these corrections: 12 living named birds, 7 deceased on record.
+
+## [1.18.0] — 2026-06-07
+
+### Changed — hatch_date is now the single source of truth for bird age; the hardcoded "age" string is gone (Claude Opus 4.8 (1M context))
+
+The boss was tired of the flock registry showing stale ages ("days old", "~5 weeks", "~10-11 days") that were hand-written weeks ago and never updated. Age is now computed against the system clock on each render from one anchor — `hatch_date` — and there is no static `age` field left in the data to drift. Every bird carries a `hatch_date`; the ones we had to reason out are flagged and shown as estimates rather than presented as fact.
+
+**What changed:**
+
+- **`lib/content.ts` → `getBirdAgeLabel(hatchDate?, estimated?)`** replaces the old `getChickAgeLabel`. It generalizes the age ladder all the way up: `Day X` (0–13 days) → `X weeks` (14–55) → `X months` (56–364, 30-day months) → `Y years[ M months]` (365+, e.g. "2 years 2 months"). It parses the three date precisions `flock-profiles.json` can record — exact `YYYY-MM-DD`, month-only `YYYY-MM` (mid-month), year-only `YYYY` (mid-year) — and **prefixes approximate results with `~`**. The new `estimated` param (the bird's `hatch_date_estimated` flag) marks a reasoned, non-observed date: it forces the `~` prefix and adds a ` (est.)` suffix → `~2 years 2 months (est.)`. Returns `null` only for a genuinely unusable date. The tier math lives in a small `formatBirdAge(days)` helper (SRP).
+- **`app/flock/page.tsx`.** Renders **only** the computed label — the `bird.age` fallback badge and the `age` field were removed from the `FlockBird` types. Every card's age now comes solely from `getBirdAgeLabel(hatch_date, hatch_date_estimated)`. Estimated birds also get a `~` on the `HATCH` instrument field (and in the breeding-line panel) so a reasoned date never reads as observed.
+- **`content/flock-profiles.json`.** The hardcoded `age` string was deleted from **all 28** flock_birds. Every bird now has a `hatch_date`: **16 real** (recorded hatches) and **12 estimated** (`hatch_date_estimated: true`) — the 8 grown birds that had only a fuzzy age (Birdatha, Birdgit, Henrietta, Little Big Red Junior, Whitey Red Legs, EE hen 1, EE hen 2, Black Australorp hen) got a reasoned spring estimate, and the 4 month-only cohorts (Bronze turkey poults, Barred Rock chicks, Plymouth Rock chicks, the May TSC batch) were upgraded to a full ISO date anchored on their recorded purchase day. `age_note` was kept on every bird as provenance.
+
+**Why / how (facts worth flagging):**
+
+- **The original bug was "NaN months."** The old `getChickAgeLabel` choked on partial dates — `new Date("2026-04T00:00:00")` is `Invalid Date` → literal "NaN months" for the month-only cohorts. Fixed by precision-aware parsing; those cohorts now read live, flagged ages.
+- **Month-only cohorts were upgraded, not left partial.** The `2026-04` / `2026-05` batches were dated from their recorded purchase day (25-Apr / ~02-May) rather than anchored mid-month — purchase day is the better estimate for store-bought day-olds — and flagged `estimated`. The partial-date (`~`) code path is retained for any future month-only or year-only entry.
+- **Henrietta's Boss-confirmed edit is preserved.** Her "older than first recorded" fact now lives in an estimated `hatch_date` (2024-04-01 → "~2 years 2 months (est.)") plus her kept `age_note`; the "2 of 4 remaining" TSC edit (name + notes) is untouched.
+- **Estimates are honest, not invented precision.** Truly-unknown adults are dated only with the `hatch_date_estimated` flag set, so the UI always shows `~ … (est.)` rather than a hard number. Deceased birds carry estimated dates too (for a complete record) though their cards show the loss date, not a live age.
+- **Triskaidekaphobia rule, now enforced in the age compute.** Live-computing age means a chick exactly 13 days old would render "Day 13" — a literal "13" in the DOM, which Boss's rule forbids (and the old `getChickAgeLabel` had the same latent `days <= 13` branch). `formatBirdAge` now returns "2 weeks" at day 13 instead. No other tier can reach 13 (weeks cap at 7, months at 12, no bird nears 13 years), so the `/\b13\b/` claim in the `/flock` header is true for every realistic age.
+
 ## [1.17.1] — 2026-06-07
 
 ### Fixed — June (NI) clutch site-pass: Horstabird LBRJ/pullet correction, Adelbird down + clutch photos wired (Claude Opus 4.8 (1M context))

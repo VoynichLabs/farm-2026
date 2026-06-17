@@ -132,7 +132,8 @@
     {
       "name": "Birdatha",
       "breed": "Rhode Island Red",
-      "age": "2+ years",
+      "hatch_date": "2024-04-01",
+      "hatch_date_estimated": true,
       "age_note": "One of the oldest birds on the farm",
       "status": "deceased",
       "egg_color": "Brown",
@@ -146,7 +147,8 @@
     {
       "name": "Birdgit",
       "breed": "Speckled Sussex",
-      "age": "2+ years",
+      "hatch_date": "2024-04-01",
+      "hatch_date_estimated": true,
       "age_note": "One of the older birds",
       "status": "deceased",
       "egg_color": "Tan to light brown",
@@ -160,19 +162,22 @@
     {
       "name": "Henrietta",
       "breed": "Golden Laced Wyandotte",
-      "age": "2 years",
-      "age_note": "About 2 years old",
-      "status": "active",
+      "hatch_date": "2024-04-01",
+      "hatch_date_estimated": true,
+      "age_note": "A bit over 2 years old — Boss-confirmed 2026-06-07 she is older than first recorded",
+      "status": "deceased",
+      "cause_of_death": "Date and cause pending — Boss-confirmed deceased 2026-06-17",
       "egg_color": "Brown",
       "temperament": "Hardy, independent",
       "color_description": "Gold and black laced plumage, purple leg band on left leg",
       "photo": "birds/henrietta.jpg",
-      "notes": "Identified by purple leg band; hatched with chick band"
+      "notes": "Matriarch and founder of the Henrietta line (Henriella, Henriessa, Henridotta). Identified by purple leg band. Boss-confirmed deceased on 2026-06-17 — her passing had not been recorded in any system prior; exact date and cause pending."
     },
     {
       "name": "Little Big Red Junior",
       "breed": "Rhode Island Red (likely)",
-      "age": "Unknown",
+      "hatch_date": "2024-04-01",
+      "hatch_date_estimated": true,
       "age_note": "Adult rooster",
       "status": "deceased",
       "egg_color": "N/A (rooster)",
@@ -186,7 +191,8 @@
     {
       "name": "Whitey Red Legs",
       "breed": "Easter Egger × Rhode Island Red cross (rooster)",
-      "age": "Unknown",
+      "hatch_date": "2024-05-01",
+      "hatch_date_estimated": true,
       "age_note": "Adult rooster",
       "status": "deceased",
       "egg_color": "N/A (rooster)",
@@ -198,21 +204,23 @@
       "cause_of_death": "Disappeared without trace; presumed predation"
     },
     {
-      "name": "EE hen 1",
+      "name": "Birdsula",
       "breed": "Easter Egger",
-      "age": "1+ years",
+      "hatch_date": "2025-04-01",
+      "hatch_date_estimated": true,
       "age_note": "At least 1 year old",
       "status": "active",
       "egg_color": "Blue or green",
       "temperament": "Friendly, curious",
       "color_description": "Dark blue-black slate plumage, single comb",
       "photo": "birds/ee-hen-1.jpg",
-      "notes": "Darker of the two Easter Egger hens; likely mother of Birdadonna"
+      "notes": "Boss-named; was tracked under the placeholder 'EE hen 1' before her name was confirmed. Darker of the two Easter Egger hens; dam of Birdadonna and of the 2026 June clutch. Adult blue/green-egg layer — a distinct bird from the 2026 chick Birdsilla."
     },
     {
       "name": "EE hen 2",
       "breed": "Easter Egger",
-      "age": "1+ years",
+      "hatch_date": "2025-04-01",
+      "hatch_date_estimated": true,
       "age_note": "At least 1 year old",
       "status": "deceased",
       "deceased_date": "2026-05-16",
@@ -226,19 +234,20 @@
     {
       "name": "Birdadonna",
       "breed": "Easter Egger × RIR cross",
-      "age": "1 year",
+      "hatch_date": "2025-04-02",
       "age_note": "Hatched April 2, 2025 — second-generation farm-hatched hen",
       "status": "active",
       "egg_color": "Blue",
       "temperament": "Friendly, active",
       "color_description": "Blue-gray body with golden auburn hackle",
       "photo": "birds/birdadonna-2.jpg",
-      "notes": "Hatched in incubator on boss's desk; dam: EE hen 1, sire: Little Big Red Junior. Survived the early-April 2026 predator wave that took Birdgit, Birdatha, and the Black Australorp. Laid the egg (03-April-2026) that hatched as Birdadotta on 25-April-2026."
+      "notes": "Hatched in incubator on boss's desk; dam: Birdsula (formerly 'EE hen 1'), sire: Little Big Red Junior. Survived the early-April 2026 predator wave that took Birdgit, Birdatha, and the Black Australorp. Laid the egg (03-April-2026) that hatched as Birdadotta on 25-April-2026."
     },
     {
       "name": "Black Australorp hen",
       "breed": "Black Australorp",
-      "age": "Unknown",
+      "hatch_date": "2024-04-01",
+      "hatch_date_estimated": true,
       "age_note": "Adult",
       "status": "deceased",
       "egg_color": "Brown (large)",
@@ -252,7 +261,6 @@
     {
       "name": "Birdadette",
       "breed": "Easter Egger",
-      "age": "About one month",
       "hatch_date": "2026-04-06",
       "age_note": "Hatched 06-April-2026 — about a month old as of early May",
       "status": "active",
@@ -266,7 +274,6 @@
     {
       "name": "Turkey poults (3)",
       "breed": "White Broad-Breasted Turkey",
-      "age": "~5 weeks",
       "hatch_date": "2026-03-31",
       "age_note": "Purchased 07-April-2026 from local source — estimated ~5 weeks old as of early May",
       "status": "active",
@@ -278,23 +285,21 @@
       "location": "coop"
     },
     {
-      "name": "Tractor Supply chicks (4)",
+      "name": "Tractor Supply chicks (2 of 4 remaining)",
       "breed": "Brahma or Cream Legbar (uncertain)",
-      "age": "~5-6 weeks",
       "hatch_date": "2026-03-27",
-      "age_note": "Purchased 07-April-2026 from Tractor Supply, straight run — about 5-6 weeks old as of early May",
+      "age_note": "Purchased 07-April-2026 from Tractor Supply, straight run. ~10 weeks old as of 2026-06-07.",
       "status": "active",
       "egg_color": "TBD",
       "temperament": "Active, alert",
       "color_description": "Varied chick down feathering out",
       "photo": null,
-      "notes": "4 chicks from Tractor Supply, straight run (unsexed). Brahma or Cream Legbar — breed uncertain. Graduated to the coop with the white turkey poults and the older juveniles.",
+      "notes": "Originally 4 chicks from Tractor Supply, straight run (unsexed), Brahma or Cream Legbar — breed uncertain. 2 of the 4 have since been lost (Boss-confirmed 2026-06-07; date/cause not specified). 2 remain, in the coop with the white turkey poults and the older juveniles.",
       "location": "coop"
     },
     {
       "name": "Birdadotta",
       "breed": "Easter Egger × RIR cross",
-      "age": "~24 days",
       "hatch_date": "2026-04-25",
       "age_note": "Hatched April 25, 2026 in incubator from Birdadonna's egg",
       "status": "active",
@@ -308,8 +313,8 @@
     {
       "name": "Bronze turkey poults (2)",
       "breed": "Bronze Broad-Breasted Turkey",
-      "age": "~10-11 days",
-      "hatch_date": "2026-04",
+      "hatch_date": "2026-04-25",
+      "hatch_date_estimated": true,
       "age_note": "Purchased 25-April-2026 from Tractor Supply",
       "status": "active",
       "egg_color": "N/A (poults)",
@@ -322,8 +327,8 @@
     {
       "name": "Barred Rock chicks (2)",
       "breed": "Barred Plymouth Rock",
-      "age": "~10-11 days",
-      "hatch_date": "2026-04",
+      "hatch_date": "2026-04-25",
+      "hatch_date_estimated": true,
       "age_note": "Purchased 25-April-2026 from Tractor Supply",
       "status": "active",
       "egg_color": "TBD (too young)",
@@ -336,8 +341,8 @@
     {
       "name": "Plymouth Rock chicks (2)",
       "breed": "Plymouth Rock (variety TBD)",
-      "age": "~10-11 days",
-      "hatch_date": "2026-04",
+      "hatch_date": "2026-04-25",
+      "hatch_date_estimated": true,
       "age_note": "Purchased 25-April-2026 from Tractor Supply",
       "status": "active",
       "egg_color": "TBD (too young)",
@@ -350,7 +355,6 @@
     {
       "name": "Cackle Hatchery chicks (15)",
       "breed": "Mixed — Exotic Island Fowl Special (5) + Rare Chick Special (10)",
-      "age": "~4 weeks",
       "hatch_date": "2026-04-08",
       "age_note": "Shipped 08-April-2026 from Cackle Hatchery, Lebanon MO (Order #519118), hatched day of shipment — about 4 weeks old as of early May",
       "status": "active",
@@ -397,7 +401,6 @@
     {
       "name": "March juveniles (6)",
       "breed": "1 Easter Egger + 2 Blue Laced Red Wyandotte + 3 Cream Legbar",
-      "age": "~10 weeks",
       "hatch_date": "2026-02-26",
       "age_note": "Purchased early March 2026 from Tractor Supply, ~1 week old at purchase — about 10 weeks old as of early May",
       "status": "active",
@@ -411,8 +414,8 @@
     {
       "name": "Tractor Supply chicks — May batch (6)",
       "breed": "TBD",
-      "age": "Days old",
-      "hatch_date": "2026-05",
+      "hatch_date": "2026-05-02",
+      "hatch_date_estimated": true,
       "age_note": "Purchased ~02-May-2026 from Tractor Supply (one week after the 25-April Bronze turkey + Plymouth Rock haul)",
       "status": "active",
       "egg_color": "TBD (too young)",
@@ -425,7 +428,6 @@
     {
       "name": "Birdthazar",
       "breed": "Easter Egger lineage (cross TBD)",
-      "age": "Days old",
       "hatch_date": "2026-05-16",
       "age_note": "Hatched 06:04 EDT, 2026-05-16 from a blue egg set 2026-04-25. Provisional name pending male confirmation.",
       "status": "active",
@@ -439,7 +441,6 @@
     {
       "name": "Henriella",
       "breed": "Wyandotte × RIR cross",
-      "age": "Days old",
       "hatch_date": "2026-05-16",
       "age_note": "Hatched ≤21:21 EDT, 2026-05-16 from a brown egg set 2026-04-25",
       "status": "active",
@@ -453,7 +454,6 @@
     {
       "name": "Birdsilla",
       "breed": "Easter Egger lineage (cross TBD)",
-      "age": "Days old",
       "hatch_date": "2026-05-16",
       "age_note": "Hatched 22:12 EDT, 2026-05-16 from a blue egg marked 4/25",
       "status": "active",
@@ -467,7 +467,6 @@
     {
       "name": "Birdimir",
       "breed": "Easter Egger lineage (cross TBD)",
-      "age": "Days old",
       "hatch_date": "2026-06-02",
       "age_note": "Hatched 2026-06-02 from a blue egg, June (new-incubator) clutch set ~2026-05-12. First of six June chicks.",
       "status": "active",
@@ -481,7 +480,6 @@
     {
       "name": "Ingebird",
       "breed": "Easter Egger lineage (cross TBD)",
-      "age": "Days old",
       "hatch_date": "2026-06-02",
       "age_note": "Hatched 2026-06-02 from a blue egg, June (new-incubator) clutch. Photographed wet ~15:58 EDT.",
       "status": "active",
@@ -495,7 +493,6 @@
     {
       "name": "Henriessa",
       "breed": "Golden Laced Wyandotte cross (Henrietta line)",
-      "age": "Days old",
       "hatch_date": "2026-06-03",
       "age_note": "Hatched the morning of 2026-06-03 from a brown egg, June (new-incubator) clutch.",
       "status": "active",
@@ -509,7 +506,6 @@
     {
       "name": "Horstabird",
       "breed": "Easter Egger lineage (cross TBD)",
-      "age": "Days old",
       "hatch_date": "2026-06-03",
       "age_note": "Hatched 16:44 EDT 2026-06-03 from a blue egg (Egg #4), June (new-incubator) clutch. Assisted hatch.",
       "status": "active",
@@ -523,7 +519,6 @@
     {
       "name": "Henridotta",
       "breed": "Golden Laced Wyandotte cross (Henrietta line)",
-      "age": "Days old",
       "hatch_date": "2026-06-03",
       "age_note": "Hatched ≈18:22 EDT 2026-06-03 from Henrietta's own brown egg (Egg #7, marked 5/10), June (new-incubator) clutch.",
       "status": "active",
@@ -537,7 +532,6 @@
     {
       "name": "Adelbird",
       "breed": "Easter Egger lineage (cross TBD)",
-      "age": "Days old",
       "hatch_date": "2026-06-04",
       "age_note": "Hatched overnight 2026-06-03 → 2026-06-04 from a blue egg (Egg #5, day 23). The sixth and final chick of the 2026 season.",
       "status": "active",

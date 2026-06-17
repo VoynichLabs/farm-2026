@@ -1,11 +1,14 @@
 /**
- * Author: Claude Opus 4.6
- * Date: 09-Apr-2026
+ * Author: Claude Opus 4.8 (1M context)
+ * Date: 07-Jun-2026
  * PURPOSE: Server-side content loader for MDX/JSON content. Reads projects, diary entries,
  *   field notes, flock profiles, and materials from the content/ directory using gray-matter.
  *   Field notes are the weekly farm update system (replaces diary for public-facing updates).
  * SRP/DRY check: Pass — all content loading flows through this single module.
- *   getChickAgeLabel() computes dynamic age from hatch_date for chick entries.
+ *   getBirdAgeLabel() is the single age authority: it computes a live age label from a
+ *   bird's hatch_date (full, partial, or year-only) on every render. Every bird now
+ *   carries a hatch_date, so there is no hardcoded "age" string left to go stale —
+ *   estimated dates are flagged (hatch_date_estimated) and surfaced as "(est.)".
  */
 import fs from "fs";
 import path from "path";
@@ -58,8 +61,10 @@ export interface Breed {
 export interface FlockBird {
   name: string;
   breed: string;
-  age: string;
   hatch_date?: string;
+  // True when hatch_date is a reasoned estimate (no recorded hatch) rather than
+  // an observed date — drives the "~ … (est.)" marker on the live age label.
+  hatch_date_estimated?: boolean;
   age_note: string;
   status: string;
   egg_color: string;
@@ -72,22 +77,89 @@ export interface FlockBird {
   cause_of_death?: string;
 }
 
+// Turn a whole-day count into the human age tier:
+//   0–13   → "Day X"
+//   14–55  → "X weeks"
+//   56–364 → "X months"   (30-day months)
+//   365+   → "Y years[ M months]"  (365-day years, remainder in 30-day months)
+// 30/365 approximations are intentional — they keep the farm's casual age
+// language ("2 months", "1 year 2 months") rather than drifting into exact
+// calendar arithmetic the registry never speaks.
+//
+// Triskaidekaphobia rule (Boss has it — see FlockGemStrip + CHANGELOG): the
+// literal "13" must never reach the DOM. A 13-day-old bird is shown as
+// "2 weeks" (one day early) instead of "Day 13". No higher tier can produce a
+// 13 — weeks cap at 7 (≤55 days), months at 12 (≤364 days), and no farm bird
+// comes near 13 years — so "Day 13" is the only reachable 13 to suppress.
+function formatBirdAge(days: number): string {
+  if (days === 13) return "2 weeks";
+  if (days <= 13) return `Day ${days}`;
+  if (days <= 55) {
+    const weeks = Math.floor(days / 7);
+    return `${weeks} week${weeks !== 1 ? "s" : ""}`;
+  }
+  if (days < 365) {
+    const months = Math.floor(days / 30);
+    return `${months} month${months !== 1 ? "s" : ""}`;
+  }
+  const years = Math.floor(days / 365);
+  const months = Math.floor((days % 365) / 30);
+  const yearPart = `${years} year${years !== 1 ? "s" : ""}`;
+  if (months === 0) return yearPart;
+  return `${yearPart} ${months} month${months !== 1 ? "s" : ""}`;
+}
+
 /**
- * Compute a human-readable age label from a hatch date.
- * Days 0–13 → "Day X", 14–55 → "X weeks", 56+ → "X months".
- * Returns null if no hatch_date is provided.
+ * The single source of truth for a bird's age: compute a live, human-readable
+ * label from its hatch date against the system clock on every render. This is
+ * what keeps the flock registry from ever showing a stale hardcoded "age".
+ *
+ * Accepts three date precisions, mirroring what flock-profiles.json records:
+ *   - "YYYY-MM-DD" (exact)        → precise label, e.g. "2 months"
+ *   - "YYYY-MM"    (month known)  → anchored to mid-month, prefixed "~"
+ *   - "YYYY"       (year known)   → anchored to mid-year, prefixed "~"
+ * The "~" prefix marks a label derived from an approximate hatch date so the
+ * imprecision is visible rather than implied.
+ *
+ * `estimated` (the bird's hatch_date_estimated flag) marks a hatch date that was
+ * reasoned out rather than observed — e.g. an adult hen with only a fuzzy "over
+ * 2 years", or a store-bought cohort dated from its purchase day. An estimated
+ * date is inherently approximate, so it is always prefixed "~" and suffixed
+ * " (est.)" → "~2 years 2 months (est.)" — keeping the guess honest on the card.
+ *
+ * Returns null only when there is genuinely no usable date (absent, malformed,
+ * or in the future). Every bird in the registry now carries a hatch_date, so in
+ * practice the null branch is only the safety net for a future date-less entry.
  */
-export function getChickAgeLabel(hatchDate?: string): string | null {
+export function getBirdAgeLabel(hatchDate?: string, estimated?: boolean): string | null {
   if (!hatchDate) return null;
-  const hatch = new Date(hatchDate + "T00:00:00");
+
+  let hatch: Date;
+  let approximate = false;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(hatchDate)) {
+    hatch = new Date(`${hatchDate}T00:00:00`);
+  } else if (/^\d{4}-\d{2}$/.test(hatchDate)) {
+    // Month known but not the day — anchor to the middle of the month.
+    hatch = new Date(`${hatchDate}-15T00:00:00`);
+    approximate = true;
+  } else if (/^\d{4}$/.test(hatchDate)) {
+    // Only the year is known — anchor to mid-year.
+    hatch = new Date(`${hatchDate}-07-01T00:00:00`);
+    approximate = true;
+  } else {
+    return null;
+  }
+  if (Number.isNaN(hatch.getTime())) return null;
+
   const now = new Date();
   const days = Math.floor((now.getTime() - hatch.getTime()) / (1000 * 60 * 60 * 24));
   if (days < 0) return null;
-  if (days <= 13) return `Day ${days}`;
-  const weeks = Math.floor(days / 7);
-  if (days <= 55) return `${weeks} week${weeks !== 1 ? "s" : ""}`;
-  const months = Math.floor(days / 30);
-  return `${months} month${months !== 1 ? "s" : ""}`;
+
+  // An estimated hatch date is approximate by definition — show the "~" too.
+  if (estimated) approximate = true;
+  const label = formatBirdAge(days);
+  const prefixed = approximate ? `~${label}` : label;
+  return estimated ? `${prefixed} (est.)` : prefixed;
 }
 
 export interface IncubatorClutch {

@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.7 (1M context)
- * Date: 2026-05-11
+ * Author: Claude Opus 4.8 (1M context)
+ * Date: 07-Jun-2026
  * PURPOSE: /flock — the breeding-program memory surface. Per
  *   docs/11-May-2026-hermes-breeding-showcase-notes.md, the openclaw brief
  *   (docs/09-May-2026-openclaw-farm-ops-story-design-brief.md §9, §10, §17.4,
@@ -30,13 +30,17 @@
  *
  * SRP/DRY check: Pass — page composes BirdCard primitives and a single
  *   NameLineagePanel against flock-profiles.json + a small local lineage
- *   map. No data fetch elsewhere. The triskaidekaphobia rule
- *   (memory/feedback_no_thirteen.md) is honoured — no derived count
- *   equal to 13 is ever rendered.
+ *   map. No data fetch elsewhere. Age is never hardcoded here: every bird
+ *   carries a hatch_date, so every card's age comes solely from
+ *   getBirdAgeLabel(hatch_date, hatch_date_estimated) (lib/content.ts),
+ *   computed live on each render — there is no static `age` string left to
+ *   show, and estimated dates render with a "~ … (est.)" marker. The
+ *   triskaidekaphobia rule (memory/feedback_no_thirteen.md) is honoured —
+ *   no derived count equal to 13 is ever rendered.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getFlockProfiles, getChickAgeLabel, type IncubatorClutch } from "@/lib/content";
+import { getFlockProfiles, getBirdAgeLabel, type IncubatorClutch } from "@/lib/content";
 import Image from "next/image";
 import FlockGemStrip from "@/app/components/flock/FlockGemStrip";
 
@@ -343,10 +347,15 @@ export default function FlockPage() {
               {lineageGenetic.map((b) => {
                 const ln = LINEAGE[b.name];
                 const isLost = b.status === "deceased";
+                const hatchFmt = fmtDate(b.hatch_date);
+                // Estimated hatch dates carry a "~" so the lineage strip never
+                // presents a reasoned guess as an observed date.
                 const dateStr = isLost
                   ? fmtDate(b.deceased_date) || "—"
-                  : fmtDate(b.hatch_date) || (b.age ?? "—");
-                const dateLabel = isLost ? "LOST" : b.hatch_date ? "HATCH" : "AGE";
+                  : hatchFmt
+                    ? b.hatch_date_estimated ? `~${hatchFmt}` : hatchFmt
+                    : "—";
+                const dateLabel = isLost ? "LOST" : "HATCH";
                 return (
                   <div
                     key={b.name}
@@ -628,8 +637,8 @@ export default function FlockPage() {
 interface FlockBird {
   name: string;
   breed: string;
-  age: string;
   hatch_date?: string;
+  hatch_date_estimated?: boolean;
   age_note: string;
   status: string;
   egg_color: string;
@@ -674,11 +683,19 @@ function BirdCard({
 
   const ln = LINEAGE[bird.name];
   const hatchStr = fmtDate(bird.hatch_date);
-  const dynamicAge = getChickAgeLabel(bird.hatch_date);
+  // Live age computed from hatch_date — the single source of truth. Every bird
+  // carries a hatch_date, so this is the only age the card ever shows; the
+  // estimated flag adds the "~ … (est.)" marker for reasoned (non-observed) dates.
+  const dynamicAge = getBirdAgeLabel(bird.hatch_date, bird.hatch_date_estimated);
 
-  // Instrument-strip fields: only render the ones a bird actually has.
+  // Instrument-strip fields: only render the ones a bird actually has. An
+  // estimated hatch date is prefixed "~" so the date itself reads as a guess.
   const instrumentFields: Array<{ label: string; value: string }> = [];
-  if (hatchStr) instrumentFields.push({ label: "HATCH", value: hatchStr });
+  if (hatchStr)
+    instrumentFields.push({
+      label: "HATCH",
+      value: bird.hatch_date_estimated ? `~${hatchStr}` : hatchStr,
+    });
   if (dynamicAge) instrumentFields.push({ label: "AGE", value: dynamicAge });
   if (ln?.dam && ln?.sire)
     instrumentFields.push({ label: "PAIR", value: `${ln.dam} × ${ln.sire}` });
@@ -735,13 +752,9 @@ function BirdCard({
         <h3 className="text-xl font-bold font-serif text-forest mb-0.5">{bird.name}</h3>
         <p className="text-sm text-wood font-medium mb-3">{bird.breed}</p>
 
-        {/* Badges */}
+        {/* Badges. Age is never a badge: it lives in the instrument strip above,
+            computed live from hatch_date. The only badge here is egg color. */}
         <div className="flex flex-wrap gap-2 mb-4">
-          {!hatchStr && (
-            <span className="inline-block text-xs bg-forest/10 text-forest px-2 py-1 rounded">
-              {bird.age}
-            </span>
-          )}
           {bird.egg_color !== "N/A (rooster)" && (
             <span
               className={`inline-block text-xs px-2 py-1 rounded ${eggColorBadgeColors[bird.egg_color] || "bg-gray-500 text-white"}`}
