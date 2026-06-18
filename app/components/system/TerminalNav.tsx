@@ -1,6 +1,6 @@
 "use client";
 /**
- * Author: Claude Opus 4.7 (1M context)
+ * Author: Claude Opus 4.7 (1M context); Claude Opus 4.8 (1M context) (Bubba) (edit 18-June-2026 — added the /markets nav link per Boss, surfacing the Poultry Capital Markets page from direct-URL-only into the nav)
  * Date: 10-May-2026
  * PURPOSE: Sitewide top bar in a terminal / mission-control aesthetic.
  *   Replaces the cream pill-link nav (v1.16.0 and prior) per Boss's
@@ -34,6 +34,7 @@ const NAV_LINKS: { href: string; label: string }[] = [
   { href: "/gallery/gems", label: "gallery" },
   { href: "/yard", label: "yard" },
   { href: "/flock", label: "flock" },
+  { href: "/markets", label: "markets" },
   { href: "/field-notes", label: "notes" },
   { href: "/projects", label: "projects" },
 ];

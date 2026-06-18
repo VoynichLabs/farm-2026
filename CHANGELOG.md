@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.20.0] — 2026-06-18
+
+### Added — Poultry Capital Markets surfaced in site nav (Claude Opus 4.8 (1M context) (Bubba))
+
+- Added a `markets` link to `TerminalNav` (`app/components/system/TerminalNav.tsx`), placed after `flock`. The Poultry Capital Markets page (`/markets`) — the satirical flock-driven stock/options picker — had been live since its build but deliberately kept out of the nav (direct-URL only). Per Boss (2026-06-18, #meet-the-lobsters), it is now surfaced innocuously in the nav alongside the other lowercase mono links. No change to the page itself; this only adds the navigation entry.
+
 ## [1.19.0] — 2026-06-17
 
 ### Changed — flock registry corrections: Birdsula formalized, Henrietta marked deceased (Claude Opus 4.8 (1M context))
