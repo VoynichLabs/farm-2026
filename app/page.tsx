@@ -1,17 +1,24 @@
 /**
- * Author: Claude Opus 4.7 (1M context) / Claude Sonnet 4.6
- * Date: 10-May-2026 / updated 20-May-2026
+ * Author: Claude Opus 4.7 (1M context) / Claude Sonnet 4.6 / Claude Opus 4.8 (1M context)
+ * Date: 10-May-2026 / updated 20-May-2026 / refreshed 22-Jun-2026
  * PURPOSE: Homepage — terminal / mission-control composition. From top to
  *   bottom: TerminalNav (in layout.tsx), then this page renders:
- *     1. 2026 Hatchlings hero — 5 incubator chicks front and center.
+ *     1. 2026 Hatchlings hero — the incubator chicks front and center,
+ *        newest hatch first (now includes the June NI clutch's Birdimir).
  *     2. SystemBanner — short story strip about the live pipeline.
  *     3. GuardianHomeBadge + HomeCameraStage — live camera feeds.
  *     4. RecentGemsRail — client-side fetch of curated moments.
  *     5. A tight nav rail to the deeper pages, file-listing styled.
  *     6. A short status-line footer.
  *
+ *   Hatchling ages are computed live from each chick's hatch_date via
+ *   getBirdAgeLabel (the age SSoT established in CHANGELOG 1.18.0) — there is
+ *   no hardcoded day count to drift, and the tile count is derived from the
+ *   roster, never a literal.
+ *
  * SRP/DRY check: Pass — composition only. Each sub-piece owns its own
- *   data + empty states.
+ *   data + empty states. Age uses the shared getBirdAgeLabel helper rather
+ *   than a re-implemented date math.
  */
 import Image from "next/image";
 import Link from "next/link";
@@ -20,6 +27,7 @@ import HomeCameraStage from "@/app/components/home/HomeCameraStage";
 import RecentGemsRail from "@/app/components/home/RecentGemsRail";
 import SystemBanner from "@/app/components/home/SystemBanner";
 import GemsStatFooter from "@/app/components/gems/GemsStatFooter";
+import { getBirdAgeLabel } from "@/lib/content";
 
 const DEEPER_LINKS: { href: string; label: string; hint: string }[] = [
   { href: "/projects/guardian", label: "guardian", hint: "live cameras + PTZ + dashboard" },
@@ -34,55 +42,69 @@ const DEEPER_LINKS: { href: string; label: string; hint: string }[] = [
 type Chick = {
   name: string;
   breed: string;
-  hatch: string;
-  ageDays: number;
+  hatch: string; // short display label, e.g. "Jun 2"
+  hatchISO: string; // age source of truth — live age derived from this date
   photo: string | null;
 };
 
+// Newest hatch first. Age is never stored here — only the hatch date — so the
+// "b. {date} · {age}" line is computed live on every render and can't go stale
+// (the bug CHANGELOG 1.18.0 fixed for /flock). Two Birdadette frames are kept
+// intentionally (held + portrait); the section count below de-dupes by name.
 const HATCHLINGS_2026: Chick[] = [
   {
-    name: "Birdadette",
-    breed: "Easter Egger",
-    hatch: "Apr 6",
-    ageDays: 44,
-    photo: "/photos/may-2026/birdadette-may20-held.jpg",
-  },
-  {
-    name: "Birdadette",
-    breed: "Easter Egger",
-    hatch: "Apr 6",
-    ageDays: 44,
-    photo: "/photos/may-2026/birdadette-may20-portrait.jpg",
-  },
-  {
-    name: "Birdadotta",
-    breed: "EE × RIR",
-    hatch: "Apr 25",
-    ageDays: 25,
-    photo: "/photos/may-2026/birdadotta-s7-2026-05-18.png",
+    name: "Birdimir",
+    breed: "EE lineage",
+    hatch: "Jun 2",
+    hatchISO: "2026-06-02",
+    photo: "/photos/birds/IMG_6233-birdimir-juvenile-22jun2026.jpg",
   },
   {
     name: "Birdthazar",
     breed: "EE (probable cockerel)",
     hatch: "May 16",
-    ageDays: 4,
+    hatchISO: "2026-05-16",
     photo: "/photos/may-2026/birdthazar-day4-portrait.jpg",
   },
   {
     name: "Henriella",
     breed: "Wyandotte × RIR",
     hatch: "May 16",
-    ageDays: 4,
+    hatchISO: "2026-05-16",
     photo: "/photos/may-2026/chick2-day4-portrait.jpg",
   },
   {
     name: 'Chick #3 "Monster Leg"',
     breed: "EE lineage",
     hatch: "May 16",
-    ageDays: 4,
+    hatchISO: "2026-05-16",
     photo: "/photos/may-2026/chick3-day4-portrait.jpg",
   },
+  {
+    name: "Birdadotta",
+    breed: "EE × RIR",
+    hatch: "Apr 25",
+    hatchISO: "2026-04-25",
+    photo: "/photos/may-2026/birdadotta-s7-2026-05-18.png",
+  },
+  {
+    name: "Birdadette",
+    breed: "Easter Egger",
+    hatch: "Apr 6",
+    hatchISO: "2026-04-06",
+    photo: "/photos/may-2026/birdadette-may20-held.jpg",
+  },
+  {
+    name: "Birdadette",
+    breed: "Easter Egger",
+    hatch: "Apr 6",
+    hatchISO: "2026-04-06",
+    photo: "/photos/may-2026/birdadette-may20-portrait.jpg",
+  },
 ];
+
+// Distinct birds shown (Birdadette appears twice) — derived, never a literal.
+const HATCHLING_BIRD_COUNT = new Set(HATCHLINGS_2026.map((c) => c.name)).size;
 
 export default function Home() {
   return (
@@ -92,11 +114,11 @@ export default function Home() {
       <section className="border-b border-guardian-border">
         <div className="max-w-7xl mx-auto px-3 py-4">
           <div className="text-emerald-400 tracking-wider mb-3 font-mono text-[0.78rem]">
-            ▸ 2026 INCUBATOR HATCH — {HATCHLINGS_2026.length} chicks
+            ▸ 2026 INCUBATOR HATCH — {HATCHLING_BIRD_COUNT} chicks
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {HATCHLINGS_2026.map((chick) => (
-              <div key={chick.name} className="flex flex-col gap-1.5">
+            {HATCHLINGS_2026.map((chick, idx) => (
+              <div key={`${chick.name}-${idx}`} className="flex flex-col gap-1.5">
                 {chick.photo ? (
                   <div className="w-full h-56 border border-guardian-border bg-guardian-card/20 flex items-center justify-center overflow-hidden">
                     <Image
@@ -119,7 +141,7 @@ export default function Home() {
                   <div className="text-emerald-300">{chick.name}</div>
                   <div className="text-guardian-muted">{chick.breed}</div>
                   <div className="text-guardian-muted">
-                    b. {chick.hatch} · {chick.ageDays}d
+                    b. {chick.hatch} · {getBirdAgeLabel(chick.hatchISO)}
                   </div>
                 </div>
               </div>

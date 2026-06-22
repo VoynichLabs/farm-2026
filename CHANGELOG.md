@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.21.0] — 2026-06-22
+
+### Added — Birdimir "then & now" on /hatches; homepage hatchling ages go live (Claude Opus 4.8 (1M context))
+
+**What:** Birdimir — the first chick of the June (NI) clutch — now has both a hatch-day photo (2 Jun 2026) and a juvenile photo (22 Jun 2026) in the repo, a filled-in hatch record, a featured "then → now" comparison block at the top of `/hatches`, and a fresh tile on the homepage hatchling hero. The homepage hero's hardcoded ages were also replaced with live computation.
+
+**Why:** The hatch ledger exists to calibrate hatch-day down against grown-out plumage (`content/hatches/SCHEMA.md`), but no chick had a side-by-side that made that arc legible — and Birdimir's record had an empty `photos` array. Separately, the homepage hatchling hero still showed the May spring chicks with frozen day counts (e.g. "44d", true on 20 May), the exact stale-age problem CHANGELOG 1.18.0 fixed for `/flock`, and carried no June-clutch bird at all.
+
+**How:**
+
+- **Photos** — `public/photos/birds/IMG_5089-birdimir-hatch-02jun2026.jpg` (wet buff down in the egg basket) and `IMG_6233-birdimir-juvenile-22jun2026.jpg` (mostly-white juvenile, black wing/tail speckles, on a coop rail), following the existing `IMG_<n>-<descriptor>-<DDmmmYYYY>.jpg` convention. Originals copied, not moved.
+- **`content/hatches/2026/2026-06-02-01-birdimir.md`** — `photos[]` now carries the two real paths + captions (confidence high); an append-only `phenotype_observations` entry dated 2026-06-22 (age_days 20) records the white juvenile plumage with black flecking and notes the head-spot discriminator from Ingebird is no longer reliable now that both feathered out white. `current_location` left as `brooder` (the coop rail is a photo location, not a confirmed move).
+- **`app/components/hatches/ThenAndNow.tsx`** (new) — a purely presentational, typed then→now block in the calm-farm palette (cream card, forest serif, guardian-bg instrument strips). `/hatches` selects Birdimir's record by id, derives the pair from the record itself (first photo = hatch day; last photo = most recent; dates/age from `hatch_date` + the latest phenotype observation), and the block self-suppresses until two photos exist. No per-chick hardcoding, no new data source.
+- **`app/hatches/page.tsx`** — renders the feature above the records grid; brought to the standard file-header format while edited.
+- **`app/page.tsx`** — homepage hatchling hero adds Birdimir (newest-first) with the juvenile photo, and swaps each tile's hardcoded `ageDays` for live `getBirdAgeLabel(hatchISO)` (the age SSoT from 1.18.0, with its day-13 guard). The tile count is now derived and de-duped by name (Birdadette appears twice) rather than a literal, and the duplicate-name React key was made unique.
+- **No change to `/markets`** — its frames are coop-cam stock-pick stills from a separate pipeline; the intentional, route-scoped maximalist aesthetic is untouched.
+
 ## [1.20.0] — 2026-06-18
 
 ### Added — Poultry Capital Markets surfaced in site nav (Claude Opus 4.8 (1M context) (Bubba))

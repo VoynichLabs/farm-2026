@@ -1,17 +1,31 @@
 /**
- * /hatches — event ledger for every 2026 incubator hatch.
+ * Author: Claude Opus 4.8 (1M context)
+ * Date: 10-May-2026 / updated 22-Jun-2026
+ * PURPOSE: /hatches — event ledger for every 2026 incubator hatch. Reads from
+ *   content/hatches/2026/*.md (per-chick source of truth, schema in
+ *   content/hatches/SCHEMA.md). Each card is a hatch event, not a
+ *   current-state roster row — /flock is the current-state surface.
  *
- * Reads from content/hatches/2026/*.md (per-chick source of truth, schema in
- * content/hatches/SCHEMA.md). Each card is a hatch event, not a current-state
- * roster row — /flock is the current-state surface.
+ *   Layout: terminal hero strip → Birdimir "then → now" feature (hatch-day vs
+ *   day-20, the worked example of the ledger's down-color → adult-plumage
+ *   calibration purpose) → per-chick cards (newest first) → footer link back
+ *   to /flock for live state. No 13s in derived counts.
  *
- * Layout: terminal hero strip → per-chick cards (newest first) → footer link
- * back to /flock for live state. No 13s in derived counts.
+ * SRP/DRY check: Pass — page selects records via getHatchRecords and composes
+ *   HatchCard + the presentational ThenAndNow component. The then/now data is
+ *   derived from Birdimir's own HatchRecord (photos[], hatch_date, latest
+ *   phenotype observation) — no per-chick hardcoding, no new data source.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { getHatchRecords, type HatchRecord, type HatchObservation } from "@/lib/content";
+import ThenAndNow, { type ThenNowPhoto } from "@/app/components/hatches/ThenAndNow";
+
+// Birdimir — first chick of the June (NI) clutch — is the worked example for
+// the then/now feature. Selected by canonical id; the block self-suppresses if
+// the record or its two photos aren't present yet.
+const THEN_NOW_HATCH_ID = "2026-06-02-01";
 
 export const metadata: Metadata = {
   title: "Hatches 2026",
@@ -31,8 +45,60 @@ const firstPhoto = (r: HatchRecord) => r.photos.find((p) => p.path);
 const observed = (o: HatchObservation) =>
   (o.observed ?? {}) as Record<string, string | undefined>;
 
+// repo-relative "public/photos/..." → web "/photos/..." (same strip HatchCard
+// uses for next/image src).
+const webPath = (p: string) => `/${p.replace(/^public\//, "")}`;
+
+// Derive then/now props from a hatch record. First real photo = hatch day
+// (age 0); last real photo = most recent. Dates and age come from the record
+// itself (hatch_date + the latest phenotype observation) so nothing is retyped.
+// Returns null unless the record has at least two committed photos — the
+// feature self-suppresses until both frames exist.
+type ThenNowData = {
+  name: string;
+  framing: string;
+  then: ThenNowPhoto;
+  now: ThenNowPhoto;
+};
+function buildThenNow(record: HatchRecord | undefined): ThenNowData | null {
+  if (!record) return null;
+  const withPaths = record.photos.filter((p) => p.path);
+  if (withPaths.length < 2) return null;
+
+  const first = withPaths[0];
+  const last = withPaths[withPaths.length - 1];
+  const name = record.name && record.name.length > 0 ? record.name : "This chick";
+  const hatchLabel = fmtDate(record.hatch_date) || "";
+
+  const latestObs =
+    record.phenotype_observations[record.phenotype_observations.length - 1];
+  const nowDate = fmtDate(latestObs?.date) || hatchLabel;
+  const nowAge =
+    typeof latestObs?.age_days === "number" ? `Day ${latestObs.age_days}` : "Now";
+
+  return {
+    name,
+    framing: `${name} hatched ${hatchLabel} and is feathering out fast. The hatch ledger exists to calibrate hatch-day down against the grown-out bird; here is that arc on a single chick — the hatch frame beside the most recent one.`,
+    then: {
+      src: webPath(first.path),
+      dateLabel: hatchLabel,
+      ageLabel: "Hatch day",
+      caption: first.caption,
+      alt: `${name} on hatch day`,
+    },
+    now: {
+      src: webPath(last.path),
+      dateLabel: nowDate,
+      ageLabel: nowAge,
+      caption: last.caption,
+      alt: `${name} as a juvenile`,
+    },
+  };
+}
+
 export default function HatchesPage() {
   const records = getHatchRecords("2026");
+  const thenNow = buildThenNow(records.find((r) => r.id === THEN_NOW_HATCH_ID));
 
   return (
     <main className="min-h-screen bg-cream">
@@ -65,6 +131,10 @@ export default function HatchesPage() {
           </div>
         </div>
       </section>
+
+      {/* Featured then → now (Birdimir, the worked example). Self-suppresses
+          until the record has two committed photos. */}
+      {thenNow && <ThenAndNow {...thenNow} />}
 
       {/* Records */}
       {records.length === 0 ? (
