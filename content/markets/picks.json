@@ -208,6 +208,26 @@
   ],
   "picks": [
     {
+      "date": "2026-06-22",
+      "ticker": "TSN",
+      "company": "Tyson Foods, Inc.",
+      "play": "SHARES — hold the high roost",
+      "conviction": 74,
+      "rating": "STRONG BUY",
+      "omen": "High-roost count up. Protein names lead. Tyson follows the perch.",
+      "frame": "/photos/markets/pick-tsn.jpg",
+      "frameTime": "2026-06-22 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "Dark/Black — HIGH-ROOST, top-left ledge",
+        "Tan/Brown — GROUND, back-right corner",
+        "Brown Striped — HIGH-ROOST, center"
+      ],
+      "mood": "Decisive. Feed-adjacent.",
+      "realQuote": "TSN last $55.46 (-1.32%) — real, 2026-06-22"
+    },
+    {
       "date": "2026-06-19",
       "ticker": "CORN",
       "company": "Teucrium Corn Fund",
@@ -770,38 +790,38 @@
       "name": "Tyson Foods",
       "px": 55.46,
       "chg": -1.32,
-      "date": "2026-06-19"
+      "date": "2026-06-22"
     },
     {
       "sym": "PPC",
       "name": "Pilgrim's Pride",
-      "px": 27.32,
-      "chg": -3.63,
-      "date": "2026-06-19"
+      "px": 27.0,
+      "chg": -1.17,
+      "date": "2026-06-22"
     },
     {
       "sym": "ADM",
       "name": "Archer-Daniels-Midland",
       "px": 75.1,
       "chg": -1.83,
-      "date": "2026-06-19"
+      "date": "2026-06-22"
     },
     {
       "sym": "MOO",
       "name": "VanEck Agribusiness ETF",
-      "px": 76.96,
-      "chg": -0.43,
-      "date": "2026-06-19"
+      "px": 76.92,
+      "chg": -0.01,
+      "date": "2026-06-22"
     },
     {
       "sym": "CORN",
       "name": "Teucrium Corn Fund",
       "px": 16.95,
       "chg": -1.17,
-      "date": "2026-06-19"
+      "date": "2026-06-22"
     }
   ],
-  "realAsOf": "2026-06-19",
+  "realAsOf": "2026-06-22",
   "benchmark": {
     "flock": "+7.30% MTD (unaudited, imaginary)",
     "spy": "SPY $741.25 (+0.75% last session, real)"
