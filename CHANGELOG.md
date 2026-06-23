@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [Unreleased]
+
+### Planned — Rotating bird portraits on /markets
+
+Not built yet. Boss asked (2026-06-23) for a rotating selection of portrait-style chicken photos on the `/markets` terminal. The approach, the candidate photos, and exactly where it slots into `app/components/markets/Terminal.tsx` are written up in **`docs/23-Jun-2026-markets-bird-portraits-plan.md`** — start there.
+
 ## [1.24.0] — 2026-06-23
 
 ### Added — Four flock birds named & added to the registry: Chonkers, Chonkette, Ravenessa, Quasibirdo (Claude Opus 4.8 (1M context))
