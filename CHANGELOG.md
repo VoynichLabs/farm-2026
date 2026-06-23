@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.23.0] — 2026-06-23
+
+### Added — Henriella day-38 grown-out photos + first laced-plumage observation (Claude Opus 4.8 (1M context) (Bubba))
+
+**What:** Three Boss-supplied photos of Henriella (her first proper individual shots since the day-9 ID frames, 23 Jun 2026) added to the repo, plus a new dated `phenotype_observation` on her hatch record capturing day-38 juvenile plumage.
+
+**Why:** Per Boss in #meet-the-lobsters, logging the hatch photos as Horst has requested. Henriella is camera-shy and her hatch record had three empty placeholder photo stubs (day-0 down, never committed); the day-9→day-38 arc — when the Wyandotte lacing actually shows up — was unrecorded.
+
+**How:**
+
+- **Photos** — `public/photos/birds/IMG_6283-henriella-23jun2026.jpg` and `IMG_6292-henriella-23jun2026.jpg` (front three-quarter, gazebo perch) and `IMG_6269-henriella-23jun2026.jpg` (in-hand close-up), following the existing `IMG_<n>-<name>-<DDmmmYYYY>.jpg` convention. Originals copied from inbound, not moved; byte sizes verified against source.
+- **`content/hatches/2026/2026-05-16-02-henriella.md`** — `photos[]` gains the three real paths + captions (confidence high, Boss-confirmed ID), appended after the pre-existing day-0 stubs (left untouched — different life stage). An append-only `phenotype_observations` entry dated 2026-06-23 (age_days 38) records slate/blue-gray body with pale-edged feather lacing, a rust-auburn breast/hackle wash, a dark grizzled head with pale throat, yellow legs, and a just-developing single red comb. Calibration: the early "grey-and-white down → slate body, dark head cap" notes are tracking, and the Wyandotte lacing the dam (Golden Laced Wyandotte, Henrietta) predicted is now clearly expressed. Sex not yet callable (leans pullet). No existing observation edited; growth log is append-only per schema.
+
 ## [1.22.0] — 2026-06-23
 
 ### Added — Birdadotta day-59 grown-out photos + calibration observation (Claude Opus 4.8 (1M context) (Bubba))
