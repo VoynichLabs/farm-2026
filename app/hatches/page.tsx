@@ -182,7 +182,7 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
       <div className="relative w-full h-64 bg-forest/10">
         {photo?.path ? (
           <Image
-            src={`/${photo.path.replace(/^public\//, "")}`}
+            src={webPath(photo.path)}
             alt={photo.caption || displayName}
             fill
             sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
