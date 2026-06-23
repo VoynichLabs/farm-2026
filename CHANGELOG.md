@@ -3,11 +3,19 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
-## [Unreleased]
+## [1.25.0] — 2026-06-23
 
-### Planned — Rotating bird portraits on /markets
+### Added — Rotating flock portraits on the /markets trading floor (Claude Opus 4.8)
 
-Not built yet. Boss asked (2026-06-23) for a rotating selection of portrait-style chicken photos on the `/markets` terminal. The approach, the candidate photos, and exactly where it slots into `app/components/markets/Terminal.tsx` are written up in **`docs/23-Jun-2026-markets-bird-portraits-plan.md`** — start there.
+**What:** The `/markets` terminal's "TRADING FLOOR" tile, previously four static coop-cam stills, now rotates through eight committed flock portraits — one tile swaps to the next bird every ~3s, labeled with the bird's name. Plan: `docs/23-Jun-2026-markets-bird-portraits-plan.md`.
+
+**Why:** Boss asked (2026-06-23) for a rotating selection of portrait-style chicken photos on the markets page. (Note: the page's original header comment had deliberately kept portraits off /markets to protect its maximalist look — Boss's request overrides that; the rotator is styled to fit the terminal.)
+
+**How:**
+
+- `app/components/markets/Terminal.tsx` — new `FLOOR_BIRDS` pool (8 `{src,name}` entries pointing at existing `public/photos/birds/` shots, no new pipeline) and a `FloorCams` client component. Four visible slots; an interval advances ONE slot round-robin each tick, so the swap is staggered (one trader rotates in at a time) rather than a synchronized all-tiles flip. With 8 birds across 4 slots the visible set is always 4 distinct, consecutive birds.
+- Hydration-safe: first render is always slots `[0,1,2,3]` (server === client); rotation starts after mount; `setState` lives in the interval callback, not the effect body (no new `react-hooks/set-state-in-effect`).
+- No CSS keyframe fade: the parent re-renders every second (live clock), which restarted an inline animation and pinned the tiles at opacity 0. Dropped it for a clean cut (reads fine as a cam cut). The four static `live-*.jpg` are no longer referenced.
 
 ## [1.24.0] — 2026-06-23
 

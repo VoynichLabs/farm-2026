@@ -1,15 +1,17 @@
 "use client";
 /**
- * Author: Claude Opus 4.7 (Bubba)
+ * Author: Claude Opus 4.7 (Bubba) / Claude Opus 4.8 (rotating floor, 23-Jun-2026)
  * Date: 21-May-2026 (v2 — polish pass per Boss: sharper images, cleaner
- *   layout, real tickers mixed in)
+ *   layout, real tickers mixed in) / 23-Jun-2026 (trading-floor tile now
+ *   rotates through committed flock portraits instead of 4 static stills)
  * PURPOSE: Client island for /markets — "POULTRY CAPITAL MARKETS". Dense
  *   terminal: scrolling ticker tape (poultry + REAL tickers, flagged),
  *   live EDT/UTC clocks, jittering quotes, today's flock pick with real
  *   Tyson quote + receipts, candlestick tape, order book, flock sentiment,
  *   a REAL WATCHLIST (real last-close from stooq, baked at edit time),
  *   flock-vs-S&P benchmark, news wire, six chicken analysts, track record,
- *   and a live coop-floor strip. Maximalist on purpose (see page.tsx).
+ *   and a trading-floor tile that rotates through committed flock portraits
+ *   (the "traders"). Maximalist on purpose (see page.tsx).
  *
  *   Real stock numbers are genuine last-close values baked into
  *   content/markets/picks.json; they are static (no runtime fetch) so the
@@ -87,6 +89,21 @@ function clk(d: Date, utc: boolean): string {
 const PANEL = "border border-[#1f3b2e] bg-[#06120c]";
 const LABEL =
   "text-[10px] uppercase tracking-[0.22em] text-[#46a571] px-2 py-1.5 border-b border-[#1f3b2e] bg-[#0a1a11] flex items-center justify-between";
+
+// The "trading floor" traders — portrait-style shots of the flock, already
+// committed under public/photos/birds (no pipeline, no JSON). The floor tile
+// rotates a sliding window of these every few seconds. Add/remove freely.
+const FLOOR_BIRDS: { src: string; name: string }[] = [
+  { src: "/photos/birds/IMG_6292-henriella-23jun2026.jpg", name: "Henriella" },
+  { src: "/photos/birds/IMG_6271-birdadotta-23jun2026.jpg", name: "Birdadotta" },
+  { src: "/photos/birds/IMG_5874-quasibirdo-18jun2026.jpg", name: "Quasibirdo" },
+  { src: "/photos/birds/IMG_5958-ravenessa-18jun2026.jpg", name: "Ravenessa" },
+  { src: "/photos/birds/IMG_6233-birdimir-juvenile-22jun2026.jpg", name: "Birdimir" },
+  { src: "/photos/birds/IMG_6268-birdthazar-23jun2026.jpg", name: "Birdthazar" },
+  { src: "/photos/birds/IMG_5948-chonkers-chonkette-18jun2026.jpg", name: "Chonkers + Chonkette" },
+  { src: "/photos/birds/IMG_5849-birdadette-23jun2026.jpg", name: "Birdadette" },
+];
+const FLOOR_TILES = 4; // visible tiles; the pool slides one bird per tick
 
 // CHICKEN PICKS — the real paper portfolio. Fills are baked into picks.json;
 // last prices come live from /api/quotes (Yahoo proxy) and P&L is computed here.
@@ -197,6 +214,62 @@ function ChickenPicks({ pf }: { pf: Portfolio }) {
         <div className="mt-1 text-[#46a571]">{pf.source} · last prices via Yahoo Finance (auto-refresh 45s)</div>
       </div>
     </section>
+  );
+}
+
+// Rotating trading-floor portraits. Four visible slots; every few seconds ONE
+// of them (round-robin) swaps to the next bird in the pool — a staggered
+// rotation that reads like a live floor, not a synchronized all-tiles blink.
+// Hydration-safe: the first render is always slots [0,1,2,3] (server ===
+// client); rotation starts after mount, and setState happens inside the
+// interval callback (not the effect body), so it doesn't trip
+// react-hooks/set-state-in-effect. With 8 birds in 4 slots the visible set is
+// always 4 distinct, consecutive birds (no duplicate on screen).
+function FloorCams() {
+  const [slots, setSlots] = useState<number[]>(() =>
+    Array.from({ length: FLOOR_TILES }, (_, i) => i),
+  );
+  const nextBird = useRef(FLOOR_TILES); // next pool index to bring in
+  const turn = useRef(0); // which slot updates this tick (round-robin)
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      const slot = turn.current % FLOOR_TILES;
+      const bird = nextBird.current % FLOOR_BIRDS.length;
+      nextBird.current += 1;
+      turn.current += 1;
+      setSlots((prev) => prev.map((v, i) => (i === slot ? bird : v)));
+    }, 3000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#1f3b2e]">
+      {slots.map((birdIdx, i) => {
+        const bird = FLOOR_BIRDS[birdIdx];
+        return (
+          <div key={i} className="relative bg-black overflow-hidden">
+            {/* keyed by src so the swapped tile cleanly replaces the old one.
+                No CSS keyframe here on purpose: the parent re-renders every
+                second (live clock), which restarts an inline animation and
+                pinned these at opacity 0. A hard cut reads fine as a cam cut. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              key={bird.src}
+              src={bird.src}
+              alt={bird.name}
+              className="h-56 w-full object-cover opacity-95"
+            />
+            <span className="absolute top-1 left-1 text-[9px] bg-black/70 px-1 text-[#22e06b] tracking-wider">
+              {bird.name}
+            </span>
+            <span className="absolute bottom-1 right-1 text-[9px] bg-black/70 px-1 text-[#ff4d4d]">
+              ●LIVE
+            </span>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
@@ -510,24 +583,15 @@ export default function Terminal({ data }: { data: MarketData }) {
           </div>
         </section>
 
-        {/* LIVE FLOOR */}
+        {/* TRADING FLOOR — rotating flock portraits ("the traders") */}
         <section className={`lg:col-span-12 ${PANEL}`}>
           <div className={LABEL}>
-            <span>◉ TRADING FLOOR — LIVE COOP CAM (S7)</span>
+            <span>◉ TRADING FLOOR — MEET THE TRADERS</span>
             <span style={{ color: GREEN }} className="flex items-center gap-1">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#22e06b]" style={{ animation: "ppm-blink 1.1s steps(1) infinite" }} /> ON AIR
             </span>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#1f3b2e]">
-            {["/photos/markets/live-1.jpg", "/photos/markets/live-2.jpg", "/photos/markets/live-3.jpg", "/photos/markets/live-4.jpg"].map((src, i) => (
-              <div key={src} className="relative bg-black">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt={`Live coop floor ${i + 1}`} className="h-44 w-full object-cover opacity-90" />
-                <span className="absolute top-1 left-1 text-[9px] bg-black/70 px-1 text-[#22e06b]">CAM-{i + 1}</span>
-                <span className="absolute bottom-1 right-1 text-[9px] bg-black/70 px-1 text-[#ff4d4d]">●LIVE</span>
-              </div>
-            ))}
-          </div>
+          <FloorCams />
         </section>
       </div>
 
