@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# OpenClaw agent-workspace scaffolding — NOT part of the website. Default
+# boilerplate an OpenClaw run drops in its working dir; deleted 2026-06-23 and
+# ignored here so a future run in this repo can't re-add them. Also ignore the
+# stray flock-profiles JSON backups agents leave behind.
+/.openclaw/
+/.openclaw-cli-images/
+/AGENTS.md
+/HEARTBEAT.md
+/IDENTITY.md
+/SOUL.md
+/TOOLS.md
+/USER.md
+/content/flock-profiles.json.bak.*
