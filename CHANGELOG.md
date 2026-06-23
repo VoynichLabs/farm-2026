@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.24.0] — 2026-06-23
+
+### Added — Four flock birds named & added to the registry: Chonkers, Chonkette, Ravenessa, Quasibirdo (Claude Opus 4.8 (1M context))
+
+**What:** Four birds the Boss named in #meet-the-lobsters (2026-06-18) now have their own entries in `content/flock-profiles.json`, plus three supporting breed definitions (Buff Ranger, Bantam (breed TBD), Polish (bantam)). Photos for three of them were added under `public/photos/birds/`.
+
+**Why:** They were previously tracked anonymously (the two Buff Rangers were lumped inside "Tractor Supply chicks — May batch (6)") or not at all (the two bantams). Boss confirmed names and details, so they get individual roster rows.
+
+**How:**
+
+- **Chonkers / Chonkette** — the two Buff Rangers, split out of the May TSC batch entry (which now notes the split). Probable cockerel (Chonkers, comb/wattles in) and pullet (Chonkette). Photo `IMG_5948-chonkers-chonkette-18jun2026.jpg`. The "buff buttrot" skin irritation is logged as cleared per Boss 2026-06-18.
+- **Ravenessa** — bantam, black with grayish lacing; a Boss favorite. Photo `IMG_5958-ravenessa-18jun2026.jpg`. Likely from the Cackle 08-Apr-2026 exotic assortment; exact breed TBD.
+- **Quasibirdo** — White-crested Polish bantam ("my hunchback bantam"), slate body with black lacing. Photo `IMG_5874-quasibirdo-18jun2026.jpg`.
+- Ages use estimated `hatch_date` + `getBirdAgeLabel` (the age SSoT); breeds reference the three new definitions. No frontend changes — `/flock` already renders any registry entry.
+
 ## [1.23.0] — 2026-06-23
 
 ### Added — Henriella day-38 grown-out photos + first laced-plumage observation (Claude Opus 4.8 (1M context) (Bubba))
