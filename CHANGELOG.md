@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.22.0] — 2026-06-23
+
+### Added — Birdadotta day-59 grown-out photos + calibration observation (Claude Opus 4.8 (1M context) (Bubba))
+
+**What:** Two Boss-supplied photos of Birdadotta (first individual shots of her in the run, 23 Jun 2026) added to the repo, plus a new dated `phenotype_observation` on her hatch record capturing day-59 plumage against the day-23 prediction.
+
+**Why:** Per Boss in #meet-the-lobsters, logging the hatch photos as Horst has requested. The hatch ledger (`content/hatches/SCHEMA.md`) exists to calibrate hatch-day down against grown-out adult plumage; Birdadotta is "camera shy" and had no individual photo past the 18 May S7-cam frame, so the day-23→day-59 arc was unrecorded.
+
+**How:**
+
+- **Photos** — `public/photos/birds/IMG_6271-birdadotta-23jun2026.jpg` (front three-quarter) and `IMG_6259-birdadotta-23jun2026.jpg` (rear three-quarter), following the existing `IMG_<n>-<name>-<DDmmmYYYY>.jpg` convention. Originals copied from inbound, not moved; checksums verified.
+- **`content/hatches/2026/2026-04-25-01-birdadotta.md`** — `photos[]` gains the two real paths + captions (confidence high, Boss-confirmed ID); an append-only `phenotype_observations` entry dated 2026-06-23 (age_days 59) records predominantly black body/saddle/tail feathering with a rust-auburn hackle, yellow legs, and a just-developing single red comb. Calibration note: the day-23 "blue-gray base" prediction is reading too light — she's feathering out closer to the LBRJ/RIR sire than to dam Birdadonna's blue-gray. Sex still not callable. No existing observation edited; growth log is append-only per schema.
+
 ## [1.21.0] — 2026-06-22
 
 ### Added — Birdimir "then & now" on /hatches; homepage hatchling ages go live (Claude Opus 4.8 (1M context))
