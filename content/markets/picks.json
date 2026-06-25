@@ -208,6 +208,24 @@
   ],
   "picks": [
     {
+      "date": "2026-06-25",
+      "ticker": "MOO",
+      "company": "VanEck Agribusiness ETF",
+      "play": "SHARES — graze the index",
+      "conviction": 71,
+      "rating": "BUY",
+      "omen": "Broad-based grazing across the full run. Ag basket reads positive. Index exposure confirmed.",
+      "frame": "",
+      "frameTime": "2026-06-25 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "All visible birds — GROUND, uniform spread"
+      ],
+      "mood": "Calm. Diversified.",
+      "realQuote": "MOO last $77.16 (+0.81%) — real, 2026-06-25"
+    },
+    {
       "date": "2026-06-24",
       "ticker": "ADM",
       "company": "Archer-Daniels-Midland Company",
@@ -826,40 +844,40 @@
     {
       "sym": "TSN",
       "name": "Tyson Foods",
-      "px": 57.42,
-      "chg": 3.44,
-      "date": "2026-06-24"
+      "px": 57.81,
+      "chg": 0.68,
+      "date": "2026-06-25"
     },
     {
       "sym": "PPC",
       "name": "Pilgrim's Pride",
-      "px": 27.33,
-      "chg": -1.41,
-      "date": "2026-06-24"
+      "px": 27.56,
+      "chg": -0.58,
+      "date": "2026-06-25"
     },
     {
       "sym": "ADM",
       "name": "Archer-Daniels-Midland",
-      "px": 75.84,
-      "chg": -0.59,
-      "date": "2026-06-24"
+      "px": 75.08,
+      "chg": -1.0,
+      "date": "2026-06-25"
     },
     {
       "sym": "MOO",
       "name": "VanEck Agribusiness ETF",
-      "px": 76.81,
-      "chg": 0.3,
-      "date": "2026-06-24"
+      "px": 77.16,
+      "chg": 0.81,
+      "date": "2026-06-25"
     },
     {
       "sym": "CORN",
       "name": "Teucrium Corn Fund",
-      "px": 16.74,
-      "chg": -0.18,
-      "date": "2026-06-24"
+      "px": 16.62,
+      "chg": -0.06,
+      "date": "2026-06-25"
     }
   ],
-  "realAsOf": "2026-06-24",
+  "realAsOf": "2026-06-25",
   "benchmark": {
     "flock": "+7.30% MTD (unaudited, imaginary)",
     "spy": "SPY $741.25 (+0.75% last session, real)"
