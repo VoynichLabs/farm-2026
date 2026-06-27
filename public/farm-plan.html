@@ -3,10 +3,11 @@
   Date: 27-June-2026
   PURPOSE: Static, self-contained viewer for the 2026 farm chicken-run / coop / garden
     fence design. Shows the 5 design drawings (by Concordancy) with the agreed build spec.
-    Served from public/ at https://farm.markbarney.net/farm-plan/ so the plan can be
-    looked at from any device. No build step, no framework — matches the existing
-    public/*.html static pages (property-map.html, enclosure-cad.html).
-  SRP/DRY check: Pass — single static viewer for the farm-plan drawings; no equivalent page existed.
+    Flat file served at https://farm.markbarney.net/farm-plan.html — matches the existing
+    public/*.html static pages (property-map.html, enclosure-cad.html); Next.js does not
+    resolve a folder's index.html at /farm-plan/, so this lives as a flat file. Images stay
+    in public/farm-plan/ and are referenced relatively.
+  SRP/DRY check: Pass — single static viewer; replaces the earlier public/farm-plan/index.html (removed) so there is one page file, not two.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -45,42 +46,43 @@
   <h2>Drawings</h2>
 
   <figure>
-    <a href="site-plan-overview.jpg"><img src="site-plan-overview.jpg" alt="Full farm site plan"></a>
+    <a href="farm-plan/site-plan-overview.jpg"><img src="farm-plan/site-plan-overview.jpg" alt="Full farm site plan"></a>
     <figcaption><span class="cap-title">Site plan overview.</span> Metal chicken coop (far left), old barn floor (center-left, with a storage corner), two small trees, wooden chicken coop (center), garden (right), and the pink/red L-shaped chicken run.</figcaption>
   </figure>
 
   <figure>
-    <a href="fence-bracing-versionA-vs-B.jpg"><img src="fence-bracing-versionA-vs-B.jpg" alt="Fence bracing Version A vs Version B"></a>
+    <a href="farm-plan/fence-bracing-versionA-vs-B.jpg"><img src="farm-plan/fence-bracing-versionA-vs-B.jpg" alt="Fence bracing Version A vs Version B"></a>
     <figcaption><span class="cap-title">Bracing: Version A vs B.</span> Version A (full-X cross-bracing) vs Version B (V-bracing). <strong>Version A chosen</strong> — closes the squeeze gap at the bottom rail.</figcaption>
   </figure>
 
   <figure>
-    <a href="run-topview-roof-crossbars.jpg"><img src="run-topview-roof-crossbars.jpg" alt="Run top view with roof cross-bars"></a>
+    <a href="farm-plan/run-topview-roof-crossbars.jpg"><img src="farm-plan/run-topview-roof-crossbars.jpg" alt="Run top view with roof cross-bars"></a>
     <figcaption><span class="cap-title">Run top view.</span> Roof cross-bars over the run for the overhead mesh.</figcaption>
   </figure>
 
   <figure>
-    <a href="garden-detail.jpg"><img src="garden-detail.jpg" alt="Garden detail"></a>
+    <a href="farm-plan/garden-detail.jpg"><img src="farm-plan/garden-detail.jpg" alt="Garden detail"></a>
     <figcaption><span class="cap-title">Garden.</span> Roughly 7.5 m × 10 m, with the overlap zone.</figcaption>
   </figure>
 
   <figure>
-    <a href="purple-expansion-zone.jpg"><img src="purple-expansion-zone.jpg" alt="Purple expansion zone"></a>
+    <a href="farm-plan/purple-expansion-zone.jpg"><img src="farm-plan/purple-expansion-zone.jpg" alt="Purple expansion zone"></a>
     <figcaption><span class="cap-title">Expansion reserve.</span> The purple strategic-reserve zone beside the wooden coop.</figcaption>
   </figure>
 
   <h2>Build spec</h2>
   <div class="spec">
     <p><strong>Run (Version A):</strong> full X cross-bracing, bottom rail at ground; 2″×4″ welded wire (72″ × 150 ft roll). <strong>No full buried wire-mesh ground — too costly for this build.</strong> The ½″ hardware-cloth bottom band + buried L-apron is an <em>optional</em> add, done only where digging actually shows up and budget allows.</p>
-    <p><strong>Roof:</strong> 2″×4″ welded wire over the cross-bars, taut, clipped with j-clips/hog rings every few inches; center support on any span over ~4 ft. Built as removable/openable framed sections (split the 14×14 ft footprint into 2–3), framed in EMT conduit or aluminum angle (not steel); lift-off into L-brackets or hinged; spring-clip the resting position. Lets you clear winter snow load. <strong>Rule:</strong> a section is open only while someone is standing under it (open roof = hawk access).</p>
+    <p><strong>Roof (the priority):</strong> 2″×4″ welded wire over the cross-bars, positively fastened with j-clips/hog rings at every frame member (wind uplift peels resting-contact mesh); short spans (4–6 ft) between uprights and a slight pitch so snow sheds instead of loading the span; corner-post footings carry the snow weight. Built as removable/openable framed sections (split the 14×14 ft footprint into 2–3), framed in EMT conduit or aluminum angle (not steel). <strong>Rule:</strong> a section is open only while someone is standing under it.</p>
     <p><strong>Garden (~120 ft perimeter, one 150 ft roll):</strong> 2″ hex netting; fold the bottom 6–8″ outward and pin for rabbits/groundhogs. For deer: a two-strand high line (~2 ft and ~5 ft, 18″ apart), monofilament or bailing wire; flag it with tape the first season.</p>
     <p><strong>Purple zone:</strong> strategic reserve — hold for coop/run expansion if adding birds, otherwise extend the garden into it.</p>
+    <p><strong>Observed predators:</strong> coyotes, bobcats, hawks, possibly raccoons — no foxes so far. Climbers/jumpers and aerial, so the <strong>roof is the real defense</strong>; the buried anti-dig apron stays optional until digging is actually seen.</p>
     <p><strong>Sourcing:</strong> Tractor Supply or Home Depot. Not eBay (shipping). Amazon only with free Prime shipping and a good bulk price.</p>
   </div>
 
   <footer>
-    Design collaboration: Concordancy + Horst + Bubba, in #meet-the-lobsters, 2026-06-26.
-    Source repos: <a href="https://github.com/VoynichLabs/farm-2026/tree/main/docs/farm-plan">farm-2026/docs/farm-plan</a>.
+    Design collaboration: Concordancy + Horst + Bubba, in #meet-the-lobsters, 2026-06-26/27.
+    Source: <a href="https://github.com/VoynichLabs/farm-2026/tree/main/docs/farm-plan">farm-2026/docs/farm-plan</a>.
   </footer>
 </div>
 </body>
