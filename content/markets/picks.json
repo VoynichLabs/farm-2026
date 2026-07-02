@@ -208,6 +208,24 @@
   ],
   "picks": [
     {
+      "date": "2026-07-02",
+      "ticker": "MOO",
+      "company": "VanEck Agribusiness ETF",
+      "play": "SHARES — graze the index",
+      "conviction": 71,
+      "rating": "BUY",
+      "omen": "Broad-based grazing across the full run. Ag basket reads positive. Index exposure confirmed.",
+      "frame": "",
+      "frameTime": "2026-07-02 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "All visible birds — GROUND, uniform spread"
+      ],
+      "mood": "Calm. Diversified.",
+      "realQuote": "MOO last $78.99 (-0.27%) — real, 2026-07-02"
+    },
+    {
       "date": "2026-07-01",
       "ticker": "ADM",
       "company": "Archer-Daniels-Midland Company",
@@ -760,21 +778,6 @@
       ],
       "mood": "Busy and cozy coop activity",
       "realQuote": "TSN last $66.52 (+0.2%) — real, 2026-05-20"
-    },
-    {
-      "date": "2026-05-20",
-      "ticker": "EGGZ",
-      "company": "Eggs.com Holdings",
-      "play": "SHARES — full degenerate size",
-      "conviction": 61,
-      "rating": "BUY",
-      "omen": "Four hens converged on a single nesting box. Supply shock signal. The flock front-ran the laying cycle.",
-      "frame": "",
-      "frameTime": "2026-05-20 07:41 EDT",
-      "model": "qwen/qwen3.5-9b (local, LM Studio)",
-      "source": "S7 coop cam → Guardian frame proxy → VLM",
-      "birdReads": [],
-      "mood": "Coordinated, suspicious"
     }
   ],
   "analysts": [
@@ -906,40 +909,40 @@
     {
       "sym": "TSN",
       "name": "Tyson Foods",
-      "px": 57.25,
-      "chg": -2.39,
-      "date": "2026-07-01"
+      "px": 58.43,
+      "chg": 2.06,
+      "date": "2026-07-02"
     },
     {
       "sym": "PPC",
       "name": "Pilgrim's Pride",
-      "px": 28.11,
-      "chg": -2.9,
-      "date": "2026-07-01"
+      "px": 28.73,
+      "chg": 0.63,
+      "date": "2026-07-02"
     },
     {
       "sym": "ADM",
       "name": "Archer-Daniels-Midland",
-      "px": 76.4,
-      "chg": -0.61,
-      "date": "2026-07-01"
+      "px": 76.8,
+      "chg": 0.27,
+      "date": "2026-07-02"
     },
     {
       "sym": "MOO",
       "name": "VanEck Agribusiness ETF",
-      "px": 79.2,
-      "chg": 0.19,
-      "date": "2026-07-01"
+      "px": 78.99,
+      "chg": -0.27,
+      "date": "2026-07-02"
     },
     {
       "sym": "CORN",
       "name": "Teucrium Corn Fund",
-      "px": 16.89,
-      "chg": 0.96,
-      "date": "2026-07-01"
+      "px": 16.95,
+      "chg": 1.19,
+      "date": "2026-07-02"
     }
   ],
-  "realAsOf": "2026-07-01",
+  "realAsOf": "2026-07-02",
   "benchmark": {
     "flock": "+7.30% MTD (unaudited, imaginary)",
     "spy": "SPY $741.25 (+0.75% last session, real)"
