@@ -1,35 +1,39 @@
 "use client";
 /**
- * Author: Claude Opus 4.6 (1M context)
- * Date: 14-Apr-2026
+ * Author: Claude Fable 5 (orig Claude Opus 4.6, 14-Apr-2026)
+ * Date: 06-Jul-2026
  * PURPOSE: Filter chip bar for the gems gallery. All filter state lives
  *   in the URL query string, so filter combinations are deep-linkable,
  *   SSR-friendly, and survive reloads. Each chip click replaces the
  *   current route with a new search param set, which Next re-fetches
  *   server-side on navigation — no client-side filtering logic.
- * SRP/DRY check: Pass — camera options come from lib/cameras.ts SSoT;
- *   activity options come from the Activity type; no duplication.
+ *
+ *   06-Jul-2026 (terminal glow-up, Boss-directed): Camera and Individual
+ *   rows removed. The gem pipeline is fed by the S7 alone (other cameras
+ *   make timelapse reels), so camera chips filtered a single-camera
+ *   archive against the *live* roster and mostly returned nothing; the
+ *   VLM's individual tags ("chick"/"adult") were too coarse to mean
+ *   anything. Activity choices trimmed to the tags that actually occur
+ *   in the curated archive (dust-bathing/sparring had 1–3 rows; huddling
+ *   and drinking were missing). Deep links with camera=/individual=
+ *   params still filter server-side — this bar just no longer offers
+ *   them. Chips restyled to guardian tokens.
+ * SRP/DRY check: Pass — activity options come from the Activity type;
+ *   no duplication.
  */
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
-import { CAMERAS } from "@/lib/cameras";
-import { activityLabel, cameraLabel } from "@/lib/gems-format";
+import { activityLabel } from "@/lib/gems-format";
 import type { Activity } from "@/app/components/guardian/types";
 
 const ACTIVITY_CHOICES: Activity[] = [
-  "eating",
   "foraging",
-  "preening",
-  "sleeping",
-  "dust-bathing",
-  "sparring",
   "alert",
-];
-
-const INDIVIDUAL_CHOICES: Array<{ value: string; label: string }> = [
-  { value: "birdadette", label: "Birdadette" },
-  { value: "adult-survivor", label: "Adults" },
-  { value: "chick", label: "Chicks" },
+  "sleeping",
+  "huddling",
+  "drinking",
+  "eating",
+  "preening",
 ];
 
 type RangePreset = "day" | "week" | "month" | "all";
@@ -71,10 +75,10 @@ function Chip({
     <button
       type="button"
       onClick={onClick}
-      className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+      className={`rounded-full border px-3 py-1 text-xs font-mono transition-colors ${
         active
-          ? "border-wood bg-wood text-cream"
-          : "border-forest/20 bg-cream text-forest/70 hover:border-wood/40"
+          ? "border-guardian-accent bg-guardian-accent/20 text-emerald-300"
+          : "border-guardian-border bg-guardian-card text-guardian-text/70 hover:border-guardian-hover hover:text-guardian-text"
       }`}
     >
       {label}
@@ -133,18 +137,7 @@ export default function GemFilters() {
     current.range !== "week";
 
   return (
-    <div className="space-y-3 rounded-xl border border-forest/10 bg-cream/60 p-4">
-      <FilterRow label="Camera">
-        {CAMERAS.map((c) => (
-          <Chip
-            key={c.name}
-            label={cameraLabel(c.name)}
-            active={current.cameras.includes(c.name)}
-            onClick={() => toggleValue("camera", c.name)}
-          />
-        ))}
-      </FilterRow>
-
+    <div className="space-y-3 rounded-xl border border-guardian-border bg-guardian-card/50 p-4">
       <FilterRow label="Activity">
         {ACTIVITY_CHOICES.map((a) => (
           <Chip
@@ -152,17 +145,6 @@ export default function GemFilters() {
             label={activityLabel(a)}
             active={current.activities.includes(a)}
             onClick={() => toggleValue("activity", a)}
-          />
-        ))}
-      </FilterRow>
-
-      <FilterRow label="Individual">
-        {INDIVIDUAL_CHOICES.map((i) => (
-          <Chip
-            key={i.value}
-            label={i.label}
-            active={current.individuals.includes(i.value)}
-            onClick={() => toggleValue("individual", i.value)}
           />
         ))}
       </FilterRow>
@@ -183,7 +165,7 @@ export default function GemFilters() {
           <button
             type="button"
             onClick={clearAll}
-            className="text-xs text-wood hover:underline"
+            className="text-xs text-guardian-accent hover:text-emerald-300 hover:underline"
           >
             Clear all filters
           </button>
@@ -196,7 +178,7 @@ export default function GemFilters() {
 function FilterRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="text-xs font-semibold uppercase tracking-wide text-forest/50">
+      <span className="text-xs font-mono font-semibold uppercase tracking-wide text-guardian-muted">
         {label}
       </span>
       <div className="flex flex-wrap gap-1.5">{children}</div>

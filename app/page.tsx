@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.7 (1M context) / Claude Sonnet 4.6 / Claude Opus 4.8 (1M context)
- * Date: 10-May-2026 / updated 20-May-2026 / refreshed 22-Jun-2026
+ * Author: Claude Fable 5 (prev Claude Opus 4.7 / Claude Sonnet 4.6 / Claude Opus 4.8)
+ * Date: 06-Jul-2026 (orig 10-May-2026; updated 20-May / 22-Jun-2026)
  * PURPOSE: Homepage — terminal / mission-control composition. From top to
  *   bottom: TerminalNav (in layout.tsx), then this page renders:
  *     1. 2026 Hatchlings hero — the incubator chicks front and center,
@@ -14,7 +14,9 @@
  *   Hatchling ages are computed live from each chick's hatch_date via
  *   getBirdAgeLabel (the age SSoT established in CHANGELOG 1.18.0) — there is
  *   no hardcoded day count to drift, and the tile count is derived from the
- *   roster, never a literal.
+ *   roster, never a literal. 06-Jul-2026: Birdadette renamed Birddor
+ *   (cockerel); Chick #3 identified as Birdsilla; one Birddor frame swapped
+ *   for the 23-Jun portrait.
  *
  * SRP/DRY check: Pass — composition only. Each sub-piece owns its own
  *   data + empty states. Age uses the shared getBirdAgeLabel helper rather
@@ -49,7 +51,7 @@ type Chick = {
 
 // Newest hatch first. Age is never stored here — only the hatch date — so the
 // "b. {date} · {age}" line is computed live on every render and can't go stale
-// (the bug CHANGELOG 1.18.0 fixed for /flock). Two Birdadette frames are kept
+// (the bug CHANGELOG 1.18.0 fixed for /flock). Two Birddor frames are kept
 // intentionally (held + portrait); the section count below de-dupes by name.
 const HATCHLINGS_2026: Chick[] = [
   {
@@ -74,7 +76,7 @@ const HATCHLINGS_2026: Chick[] = [
     photo: "/photos/may-2026/chick2-day4-portrait.jpg",
   },
   {
-    name: 'Chick #3 "Monster Leg"',
+    name: 'Birdsilla "Monster Leg"',
     breed: "EE lineage",
     hatch: "May 16",
     hatchISO: "2026-05-16",
@@ -88,22 +90,22 @@ const HATCHLINGS_2026: Chick[] = [
     photo: "/photos/may-2026/birdadotta-s7-2026-05-18.png",
   },
   {
-    name: "Birdadette",
-    breed: "Easter Egger",
+    name: "Birddor",
+    breed: "Easter Egger (cockerel)",
     hatch: "Apr 6",
     hatchISO: "2026-04-06",
     photo: "/photos/may-2026/birdadette-may20-held.jpg",
   },
   {
-    name: "Birdadette",
-    breed: "Easter Egger",
+    name: "Birddor",
+    breed: "Easter Egger (cockerel)",
     hatch: "Apr 6",
     hatchISO: "2026-04-06",
-    photo: "/photos/may-2026/birdadette-may20-portrait.jpg",
+    photo: "/photos/birds/IMG_5849-birdadette-23jun2026.jpg",
   },
 ];
 
-// Distinct birds shown (Birdadette appears twice) — derived, never a literal.
+// Distinct birds shown (Birddor appears twice) — derived, never a literal.
 const HATCHLING_BIRD_COUNT = new Set(HATCHLINGS_2026.map((c) => c.name)).size;
 
 export default function Home() {

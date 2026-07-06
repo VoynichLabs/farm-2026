@@ -1,7 +1,7 @@
 "use client";
 /**
- * Author: Claude Opus 4.7 (1M context)
- * Date: 2026-05-11
+ * Author: Claude Fable 5 (orig Claude Opus 4.7)
+ * Date: 06-Jul-2026 (orig 2026-05-11) — guardian palette (terminal glow-up)
  * PURPOSE: Per-cohort gem rail for /flock — fetches recent VLM-curated frames
  *   from guardian.markbarney.net filtered by scene(s), renders them as a
  *   12-tile grid, shows the total cohort gem count, and links to the full
@@ -106,20 +106,20 @@ export default function FlockGemStrip({
   return (
     <div className="mb-8">
       <div className="flex items-baseline justify-between mb-3 font-mono text-[0.7rem] uppercase tracking-widest">
-        <span className="text-forest/70">
+        <span className="text-guardian-text/70">
           <span className="text-guardian-accent">▸</span> {label}
           {/* Suppress count display when total === 13 — triskaidekaphobia
               rule, per memory/feedback_no_thirteen.md. Strip still renders;
               just no "13 frames archived" string in the DOM. */}
           {total !== null && total > 0 && total !== 13 && (
-            <span className="text-forest/40 normal-case ml-2">
+            <span className="text-guardian-muted normal-case ml-2">
               {total.toLocaleString()} frame{total === 1 ? "" : "s"} archived
             </span>
           )}
         </span>
         <Link
           href={`/gallery/gems${galleryLinkQs ? `?${galleryLinkQs}` : ""}`}
-          className="text-wood hover:text-wood-light"
+          className="text-guardian-accent hover:text-emerald-300"
         >
           browse all ↗
         </Link>
@@ -133,7 +133,7 @@ export default function FlockGemStrip({
           {Array.from({ length: limit }).map((_, i) => (
             <div
               key={i}
-              className="aspect-[4/3] rounded-lg bg-cream-dark animate-pulse"
+              className="aspect-[4/3] rounded-lg bg-guardian-card animate-pulse"
             />
           ))}
         </div>
@@ -153,7 +153,7 @@ export default function FlockGemStrip({
       )}
 
       {showFallback && (
-        <p className="text-forest/50 text-xs font-mono">
+        <p className="text-guardian-muted text-xs font-mono">
           Gem archive is unreachable right now.
           {emptyHint ? ` ${emptyHint}` : ""}
         </p>

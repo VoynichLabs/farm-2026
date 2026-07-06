@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.8 (1M context)
- * Date: 10-May-2026 / updated 22-Jun-2026
+ * Author: Claude Fable 5 (prev Claude Opus 4.8)
+ * Date: 06-Jul-2026 (orig 10-May-2026 / updated 22-Jun-2026)
  * PURPOSE: /hatches — event ledger for every 2026 incubator hatch. Reads from
  *   content/hatches/2026/*.md (per-chick source of truth, schema in
  *   content/hatches/SCHEMA.md). Each card is a hatch event, not a
@@ -15,6 +15,8 @@
  *   HatchCard + the presentational ThenAndNow component. The then/now data is
  *   derived from Birdimir's own HatchRecord (photos[], hatch_date, latest
  *   phenotype observation) — no per-chick hardcoding, no new data source.
+ *   06-Jul-2026 (terminal glow-up): cream-era card/wrapper classes converted
+ *   to the guardian palette (see docs/06-Jul-2026-terminal-glowup-plan.md).
  */
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -101,7 +103,7 @@ export default function HatchesPage() {
   const thenNow = buildThenNow(records.find((r) => r.id === THEN_NOW_HATCH_ID));
 
   return (
-    <main className="min-h-screen bg-cream">
+    <main className="min-h-screen">
       {/* Hero — terminal strip + serif title */}
       <section className="bg-guardian-bg text-guardian-text border-b border-guardian-border">
         <div className="max-w-6xl mx-auto px-4 pt-14 pb-10">
@@ -139,7 +141,7 @@ export default function HatchesPage() {
       {/* Records */}
       {records.length === 0 ? (
         <section className="max-w-5xl mx-auto px-4 py-16">
-          <p className="text-forest/60">No 2026 hatches recorded yet.</p>
+          <p className="text-guardian-muted">No 2026 hatches recorded yet.</p>
         </section>
       ) : (
         <section className="max-w-6xl mx-auto px-4 py-12 grid gap-8 md:grid-cols-2">
@@ -150,15 +152,15 @@ export default function HatchesPage() {
       )}
 
       {/* Footer */}
-      <footer className="bg-forest text-cream/50 text-center py-8 text-sm">
-        <p className="font-serif font-bold text-cream/70 mb-1">Farm 2026</p>
+      <footer className="bg-guardian-card border-t border-guardian-border text-guardian-muted text-center py-8 text-sm">
+        <p className="font-serif font-bold text-guardian-text/80 mb-1">Farm 2026</p>
         <p>
           Hampton, CT — current roster on{" "}
-          <Link href="/flock" className="hover:text-cream/80 underline">
+          <Link href="/flock" className="hover:text-guardian-text underline">
             /flock
           </Link>
           {" · "}
-          <Link href="/" className="hover:text-cream/80">
+          <Link href="/" className="hover:text-guardian-text">
             ← Home
           </Link>
         </p>
@@ -177,9 +179,9 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
   const observations = [...r.phenotype_observations].reverse();
 
   return (
-    <article className="bg-white rounded-xl shadow-md overflow-hidden border border-cream-dark flex flex-col">
+    <article className="bg-guardian-card rounded-xl overflow-hidden border border-guardian-border flex flex-col">
       {/* Photo or placeholder */}
-      <div className="relative w-full h-64 bg-forest/10">
+      <div className="relative w-full h-64 bg-guardian-hover/30">
         {photo?.path ? (
           <Image
             src={webPath(photo.path)}
@@ -189,9 +191,9 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
             className="object-cover"
           />
         ) : (
-          <div className="h-full flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-forest/15 to-forest/5">
-            <span className="text-5xl text-forest/50">🐣</span>
-            <span className="text-[0.65rem] uppercase tracking-widest text-forest/50 font-medium">
+          <div className="h-full flex flex-col items-center justify-center gap-2 bg-guardian-bg/40">
+            <span className="text-5xl text-guardian-muted">🐣</span>
+            <span className="text-[0.65rem] uppercase tracking-widest text-guardian-muted font-medium">
               Photo pending
             </span>
           </div>
@@ -231,19 +233,19 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
 
       <div className="p-5 flex flex-col flex-1 gap-3">
         <div>
-          <h2 className="text-2xl font-bold font-serif text-forest">{displayName}</h2>
-          {r.breed && <p className="text-sm text-wood font-medium">{r.breed}</p>}
-          <p className="text-[0.7rem] font-mono uppercase tracking-widest text-forest/40 mt-1">
+          <h2 className="text-2xl font-bold font-serif text-white">{displayName}</h2>
+          {r.breed && <p className="text-sm text-guardian-accent font-medium">{r.breed}</p>}
+          <p className="text-[0.7rem] font-mono uppercase tracking-widest text-guardian-muted/80 mt-1">
             id · {r.id}
           </p>
         </div>
 
         {/* Parentage */}
         {(r.parent_hen || r.parent_rooster_window) && (
-          <div className="text-xs text-forest/70 border-l-2 border-wood/40 pl-3">
+          <div className="text-xs text-guardian-text/80 border-l-2 border-guardian-accent/40 pl-3">
             {r.parent_hen && (
               <p>
-                <span className="font-mono uppercase tracking-widest text-forest/50 text-[0.65rem]">
+                <span className="font-mono uppercase tracking-widest text-guardian-muted text-[0.65rem]">
                   dam
                 </span>{" "}
                 {r.parent_hen}
@@ -251,14 +253,14 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
             )}
             {r.parent_rooster_window && (
               <p>
-                <span className="font-mono uppercase tracking-widest text-forest/50 text-[0.65rem]">
+                <span className="font-mono uppercase tracking-widest text-guardian-muted text-[0.65rem]">
                   sire
                 </span>{" "}
                 {r.parent_rooster_window}
               </p>
             )}
             {r.parentage_confidence && (
-              <p className="text-forest/50 mt-0.5">
+              <p className="text-guardian-muted mt-0.5">
                 <span className="font-mono uppercase tracking-widest text-[0.65rem]">
                   confidence
                 </span>{" "}
@@ -270,59 +272,59 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
 
         {/* Lifecycle summary if grown, otherwise nothing — keep card a snapshot */}
         {r.lifecycle_summary && (
-          <p className="text-sm text-forest/80 italic">{r.lifecycle_summary}</p>
+          <p className="text-sm text-guardian-text/80 italic">{r.lifecycle_summary}</p>
         )}
 
         {/* Phenotype observations — collapsed to most recent + one older */}
         {observations.length > 0 && (
-          <details className="text-xs text-forest/70 mt-1">
-            <summary className="cursor-pointer font-mono uppercase tracking-widest text-[0.65rem] text-forest/50 hover:text-forest/80">
+          <details className="text-xs text-guardian-text/75 mt-1">
+            <summary className="cursor-pointer font-mono uppercase tracking-widest text-[0.65rem] text-guardian-muted hover:text-guardian-text">
               phenotype observations ({observations.length})
             </summary>
-            <ol className="mt-2 space-y-3 border-l border-cream-dark pl-3">
+            <ol className="mt-2 space-y-3 border-l border-guardian-border pl-3">
               {observations.map((o, i) => {
                 const obs = observed(o);
                 return (
                   <li key={i}>
-                    <p className="font-mono uppercase tracking-widest text-[0.65rem] text-forest/50">
+                    <p className="font-mono uppercase tracking-widest text-[0.65rem] text-guardian-muted">
                       {fmtDate(o.date)}
                       {typeof o.age_days === "number" && (
-                        <span className="text-forest/40"> · day {o.age_days}</span>
+                        <span className="text-guardian-muted/80"> · day {o.age_days}</span>
                       )}
                     </p>
                     {obs.down_color && (
                       <p>
-                        <span className="text-forest/50">down · </span>
+                        <span className="text-guardian-muted">down · </span>
                         {obs.down_color}
                       </p>
                     )}
                     {obs.markings && (
                       <p>
-                        <span className="text-forest/50">markings · </span>
+                        <span className="text-guardian-muted">markings · </span>
                         {obs.markings}
                       </p>
                     )}
                     {obs.distinguishing_features && (
                       <p>
-                        <span className="text-forest/50">features · </span>
+                        <span className="text-guardian-muted">features · </span>
                         {obs.distinguishing_features}
                       </p>
                     )}
                     {obs.sex && obs.sex !== "unknown" && (
                       <p>
-                        <span className="text-forest/50">sex · </span>
+                        <span className="text-guardian-muted">sex · </span>
                         {String(obs.sex)}
                       </p>
                     )}
                     {o.prediction?.expected_sex && (
-                      <p className="text-forest/60 italic">
-                        <span className="text-forest/40">prediction · </span>
+                      <p className="text-guardian-text/60 italic">
+                        <span className="text-guardian-muted/80">prediction · </span>
                         {o.prediction.expected_sex}
                         {o.prediction.confidence && ` (${o.prediction.confidence})`}
                         {o.prediction.reasoning && ` — ${o.prediction.reasoning}`}
                       </p>
                     )}
-                    {o.notes && <p className="text-forest/60">{o.notes}</p>}
+                    {o.notes && <p className="text-guardian-text/60">{o.notes}</p>}
                   </li>
                 );
               })}
@@ -332,8 +334,8 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
 
         {/* Lifecycle status pill */}
         {r.lifecycle?.current_location && (
-          <p className="mt-auto pt-3 border-t border-cream-dark">
-            <span className="inline-block text-[0.65rem] font-mono uppercase tracking-widest bg-forest/10 text-forest px-2 py-1 rounded">
+          <p className="mt-auto pt-3 border-t border-guardian-border/50">
+            <span className="inline-block text-[0.65rem] font-mono uppercase tracking-widest bg-guardian-accent/10 text-emerald-300/90 border border-guardian-accent/25 px-2 py-1 rounded">
               {r.lifecycle.current_location}
             </span>
           </p>

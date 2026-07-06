@@ -101,7 +101,7 @@ const FLOOR_BIRDS: { src: string; name: string }[] = [
   { src: "/photos/birds/IMG_6233-birdimir-juvenile-22jun2026.jpg", name: "Birdimir" },
   { src: "/photos/birds/IMG_6268-birdthazar-23jun2026.jpg", name: "Birdthazar" },
   { src: "/photos/birds/IMG_5948-chonkers-chonkette-18jun2026.jpg", name: "Chonkers + Chonkette" },
-  { src: "/photos/birds/IMG_5849-birdadette-23jun2026.jpg", name: "Birdadette" },
+  { src: "/photos/birds/IMG_5849-birdadette-23jun2026.jpg", name: "Birddor" },
 ];
 const FLOOR_TILES = 4; // visible tiles; the pool slides one bird per tick
 

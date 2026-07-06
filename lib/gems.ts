@@ -1,11 +1,14 @@
-// Author: Claude Opus 4.7 (1M context) (orig Opus 4.6, 14-Apr-2026)
-// Date: 06-May-2026
+// Author: Claude Fable 5 (prev Claude Opus 4.7; orig Opus 4.6, 14-Apr-2026)
+// Date: 06-Jul-2026 (orig 06-May-2026)
 // PURPOSE: Typed fetchers for farm-guardian's /api/v1/images/* surface
 //          (v2.25.0). Single I/O layer for every gems / recent / stats
 //          call. Handles URL assembly, Next revalidation window, error
 //          mapping, and the `apparent_age_days = -1 → null` normalisation
 //          at the API boundary (parent plan 2.b rule).
 //          Consumed by GemsGallery, LatestFlockFrames, GemsStatFooter.
+//          06-Jul-2026: the backend /gems endpoint is now Boss-curated —
+//          it only returns frames with >=1 Discord reaction (farm-guardian
+//          v2.44.16). Same row shape; no client change needed.
 // SRP/DRY check: Pass — only lib/gems-format.ts handles formatting; this
 //                file only fetches + shapes.
 //

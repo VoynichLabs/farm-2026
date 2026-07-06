@@ -5,6 +5,8 @@
  *   a hero cover image, inline photo gallery, and prev/next navigation.
  *   06-Jul-2026: MDXRemote now runs with remark-gfm so GFM tables render
  *   as tables instead of literal pipe text (same fix as project pages).
+ *   06-Jul-2026 (terminal glow-up): cream-era classes converted to the
+ *   guardian palette; dead `prose prose-green` replaced with .terminal-prose.
  * SRP/DRY check: Pass — reuses getFieldNote/getAllFieldNotes from lib/content.ts,
  *   follows same MDXRemote pattern as project pages.
  */
@@ -66,14 +68,14 @@ export default async function FieldNotePage({
   return (
     <main className="max-w-4xl mx-auto px-4 py-12">
       <div className="mb-8">
-        <Link href="/field-notes" className="text-wood hover:underline text-sm">
+        <Link href="/field-notes" className="text-guardian-accent hover:text-emerald-300 hover:underline text-sm">
           &larr; All Field Notes
         </Link>
       </div>
 
       {/* Cover image */}
       {note.cover && (
-        <div className="mb-8 rounded-xl overflow-hidden shadow-lg bg-forest/5">
+        <div className="mb-8 rounded-xl overflow-hidden border border-guardian-border bg-guardian-card">
           <Image
             src={note.cover}
             alt={note.title}
@@ -88,34 +90,34 @@ export default async function FieldNotePage({
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-3">
-          <span className="font-mono text-sm text-forest-light/60">
+          <span className="font-mono text-sm text-guardian-muted">
             {note.date}
           </span>
           {note.tags.map((tag) => (
             <span
               key={tag}
-              className="text-xs bg-forest/10 text-forest px-2 py-0.5 rounded"
+              className="text-xs bg-guardian-accent/10 text-emerald-300/90 border border-guardian-accent/25 px-2 py-0.5 rounded"
             >
               {tag}
             </span>
           ))}
         </div>
-        <h1 className="text-4xl font-bold font-serif">{note.title}</h1>
+        <h1 className="text-4xl font-bold font-serif text-white">{note.title}</h1>
       </div>
 
       {/* MDX content */}
-      <section className="prose prose-green max-w-none mb-12">
+      <section className="terminal-prose max-w-none mb-12">
         <MDXRemote source={note.content} options={mdxOptions} />
       </section>
 
       {/* Photo gallery */}
       {note.photos.length > 0 && (
         <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-4 font-serif">Photos</h2>
+          <h2 className="text-2xl font-bold mb-4 font-serif text-white">Photos</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {note.photos.map((photo, i) => (
               <figure key={i} className="m-0">
-                <div className="rounded-lg overflow-hidden bg-forest/5">
+                <div className="rounded-lg overflow-hidden border border-guardian-border bg-guardian-card">
                   <Image
                     src={photo.src}
                     alt={photo.caption}
@@ -124,7 +126,7 @@ export default async function FieldNotePage({
                     className="w-full h-auto max-h-[70vh] object-contain mx-auto"
                   />
                 </div>
-                <figcaption className="text-sm text-forest-light/60 mt-2">
+                <figcaption className="text-sm text-guardian-muted mt-2">
                   {photo.caption}
                 </figcaption>
               </figure>
@@ -134,11 +136,11 @@ export default async function FieldNotePage({
       )}
 
       {/* Prev / Next navigation */}
-      <nav className="flex justify-between items-center pt-8 border-t border-forest/10">
+      <nav className="flex justify-between items-center pt-8 border-t border-guardian-border">
         {prev ? (
           <Link
             href={`/field-notes/${prev.slug}`}
-            className="text-wood hover:underline text-sm"
+            className="text-guardian-accent hover:text-emerald-300 hover:underline text-sm"
           >
             &larr; {prev.title}
           </Link>
@@ -148,7 +150,7 @@ export default async function FieldNotePage({
         {next ? (
           <Link
             href={`/field-notes/${next.slug}`}
-            className="text-wood hover:underline text-sm"
+            className="text-guardian-accent hover:text-emerald-300 hover:underline text-sm"
           >
             {next.title} &rarr;
           </Link>

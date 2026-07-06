@@ -75,6 +75,11 @@ export interface FlockBird {
   location?: string;
   deceased_date?: string;
   cause_of_death?: string;
+  // Former name, when a bird was renamed (e.g. Birddor fka Birdadette) —
+  // used to join roster entries to hatch records filed under the old name.
+  formerly?: string;
+  // True for birds hatched on the farm in 2026 — the Ornitharchs.
+  ornitharch?: boolean;
 }
 
 // Turn a whole-day count into the human age tier:

@@ -24,6 +24,14 @@ If you are about to type a number, a breed, a camera name, or a hardware string 
 
 All content loaders live in `lib/content.ts`. Use them. Do not re-implement `fs.readFileSync` in a page file.
 
+## Theme (06-Jul-2026)
+
+**One dark theme.** The global body is the guardian palette (`--color-guardian-*` in `app/globals.css`); every page sits on it. The cream/forest tokens still exist for legacy references but no new surface should use them — the 06-Jul-2026 terminal glow-up removed the last cream-era wrappers (`docs/06-Jul-2026-terminal-glowup-plan.md`).
+
+**Markdown/MDX bodies use `.terminal-prose`** (defined in `globals.css`), NOT Tailwind `prose` classes — `@tailwindcss/typography` is not installed, so `prose` anything is a silent no-op. If MDX looks unstyled, that's why.
+
+**Ornitharch data:** `content/flock-profiles.json` marks farm-hatched 2026 birds with `ornitharch: true` (plus `formerly` when a bird was renamed, e.g. Birddor fka Birdadette). Parentage, egg color, clutch, and confidence live ONLY in `content/hatches/2026/*.md` frontmatter — pages join the two by name via `getHatchRecords()`; never copy parentage strings into page code or the roster JSON.
+
 ## Rules
 
 1. **Never hardcode a count in prose or layout.** `{CAMERAS.length}` is always better than `5`. If you see a literal number describing data that lives in an SSoT, derive it.

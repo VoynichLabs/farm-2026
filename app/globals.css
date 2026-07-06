@@ -27,6 +27,107 @@ h1, h2, h3, h4, h5, h6 {
   font-family: Georgia, "Times New Roman", serif;
 }
 
+/* MDX / markdown typography for the dark terminal theme (06-Jul-2026).
+   The old `prose prose-green` classes were never backed by a plugin
+   (@tailwindcss/typography is not installed), so markdown bodies rendered
+   as unstyled browser defaults — light body text inheriting onto white
+   cards. `.terminal-prose` is the sitewide replacement: apply it to any
+   rendered markdown/MDX body sitting on the guardian palette. */
+.terminal-prose {
+  color: var(--color-guardian-text);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+.terminal-prose h1,
+.terminal-prose h2,
+.terminal-prose h3,
+.terminal-prose h4 {
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  margin: 1.75em 0 0.6em;
+  line-height: 1.25;
+}
+.terminal-prose h1 { font-size: 1.6rem; }
+.terminal-prose h2 { font-size: 1.35rem; }
+.terminal-prose h3 { font-size: 1.15rem; }
+.terminal-prose h4 { font-size: 1rem; }
+.terminal-prose h1:first-child,
+.terminal-prose h2:first-child,
+.terminal-prose h3:first-child { margin-top: 0; }
+.terminal-prose p { margin: 0 0 1em; }
+.terminal-prose a {
+  color: #34d399; /* emerald-400 — matches the nav accent */
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.terminal-prose a:hover { color: #6ee7b7; }
+.terminal-prose strong { color: #fff; }
+.terminal-prose ul,
+.terminal-prose ol { margin: 0 0 1em; padding-left: 1.4em; }
+.terminal-prose ul { list-style: disc; }
+.terminal-prose ol { list-style: decimal; }
+.terminal-prose li { margin: 0.3em 0; }
+.terminal-prose li::marker { color: var(--color-guardian-muted); }
+.terminal-prose blockquote {
+  border-left: 2px solid var(--color-guardian-border);
+  padding-left: 1em;
+  margin: 1.25em 0;
+  color: var(--color-guardian-muted);
+  font-style: italic;
+}
+.terminal-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  background: var(--color-guardian-card);
+  border: 1px solid var(--color-guardian-border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+}
+.terminal-prose pre {
+  background: var(--color-guardian-card);
+  border: 1px solid var(--color-guardian-border);
+  border-radius: 6px;
+  padding: 1em;
+  overflow-x: auto;
+  margin: 0 0 1.25em;
+}
+.terminal-prose pre code { background: none; border: none; padding: 0; }
+.terminal-prose hr {
+  border: none;
+  border-top: 1px solid var(--color-guardian-border);
+  margin: 2em 0;
+}
+.terminal-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin: 0 0 1.25em;
+  display: block;
+  overflow-x: auto;
+}
+.terminal-prose thead th {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-guardian-muted);
+  text-align: left;
+  border-bottom: 1px solid var(--color-guardian-border);
+  padding: 0.5em 0.75em;
+}
+.terminal-prose tbody td {
+  border-bottom: 1px solid color-mix(in srgb, var(--color-guardian-border) 50%, transparent);
+  padding: 0.5em 0.75em;
+  vertical-align: top;
+}
+.terminal-prose img {
+  max-width: 100%;
+  border: 1px solid var(--color-guardian-border);
+  border-radius: 6px;
+  margin: 1.25em 0;
+}
+
 /* /markets — Poultry Capital Markets terminal animations (route-scoped, 21-May-2026) */
 @keyframes ppm-marquee {
   from { transform: translateX(0); }

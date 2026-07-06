@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.8 (1M context)
- * Date: 22-Jun-2026
+ * Author: Claude Fable 5 (prev Claude Opus 4.8)
+ * Date: 06-Jul-2026 (orig 22-Jun-2026)
  * PURPOSE: ThenAndNow — a tasteful "then → now" comparison block for a single
  *   hatch, rendered as a featured pair at the top of /hatches. It sets a
  *   chick's hatch-day photo beside its most recent photo, each tagged with the
@@ -13,9 +13,9 @@
  *   dates with its own fmtDate, and passes plain props in. This component owns
  *   layout only — no data fetching, no date math, no record lookup.
  *
- *   Calm-farm palette per docs/FRONTEND-ARCHITECTURE.md: cream card, forest
- *   serif heading, guardian-bg instrument strips for the durable facts. This
- *   is the narrative layer, not the maximalist /markets surface.
+ *   06-Jul-2026 (terminal glow-up): cream card / forest text converted to
+ *   the sitewide dark guardian palette; instrument strips unchanged. Still
+ *   the narrative layer, not the maximalist /markets surface.
  *
  * SRP/DRY check: Pass — single responsibility (render one then/now pair).
  *   Reuses the page's fmtDate (no third date-format copy) and the existing
@@ -48,8 +48,8 @@ interface ThenAndNowProps {
 
 function Frame({ photo, tag }: { photo: ThenNowPhoto; tag: "THEN" | "NOW" }) {
   return (
-    <figure className="bg-white rounded-xl shadow-md overflow-hidden border border-cream-dark flex flex-col">
-      <div className="relative w-full aspect-[4/5] bg-forest/10">
+    <figure className="bg-guardian-card rounded-xl overflow-hidden border border-guardian-border flex flex-col">
+      <div className="relative w-full aspect-[4/5] bg-guardian-hover/30">
         <Image
           src={photo.src}
           alt={photo.alt}
@@ -74,7 +74,7 @@ function Frame({ photo, tag }: { photo: ThenNowPhoto; tag: "THEN" | "NOW" }) {
         </span>
       </div>
 
-      <figcaption className="p-4 text-sm text-forest/70 leading-relaxed">
+      <figcaption className="p-4 text-sm text-guardian-text/75 leading-relaxed">
         {photo.caption}
       </figcaption>
     </figure>
@@ -84,13 +84,13 @@ function Frame({ photo, tag }: { photo: ThenNowPhoto; tag: "THEN" | "NOW" }) {
 export default function ThenAndNow({ name, framing, then, now }: ThenAndNowProps) {
   return (
     <section className="max-w-6xl mx-auto px-4 pt-12 pb-4">
-      <p className="font-mono text-[0.7rem] uppercase tracking-widest text-forest/60 mb-2">
+      <p className="font-mono text-[0.7rem] uppercase tracking-widest text-guardian-accent mb-2">
         [THEN &rarr; NOW]
       </p>
-      <h2 className="text-2xl md:text-3xl font-bold font-serif text-forest mb-2">
+      <h2 className="text-2xl md:text-3xl font-bold font-serif text-white mb-2">
         {name}, Hatch Day to {now.ageLabel}
       </h2>
-      <p className="text-forest/70 text-sm mb-8 max-w-3xl leading-relaxed">{framing}</p>
+      <p className="text-guardian-text/70 text-sm mb-8 max-w-3xl leading-relaxed">{framing}</p>
 
       {/* Two frames with a center connector. The connector collapses out of the
           flow on narrow screens; the frames stack. */}
@@ -98,7 +98,7 @@ export default function ThenAndNow({ name, framing, then, now }: ThenAndNowProps
         <Frame photo={then} tag="THEN" />
         <div
           aria-hidden
-          className="hidden md:flex items-center justify-center font-mono text-2xl text-wood"
+          className="hidden md:flex items-center justify-center font-mono text-2xl text-guardian-accent"
         >
           &rarr;
         </div>

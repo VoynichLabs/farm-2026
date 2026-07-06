@@ -1,10 +1,12 @@
 /**
- * Author: Claude Opus 4.6 (1M context)
- * Date: 14-Apr-2026
+ * Author: Claude Fable 5 (orig Claude Opus 4.6)
+ * Date: 06-Jul-2026 (orig 14-Apr-2026)
  * PURPOSE: Single gem tile — responsive thumbnail with overlay badges in
  *   compact mode, or a stacked card with caption in default mode. Accepts
  *   an onOpen callback so the lightbox owner (GemsGalleryClient) controls
  *   modal state. No fetching, no state.
+ *   06-Jul-2026 (terminal glow-up): cream-era tile surfaces converted to
+ *   guardian tokens so both variants sit correctly on the dark theme.
  * SRP/DRY check: Pass — GemCardBadges handles pills; GemCaption handles
  *   caption; lib/gems-format.ts handles label strings.
  */
@@ -45,7 +47,7 @@ export default function GemCard({ row, variant = "default", onOpen, priority = f
       </>
     );
     const shared =
-      "group relative block aspect-[4/3] w-full overflow-hidden rounded-lg bg-cream-dark shadow-sm hover:shadow-md transition-shadow focus:outline-none focus:ring-2 focus:ring-wood";
+      "group relative block aspect-[4/3] w-full overflow-hidden rounded-lg bg-guardian-card border border-guardian-border hover:border-guardian-hover transition-colors focus:outline-none focus:ring-2 focus:ring-guardian-accent";
     if (onOpen) {
       return (
         <button
@@ -66,14 +68,14 @@ export default function GemCard({ row, variant = "default", onOpen, priority = f
   }
 
   return (
-    <article className="group overflow-hidden rounded-xl bg-cream shadow-sm hover:shadow-md transition-shadow">
+    <article className="group overflow-hidden rounded-xl bg-guardian-card border border-guardian-border hover:border-guardian-hover transition-colors">
       <button
         type="button"
         onClick={() => onOpen?.(row.id)}
-        className="block w-full focus:outline-none focus:ring-2 focus:ring-wood"
+        className="block w-full focus:outline-none focus:ring-2 focus:ring-guardian-accent"
         aria-label={`Open gem: ${thumbAlt}`}
       >
-        <div className="relative aspect-[4/3] w-full overflow-hidden bg-cream-dark">
+        <div className="relative aspect-[4/3] w-full overflow-hidden bg-guardian-bg">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={row.full_url || row.thumb_url}

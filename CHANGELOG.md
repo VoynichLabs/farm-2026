@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.27.0] — 2026-07-06
+
+### Changed — Terminal glow-up: dark-theme readability fix sitewide, THE ORNITHARCHS on /flock, Boss-curated gems, Birdadette → Birddor (Claude Fable 5)
+
+**What:** Four Boss-directed workstreams (plan: `docs/06-Jul-2026-terminal-glowup-plan.md`):
+
+1. **Readability restyle, terminal aesthetic kept.** v1.16.3 flipped the global body to the dark guardian palette, but 17 files still carried cream-era styling — white cards inheriting light body text, forest-dark text on the dark body. Compounding it, every `prose prose-green` class was dead: `@tailwindcss/typography` was never installed, so MDX rendered as unstyled defaults (the unreadable wash on /projects/guardian). Fix: a hand-rolled `.terminal-prose` block in `globals.css` (serif headings, emerald links, hairline tables — no plugin dependency) plus guardian-token conversion across projects ×2, field-notes ×2, flock, gallery/gems, hatches, yard, and the shared GemCard / GemFilters / GemsEmpty / GemsError / GemsLoadMore / FlockGemStrip / ThenAndNow components.
+2. **THE ORNITHARCHS — new /flock lead section.** Every bird hatched on the farm in 2026 (count derived, currently 11), grouped by clutch, each tile joining flock-profiles.json (identity/photo) with the per-chick hatch records (parentage SSoT: dam, sire window, confidence, egg color). Leads with the legacy story: sires LBRJ (†24-Apr, predator) and his son Whitey Red Legs (†01-May, vanished) are both gone; Henrietta (†05-Jun, natural causes) died two days after her last two chicks hatched — her three chicks carry her name. Founders' memorial strip with derived offspring counts; blue-egg/brown-egg chips (the actual parentage evidence); "portrait pending" tiles for Henriessa/Henridotta (no committed photos exist); Ingebird's portrait flagged "photo ID unconfirmed" per its filename convention.
+3. **Gems gallery de-junked.** farm-guardian v2.44.16 gates the public /gems endpoint on `discord_reactions >= 1` (Boss's Discord reaction is the real quality gate) — the gallery drops from ~10,300 VLM-nominated frames to ~1,600 human-approved ones; hero + homepage rails inherit the curation. Gallery hero copy now states the contract (S7 feeds the pipeline, a person decides). GemFilters loses its Camera row (single-camera pipeline; chips mostly returned nothing) and Individual row (VLM tags too coarse); Activity chips trimmed to tags that actually occur (adds huddling/drinking, drops dust-bathing/sparring at 1–3 rows).
+4. **Birdadette → Birddor.** Turned out male; renamed across flock-profiles.json (`formerly` field preserved), /flock, the homepage hatchling cards (Birdsilla also gets her name on the card that read Chick #3), the hatch record, and the markets trading floor. The "named after Birdgit" claim was Boss-corrected as fabricated and removed from all five places it appeared (profiles ×3, hatch record, April field note — the note carries an inline correction rather than silent history rewrite).
+
+**Why:** Boss (06-Jul): the Guardian project page was "unreadably god-awful," the gallery "full of junk," and the flock story worth telling properly — 11 birds hatched here from hens who lived good lives here, with the whole founding generation now passed.
+
+**How:** No layout rework beyond /flock's new section — the restyle is token substitution (bg-cream/bg-white/forest → guardian tokens). Parentage renders from hatch-record frontmatter via the existing `getHatchRecords()` loader, never retyped into page code; cohorts derive from `clutch_id`. Counts remain derived (no hardcoded 11). Backend change is farm-guardian v2.44.16 (`min_reactions` param); row shape unchanged so `types.ts` and `check:contract` are untouched.
+
 ## [1.26.0] — 2026-07-06
 
 ### Fixed — Duo 2 camera stuck in CONNECTING forever; display-sized snapshot polling; GFM tables (Claude Fable 5)
