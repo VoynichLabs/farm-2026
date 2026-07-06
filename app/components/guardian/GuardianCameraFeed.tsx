@@ -1,7 +1,7 @@
 "use client";
 /**
- * Author: Claude Opus 4.7 (1M context) (orig Claude Opus 4.6, 15-Apr-2026)
- * Date: 10-May-2026
+ * Author: Claude Fable 5 (prev Claude Opus 4.7 (1M context); orig Claude Opus 4.6, 15-Apr-2026)
+ * Date: 06-Jul-2026
  * PURPOSE: Reusable camera feed via snapshot polling. Fetches a single JPEG from
  *   Guardian's /api/cameras/{name}/frame endpoint every ~1.2s and swaps the img src.
  *   Replaced persistent MJPEG streaming because browsers limit concurrent HTTP/1.1
@@ -35,6 +35,15 @@
  *   visible. It also no longer flips on a single missed snapshot — a threshold
  *   of a few consecutive failures must pass before the strip appears, so normal
  *   one-off tunnel hiccups don't flicker the UI.
+ *   v1.26.0 (06-Jul-2026): frames are now requested display-sized via the
+ *     backend's `max_width` + `q` params (see farm-guardian dashboard.py)
+ *     instead of at native resolution. Root cause of "the Duo 2 isn't on the
+ *     site": its dual-lens panoramic snapshot is ~4MB, which takes longer
+ *     than FRAME_FETCH_TIMEOUT_MS to cross the Cloudflare tunnel, so every
+ *     poll aborted and the tile sat in CONNECTING forever. A 1280px/q75
+ *     duo2 frame is ~120KB / ~0.6s. Width arrives via the `maxWidth` prop
+ *     (stage tiles get more pixels than thumbnails); the backend only
+ *     re-encodes when the source is wider, so small cams are pass-through.
  *   15-Apr-2026: `FeedState` is now exported and the `onStatusChange` callback
  *   reports the full state string (not just a live boolean) so parent layouts
  *   can distinguish "connecting" (still trying — keep visible) from "offline"
@@ -72,6 +81,14 @@ const OFFLINE_THRESHOLD = 10;
 // disappear → 5 more misses → strip shown again. Holding the strip for a
 // few seconds smooths that into a single visible "reconnecting" period.
 const RECONNECT_MIN_VISIBLE_MS = 4000;
+// Default snapshot width when the parent doesn't specify one. 1280 is plenty
+// for any tile on the page and keeps even the panoramic Duo 2 frame near
+// ~120KB — comfortably inside FRAME_FETCH_TIMEOUT_MS through the tunnel.
+const DEFAULT_MAX_WIDTH = 1280;
+// JPEG re-encode quality for downscaled frames. 75 is visually clean for
+// live-monitoring tiles and roughly halves the payload vs the backend's
+// default of 85.
+const FRAME_JPEG_QUALITY = 75;
 
 export type FeedState = "connecting" | "live" | "reconnecting" | "offline";
 
@@ -80,11 +97,16 @@ export default function GuardianCameraFeed({
   label,
   online,
   onStatusChange,
+  maxWidth = DEFAULT_MAX_WIDTH,
 }: {
   cameraName: string;
   label: string;
   online: boolean | null;
   onStatusChange?: (cameraName: string, state: FeedState) => void;
+  // Display-size hint forwarded to the backend as `max_width`. The backend
+  // only re-encodes when the source frame is wider than this, so it's safe
+  // to pass for every camera regardless of native resolution.
+  maxWidth?: number;
 }) {
   const [frameUrl, setFrameUrl] = useState<string | null>(null);
   const [feedState, setFeedState] = useState<FeedState>("connecting");
@@ -115,8 +137,11 @@ export default function GuardianCameraFeed({
       );
 
       try {
+        // max_width/q keep the payload display-sized: native frames (4K
+        // Reolink ~1.4MB, panoramic Duo 2 ~4MB) can't reliably cross the
+        // tunnel inside FRAME_FETCH_TIMEOUT_MS at 1.2s cadence.
         const res = await fetch(
-          `${GUARDIAN_API}/api/cameras/${cameraName}/frame?t=${Date.now()}`,
+          `${GUARDIAN_API}/api/cameras/${cameraName}/frame?max_width=${maxWidth}&q=${FRAME_JPEG_QUALITY}&t=${Date.now()}`,
           { signal: ac.signal },
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -191,7 +216,7 @@ export default function GuardianCameraFeed({
         return null;
       });
     };
-  }, [cameraName]);
+  }, [cameraName, maxWidth]);
 
   useEffect(() => {
     if (online === true && feedState === "offline") {

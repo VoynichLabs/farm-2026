@@ -279,6 +279,7 @@ export default function Terminal({ data }: { data: MarketData }) {
   const rng = useRef(lcg(424242));
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- clock must initialize post-mount: `now` starts null so SSR and first client render match (hydration safety), same documented pattern as GuardianCameraStage
     setNow(new Date());
     const clock = setInterval(() => setNow(new Date()), 1000);
     const ticker = setInterval(() => {

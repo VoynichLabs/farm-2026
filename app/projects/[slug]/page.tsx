@@ -1,3 +1,13 @@
+/**
+ * Author: Claude Fable 5 (header added 06-Jul-2026; page predates the header rule)
+ * Date: 06-Jul-2026
+ * PURPOSE: Project detail page — MDX overview, materials table, diary
+ *   timeline; the guardian slug swaps the hero for the live dashboard.
+ *   06-Jul-2026: MDXRemote now runs with remark-gfm so GFM tables (e.g.
+ *   the Guardian hardware table) render as tables, not literal pipe text.
+ * SRP/DRY check: Pass — content loading lives in lib/content.ts; Guardian
+ *   rendering is composed from app/components/guardian/.
+ */
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,7 +19,13 @@ import {
   getProjectMaterials,
 } from "@/lib/content";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 import GuardianDashboard from "@/app/components/guardian/GuardianDashboard";
+
+// GFM support (pipe tables, strikethrough, autolinks) for project MDX —
+// without it the Guardian hardware table rendered as literal `|` text
+// (fixed 06-Jul-2026, see docs/06-Jul-2026-duo2-frame-and-tunnel-load-plan.md).
+const mdxOptions = { mdxOptions: { remarkPlugins: [remarkGfm] } };
 
 const statusColors: Record<string, string> = {
   planning: "bg-yellow-600",
@@ -135,7 +151,7 @@ export default async function ProjectPage({
 
       {/* Project Overview MDX */}
       <section className="prose prose-green max-w-none mb-12 bg-white rounded-lg shadow p-6">
-        <MDXRemote source={project.content} />
+        <MDXRemote source={project.content} options={mdxOptions} />
       </section>
 
       {/* Materials */}
@@ -207,7 +223,7 @@ export default async function ProjectPage({
                 </div>
                 <h3 className="text-xl font-bold mb-3">{entry.title}</h3>
                 <div className="prose prose-green max-w-none text-sm">
-                  <MDXRemote source={entry.content} />
+                  <MDXRemote source={entry.content} options={mdxOptions} />
                 </div>
               </article>
             ))}

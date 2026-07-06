@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.26.0] — 2026-07-06
+
+### Fixed — Duo 2 camera stuck in CONNECTING forever; display-sized snapshot polling; GFM tables (Claude Fable 5)
+
+**What:** The new `duo2` (Reolink Duo 2 dual-lens panoramic) never showed a frame on the homepage or `/projects/guardian` — its tile sat in amber CONNECTING indefinitely, reading as "the camera isn't on the site." Snapshot polling now requests display-sized frames; duo2 gets a metadata overlay entry (8:3 aspect); MDX pages render GFM tables. Plan + root-cause walk: `docs/06-Jul-2026-duo2-frame-and-tunnel-load-plan.md`.
+
+**Why:** duo2's native snapshot is a ~4MB JPEG that takes longer than the feed's 12s fetch timeout to cross the Cloudflare tunnel, so every poll aborted before the first frame landed. The backend frame endpoint has supported `max_width`/`q` (added for exactly this tunnel-choke problem) — the frontend just never passed them. Measured: native duo2 frame >12s (times out); `max_width=1280&q=70` → 122KB in 0.6s.
+
+**How:**
+
+- `GuardianCameraFeed.tsx` — frame URL now carries `max_width` (new `maxWidth` prop, default 1280) and `q=75`. Backend only re-encodes when the source is wider, so small cams stay pass-through. Side benefit: house-yard's ~1.4MB 4K pass-through per tile per 1.2s drops ~5-10×, cutting tunnel load fleet-wide.
+- `GuardianCameraStage.tsx` — passes 1600 for stage tiles, 800 for thumbnails.
+- `lib/cameras.ts` — `duo2` overlay entry (label, "Duo 2" short label, 8/3 aspect ratio) so the panoramic frame doesn't letterbox in a 16:9 box.
+- `app/projects/[slug]/page.tsx`, `app/field-notes/[slug]/page.tsx` — `remark-gfm` wired into MDXRemote; the Guardian hardware table previously rendered as literal `|` characters. New dependency: `remark-gfm`.
+- `content/projects/guardian/index.mdx` — hardware table gains the duo2 row.
+- `package.json` version re-synced to the changelog (had stalled at 1.16.8 while the changelog advanced to 1.25.0; the site header reads the package version, so it was under-reporting).
+
 ## [1.25.0] — 2026-06-23
 
 ### Added — Rotating flock portraits on the /markets trading floor (Claude Opus 4.8)

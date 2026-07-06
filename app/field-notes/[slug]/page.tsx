@@ -1,8 +1,10 @@
 /**
- * Author: Claude Opus 4.6
- * Date: 12-Apr-2026
+ * Author: Claude Fable 5 (orig Claude Opus 4.6, 12-Apr-2026)
+ * Date: 06-Jul-2026
  * PURPOSE: Individual field note detail page. Renders MDX content with
  *   a hero cover image, inline photo gallery, and prev/next navigation.
+ *   06-Jul-2026: MDXRemote now runs with remark-gfm so GFM tables render
+ *   as tables instead of literal pipe text (same fix as project pages).
  * SRP/DRY check: Pass — reuses getFieldNote/getAllFieldNotes from lib/content.ts,
  *   follows same MDXRemote pattern as project pages.
  */
@@ -12,6 +14,10 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getFieldNote, getAllFieldNotes } from "@/lib/content";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
+
+// GFM (tables, strikethrough, autolinks) — matches the project-page MDX setup.
+const mdxOptions = { mdxOptions: { remarkPlugins: [remarkGfm] } };
 
 export function generateStaticParams() {
   return getAllFieldNotes().map((n) => ({ slug: n.slug }));
@@ -99,7 +105,7 @@ export default async function FieldNotePage({
 
       {/* MDX content */}
       <section className="prose prose-green max-w-none mb-12">
-        <MDXRemote source={note.content} />
+        <MDXRemote source={note.content} options={mdxOptions} />
       </section>
 
       {/* Photo gallery */}

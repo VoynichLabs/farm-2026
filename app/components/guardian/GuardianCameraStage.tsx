@@ -1,7 +1,7 @@
 "use client";
 /**
- * Author: Claude Opus 4.7 (1M context)
- * Date: 02-May-2026
+ * Author: Claude Fable 5 (prev Claude Opus 4.7 (1M context))
+ * Date: 06-Jul-2026
  * PURPOSE: Modular camera viewer — one featured feed big, the rest as live
  *   thumbnails. Click any thumbnail to promote it to the stage. Selection
  *   persists in localStorage and can be deep-linked via `?cam=<name>`.
@@ -42,6 +42,13 @@ import { useEffect, useMemo, useState } from "react";
 import GuardianCameraFeed from "./GuardianCameraFeed";
 import { useCameraStatuses } from "./useCameraStatuses";
 import { CameraMeta, isCameraName } from "@/lib/cameras";
+
+// Snapshot width hints forwarded to the backend's max_width param
+// (06-Jul-2026): top-stage tiles get more pixels than thumbnails. Layout
+// decisions live here once — the feed component just polls at whatever
+// width it's told.
+const STAGE_FRAME_WIDTH = 1600;
+const THUMB_FRAME_WIDTH = 800;
 
 // Static class strings so the Tailwind JIT picks them up (no dynamic concat).
 function gridColsForCount(count: number): string {
@@ -194,6 +201,7 @@ export default function GuardianCameraStage({
               label={featuredCam.label}
               online={online}
               onStatusChange={onStatusChange}
+              maxWidth={STAGE_FRAME_WIDTH}
             />
           </div>
           <div
@@ -205,6 +213,7 @@ export default function GuardianCameraStage({
               label={secondaryCam.label}
               online={online}
               onStatusChange={onStatusChange}
+              maxWidth={STAGE_FRAME_WIDTH}
             />
           </div>
         </div>
@@ -221,6 +230,7 @@ export default function GuardianCameraStage({
             label={featuredCam.label}
             online={online}
             onStatusChange={onStatusChange}
+            maxWidth={STAGE_FRAME_WIDTH}
           />
         </div>
       )}
@@ -245,6 +255,7 @@ export default function GuardianCameraStage({
                   label={cam.shortLabel}
                   online={online}
                   onStatusChange={onStatusChange}
+                  maxWidth={THUMB_FRAME_WIDTH}
                 />
               </div>
               <div className="pointer-events-none absolute inset-0 rounded ring-1 ring-transparent group-hover:ring-emerald-400/60 transition" />
