@@ -208,6 +208,26 @@
   ],
   "picks": [
     {
+      "date": "2026-07-06",
+      "ticker": "TSN",
+      "company": "Tyson Foods, Inc.",
+      "play": "SHARES — hold the high roost",
+      "conviction": 74,
+      "rating": "STRONG BUY",
+      "omen": "High-roost count up. Protein names lead. Tyson follows the perch.",
+      "frame": "/photos/markets/pick-tsn.jpg",
+      "frameTime": "2026-07-06 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "Dark/Black — HIGH-ROOST, top-left ledge",
+        "Tan/Brown — GROUND, back-right corner",
+        "Brown Striped — HIGH-ROOST, center"
+      ],
+      "mood": "Decisive. Feed-adjacent.",
+      "realQuote": "TSN last $58.89 (+0.79%) — real, 2026-07-06"
+    },
+    {
       "date": "2026-07-02",
       "ticker": "MOO",
       "company": "VanEck Agribusiness ETF",
@@ -756,28 +776,6 @@
       ],
       "mood": "Hungry. Inflationary.",
       "realQuote": "CORN last $18.33 (+0.16%) — real, 2026-05-22"
-    },
-    {
-      "date": "2026-05-21",
-      "ticker": "TSN",
-      "company": "Tyson Foods, Inc.",
-      "play": "WEEKLY CALLS — slightly OTM, Fri expiry",
-      "conviction": 73,
-      "rating": "STRONG BUY",
-      "omen": "Two hens held the high roost (up). The red-comb alpha mounted the feed bucket and stared down the flock. They are long their own supplier — and the real tape agrees: TSN closed green.",
-      "frame": "/photos/markets/pick-tsn.jpg",
-      "frameTime": "2026-05-21 ~08:5x EDT (live read)",
-      "model": "qwen/qwen3.5-9b (local, LM Studio)",
-      "source": "S7 coop cam → Guardian frame proxy → VLM",
-      "birdReads": [
-        "Dark/Black — HIGH-ROOST, top-left edge",
-        "Tan/Brown — GROUND, back-left corner",
-        "Brown Striped — HIGH-ROOST, center-left ledge",
-        "Black & White Speckled — GROUND, center-right by the bucket",
-        "Black & White / Red Comb — GROUND, bottom-right foreground"
-      ],
-      "mood": "Busy and cozy coop activity",
-      "realQuote": "TSN last $66.52 (+0.2%) — real, 2026-05-20"
     }
   ],
   "analysts": [
@@ -909,40 +907,40 @@
     {
       "sym": "TSN",
       "name": "Tyson Foods",
-      "px": 58.43,
-      "chg": 2.06,
-      "date": "2026-07-02"
+      "px": 58.89,
+      "chg": 0.79,
+      "date": "2026-07-06"
     },
     {
       "sym": "PPC",
       "name": "Pilgrim's Pride",
-      "px": 28.73,
-      "chg": 0.63,
-      "date": "2026-07-02"
+      "px": 28.76,
+      "chg": 0.74,
+      "date": "2026-07-06"
     },
     {
       "sym": "ADM",
       "name": "Archer-Daniels-Midland",
-      "px": 76.8,
-      "chg": 0.27,
-      "date": "2026-07-02"
+      "px": 76.79,
+      "chg": 0.23,
+      "date": "2026-07-06"
     },
     {
       "sym": "MOO",
       "name": "VanEck Agribusiness ETF",
-      "px": 78.99,
-      "chg": -0.27,
-      "date": "2026-07-02"
+      "px": 80.91,
+      "chg": 2.43,
+      "date": "2026-07-06"
     },
     {
       "sym": "CORN",
       "name": "Teucrium Corn Fund",
-      "px": 16.95,
-      "chg": 1.19,
-      "date": "2026-07-02"
+      "px": 16.86,
+      "chg": -0.53,
+      "date": "2026-07-06"
     }
   ],
-  "realAsOf": "2026-07-02",
+  "realAsOf": "2026-07-06",
   "benchmark": {
     "flock": "+7.30% MTD (unaudited, imaginary)",
     "spy": "SPY $741.25 (+0.75% last session, real)"
