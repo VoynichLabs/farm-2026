@@ -79,3 +79,7 @@ Data architecture (SRP/DRY):
 5. B3–B5: content corrections, homepage names, floor label
 6. C: GemFilters strip-down + backend min_reactions + restart + contract check
 7. D: verify, screenshots, docs, CHANGELOGs
+
+## Appendix (post-ship, same day) — rotating portraits + throwbacks
+
+Boss follow-up after v1.27.0 shipped: "find some real good ones… rotating amount of pictures… throwbacks to birds when they were younger." Delivered as v1.28.0: full 38-photo visual audit (three mislabels caught: the 3weeks-a flower photo, the birdadotta-fluffy turkey poult, the sideways day-8 file — rotated in place), per-photo `date`/`showcase` fields on hatch-record photos[], and the `OrnitharchPortrait` rotator (staggered cross-fade, age chips, hydration-safe). Pools build from hatch-record frontmatter in `buildPortraitPool()`; Henrietta's memorial tile rotates to her 2022 throwback. Still open: real solo portraits for Henriessa/Henridotta (IMG_5144/5147 uncommitted), a genuine LBRJ photo, a better current Birdsilla portrait.

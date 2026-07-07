@@ -199,7 +199,9 @@
       "temperament": "Hardy, independent",
       "color_description": "Gold and black laced plumage, purple leg band on left leg",
       "photo": "birds/henrietta.jpg",
-      "notes": "Matriarch and founder of the Henrietta line (Henriella, Henriessa, Henridotta). Purple left-leg band; the flock's only brown-egg layer. Passed peacefully of old age overnight of 4-5 June 2026 and was buried in the garden under a tomato plant."
+      "notes": "Matriarch and founder of the Henrietta line (Henriella, Henriessa, Henridotta). Purple left-leg band; the flock's only brown-egg layer. Passed peacefully of old age overnight of 4-5 June 2026 and was buried in the garden under a tomato plant.",
+      "photo_throwback": "history/henrietta-2022-scary-birds.jpg",
+      "photo_throwback_label": "2022 · the scary birds"
     },
     {
       "name": "Little Big Red Junior",
@@ -336,7 +338,7 @@
       "egg_color": "TBD (too young)",
       "temperament": "Alert, growing fast",
       "color_description": "Young pullet — blue eyes, distinctive coloring around the beak, slight rust on the wings, white tips on wings + belly (the key Birdadotta-vs-Birdadette discriminator)",
-      "photo": "birds/IMG_6259-birdadotta-23jun2026.jpg",
+      "photo": "birds/IMG_6271-birdadotta-23jun2026.jpg",
       "notes": "Birdadonna's offspring — egg laid 03-April-2026, hatched day-22, making her the first second-generation chick of the breeding program (dam Birdadonna, sire window Little Big Red Junior). Moved from brooder to nesting-box on 2026-05-16 when the brooder was cleared to receive the April-25 hatchlings.",
       "location": "nesting-box",
       "ornitharch": true
@@ -655,7 +657,7 @@
       "egg_color": "TBD (too young)",
       "temperament": "Was vocalizing distress at 21:23 EDT while Birdthazar was harassing; settled once Birdthazar moved to brooder",
       "color_description": "Grey-and-white down — magnificent coloring per Boss; visually distinct from the two buff siblings",
-      "photo": "birds/IMG_6283-henriella-23jun2026.jpg",
+      "photo": "birds/IMG_6292-henriella-23jun2026.jpg",
       "notes": "First chick of the Henrietta line. Dam confirmed: Henrietta (only brown-egg layer among the active hens — Golden Laced Wyandotte). Sire LBRJ probable per the April 25 paternity window. Named Henriella per the Boss-confirmed 2026 hatch spine. The line later produced the June chicks Henriessa and Henridotta. Currently in the brooder with Birdthazar and Birdsilla.",
       "location": "brooder",
       "ornitharch": true

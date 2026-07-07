@@ -80,6 +80,10 @@ export interface FlockBird {
   formerly?: string;
   // True for birds hatched on the farm in 2026 — the Ornitharchs.
   ornitharch?: boolean;
+  // Optional second frame for memorial/founder tiles (e.g. Henrietta's 2022
+  // throwback) — rotated against `photo` with the label as the era chip.
+  photo_throwback?: string;
+  photo_throwback_label?: string;
 }
 
 // Turn a whole-day count into the human age tier:
@@ -342,6 +346,12 @@ export interface HatchPhoto {
   path: string;
   confidence: string;
   caption: string;
+  /** ISO date the photo was taken, when known — drives the age tag
+   *  ("hatch day", "day 8", "wk 3") on rotating portrait tiles. */
+  date?: string;
+  /** false = documentary shot (equipment, thermometer, group context) that
+   *  belongs in the hatch record but not in a bird's portrait rotation. */
+  showcase?: boolean;
 }
 
 export interface HatchObservation {
@@ -470,7 +480,17 @@ export function getHatchRecords(year: string = "2026"): HatchRecord[] {
           : undefined,
         name: data.name ? String(data.name) : undefined,
         status: data.status ? String(data.status) : undefined,
-        photos: Array.isArray(data.photos) ? data.photos : [],
+        // Photo entries may carry a `date:` (YAML parses it into a Date —
+        // normalize back to "YYYY-MM-DD") and an optional `showcase: false`.
+        photos: Array.isArray(data.photos)
+          ? data.photos.map((ph: Record<string, unknown>) => ({
+              path: ph.path ? String(ph.path) : "",
+              confidence: ph.confidence ? String(ph.confidence) : "",
+              caption: ph.caption ? String(ph.caption) : "",
+              date: ph.date ? toISODate(ph.date) : undefined,
+              showcase: ph.showcase === false ? false : undefined,
+            }))
+          : [],
         evidence: Array.isArray(data.evidence) ? data.evidence.map(String) : [],
         phenotype_observations: Array.isArray(data.phenotype_observations)
           ? data.phenotype_observations.map(normalizeObservation)

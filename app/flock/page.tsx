@@ -48,6 +48,9 @@ import {
 } from "@/lib/content";
 import Image from "next/image";
 import FlockGemStrip from "@/app/components/flock/FlockGemStrip";
+import OrnitharchPortrait, {
+  type RotatingPhoto,
+} from "@/app/components/flock/OrnitharchPortrait";
 
 export const metadata: Metadata = {
   title: "The Flock",
@@ -134,6 +137,51 @@ const fmtSpan = (isoA: string, isoB: string): string => {
 // boilerplate for tile display without dropping the uncertainty.
 const shortSire = (w?: string): string | null =>
   w ? w.replace(" (NI-clutch paternity window)", " (window)") : null;
+
+// repo-relative "public/photos/..." → web "/photos/..." (same convention as
+// /hatches). Hatch-record photo paths are stored repo-relative.
+const webPath = (p: string) => `/${p.replace(/^public\//, "")}`;
+
+// Short age-at-photo chip for a throwback frame: "hatch day", "day 8",
+// "3 wks", "2 mos". Undated frames read "throwback". The literal "day 13"
+// is skipped (triskaidekaphobia rule) — it renders as "2 wks" instead.
+const throwbackTag = (hatchISO?: string, photoISO?: string): string => {
+  if (!hatchISO || !photoISO) return "throwback";
+  const hatch = new Date(`${hatchISO}T00:00:00`).getTime();
+  const shot = new Date(`${photoISO}T00:00:00`).getTime();
+  if (Number.isNaN(hatch) || Number.isNaN(shot)) return "throwback";
+  const days = Math.round((shot - hatch) / 86400000);
+  if (days <= 1) return "hatch day";
+  if (days < 13) return `day ${days}`;
+  if (days < 56) return `${Math.floor(days / 7)} wks`;
+  return `${Math.floor(days / 30)} mos`;
+};
+
+// A bird's rotating pool: current portrait first, then its hatch-record
+// throwbacks in chronological order. Record entries flagged showcase:false
+// (equipment shots, thermometers) stay out of the rotation; the current
+// portrait is deduped out of the throwback list by src.
+const buildPortraitPool = (bird: FlockBird, record?: HatchRecord): RotatingPhoto[] => {
+  const pool: RotatingPhoto[] = [];
+  const age = getBirdAgeLabel(bird.hatch_date, bird.hatch_date_estimated);
+  if (bird.photo) {
+    pool.push({
+      src: `/photos/${bird.photo}`,
+      tag: age ? `now · ${age}` : "now",
+      alt: bird.name,
+    });
+  }
+  const throwbacks = (record?.photos ?? [])
+    .filter((ph) => ph.path && ph.showcase !== false)
+    .sort((a, b) => (a.date ?? "9999").localeCompare(b.date ?? "9999"))
+    .map((ph) => ({
+      src: webPath(ph.path),
+      tag: throwbackTag(record?.hatch_date, ph.date),
+      alt: ph.caption || `${bird.name}, younger`,
+    }))
+    .filter((ph) => !pool.some((existing) => existing.src === ph.src));
+  return [...pool, ...throwbacks];
+};
 
 export default function FlockPage() {
   const flockData = getFlockProfiles();
@@ -336,7 +384,20 @@ export default function FlockPage() {
                   className="bg-guardian-card border border-guardian-border rounded-lg overflow-hidden flex flex-col"
                 >
                   <div className="relative w-full h-44 bg-guardian-hover/30">
-                    {bird.photo ? (
+                    {bird.photo && bird.photo_throwback ? (
+                      <OrnitharchPortrait
+                        photos={[
+                          { src: `/photos/${bird.photo}`, tag: "portrait", alt: bird.name },
+                          {
+                            src: `/photos/${bird.photo_throwback}`,
+                            tag: bird.photo_throwback_label ?? "throwback",
+                            alt: `${bird.name}, earlier years`,
+                          },
+                        ]}
+                        stagger={2}
+                        sizes="(min-width: 768px) 33vw, 100vw"
+                      />
+                    ) : bird.photo ? (
                       <Image
                         src={`/photos/${bird.photo}`}
                         alt={bird.name}
@@ -381,8 +442,13 @@ export default function FlockPage() {
                   </span>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {cohort.members.map((bird) => (
-                    <OrnitharchTile key={bird.name} bird={bird} record={recordFor(bird)} />
+                  {cohort.members.map((bird, bi) => (
+                    <OrnitharchTile
+                      key={bird.name}
+                      bird={bird}
+                      record={recordFor(bird)}
+                      index={ci * 3 + bi}
+                    />
                   ))}
                 </div>
               </div>
@@ -804,9 +870,11 @@ interface BreedProfile {
 function OrnitharchTile({
   bird,
   record,
+  index = 0,
 }: {
   bird: FlockBird;
   record?: HatchRecord;
+  index?: number;
 }) {
   const age = getBirdAgeLabel(bird.hatch_date, bird.hatch_date_estimated);
   const hatchStr = fmtDate(bird.hatch_date);
@@ -817,17 +885,16 @@ function OrnitharchTile({
   // Filename convention: pipeline commits low-confidence IDs with a
   // "-suspected-" marker. Surface that honestly instead of hiding it.
   const photoUnconfirmed = bird.photo?.includes("suspected") ?? false;
+  const pool = buildPortraitPool(bird, record);
 
   return (
     <div className="bg-guardian-card border border-guardian-border rounded-lg overflow-hidden flex flex-col">
       <div className="relative w-full aspect-[4/5] bg-guardian-hover/30">
-        {bird.photo ? (
-          <Image
-            src={`/photos/${bird.photo}`}
-            alt={bird.name}
-            fill
+        {pool.length > 0 ? (
+          <OrnitharchPortrait
+            photos={pool}
+            stagger={index}
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover"
           />
         ) : (
           <div className="h-full flex flex-col items-center justify-center gap-2 text-guardian-muted">

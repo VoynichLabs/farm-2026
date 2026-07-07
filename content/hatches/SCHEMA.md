@@ -52,6 +52,13 @@ photos:
   - path: ""                   # repo-relative, e.g. "public/photos/april-2026/birdadette-fresh-hatch.jpg"
     confidence: medium         # low / medium / high — how sure we are this is this chick
     caption: ""
+    date: 2026-04-06           # optional — the day the photo was taken; drives the
+                               # age tag ("hatch day" / "day 8" / "3 wks") on the
+                               # rotating portrait tiles on /flock (added 06-Jul-2026)
+    showcase: false            # optional — set false for documentation frames
+                               # (equipment, thermometers, mislabeled files) that
+                               # belong in the record but not in the bird's
+                               # portrait rotation; omit for normal bird photos
 
 # Evidence trail — links to diary entries, photos, or source documents
 evidence:

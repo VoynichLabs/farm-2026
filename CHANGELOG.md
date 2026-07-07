@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.28.0] — 2026-07-06
+
+### Added — Rotating ornitharch portraits with throwbacks; full photo-tree curation audit (Claude Fable 5)
+
+**What:** Every ornitharch tile on /flock now rotates through a curated per-bird photo pool — current portrait first, then dated throwbacks walking back to hatch day, each frame chipped with the bird's age at the shot ("now · 3 months" → "day 8" → "hatch day"). Staggered cross-fade rotation (new `OrnitharchPortrait` client island, same hydration pattern as the /markets floor rotator). Henrietta's memorial tile rotates to her 2022 "scary birds" throwback. Hatch-record `photos[]` entries gain optional `date` (drives the age tag) and `showcase: false` (documentation frames stay out of rotations) — documented in content/hatches/SCHEMA.md.
+
+**Why:** Boss (06-Jul): "go through the pictures and find some real good ones… a rotating amount of pictures… throwbacks showing birds when they were younger."
+
+**How:** All 38 bird-relevant photos in the repo were visually reviewed and rated. Curation surfaced and fixed real data problems:
+
+- `april-2026/birdadette-3weeks-a.jpg` is a photo of bleeding-heart **flowers** (no bird) — flagged `showcase: false` with a mislabel note in Birddor's record.
+- `april-2026/birdadotta-fluffy.jpg` is a **Bronze turkey poult**, not Birdadotta (visually confirmed: spotted head, pink legs, turkey wing lacing; the TSC poults arrived the day she hatched) — flagged out of her rotation.
+- `april-2026/birdadette-day8-keyboard.jpg` was stored sideways — pixel data rotated upright in place (same path, so no reference breaks).
+- `birds/little-big-red.jpg` mislabel CONFIRMED (old brooder group shot, not LBRJ) — his memorial tile keeps the placeholder.
+- Profile portraits upgraded where a better frame existed: Birdadotta → IMG_6271 (front three-quarter, was the rear view), Henriella → IMG_6292 (eye-contact perch shot).
+- Best-of throwbacks wired into records with dates: Birddor's fresh-hatch/day-8/3-weeks/May-20 set, Birdthazar's and Birdsilla's day-4 eggshell portraits, Henriella's day-4, Birdimir's incubator hatch frame, Ingebird's hedged day-20 portrait.
+- Henriessa and Henridotta (no committed solo photos) now show the June-clutch group shot (all six, day 1) instead of an empty placeholder — still flagged for real portraits (uncommitted IMG_5144/5147).
+
+Pools render from the hatch-record SSoT via `buildPortraitPool()` in app/flock/page.tsx — no photo list is duplicated into page code. Sitewide rotation now: hero (hourly gems), /markets floor, /flock portrait wall + Henrietta memorial.
+
 ## [1.27.0] — 2026-07-06
 
 ### Changed — Terminal glow-up: dark-theme readability fix sitewide, THE ORNITHARCHS on /flock, Boss-curated gems, Birdadette → Birddor (Claude Fable 5)
