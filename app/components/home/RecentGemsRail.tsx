@@ -1,8 +1,10 @@
 "use client";
 /**
- * Author: Claude Opus 4.7 (1M context)
- * Date: 10-May-2026
- * PURPOSE: Homepage gem rail — fetches the 12 most recent gems on mount and
+ * Author: Claude Opus 4.8 (prev Claude Opus 4.7 (1M context))
+ * Date: 16-Jul-2026 (orig 10-May-2026)
+ * PURPOSE: 16-Jul-2026 daylight retheme: converted to the light Field Guide
+ *   (field-*) tokens with a specimen-tag kicker (PAGE_MARKS.gems) — styling
+ *   only. Homepage gem rail — fetches the 12 most recent gems on mount and
  *   renders them as compact tiles. Client-side instead of SSR because the
  *   Guardian /api/v1/images/gems endpoint takes ~7s for limit=12 (measured
  *   2026-05-09), which blows the 3s SSR AbortSignal cap in lib/gems.ts. SSR
@@ -28,6 +30,7 @@ import Link from "next/link";
 import GemCard from "@/app/components/gems/GemCard";
 import type { GemRow } from "@/app/components/guardian/types";
 import { GUARDIAN_API } from "@/app/components/guardian/types";
+import { PAGE_MARKS } from "@/lib/emoji";
 
 const LIMIT = 12;
 
@@ -64,12 +67,12 @@ export default function RecentGemsRail() {
   return (
     <section className="max-w-7xl mx-auto px-3 py-3 font-mono text-[0.78rem]">
       <div className="flex items-baseline justify-between mb-2">
-        <span className="text-emerald-400 tracking-wider">
-          ▸ RECENT GEMS
+        <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted">
+          <span aria-hidden="true" className="mr-1.5">{PAGE_MARKS.gems}</span>RECENT GEMS
         </span>
         <Link
           href="/gallery/gems"
-          className="text-emerald-300 hover:text-emerald-200"
+          className="text-field-accent hover:text-field-accent-deep"
         >
           all gems ↗
         </Link>
@@ -82,7 +85,7 @@ export default function RecentGemsRail() {
           {Array.from({ length: LIMIT }).map((_, i) => (
             <div
               key={i}
-              className="aspect-[4/3] rounded-lg bg-guardian-card animate-pulse"
+              className="aspect-[4/3] rounded-lg bg-field-wash animate-pulse"
             />
           ))}
         </div>
@@ -100,7 +103,7 @@ export default function RecentGemsRail() {
         </div>
       )}
       {showFallback && (
-        <p className="text-guardian-muted text-sm font-mono">
+        <p className="text-field-muted text-sm font-mono">
           Gem archive is unreachable right now — the cameras above are
           polling independently.
         </p>

@@ -1,14 +1,14 @@
 /**
- * Author: Claude Fable 5 (header added 06-Jul-2026; page predates the header rule)
- * Date: 06-Jul-2026
+ * Author: Claude Opus 4.8 (prev Claude Fable 5; page predates the header rule)
+ * Date: 16-Jul-2026
  * PURPOSE: Project detail page — MDX overview, materials table, diary
- *   timeline; the guardian slug swaps the hero for the live dashboard.
- *   06-Jul-2026: MDXRemote now runs with remark-gfm so GFM tables (e.g.
+ *   timeline; the guardian slug swaps the hero for the live dashboard
+ *   (max-w-7xl, hero suppression — untouched dark island).
+ *   06-Jul-2026: MDXRemote runs with remark-gfm so GFM tables (e.g.
  *   the Guardian hardware table) render as tables, not literal pipe text.
- *   06-Jul-2026 (terminal glow-up): cream-era classes converted to the
- *   guardian palette; dead `prose prose-green` on white cards (the
- *   unreadable wash) replaced with .terminal-prose on guardian-card
- *   panels. See docs/06-Jul-2026-terminal-glowup-plan.md.
+ *   16-Jul-2026 (daylight retheme): converted from the dark guardian palette
+ *   to the light Field Guide tokens (field-*); .terminal-prose class kept
+ *   (its values are now light in globals.css). Styling only, copy unchanged.
  * SRP/DRY check: Pass — content loading lives in lib/content.ts; Guardian
  *   rendering is composed from app/components/guardian/.
  */
@@ -86,7 +86,7 @@ export default async function ProjectPage({
   return (
     <main className={`${isGuardian ? "max-w-7xl" : "max-w-4xl"} mx-auto px-4 py-12`}>
       <div className="mb-8">
-        <Link href="/projects" className="text-guardian-accent hover:text-emerald-300 hover:underline text-sm">
+        <Link href="/projects" className="text-field-accent hover:text-field-accent-deep hover:underline text-sm">
           &larr; All Projects
         </Link>
       </div>
@@ -96,7 +96,7 @@ export default async function ProjectPage({
 
       {/* Hero Photo (not for Guardian — live feed replaces it) */}
       {!isGuardian && project.heroPhoto && (
-        <div className="mb-10 rounded-xl overflow-hidden border border-guardian-border bg-guardian-card">
+        <div className="mb-10 rounded-xl overflow-hidden border border-field-border bg-field-card">
           <Image
             src={project.heroPhoto}
             alt={project.title}
@@ -116,27 +116,27 @@ export default async function ProjectPage({
           >
             {project.status}
           </span>
-          <span className="text-sm text-guardian-muted">
+          <span className="text-sm text-field-muted">
             {project.location}
           </span>
-          <span className="text-sm text-guardian-muted">
+          <span className="text-sm text-field-muted">
             Started {project.startDate}
           </span>
         </div>
-        <h1 className="text-4xl font-bold font-serif text-white mb-4">{project.title}</h1>
-        <p className="text-lg text-guardian-text/75">{project.description}</p>
+        <h1 className="text-4xl font-bold font-serif text-field-ink mb-4">{project.title}</h1>
+        <p className="text-lg text-field-muted">{project.description}</p>
       </div>
 
       {/* 3D Model links for enclosure project */}
       {slug === "chicken-enclosure-2026" && (
-        <section className="mb-8 bg-guardian-card border border-guardian-border rounded-xl p-6">
-          <h2 className="text-xl font-bold font-serif text-white mb-4">🧊 Interactive 3D Models</h2>
+        <section className="mb-8 bg-field-card border border-field-border rounded-xl p-6">
+          <h2 className="text-xl font-bold font-serif text-field-ink mb-4">🧊 Interactive 3D Models</h2>
           <div className="flex flex-wrap gap-4">
             <a
               href="/enclosure-3d.html"
               target="_blank"
               rel="noopener"
-              className="inline-flex items-center gap-2 bg-guardian-accent text-white px-5 py-3 rounded-lg hover:bg-emerald-600 transition-colors font-medium"
+              className="inline-flex items-center gap-2 bg-field-accent text-white px-5 py-3 rounded-lg hover:bg-field-accent-deep transition-colors font-medium"
             >
               🧊 View Enclosure Volume (3D)
             </a>
@@ -144,30 +144,30 @@ export default async function ProjectPage({
               href="/enclosure-cad.html"
               target="_blank"
               rel="noopener"
-              className="inline-flex items-center gap-2 bg-guardian-hover text-white px-5 py-3 rounded-lg hover:bg-guardian-muted transition-colors font-medium"
+              className="inline-flex items-center gap-2 bg-field-wash text-field-ink px-5 py-3 rounded-lg hover:bg-field-accent-soft transition-colors font-medium"
             >
               🏠 View House + Deck CAD Drawing (3D)
             </a>
           </div>
-          <p className="text-sm text-guardian-muted mt-3">Interactive models — open in a new tab, rotate and zoom freely.</p>
+          <p className="text-sm text-field-muted mt-3">Interactive models — open in a new tab, rotate and zoom freely.</p>
         </section>
       )}
 
       {/* Project Overview MDX */}
-      <section className="terminal-prose max-w-none mb-12 bg-guardian-card border border-guardian-border rounded-lg p-6 md:p-8">
+      <section className="terminal-prose max-w-none mb-12 bg-field-card border border-field-border rounded-lg p-6 md:p-8">
         <MDXRemote source={project.content} options={mdxOptions} />
       </section>
 
       {/* Materials */}
       {materials.length > 0 && (
         <section className="mb-12">
-          <h2 className="text-2xl font-bold font-serif text-white mb-4">
+          <h2 className="text-2xl font-bold font-serif text-field-ink mb-4">
             Bill of Materials — ${totalCost.toFixed(2)}
           </h2>
-          <div className="bg-guardian-card border border-guardian-border rounded-lg overflow-x-auto">
+          <div className="bg-field-card border border-field-border rounded-lg overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-guardian-border text-left font-mono text-xs uppercase tracking-wider text-guardian-muted">
+                <tr className="border-b border-field-border text-left font-mono text-xs uppercase tracking-wider text-field-muted">
                   <th className="px-4 py-3">Item</th>
                   <th className="px-4 py-3">Qty</th>
                   <th className="px-4 py-3">Unit Cost</th>
@@ -179,7 +179,7 @@ export default async function ProjectPage({
                 {materials.map((m, i) => (
                   <tr
                     key={i}
-                    className={i % 2 === 0 ? "bg-guardian-bg/40" : ""}
+                    className={i % 2 === 0 ? "bg-field-wash" : ""}
                   >
                     <td className="px-4 py-2 font-medium">{m.name}</td>
                     <td className="px-4 py-2">
@@ -189,7 +189,7 @@ export default async function ProjectPage({
                     <td className="px-4 py-2 font-semibold">
                       ${m.totalCost.toFixed(2)}
                     </td>
-                    <td className="px-4 py-2 hidden md:table-cell text-guardian-muted">
+                    <td className="px-4 py-2 hidden md:table-cell text-field-muted">
                       {m.notes}
                     </td>
                   </tr>
@@ -203,29 +203,29 @@ export default async function ProjectPage({
       {/* Diary Timeline */}
       {entries.length > 0 && (
         <section>
-          <h2 className="text-2xl font-bold font-serif text-white mb-6">Diary</h2>
+          <h2 className="text-2xl font-bold font-serif text-field-ink mb-6">Diary</h2>
           <div className="space-y-8">
             {entries.map((entry) => (
               <article
                 key={entry.date}
-                className="bg-guardian-card border border-guardian-border rounded-lg p-6"
+                className="bg-field-card border border-field-border rounded-lg p-6"
               >
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="font-mono text-sm text-guardian-muted">
+                  <span className="font-mono text-sm text-field-muted">
                     {entry.date}
                   </span>
                   <div className="flex gap-1">
                     {entry.tags.map((t) => (
                       <span
                         key={t}
-                        className="text-xs bg-guardian-accent/10 text-emerald-300/90 border border-guardian-accent/25 px-2 py-0.5 rounded"
+                        className="text-xs bg-field-accent-soft text-field-accent border border-field-accent-line px-2 py-0.5 rounded"
                       >
                         {t}
                       </span>
                     ))}
                   </div>
                 </div>
-                <h3 className="text-xl font-bold font-serif text-white mb-3">{entry.title}</h3>
+                <h3 className="text-xl font-bold font-serif text-field-ink mb-3">{entry.title}</h3>
                 <div className="terminal-prose max-w-none text-sm">
                   <MDXRemote source={entry.content} options={mdxOptions} />
                 </div>

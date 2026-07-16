@@ -1,8 +1,11 @@
 /**
- * Author: Claude Fable 5 (prev Claude Opus 4.7 / Claude Sonnet 4.6 / Claude Opus 4.8)
+ * Author: Claude Opus 4.8 (prev Claude Fable 5 / Claude Opus 4.7 / Claude Sonnet 4.6 / Claude Opus 4.8)
  * Date: 16-Jul-2026 (orig 10-May-2026; updated 20-May / 22-Jun / 06-Jul-2026)
- * PURPOSE: Homepage — terminal / mission-control composition. From top to
- *   bottom: TerminalNav (in layout.tsx), then this page renders:
+ * PURPOSE: Homepage composition. 16-Jul-2026 daylight retheme: converted to
+ *   the light Field Guide (field-*) tokens, styling only; the live-camera
+ *   surfaces (GuardianHomeBadge + HomeCameraStage) are kept as a
+ *   self-contained dark island. From top to
+ *   bottom: SiteNav (in layout.tsx), then this page renders:
  *     1. Class of 2026 hero — the birds hatched/raised this spring, newest
  *        hatch first, now grown and living in Birdcatraz (the outdoor
  *        fenced compound holding the coop + turkey pen).
@@ -31,6 +34,7 @@ import RecentGemsRail from "@/app/components/home/RecentGemsRail";
 import SystemBanner from "@/app/components/home/SystemBanner";
 import GemsStatFooter from "@/app/components/gems/GemsStatFooter";
 import { getBirdAgeLabel } from "@/lib/content";
+import { PAGE_MARKS, STATUS } from "@/lib/emoji";
 
 const DEEPER_LINKS: { href: string; label: string; hint: string }[] = [
   { href: "/projects/guardian", label: "guardian", hint: "live cameras + PTZ + dashboard" },
@@ -109,19 +113,19 @@ const HATCHLINGS_2026: Chick[] = [
 
 export default function Home() {
   return (
-    <main className="bg-guardian-bg text-guardian-text min-h-screen font-sans">
+    <main className="bg-field-bg text-field-ink min-h-screen font-sans">
 
       {/* === THE CLASS OF 2026 — hero position === */}
-      <section className="border-b border-guardian-border">
+      <section className="border-b border-field-border">
         <div className="max-w-7xl mx-auto px-3 py-4">
-          <div className="text-emerald-400 tracking-wider mb-3 font-mono text-[0.78rem]">
-            ▸ THE CLASS OF 2026 — hatched this spring, ruling Birdcatraz now
-          </div>
+          <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-3">
+            <span aria-hidden="true" className="mr-1.5">{PAGE_MARKS.home}</span>THE CLASS OF 2026 — hatched this spring, ruling Birdcatraz now
+          </span>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {HATCHLINGS_2026.map((chick, idx) => (
               <div key={`${chick.name}-${idx}`} className="flex flex-col gap-1.5">
                 {chick.photo ? (
-                  <div className="w-full h-56 border border-guardian-border bg-guardian-card/20 flex items-center justify-center overflow-hidden">
+                  <div className="w-full h-56 border border-field-border bg-field-wash flex items-center justify-center overflow-hidden">
                     <Image
                       src={chick.photo}
                       alt={chick.name}
@@ -132,16 +136,16 @@ export default function Home() {
                     />
                   </div>
                 ) : (
-                  <div className="w-full h-56 border border-dashed border-guardian-border flex items-center justify-center bg-guardian-card/30">
-                    <span className="font-mono text-[0.65rem] text-guardian-muted text-center px-1">
+                  <div className="w-full h-56 border border-dashed border-field-border flex items-center justify-center bg-field-wash">
+                    <span className="font-mono text-[0.65rem] text-field-muted text-center px-1">
                       photo<br />incoming
                     </span>
                   </div>
                 )}
                 <div className="font-mono text-[0.72rem] leading-tight">
-                  <div className="text-emerald-300">{chick.name}</div>
-                  <div className="text-guardian-muted">{chick.breed}</div>
-                  <div className="text-guardian-muted">
+                  <div className="text-field-accent">{chick.name}</div>
+                  <div className="text-field-muted">{chick.breed}</div>
+                  <div className="text-field-muted">
                     b. {chick.hatch} · {getBirdAgeLabel(chick.hatchISO)}
                   </div>
                 </div>
@@ -154,11 +158,18 @@ export default function Home() {
       {/* === STORY ABOUT THE LIVE PIPELINE === */}
       <SystemBanner />
 
-      {/* === LIVE CAMERAS === */}
-      <section className="border-b border-guardian-border">
-        <GuardianHomeBadge />
-        <div className="max-w-7xl mx-auto px-3 pt-2 pb-3">
-          <HomeCameraStage />
+      {/* === LIVE CAMERAS — deliberate dark island; camera surfaces keep the guardian palette === */}
+      <section className="border-b border-field-border">
+        <div className="max-w-7xl mx-auto px-3 pt-4 pb-3">
+          <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-3">
+            <span aria-hidden="true" className="mr-1.5">{STATUS.live}</span>Live Cameras
+          </span>
+          <div className="rounded-xl overflow-hidden bg-guardian-bg border border-field-border p-4">
+            <GuardianHomeBadge />
+            <div className="pt-2">
+              <HomeCameraStage />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -166,20 +177,22 @@ export default function Home() {
       <RecentGemsRail />
 
       {/* === DEEPER PAGES, file-listing styled === */}
-      <section className="max-w-7xl mx-auto px-3 py-4 border-t border-guardian-border font-mono text-[0.78rem]">
-        <div className="text-emerald-400 tracking-wider mb-1.5">▸ INDEX</div>
+      <section className="max-w-7xl mx-auto px-3 py-4 border-t border-field-border font-mono text-[0.78rem]">
+        <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-1.5">
+          INDEX
+        </span>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-0.5">
           {DEEPER_LINKS.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="group flex items-baseline gap-2 py-1 hover:bg-guardian-card/60 px-1 -mx-1"
+                className="group flex items-baseline gap-2 py-1 hover:bg-field-wash px-1 -mx-1"
               >
-                <span className="text-guardian-muted select-none">└─</span>
-                <span className="text-emerald-300 group-hover:text-emerald-200">
+                <span className="text-field-muted select-none">└─</span>
+                <span className="text-field-accent group-hover:text-field-accent-deep">
                   {link.label}
                 </span>
-                <span className="text-guardian-muted truncate">
+                <span className="text-field-muted truncate">
                   — {link.hint}
                 </span>
               </Link>
@@ -189,9 +202,9 @@ export default function Home() {
       </section>
 
       {/* === STATUS-LINE FOOTER === */}
-      <footer className="border-t border-guardian-border bg-guardian-card text-guardian-muted py-2 font-mono text-[0.7rem]">
+      <footer className="border-t border-field-border bg-field-card text-field-muted py-2 font-mono text-[0.7rem]">
         <div className="max-w-7xl mx-auto px-3 flex flex-wrap items-center gap-x-3 gap-y-0.5">
-          <span className="text-guardian-text/80">FARM-2026</span>
+          <span className="text-field-muted">FARM-2026</span>
           <span>·</span>
           <span>Hampton, CT</span>
           <span>·</span>
@@ -200,14 +213,14 @@ export default function Home() {
             <a
               href="https://www.instagram.com/pawel_and_pawleen/"
               rel="noopener"
-              className="hover:text-guardian-text"
+              className="hover:text-field-ink"
             >
               instagram ↗
             </a>
             <a
               href="https://www.facebook.com/profile.php?id=61557234706008"
               rel="noopener"
-              className="hover:text-guardian-text"
+              className="hover:text-field-ink"
             >
               facebook ↗
             </a>

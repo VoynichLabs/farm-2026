@@ -24,11 +24,18 @@ If you are about to type a number, a breed, a camera name, or a hardware string 
 
 All content loaders live in `lib/content.ts`. Use them. Do not re-implement `fs.readFileSync` in a page file.
 
-## Theme (06-Jul-2026)
+## Theme (16-Jul-2026 — daylight retheme)
 
-**One dark theme.** The global body is the guardian palette (`--color-guardian-*` in `app/globals.css`); every page sits on it. The cream/forest tokens still exist for legacy references but no new surface should use them — the 06-Jul-2026 terminal glow-up removed the last cream-era wrappers (`docs/06-Jul-2026-terminal-glowup-plan.md`).
+**One light theme ("Field Guide") + two sanctioned dark surfaces.** The global body is the light field palette (`--color-field-*` in `app/globals.css`: paper bg, green-black ink, moss accent, honey warm tone); every content page sits on it. Plan and full token mapping: `docs/16-Jul-2026-daylight-retheme-plan.md`. The two dark exceptions, both deliberate:
 
-**Markdown/MDX bodies use `.terminal-prose`** (defined in `globals.css`), NOT Tailwind `prose` classes — `@tailwindcss/typography` is not installed, so `prose` anything is a silent no-op. If MDX looks unstyled, that's why.
+1. **`/markets`** — the green-CRT terminal parody. `Terminal.tsx` is self-contained (own hexes, zero site tokens); `SiteNav` renders its dark variant there via `usePathname()`. Its `ppm-*` keyframes live in `globals.css` — preserve them in any rewrite.
+2. **Live-camera dark islands** — everything in `app/components/guardian/*` plus `HomeCameraStage` keeps the dark `--color-guardian-*` tokens (retained in `globals.css` for exactly these). Camera video belongs on a dark frame; don't "finish the retheme" by lightening them.
+
+No new surface uses `guardian-*` outside the islands, and the cream/forest/wood legacy tokens are **deleted** — classes referencing them silently generate nothing under Tailwind v4.
+
+**Emoji are a vocabulary, not decoration.** `lib/emoji.ts` is the SSoT (page marks, status tokens, day slots, garden, divider). One emoji = one meaning, always leading a text label, always `aria-hidden`, never in body prose, never on `/markets`. No raw emoji in JSX outside consumers of that module.
+
+**Markdown/MDX bodies use `.terminal-prose`** (defined in `globals.css`), NOT Tailwind `prose` classes — `@tailwindcss/typography` is not installed, so `prose` anything is a silent no-op. If MDX looks unstyled, that's why. The class name predates the retheme; its values are light now — do not rename it (every MDX body sitewide rides on it).
 
 **Ornitharch data:** `content/flock-profiles.json` marks farm-hatched 2026 birds with `ornitharch: true` (plus `formerly` when a bird was renamed, e.g. Birddor fka Birdadette). Parentage, egg color, clutch, and confidence live ONLY in `content/hatches/2026/*.md` frontmatter — pages join the two by name via `getHatchRecords()`; never copy parentage strings into page code or the roster JSON.
 

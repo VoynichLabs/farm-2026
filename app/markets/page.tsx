@@ -14,9 +14,12 @@
  *   dashboard slop" rule in docs/FRONTEND-ARCHITECTURE.md. Boss explicitly
  *   asked for the densest, craziest financial-terminal layout possible for
  *   THIS page only (21-May-2026). Do not "fix" it to match the calm farm
- *   aesthetic — the maximalism is the point. It is not linked from
- *   TerminalNav on purpose (novelty surface, kept out of the kid-friendly
- *   nav); reach it by direct URL.
+ *   aesthetic — the maximalism is the point. Linked from the site nav
+ *   since 18-Jun-2026 (v1.20.0). 16-Jul-2026 daylight retheme: this page
+ *   is the ONE surface that keeps the dark terminal look — SiteNav renders
+ *   its dark variant here, and Terminal.tsx is self-contained (own hexes,
+ *   no site tokens), so the sitewide light theme never reaches it. The
+ *   ppm-* keyframes it needs live in globals.css — preserve them.
  *
  *   Self-contained by design: data is read from content/markets/picks.json
  *   at render time via fs (like /yard). NO Guardian-tunnel fetch in SSR,

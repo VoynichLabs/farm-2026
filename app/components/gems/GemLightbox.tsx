@@ -1,8 +1,11 @@
 "use client";
 /**
- * Author: Claude Opus 4.6 (1M context)
- * Date: 14-Apr-2026
- * PURPOSE: Full-size modal for a selected gem. Uses the native <dialog>
+ * Author: Claude Opus 4.8 (orig Claude Opus 4.6 (1M context))
+ * Date: 16-Jul-2026 (orig 14-Apr-2026)
+ * PURPOSE: 16-Jul-2026 daylight retheme — modal panel moved off the
+ *   deleted cream/forest tokens onto the Field Guide tokens (bg-cream →
+ *   bg-field-card); over-photo white nav/close buttons stay white.
+ *   Full-size modal for a selected gem. Uses the native <dialog>
  *   element — it gives us focus trap, backdrop click, ESC-to-close for
  *   free on modern browsers. Arrow keys navigate prev/next within the
  *   current list. Composes GemCaption + GemMetaTable so a single row
@@ -66,7 +69,7 @@ export default function GemLightbox({
       {row && (
         <div className="flex h-full w-full items-center justify-center p-4">
           <div
-            className="relative flex max-h-full w-full max-w-5xl flex-col overflow-hidden rounded-xl bg-cream shadow-2xl md:flex-row"
+            className="relative flex max-h-full w-full max-w-5xl flex-col overflow-hidden rounded-xl bg-field-card shadow-2xl md:flex-row"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative flex-1 bg-black">

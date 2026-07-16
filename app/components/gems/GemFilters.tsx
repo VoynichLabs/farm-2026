@@ -1,7 +1,7 @@
 "use client";
 /**
- * Author: Claude Fable 5 (orig Claude Opus 4.6, 14-Apr-2026)
- * Date: 06-Jul-2026
+ * Author: Claude Opus 4.8 (prev Claude Fable 5; orig Claude Opus 4.6, 14-Apr-2026)
+ * Date: 16-Jul-2026
  * PURPOSE: Filter chip bar for the gems gallery. All filter state lives
  *   in the URL query string, so filter combinations are deep-linkable,
  *   SSR-friendly, and survive reloads. Each chip click replaces the
@@ -18,6 +18,8 @@
  *   and drinking were missing). Deep links with camera=/individual=
  *   params still filter server-side — this bar just no longer offers
  *   them. Chips restyled to guardian tokens.
+ *   16-Jul-2026 (daylight retheme): guardian chip styling → light Field
+ *   Guide tokens (active = accent-soft/accent, inactive = card/muted).
  * SRP/DRY check: Pass — activity options come from the Activity type;
  *   no duplication.
  */
@@ -77,8 +79,8 @@ function Chip({
       onClick={onClick}
       className={`rounded-full border px-3 py-1 text-xs font-mono transition-colors ${
         active
-          ? "border-guardian-accent bg-guardian-accent/20 text-emerald-300"
-          : "border-guardian-border bg-guardian-card text-guardian-text/70 hover:border-guardian-hover hover:text-guardian-text"
+          ? "border-field-accent-line bg-field-accent-soft text-field-accent"
+          : "border-field-border bg-field-card text-field-muted hover:border-field-accent-line hover:text-field-ink"
       }`}
     >
       {label}
@@ -137,7 +139,7 @@ export default function GemFilters() {
     current.range !== "week";
 
   return (
-    <div className="space-y-3 rounded-xl border border-guardian-border bg-guardian-card/50 p-4">
+    <div className="space-y-3 rounded-xl border border-field-border bg-field-wash p-4">
       <FilterRow label="Activity">
         {ACTIVITY_CHOICES.map((a) => (
           <Chip
@@ -165,7 +167,7 @@ export default function GemFilters() {
           <button
             type="button"
             onClick={clearAll}
-            className="text-xs text-guardian-accent hover:text-emerald-300 hover:underline"
+            className="text-xs text-field-accent hover:text-field-accent-deep hover:underline"
           >
             Clear all filters
           </button>
@@ -178,7 +180,7 @@ export default function GemFilters() {
 function FilterRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="text-xs font-mono font-semibold uppercase tracking-wide text-guardian-muted">
+      <span className="text-xs font-mono font-semibold uppercase tracking-wide text-field-muted">
         {label}
       </span>
       <div className="flex flex-wrap gap-1.5">{children}</div>

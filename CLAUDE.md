@@ -156,14 +156,14 @@ The Guardian page (`/projects/guardian`) is a live interactive dashboard, not a 
 - Homepage uses both `GuardianHomeBadge` (status bar) and `GuardianCameraFeed` (4 feeds)
 - **Content pipeline**: see `docs/CONTENT-PIPELINE.md` for the full operational guide
 
-### Design tokens
+### Design tokens (16-Jul-2026 daylight retheme)
 
 Defined in `app/globals.css`:
-- `--color-forest` / `--color-forest-light` — nav and footer backgrounds
-- `--color-cream` / `--color-cream-dark` — page backgrounds
-- `--color-wood` / `--color-wood-light` — accent/links
-- `--color-guardian-*` — Guardian dashboard palette (`bg` #0f172a, `card` #1e293b, `border` #334155, `hover` #475569, `muted` #64748b, `text` #e2e8f0, `accent` #059669)
-- Headings use Georgia serif; body uses system font stack
+- `--color-field-*` — the sitewide light "Field Guide" palette (`bg` #f8f5ec paper, `card` #fdfbf4, `ink` #262b1e, `muted` #6c6551, `border`/`hairline`/`wash`, `accent` #3e6b34 moss + `accent-deep`/`accent-soft`/`accent-line`, `honey` #c98f1b + `honey-ink`). Every content page uses these.
+- `--color-guardian-*` — dark palette retained ONLY for the live-camera dark islands (`app/components/guardian/*`, `HomeCameraStage`) — don't lighten those, and don't use guardian tokens on new content surfaces.
+- `/markets` is the one fully dark page — self-contained hexes in `Terminal.tsx`, dark `SiteNav` variant, `ppm-*` keyframes in globals.css (preserve).
+- `lib/emoji.ts` — emoji accent vocabulary SSoT (one emoji = one meaning, leading, aria-hidden, never in body prose, never on /markets).
+- Legacy cream/forest/wood tokens are deleted. Headings use Georgia serif; body uses system font stack. Theme rules: `docs/FRONTEND-ARCHITECTURE.md`.
 
 ## Multi-Machine Claude Orchestration
 

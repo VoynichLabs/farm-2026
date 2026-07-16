@@ -1,6 +1,6 @@
 /**
- * Author: Claude Fable 5 (prev Claude Opus 4.7)
- * Date: 06-Jul-2026 (orig 17-Apr-2026, purpose re-clarified 18-Apr-2026)
+ * Author: Claude Opus 4.8 (prev Claude Fable 5, Claude Opus 4.7)
+ * Date: 16-Jul-2026 (orig 17-Apr-2026, purpose re-clarified 18-Apr-2026)
  * PURPOSE: /yard route — secondary browse surface for the yard-diary
  *   stockpile. Frames are captured by farm-guardian's
  *   yard-diary-capture.py at 07:00 / 12:00 / 16:00 local and committed
@@ -29,6 +29,10 @@
  *   re-prerenders the page on each daily commit.
  *   06-Jul-2026 (terminal glow-up): cream-era classes converted to the
  *   guardian palette; layout untouched (see the redesign warning above).
+ *   16-Jul-2026 (daylight retheme): guardian palette → light Field Guide
+ *   tokens, yard page mark kicker + per-slot ☀️🌤️🌙 marks from
+ *   lib/emoji.ts. Recolor + slot marks only — layout untouched, per the
+ *   redesign warning above.
  * SRP/DRY check: Pass — single responsibility: enumerate frames from
  *   disk and render grouped by day. No I/O beyond readdirSync.
  */
@@ -37,6 +41,7 @@ import fs from "node:fs";
 import path from "node:path";
 import Image from "next/image";
 import Link from "next/link";
+import { PAGE_MARKS, DAY_SLOTS } from "@/lib/emoji";
 
 export const metadata: Metadata = {
   title: "Yard Diary",
@@ -124,35 +129,38 @@ export default function YardDiaryPage() {
     <main className="min-h-screen">
       <section className="max-w-6xl mx-auto px-4 py-12">
         <header className="mb-10">
-          <h1 className="text-4xl md:text-5xl font-bold font-serif text-white mb-3">
+          <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-4">
+            <span aria-hidden="true" className="mr-1.5">{PAGE_MARKS.yard}</span>Yard Diary
+          </span>
+          <h1 className="text-4xl md:text-5xl font-bold font-serif text-field-ink mb-3">
             Yard Diary
           </h1>
-          <p className="text-guardian-text/70 max-w-2xl mb-3">
+          <p className="text-field-muted max-w-2xl mb-3">
             Three frames of the yard every day — morning, noon, evening —
             pulled from the Reolink. One long seasonal record: tree line
             budding, cherry blossoms, summer green, autumn burn, snow.
           </p>
-          <p className="text-guardian-muted max-w-2xl text-sm italic">
+          <p className="text-field-muted max-w-2xl text-sm italic">
             These frames are stockpile for a year-end timelapse reel. The
             date is burned into each image so it survives any re-crop,
             re-share, or re-render. Individual frames are a little boring
             on purpose — the sequence is the artifact.
           </p>
-          <nav className="mt-5 flex items-center gap-3 text-xs font-mono text-guardian-accent">
-            <Link href="/gallery/gems" className="hover:text-emerald-300 transition-colors">
+          <nav className="mt-5 flex items-center gap-3 text-xs font-mono text-field-accent">
+            <Link href="/gallery/gems" className="hover:text-field-accent-deep transition-colors">
               Live gems →
             </Link>
           </nav>
         </header>
 
         {!hero ? (
-          <div className="rounded-2xl border border-guardian-border bg-guardian-card p-12 text-center text-guardian-muted">
+          <div className="rounded-2xl border border-field-border bg-field-card p-12 text-center text-field-muted">
             No frames captured yet.
           </div>
         ) : (
           <>
             <figure className="mb-12">
-              <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-guardian-border">
+              <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-field-border">
                 <Image
                   src={hero.src}
                   alt={`Yard on ${formatBossDate(hero.date)}, ${SLOT_LABEL[hero.slot]}`}
@@ -162,7 +170,7 @@ export default function YardDiaryPage() {
                   className="object-cover"
                 />
               </div>
-              <figcaption className="mt-3 text-sm text-guardian-muted font-serif">
+              <figcaption className="mt-3 text-sm text-field-muted font-serif">
                 {formatBossDate(hero.date)} · {SLOT_LABEL[hero.slot]}
               </figcaption>
             </figure>
@@ -170,14 +178,14 @@ export default function YardDiaryPage() {
             <ol className="space-y-10">
               {groups.map((day) => (
                 <li key={day.date}>
-                  <h2 className="text-lg font-semibold font-serif text-white mb-3">
+                  <h2 className="text-lg font-semibold font-serif text-field-ink mb-3">
                     {formatBossDate(day.date)}
                   </h2>
                   <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {day.frames.map((frame) => (
                       <li key={frame.slot}>
                         <figure>
-                          <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden border border-guardian-border">
+                          <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden border border-field-border">
                             <Image
                               src={frame.src}
                               alt={`Yard on ${formatBossDate(frame.date)}, ${SLOT_LABEL[frame.slot]}`}
@@ -186,7 +194,8 @@ export default function YardDiaryPage() {
                               className="object-cover"
                             />
                           </div>
-                          <figcaption className="mt-1.5 text-xs text-guardian-muted font-serif tracking-wide">
+                          <figcaption className="mt-1.5 text-xs text-field-muted font-serif tracking-wide">
+                            <span aria-hidden="true" className="mr-1">{DAY_SLOTS[frame.slot]}</span>
                             {SLOT_LABEL[frame.slot]}
                           </figcaption>
                         </figure>

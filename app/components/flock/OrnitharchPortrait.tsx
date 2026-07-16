@@ -1,7 +1,7 @@
 "use client";
 /**
- * Author: Claude Fable 5
- * Date: 06-Jul-2026
+ * Author: Claude Opus 4.8 (prev Claude Fable 5)
+ * Date: 16-Jul-2026
  * PURPOSE: Rotating portrait for one bird tile on /flock — cycles through a
  *   pool of frames (current portrait + dated throwbacks from the bird's
  *   hatch record) with a mono age-tag chip ("now · 3 months", "hatch day",
@@ -20,6 +20,10 @@
  *   frame fades in via the `orn-fade` keyframe (globals.css), so a swap
  *   never flashes the dark container background. The flock page has no
  *   per-second re-render (unlike /markets), so a CSS animation is safe.
+ *
+ *   16-Jul-2026 (daylight retheme): converted to the light Field Guide
+ *   palette — styling only; the age-tag chip stays dark-on-photo
+ *   (bg-black/60) per the photo-overlay rule. No copy or logic changes.
  *
  * SRP/DRY check: Pass — presentation-only client island; the pool (paths,
  *   tags, alts) is assembled server-side in app/flock/page.tsx from the
@@ -97,7 +101,7 @@ export default function OrnitharchPortrait({
         sizes={sizes}
         className="object-cover orn-fade"
       />
-      <span className="absolute bottom-2 left-2 bg-guardian-bg/85 border border-guardian-border text-guardian-text/90 font-mono text-[0.6rem] uppercase tracking-widest px-2 py-0.5 rounded backdrop-blur-sm">
+      <span className="absolute bottom-2 left-2 bg-black/60 border border-white/25 text-white font-mono text-[0.6rem] uppercase tracking-widest px-2 py-0.5 rounded backdrop-blur-sm">
         {current.tag}
       </span>
     </>

@@ -1,11 +1,9 @@
 /**
- * Author: Claude Fable 5 (prev Claude Opus 4.7 (1M context); orig Claude Opus 4.6, 13-Apr-2026)
+ * Author: Claude Opus 4.8 (prev Claude Fable 5; Claude Opus 4.7 (1M context); orig Claude Opus 4.6, 13-Apr-2026)
  * Date: 16-Jul-2026
- * PURPOSE: Root layout with navigation and metadata. Nav is sticky with a light
- *   cream background and pill-style links, matching the visual idiom of
- *   markbarney.net so the farm site reads as part of the same personal brand
- *   family. Internal links: Home, Guardian, Flock, Projects, Gallery, Field
- *   Notes. External link back to markbarney.net appended after a divider.
+ * PURPOSE: Root layout with navigation and metadata. Renders SiteNav (light
+ *   "Field Guide" chrome sitewide; dark terminal variant on /markets only —
+ *   16-Jul-2026 daylight retheme) above every page.
  *
  *   v1.16.0 (10-May-2026): SEO refresh. Title default rewritten to describe
  *   what the page actually IS for search engines and tabs ("Live chicken
@@ -63,7 +61,7 @@ export const metadata: Metadata = {
   },
 };
 
-import TerminalNav from "@/app/components/system/TerminalNav";
+import SiteNav from "@/app/components/system/SiteNav";
 
 export default function RootLayout({
   children,
@@ -73,7 +71,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <TerminalNav />
+        <SiteNav />
         {children}
       </body>
     </html>

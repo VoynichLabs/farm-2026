@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.31.0] — 2026-07-16
+
+### Changed — Daylight retheme: light "Field Guide" theme sitewide, /markets keeps the CRT (Claude Opus 4.8)
+
+**What:** The dark terminal theme (v1.16.3 → v1.27.0) is replaced everywhere except `/markets` by a light "Field Guide" palette — paper `#f8f5ec`, green-black ink, moss accent, honey warm tone — defined as a new `--color-field-*` token family in `app/globals.css`. `.terminal-prose` keeps its class name but its values flip to light (renaming risked a silently unstyled MDX page). `TerminalNav.tsx` → `SiteNav.tsx`: light field-guide chrome sitewide, with a `usePathname()` dark terminal variant on `/markets` only so the green-CRT page keeps a coherent dark frame. New `lib/emoji.ts` — the site's emoji accent vocabulary as typed constants (page marks 🏡🐔🐣📓🌻✨🛠️📈📡, 🐝 live, 🌱 growing, 🥚 egg, 🍂 archived, ☀️🌤️🌙 yard slots, 🎃🥒🌽 garden, 🌼 divider): one emoji = one meaning, always leading, always `aria-hidden` beside a text label, never in body prose, never on `/markets`. Bracketed mono kickers (`[ROSTER]`) become bordered specimen tags. Live-camera surfaces stay **dark islands** (all `app/components/guardian/*`, `HomeCameraStage` — the guardian tokens remain in globals.css for exactly these). The four cream-era gem components (`GemLightbox`, `GemCaption`, `GemMetaTable`, `GemCardBadges`) finally convert off the deleted cream/forest tokens — this also fixes the dark-on-dark caption bug on every `/gallery/gems` tile. `/markets` body untouched (`Terminal.tsx` is self-contained; `ppm-*` keyframes preserved). Legacy `cream/forest/wood/bark` tokens removed. `package.json` 1.28.0 → 1.31.0 (was stale vs changelog).
+
+**Why:** Boss approved the 16-Jul daylight-retheme proposal: light, farm-native theming with 🌼/🐝 accents everywhere except the markets terminal. The design keeps the terminal era's discipline (instrument strips, mono tags, hairline structure, data-driven labels) and changes only the register — mission control → field station — to avoid regressing to the shapeless cream era that got the original light site killed.
+
+**How:** Plan and token mapping in `docs/16-Jul-2026-daylight-retheme-plan.md`. Styling-only conversion — no copy or data changes anywhere; flock memorial/founders content de-emphasized visually with words untouched. Content rules verified: no rendered bird counts, no literal 13. `npm run lint` + `npm run build` clean; no browser verification per Boss (reviewing live). `docs/FRONTEND-ARCHITECTURE.md` theme rules rewritten; CLAUDE.md design-tokens section updated.
+
 ## [1.30.0] — 2026-07-16
 
 ### Added — Per-bird growth strip on /flock (E5) (Claude Fable 5)

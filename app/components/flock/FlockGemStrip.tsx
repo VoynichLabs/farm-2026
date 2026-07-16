@@ -1,7 +1,7 @@
 "use client";
 /**
- * Author: Claude Fable 5 (orig Claude Opus 4.7)
- * Date: 06-Jul-2026 (orig 2026-05-11) — guardian palette (terminal glow-up)
+ * Author: Claude Opus 4.8 (prev Claude Fable 5, orig Claude Opus 4.7)
+ * Date: 16-Jul-2026 (prev 06-Jul-2026, orig 2026-05-11)
  * PURPOSE: Per-cohort gem rail for /flock — fetches recent VLM-curated frames
  *   from guardian.markbarney.net filtered by scene(s), renders them as a
  *   12-tile grid, shows the total cohort gem count, and links to the full
@@ -22,6 +22,11 @@
  *   13. As of 2026-05-11 the live counts are 1819 / 2149 / 635 / 4624 — all
  *   safe — and the `coop yard combined` view is the closest miss at 648.
  *
+ *   16-Jul-2026 (daylight retheme): converted to the light Field Guide
+ *   palette (field-* tokens); the strip header became a specimen tag with
+ *   the STATUS.live mark from lib/emoji.ts (live-updating surface).
+ *   Styling only — fetch logic, copy, and counts untouched.
+ *
  * SRP/DRY check: Pass — composes GemCard (compact variant) over a scene-
  *   filtered slice of the gem archive. No new types, no duplicate fetcher
  *   (uses the same Guardian endpoint as RecentGemsRail).
@@ -31,6 +36,7 @@ import Link from "next/link";
 import GemCard from "@/app/components/gems/GemCard";
 import type { GemRow } from "@/app/components/guardian/types";
 import { GUARDIAN_API } from "@/app/components/guardian/types";
+import { STATUS } from "@/lib/emoji";
 
 interface GemsResponse {
   rows?: GemRow[];
@@ -106,20 +112,22 @@ export default function FlockGemStrip({
   return (
     <div className="mb-8">
       <div className="flex items-baseline justify-between mb-3 font-mono text-[0.7rem] uppercase tracking-widest">
-        <span className="text-guardian-text/70">
-          <span className="text-guardian-accent">▸</span> {label}
+        <span className="text-field-muted">
+          <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted">
+            <span aria-hidden="true" className="mr-1.5">{STATUS.live}</span>{label}
+          </span>
           {/* Suppress count display when total === 13 — triskaidekaphobia
               rule, per memory/feedback_no_thirteen.md. Strip still renders;
               just no "13 frames archived" string in the DOM. */}
           {total !== null && total > 0 && total !== 13 && (
-            <span className="text-guardian-muted normal-case ml-2">
+            <span className="text-field-muted normal-case ml-2">
               {total.toLocaleString()} frame{total === 1 ? "" : "s"} archived
             </span>
           )}
         </span>
         <Link
           href={`/gallery/gems${galleryLinkQs ? `?${galleryLinkQs}` : ""}`}
-          className="text-guardian-accent hover:text-emerald-300"
+          className="text-field-accent hover:text-field-accent-deep"
         >
           browse all ↗
         </Link>
@@ -133,7 +141,7 @@ export default function FlockGemStrip({
           {Array.from({ length: limit }).map((_, i) => (
             <div
               key={i}
-              className="aspect-[4/3] rounded-lg bg-guardian-card animate-pulse"
+              className="aspect-[4/3] rounded-lg bg-field-wash animate-pulse"
             />
           ))}
         </div>
@@ -153,7 +161,7 @@ export default function FlockGemStrip({
       )}
 
       {showFallback && (
-        <p className="text-guardian-muted text-xs font-mono">
+        <p className="text-field-muted text-xs font-mono">
           Gem archive is unreachable right now.
           {emptyHint ? ` ${emptyHint}` : ""}
         </p>

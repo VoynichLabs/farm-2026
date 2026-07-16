@@ -1,7 +1,9 @@
 /**
- * Author: Claude Opus 4.6 (1M context)
- * Date: 14-Apr-2026
- * PURPOSE: Key/value metadata table for a gem — camera, scene, activity,
+ * Author: Claude Opus 4.8 (orig Claude Opus 4.6 (1M context))
+ * Date: 16-Jul-2026 (orig 14-Apr-2026)
+ * PURPOSE: 16-Jul-2026 daylight retheme — moved off the deleted
+ *   cream/forest tokens onto Field Guide muted/ink tokens.
+ *   Key/value metadata table for a gem — camera, scene, activity,
  *   lighting, composition, quality, age bucket, absolute timestamp.
  *   Rendered inside GemLightbox. Kept as a dumb presentational component
  *   so filters can later reuse any of these facets without re-implementing
@@ -41,8 +43,8 @@ export default function GemMetaTable({ row }: Props) {
     <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
       {entries.map(([k, v]) => (
         <div key={k} className="contents">
-          <dt className="text-forest/50">{k}</dt>
-          <dd className="text-forest/90">{v}</dd>
+          <dt className="text-field-muted">{k}</dt>
+          <dd className="text-field-ink">{v}</dd>
         </div>
       ))}
     </dl>

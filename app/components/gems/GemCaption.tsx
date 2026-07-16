@@ -1,7 +1,9 @@
 /**
- * Author: Claude Opus 4.6 (1M context)
- * Date: 14-Apr-2026
- * PURPOSE: Render a gem's caption_draft with a "Draft caption:" affordance
+ * Author: Claude Opus 4.8 (orig Claude Opus 4.6 (1M context))
+ * Date: 16-Jul-2026 (orig 14-Apr-2026)
+ * PURPOSE: 16-Jul-2026 daylight retheme — moved off the deleted
+ *   cream/forest tokens onto Field Guide ink/muted tokens.
+ *   Render a gem's caption_draft with a "Draft caption:" affordance
  *   per the cross-repo rule (parent plan 2.d.4). The caption is GLM-authored
  *   and is never styled as finished editorial copy. Two length variants:
  *   full (lightbox) and clipped (card). Kept stateless so both places use
@@ -24,10 +26,10 @@ export default function GemCaption({ caption, clipLines }: Props) {
 
   return (
     <figcaption className="text-sm">
-      <span className="text-forest/50 uppercase tracking-wide text-[0.65rem] mr-1.5">
+      <span className="text-field-muted uppercase tracking-wide text-[0.65rem] mr-1.5">
         Draft caption
       </span>
-      <span className={`text-forest/80 italic ${clipClass}`}>{caption}</span>
+      <span className={`text-field-ink italic ${clipClass}`}>{caption}</span>
     </figcaption>
   );
 }

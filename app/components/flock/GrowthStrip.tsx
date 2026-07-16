@@ -1,5 +1,5 @@
 /**
- * Author: Claude Fable 5
+ * Author: Claude Opus 4.8 (prev Claude Fable 5)
  * Date: 16-Jul-2026
  * PURPOSE: GrowthStrip — a horizontally-scrollable N-photo growth timeline
  *   for one bird, generalizing ThenAndNow.tsx's fixed two-photo (hatch-day
@@ -12,7 +12,7 @@
  *   ThenAndNow already established.
  *
  *   Visual language is deliberately borrowed from ThenAndNow's inner Frame
- *   sub-component (guardian-card/guardian-border/guardian-accent tokens,
+ *   sub-component (shared card/border/accent tokens,
  *   rounded-xl corners, object-cover images, a DATE/AGE instrument-strip
  *   footer) so a bird with 3+ dated photos reads as the same design system
  *   as the Birdimir then/now feature, not a new one. The scroll-rail CSS
@@ -26,6 +26,10 @@
  *   philosophy exactly: most June/July hatches only have one committed
  *   photo so far, and an empty render here is correct, not a bug.
  *
+ *   16-Jul-2026 (daylight retheme): converted to the light Field Guide
+ *   palette (field-* tokens); the [GROWTH] kicker became a specimen tag
+ *   with the STATUS.growing mark from lib/emoji.ts. Styling only.
+ *
  * SRP/DRY check: Pass — reuses ThenNowPhoto from ThenAndNow.tsx (no
  *   redefined photo-prop shape) and lays out only what it's given; no data
  *   fetching, no date math, no record lookup, no filesystem access here.
@@ -38,6 +42,7 @@
  */
 import Image from "next/image";
 import type { ThenNowPhoto } from "@/app/components/hatches/ThenAndNow";
+import { STATUS } from "@/lib/emoji";
 
 interface GrowthStripProps {
   /** Subject name, e.g. "Birdimir". Used only as an alt-text fallback. */
@@ -52,17 +57,19 @@ export default function GrowthStrip({ name, photos }: GrowthStripProps) {
 
   return (
     <div className="pt-3">
-      <p className="font-mono text-[0.6rem] uppercase tracking-widest text-guardian-accent mb-2">
-        [GROWTH]
+      <p className="mb-2">
+        <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted">
+          <span aria-hidden="true" className="mr-1.5">{STATUS.growing}</span>Growth
+        </span>
       </p>
       <div className="overflow-x-auto pb-1">
         <div className="flex gap-2.5 snap-x snap-mandatory">
           {photos.map((photo) => (
             <figure
               key={photo.src}
-              className="snap-start flex-shrink-0 w-28 bg-guardian-card rounded-xl overflow-hidden border border-guardian-border flex flex-col"
+              className="snap-start flex-shrink-0 w-28 bg-field-card rounded-xl overflow-hidden border border-field-border flex flex-col"
             >
-              <div className="relative w-full aspect-[4/5] bg-guardian-hover/30">
+              <div className="relative w-full aspect-[4/5] bg-field-wash">
                 <Image
                   src={photo.src}
                   alt={photo.alt || `${name}, dated photo`}
@@ -73,9 +80,9 @@ export default function GrowthStrip({ name, photos }: GrowthStripProps) {
               </div>
               {/* Instrument strip — same DATE/AGE footer language as
                   ThenAndNow's Frame, condensed for a compact tile. */}
-              <figcaption className="bg-guardian-bg text-guardian-text font-mono text-[0.55rem] uppercase tracking-widest px-1.5 py-1 border-t border-guardian-border flex flex-col gap-0.5">
-                <span className="text-guardian-text truncate">{photo.dateLabel}</span>
-                <span className="text-guardian-muted truncate">{photo.ageLabel}</span>
+              <figcaption className="bg-field-bg text-field-ink font-mono text-[0.55rem] uppercase tracking-widest px-1.5 py-1 border-t border-field-border flex flex-col gap-0.5">
+                <span className="text-field-ink truncate">{photo.dateLabel}</span>
+                <span className="text-field-muted truncate">{photo.ageLabel}</span>
               </figcaption>
             </figure>
           ))}

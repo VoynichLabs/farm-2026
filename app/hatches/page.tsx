@@ -1,28 +1,31 @@
 /**
- * Author: Claude Fable 5 (prev Claude Opus 4.8)
- * Date: 06-Jul-2026 (orig 10-May-2026 / updated 22-Jun-2026)
+ * Author: Claude Opus 4.8 (prev Claude Fable 5)
+ * Date: 16-Jul-2026 (orig 10-May-2026 / updated 22-Jun-2026, 06-Jul-2026)
  * PURPOSE: /hatches — event ledger for every 2026 incubator hatch. Reads from
  *   content/hatches/2026/*.md (per-chick source of truth, schema in
  *   content/hatches/SCHEMA.md). Each card is a hatch event, not a
  *   current-state roster row — /flock is the current-state surface.
  *
- *   Layout: terminal hero strip → Birdimir "then → now" feature (hatch-day vs
+ *   Layout: hero strip → Birdimir "then → now" feature (hatch-day vs
  *   day-20, the worked example of the ledger's down-color → adult-plumage
  *   calibration purpose) → per-chick cards (newest first) → footer link back
  *   to /flock for live state. No 13s in derived counts.
+ *
+ *   16-Jul-2026 (daylight retheme): converted from the dark guardian palette
+ *   to the light Field Guide tokens (field-*); styling only, copy unchanged.
  *
  * SRP/DRY check: Pass — page selects records via getHatchRecords and composes
  *   HatchCard + the presentational ThenAndNow component. The then/now data is
  *   derived from Birdimir's own HatchRecord (photos[], hatch_date, latest
  *   phenotype observation) — no per-chick hardcoding, no new data source.
- *   06-Jul-2026 (terminal glow-up): cream-era card/wrapper classes converted
- *   to the guardian palette (see docs/06-Jul-2026-terminal-glowup-plan.md).
+ *   Emoji from lib/emoji.ts SSoT.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { getHatchRecords, type HatchRecord, type HatchObservation } from "@/lib/content";
 import ThenAndNow, { type ThenNowPhoto } from "@/app/components/hatches/ThenAndNow";
+import { PAGE_MARKS } from "@/lib/emoji";
 
 // Birdimir — first chick of the June (NI) clutch — is the worked example for
 // the then/now feature. Selected by canonical id; the block self-suppresses if
@@ -104,31 +107,31 @@ export default function HatchesPage() {
 
   return (
     <main className="min-h-screen">
-      {/* Hero — terminal strip + serif title */}
-      <section className="bg-guardian-bg text-guardian-text border-b border-guardian-border">
+      {/* Hero — specimen-tag kicker + serif title */}
+      <section className="bg-field-bg text-field-ink border-b border-field-border">
         <div className="max-w-6xl mx-auto px-4 pt-14 pb-10">
-          <p className="font-mono text-[0.7rem] uppercase tracking-widest text-guardian-accent mb-2">
-            [HATCHES · 2026]
-          </p>
-          <h1 className="text-4xl md:text-5xl font-bold font-serif text-white mb-3">
+          <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-2">
+            <span aria-hidden="true" className="mr-1.5">{PAGE_MARKS.hatches}</span>HATCHES · 2026
+          </span>
+          <h1 className="text-4xl md:text-5xl font-bold font-serif text-field-ink mb-3">
             What Came Out of an Egg This Year
           </h1>
-          <p className="text-guardian-text/70 max-w-3xl text-sm md:text-base leading-relaxed">
+          <p className="text-field-muted max-w-3xl text-sm md:text-base leading-relaxed">
             Every 2026 incubator hatch — date, parentage, dated phenotype
             observations, and our predictions against the eventual adult
             outcome. The source of truth is one file per chick in{" "}
-            <code className="text-guardian-accent/90">content/hatches/2026/</code>;
+            <code className="text-field-accent">content/hatches/2026/</code>;
             this page renders them newest first. Photos fill in over time.
           </p>
-          <div className="mt-6 font-mono text-[0.7rem] uppercase tracking-widest text-guardian-text/70 flex flex-wrap gap-x-4 gap-y-1">
+          <div className="mt-6 font-mono text-[0.7rem] uppercase tracking-widest text-field-muted flex flex-wrap gap-x-4 gap-y-1">
             <span>
-              <span className="text-guardian-muted">RECORDS</span>{" "}
-              <span className="text-guardian-text">{records.length}</span>
+              <span className="text-field-muted">RECORDS</span>{" "}
+              <span className="text-field-ink">{records.length}</span>
             </span>
-            <span className="text-guardian-muted">·</span>
+            <span className="text-field-muted">·</span>
             <span>
-              <span className="text-guardian-muted">SCHEMA</span>{" "}
-              <span className="text-guardian-text">content/hatches/SCHEMA.md</span>
+              <span className="text-field-muted">SCHEMA</span>{" "}
+              <span className="text-field-ink">content/hatches/SCHEMA.md</span>
             </span>
           </div>
         </div>
@@ -141,7 +144,7 @@ export default function HatchesPage() {
       {/* Records */}
       {records.length === 0 ? (
         <section className="max-w-5xl mx-auto px-4 py-16">
-          <p className="text-guardian-muted">No 2026 hatches recorded yet.</p>
+          <p className="text-field-muted">No 2026 hatches recorded yet.</p>
         </section>
       ) : (
         <section className="max-w-6xl mx-auto px-4 py-12 grid gap-8 md:grid-cols-2">
@@ -152,15 +155,15 @@ export default function HatchesPage() {
       )}
 
       {/* Footer */}
-      <footer className="bg-guardian-card border-t border-guardian-border text-guardian-muted text-center py-8 text-sm">
-        <p className="font-serif font-bold text-guardian-text/80 mb-1">Farm 2026</p>
+      <footer className="bg-field-card border-t border-field-border text-field-muted text-center py-8 text-sm">
+        <p className="font-serif font-bold text-field-muted mb-1">Farm 2026</p>
         <p>
           Hampton, CT — current roster on{" "}
-          <Link href="/flock" className="hover:text-guardian-text underline">
+          <Link href="/flock" className="hover:text-field-ink underline">
             /flock
           </Link>
           {" · "}
-          <Link href="/" className="hover:text-guardian-text">
+          <Link href="/" className="hover:text-field-ink">
             ← Home
           </Link>
         </p>
@@ -179,9 +182,9 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
   const observations = [...r.phenotype_observations].reverse();
 
   return (
-    <article className="bg-guardian-card rounded-xl overflow-hidden border border-guardian-border flex flex-col">
+    <article className="bg-field-card rounded-xl overflow-hidden border border-field-border flex flex-col">
       {/* Photo or placeholder */}
-      <div className="relative w-full h-64 bg-guardian-hover/30">
+      <div className="relative w-full h-64 bg-field-wash">
         {photo?.path ? (
           <Image
             src={webPath(photo.path)}
@@ -191,9 +194,9 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
             className="object-cover"
           />
         ) : (
-          <div className="h-full flex flex-col items-center justify-center gap-2 bg-guardian-bg/40">
-            <span className="text-5xl text-guardian-muted">🐣</span>
-            <span className="text-[0.65rem] uppercase tracking-widest text-guardian-muted font-medium">
+          <div className="h-full flex flex-col items-center justify-center gap-2 bg-field-wash">
+            <span className="text-5xl text-field-muted">🐣</span>
+            <span className="text-[0.65rem] uppercase tracking-widest text-field-muted font-medium">
               Photo pending
             </span>
           </div>
@@ -201,51 +204,51 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
       </div>
 
       {/* Instrument strip — durable facts */}
-      <div className="bg-guardian-bg text-guardian-text font-mono text-[0.65rem] uppercase tracking-widest px-4 py-2 border-y border-guardian-border flex flex-wrap gap-x-3 gap-y-1">
+      <div className="bg-field-bg text-field-ink font-mono text-[0.65rem] uppercase tracking-widest px-4 py-2 border-y border-field-border flex flex-wrap gap-x-3 gap-y-1">
         {hatch && (
           <span>
-            <span className="text-guardian-muted">HATCH</span>{" "}
-            <span className="text-guardian-text">{hatch}</span>
+            <span className="text-field-muted">HATCH</span>{" "}
+            <span className="text-field-ink">{hatch}</span>
             {r.hatch_time && (
-              <span className="text-guardian-text/70"> · {r.hatch_time}</span>
+              <span className="text-field-muted"> · {r.hatch_time}</span>
             )}
           </span>
         )}
         {r.incubator && (
           <span>
-            <span className="text-guardian-muted">INC</span>{" "}
-            <span className="text-guardian-text">{r.incubator}</span>
+            <span className="text-field-muted">INC</span>{" "}
+            <span className="text-field-ink">{r.incubator}</span>
           </span>
         )}
         {set && (
           <span>
-            <span className="text-guardian-muted">SET</span>{" "}
-            <span className="text-guardian-text">{set}</span>
+            <span className="text-field-muted">SET</span>{" "}
+            <span className="text-field-ink">{set}</span>
           </span>
         )}
         {r.egg_color && (
           <span>
-            <span className="text-guardian-muted">EGG</span>{" "}
-            <span className="text-guardian-text">{r.egg_color}</span>
+            <span className="text-field-muted">EGG</span>{" "}
+            <span className="text-field-ink">{r.egg_color}</span>
           </span>
         )}
       </div>
 
       <div className="p-5 flex flex-col flex-1 gap-3">
         <div>
-          <h2 className="text-2xl font-bold font-serif text-white">{displayName}</h2>
-          {r.breed && <p className="text-sm text-guardian-accent font-medium">{r.breed}</p>}
-          <p className="text-[0.7rem] font-mono uppercase tracking-widest text-guardian-muted/80 mt-1">
+          <h2 className="text-2xl font-bold font-serif text-field-ink">{displayName}</h2>
+          {r.breed && <p className="text-sm text-field-accent font-medium">{r.breed}</p>}
+          <p className="text-[0.7rem] font-mono uppercase tracking-widest text-field-muted mt-1">
             id · {r.id}
           </p>
         </div>
 
         {/* Parentage */}
         {(r.parent_hen || r.parent_rooster_window) && (
-          <div className="text-xs text-guardian-text/80 border-l-2 border-guardian-accent/40 pl-3">
+          <div className="text-xs text-field-muted border-l-2 border-field-accent-line pl-3">
             {r.parent_hen && (
               <p>
-                <span className="font-mono uppercase tracking-widest text-guardian-muted text-[0.65rem]">
+                <span className="font-mono uppercase tracking-widest text-field-muted text-[0.65rem]">
                   dam
                 </span>{" "}
                 {r.parent_hen}
@@ -253,14 +256,14 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
             )}
             {r.parent_rooster_window && (
               <p>
-                <span className="font-mono uppercase tracking-widest text-guardian-muted text-[0.65rem]">
+                <span className="font-mono uppercase tracking-widest text-field-muted text-[0.65rem]">
                   sire
                 </span>{" "}
                 {r.parent_rooster_window}
               </p>
             )}
             {r.parentage_confidence && (
-              <p className="text-guardian-muted mt-0.5">
+              <p className="text-field-muted mt-0.5">
                 <span className="font-mono uppercase tracking-widest text-[0.65rem]">
                   confidence
                 </span>{" "}
@@ -272,59 +275,59 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
 
         {/* Lifecycle summary if grown, otherwise nothing — keep card a snapshot */}
         {r.lifecycle_summary && (
-          <p className="text-sm text-guardian-text/80 italic">{r.lifecycle_summary}</p>
+          <p className="text-sm text-field-muted italic">{r.lifecycle_summary}</p>
         )}
 
         {/* Phenotype observations — collapsed to most recent + one older */}
         {observations.length > 0 && (
-          <details className="text-xs text-guardian-text/75 mt-1">
-            <summary className="cursor-pointer font-mono uppercase tracking-widest text-[0.65rem] text-guardian-muted hover:text-guardian-text">
+          <details className="text-xs text-field-muted mt-1">
+            <summary className="cursor-pointer font-mono uppercase tracking-widest text-[0.65rem] text-field-muted hover:text-field-ink">
               phenotype observations ({observations.length})
             </summary>
-            <ol className="mt-2 space-y-3 border-l border-guardian-border pl-3">
+            <ol className="mt-2 space-y-3 border-l border-field-border pl-3">
               {observations.map((o, i) => {
                 const obs = observed(o);
                 return (
                   <li key={i}>
-                    <p className="font-mono uppercase tracking-widest text-[0.65rem] text-guardian-muted">
+                    <p className="font-mono uppercase tracking-widest text-[0.65rem] text-field-muted">
                       {fmtDate(o.date)}
                       {typeof o.age_days === "number" && (
-                        <span className="text-guardian-muted/80"> · day {o.age_days}</span>
+                        <span className="text-field-muted"> · day {o.age_days}</span>
                       )}
                     </p>
                     {obs.down_color && (
                       <p>
-                        <span className="text-guardian-muted">down · </span>
+                        <span className="text-field-muted">down · </span>
                         {obs.down_color}
                       </p>
                     )}
                     {obs.markings && (
                       <p>
-                        <span className="text-guardian-muted">markings · </span>
+                        <span className="text-field-muted">markings · </span>
                         {obs.markings}
                       </p>
                     )}
                     {obs.distinguishing_features && (
                       <p>
-                        <span className="text-guardian-muted">features · </span>
+                        <span className="text-field-muted">features · </span>
                         {obs.distinguishing_features}
                       </p>
                     )}
                     {obs.sex && obs.sex !== "unknown" && (
                       <p>
-                        <span className="text-guardian-muted">sex · </span>
+                        <span className="text-field-muted">sex · </span>
                         {String(obs.sex)}
                       </p>
                     )}
                     {o.prediction?.expected_sex && (
-                      <p className="text-guardian-text/60 italic">
-                        <span className="text-guardian-muted/80">prediction · </span>
+                      <p className="text-field-muted italic">
+                        <span className="text-field-muted">prediction · </span>
                         {o.prediction.expected_sex}
                         {o.prediction.confidence && ` (${o.prediction.confidence})`}
                         {o.prediction.reasoning && ` — ${o.prediction.reasoning}`}
                       </p>
                     )}
-                    {o.notes && <p className="text-guardian-text/60">{o.notes}</p>}
+                    {o.notes && <p className="text-field-muted">{o.notes}</p>}
                   </li>
                 );
               })}
@@ -334,8 +337,8 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
 
         {/* Lifecycle status pill */}
         {r.lifecycle?.current_location && (
-          <p className="mt-auto pt-3 border-t border-guardian-border/50">
-            <span className="inline-block text-[0.65rem] font-mono uppercase tracking-widest bg-guardian-accent/10 text-emerald-300/90 border border-guardian-accent/25 px-2 py-1 rounded">
+          <p className="mt-auto pt-3 border-t border-field-hairline">
+            <span className="inline-block text-[0.65rem] font-mono uppercase tracking-widest bg-field-accent-soft text-field-accent border border-field-accent-line px-2 py-1 rounded">
               {r.lifecycle.current_location}
             </span>
           </p>
