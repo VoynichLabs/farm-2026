@@ -1,6 +1,6 @@
 # 16-Jul-2026 — Birdcatraz-Era Refresh Plan (v3)
 
-**Status: DRAFT v3 — expanded after deep pipeline dive, rewritten for standalone execution; awaiting Boss approval before implementation.**
+**Status: Parts A–E implemented and shipped 16-Jul-2026.** See "Implementation status" near the bottom for what landed, what's deliberately deferred, and what needs Boss's eyes.
 
 Boss decisions folded in:
 - **Birdcatraz = the whole enclosed area**, including the chicken coop and the turkey pen. So usb-cam (coop) and mba-cam (turkey pen) are *inside* Birdcatraz; s7-cam watches the big water bowl.
@@ -144,3 +144,26 @@ Caveat logged: "Birdadette chick→hen" specifically is impossible — Birdadett
 - **No live-posting behavior flips without explicit per-flip approval** — dry-run is the default for every lane change; the 381 real followers are the blast radius.
 - Work lands in phased chunks with verification between them, in the suggested order (A1–A6 → D1–D3 → C1–C4 → B1 → rest), not one continuous pass.
 - **Phase 1 (A1–A6) is approved to start now** — it's config/prompt/label work with no posting-behavior change, and the pipeline is actively mis-scoring the S7's water-bowl subject every cycle until it lands. Per standard workflow, write the phase implementation doc first.
+
+## Implementation status (16-Jul-2026 — all parts shipped this session)
+
+Everything below is committed and pushed on `main` in both repos. `guardian.db` backed up to `backups/guardian-pre-v2.47-20260716.db` before the first schema migration, per the guardrail above.
+
+**Part A (S7/Birdcatraz relabel) — done, v2.46.0–v2.47.1.** Also caught and fixed a real bug while doing this: `birds_preset_path` makes `~/.lmstudio/config-presets/Birds.preset.json` the *actual* live prompt/schema source (not the tracked `prompt.md`/`schema.json`) — the preset was 4 days stale and the first restart didn't actually apply the Birdcatraz prompt fix. Synced, loud-commented in `orchestrator.py` so it can't silently drift again. E1 (roster bridge) landed alongside A as `tools/pipeline/roster.py` — named-individual VLM guidance is now generated live from `flock-profiles.json`, filtered to exclude any bird Boss's own notes flag as disputed/unconfirmed.
+
+**Part B (Instagram measurement) — done, v2.48.0.** `tools/pipeline/ig_insights.py` verified live against the real account (406 followers, real reel/carousel insight probes). Found the plan's assumed `plays` metric is rejected by the live Graph API v21 (`views` is current) — normalized at parse time. New LaunchAgent plists for the nightly fetch (23:30) and weekly digest (Sunday 20:00) are **written but not yet activated** — see "Needs Boss" below for the exact commands.
+
+**Part C (site content refresh) — done, v1.29.0.** Homepage, OG image, flock roster/locations, new Birdcatraz project page, S7 copy fixes, draft field note.
+
+**Part D (caption/reel quality) — done, v2.47.0/v2.48.0, with one correction.** D1–D6, D8, D10, D11 shipped; D7 (music) deliberately deferred; D9 dropped (contradicted a standing no-upscale decision). **Correction to the original diagnosis:** the "carousel starved to zero since 07-06" claim was wrong — verified against the carousel job's own logs that it successfully posted on 07-12, 07-13, and 07-14. The real bug was that reels and carousels shared one `ig_permalink` column, so a reel later reusing an already-carousel-posted gem silently overwrote the carousel's success record (and re-posted that photo a second time, on a different surface). D1's `reel_permalink` column split is the correct fix for this — for the corrected reason. Full detail in farm-guardian's CHANGELOG v2.48.0 entry.
+
+**Part E (roster/growth) — done.** E1 (roster bridge, see Part A above), E2 (local flock growth timelapse: 83 frames, 83.2s, 2026-04-16→2026-07-16, sitting at `~/bubba-workspace/scratch/growth-timelapse-s7-2026-07-16.mp4` for Boss's review — **not posted, not committed, per this item's own "review before publish" rule**), E3/E4 (Discord reply-with-name tagging + retention pinning, v2.47.2), E5 (growth-strip component on `/flock`, v1.30.0).
+
+### Needs Boss
+
+1. **Review the growth timelapse** (`~/bubba-workspace/scratch/growth-timelapse-s7-2026-07-16.mp4`, sent separately) before any embed/publish work proceeds. 9 of its 83 frames are native landscape (pre-portrait-switch + 3 later stray captures) and get soft-upscaled to match — worth a glance, not urgent.
+2. **Activate the two new LaunchAgents** once you're comfortable (both are dry-run-tested, neither has run live yet):
+   `launchctl bootstrap gui/501 ~/Documents/GitHub/farm-guardian/deploy/ig-scheduled/com.farmguardian.ig-insights-fetch.plist`
+   `launchctl bootstrap gui/501 ~/Documents/GitHub/farm-guardian/deploy/ig-scheduled/com.farmguardian.ig-weekly-digest.plist`
+3. **Camera-of-the-day rotation** (`com.farmguardian.ig-camera-of-the-day-reel.plist`, 20:15) is also written but not activated — decide if you want `house-yard` folded into the rotation pool (it was excluded because it's never had a live plist; folding it in would be a new content surface, not a consolidation). Once the rotation's confirmed working for a few days, the old per-camera plists it supersedes (mba/usb-cam/dominator-cam/duo2 timelapse) are the retirement candidates — not touched yet.
+4. **Eyeball `/flock`** — the new growth strip sits right below each ornitharch's existing rotating portrait, which cycles through much of the same photo pool; worth a look for visual overlap/redundancy.
