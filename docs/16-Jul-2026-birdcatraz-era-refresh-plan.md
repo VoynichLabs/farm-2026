@@ -159,11 +159,19 @@ Everything below is committed and pushed on `main` in both repos. `guardian.db` 
 
 **Part E (roster/growth) — done.** E1 (roster bridge, see Part A above), E2 (local flock growth timelapse: 83 frames, 83.2s, 2026-04-16→2026-07-16, sitting at `~/bubba-workspace/scratch/growth-timelapse-s7-2026-07-16.mp4` for Boss's review — **not posted, not committed, per this item's own "review before publish" rule**), E3/E4 (Discord reply-with-name tagging + retention pinning, v2.47.2), E5 (growth-strip component on `/flock`, v1.30.0).
 
-### Needs Boss
+### Activation (done 16-Jul evening, per Boss's "don't make me the bottleneck")
+
+All three new LaunchAgents are **live** (dry-run-verified first, then bootstrapped):
+- `com.farmguardian.ig-insights-fetch` (nightly 23:30) — kickstarted once under launchd to prove the environment: 1 media checked, 1 succeeded, first real time-series row written (tonight's reel: 32 plays / 9 reach / 406 followers).
+- `com.farmguardian.ig-weekly-digest` (Sunday 20:00) — dry-run builds correctly; first live post this Sunday.
+- `com.farmguardian.ig-camera-of-the-day-reel` (daily 20:15) — dry-run correct (today's pick usb-cam no-ops cleanly while disconnected).
+
+The five superseded per-camera timelapse plists (mba/usb/dominator/duo2/gwtc) were booted out and renamed `.plist.disabled` in `~/Library/LaunchAgents/` (repo `deploy/` copies untouched, matching the ig-weekly-reel retirement convention). Evening schedule is now exactly the decided budget: 12:30 carousel · 18:00 mixed reel · 20:15 rotating timelapse · 21:00 s7-daily reel. (The 09:00 s7-backlog reel was never in D10's scope and still runs; retire it separately if wanted.)
+
+Live verification the same evening: a reel published through the new code path — 25 source gems got `reel_permalink` (zero got `ig_permalink` stamped, so the carousel pool survives), and the caption+tags landed in `ig_posted_captions`, arming the dedup loop for tomorrow's captions. Also caught and fixed post-activation: the v2.46.0 Discord label rename broke reaction-sync's reverse lookup for messages posted under the old "S7 Brooder"/"Brooder *" names (they detoured through the human-drop path; sha256 dedup prevented any data pollution) — fixed with a legacy-alias map in `discord-reaction-sync.py`.
+
+### Needs Boss (review-only, nothing blocking)
 
 1. **Review the growth timelapse** (`~/bubba-workspace/scratch/growth-timelapse-s7-2026-07-16.mp4`, sent separately) before any embed/publish work proceeds. 9 of its 83 frames are native landscape (pre-portrait-switch + 3 later stray captures) and get soft-upscaled to match — worth a glance, not urgent.
-2. **Activate the two new LaunchAgents** once you're comfortable (both are dry-run-tested, neither has run live yet):
-   `launchctl bootstrap gui/501 ~/Documents/GitHub/farm-guardian/deploy/ig-scheduled/com.farmguardian.ig-insights-fetch.plist`
-   `launchctl bootstrap gui/501 ~/Documents/GitHub/farm-guardian/deploy/ig-scheduled/com.farmguardian.ig-weekly-digest.plist`
-3. **Camera-of-the-day rotation** (`com.farmguardian.ig-camera-of-the-day-reel.plist`, 20:15) is also written but not activated — decide if you want `house-yard` folded into the rotation pool (it was excluded because it's never had a live plist; folding it in would be a new content surface, not a consolidation). Once the rotation's confirmed working for a few days, the old per-camera plists it supersedes (mba/usb-cam/dominator-cam/duo2 timelapse) are the retirement candidates — not touched yet.
-4. **Eyeball `/flock`** — the new growth strip sits right below each ornitharch's existing rotating portrait, which cycles through much of the same photo pool; worth a look for visual overlap/redundancy.
+2. **Eyeball `/flock`** — the new growth strip sits right below each ornitharch's existing rotating portrait, which cycles through much of the same photo pool; worth a look for visual overlap/redundancy.
+3. Optional: say the word if you want `house-yard` added to the camera-of-the-day rotation pool (excluded because it never had a live plist — adding it is a new content surface, not a consolidation).
