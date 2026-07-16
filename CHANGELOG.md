@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.31.1] — 2026-07-16
+
+### Removed — Memorial content off /flock (Claude Opus 4.8)
+
+**What:** `app/flock/page.tsx` no longer renders the In Memoriam section, the founders' memorial strip, the loss-narrative paragraph in THE ORNITHARCHS intro, or the in-memoriam/LOST markers (chip, LOST date, grayscale) on breeding-line tiles. Parentage records (DAM/SIRE lines, the breeding-line chain) still render — they're records, not eulogy. Data files untouched; deceased birds simply no longer surface anywhere on the page.
+
+**Why:** Boss call, 16-Jul-2026 — losses aren't site content. Standing rule going forward: no memorial framing, no loss storytelling anywhere on the site.
+
+**How:** JSX + derived-data removal only (`founders` array and its offspring-count helpers deleted; `deceasedBirds` retained for the breeding-line lookup). Lint + build clean.
+
 ## [1.31.0] — 2026-07-16
 
 ### Changed — Daylight retheme: light "Field Guide" theme sitewide, /markets keeps the CRT (Claude Opus 4.8)

@@ -1,6 +1,6 @@
 {
   "name": "farm-2026",
-  "version": "1.31.0",
+  "version": "1.31.1",
   "private": true,
   "engines": {
     "node": ">=20.9.0"

@@ -15,9 +15,7 @@
  *   clutch, each tile joining flock-profiles.json (identity/photo/status)
  *   with content/hatches/2026/*.md frontmatter (parentage SSoT: parent_hen,
  *   parent_rooster_window, parentage_confidence, egg_color, clutch_id).
- *   The section leads with the legacy story: both sires (Little Big Red
- *   Junior, his son Whitey Red Legs) and dam Henrietta are gone; the
- *   eleven carry them forward. Counts are derived, never literals.
+ *   Counts are derived, never literals.
  *   Birdadette is now Birddor (cockerel); the old "named after Birdgit"
  *   claim was Boss-corrected as false and no longer renders anywhere.
  *
@@ -42,18 +40,21 @@
  *   docs/16-Jul-2026-daylight-retheme-plan.md — styling only, zero copy
  *   changes. Bracketed kickers became specimen tags (emoji from
  *   lib/emoji.ts SSoT: page mark on the hero strip, STATUS.egg on the
- *   incubator); photo-overlay chips and gradients stay dark-on-photo;
- *   memorial/founders/LOST sections keep their exact words with quieter
- *   field-muted presentation and existing grayscale treatments.
+ *   incubator); photo-overlay chips and gradients stay dark-on-photo.
+ *
+ *   16-Jul-2026 (memorial removal, per Boss): the In Memoriam section,
+ *   founders' memorial strip, loss narrative paragraph, and the
+ *   in-memoriam/LOST markers on breeding-line tiles are removed. Roster
+ *   data files are untouched; parentage (DAM/SIRE) records still render —
+ *   they're records, not eulogy. Don't reintroduce loss storytelling.
  *
  *   Layout (top → bottom):
  *     1. Terminal hero strip + serif title
- *     2. THE ORNITHARCHS — narrative, founders' memorial strip, cohort wall
+ *     2. THE ORNITHARCHS — narrative + cohort wall
  *     3. Incubator panel (conditional)
  *     4. BREEDING LINE panel (second-generation chain)
  *     5. Birdcatraz / Coop / Hens / Roosters roster sections
  *     6. Breed Notes
- *     7. In Memoriam
  *
  * SRP/DRY check: Pass — page composes BirdCard + OrnitharchTile primitives
  *   against getFlockProfiles() + getHatchRecords() (lib/content.ts). Ages
@@ -299,28 +300,6 @@ export default function FlockPage() {
     })
     .filter((c) => c.members.length > 0);
 
-  // Founders — all deceased; offspring counts derived from the records.
-  const henriettaChicks = hatchRecords.filter((r) => r.parent_hen === "Henrietta");
-  const lbrjChicks = hatchRecords.filter((r) => r.parent_rooster_window?.includes("LBRJ"));
-  const whiteyChicks = hatchRecords.filter((r) => r.parent_rooster_window?.includes("Whitey"));
-  const founders = [
-    {
-      bird: deceasedBirds.find((b) => b.name === "Henrietta"),
-      role: "DAM",
-      legacy: `Dam of ${henriettaChicks.length} — the only brown-egg layer, so every brown-egg chick is hers, and all ${henriettaChicks.length} carry her name. Her last two hatched on June 3rd; she passed peacefully in her sleep two days later.`,
-    },
-    {
-      bird: deceasedBirds.find((b) => b.name === "Little Big Red Junior"),
-      role: "SIRE",
-      legacy: `Lead rooster; probable sire of ${lbrjChicks.length}. Lost to a predator on April 24th — Horstabird's rust facial feathers confirmed him as her sire six weeks after he was gone.`,
-    },
-    {
-      bird: deceasedBirds.find((b) => b.name === "Whitey Red Legs"),
-      role: "SIRE",
-      legacy: `Little Big Red Junior's own son; paternity window for the ${whiteyChicks.length} June-clutch chicks. Disappeared without a trace on May 1st.`,
-    },
-  ].filter((f): f is typeof f & { bird: FlockBird } => Boolean(f.bird));
-
   // For the lineage panel: the genetic chain — Birdsula (fka "EE hen 1") ×
   // Little Big Red Junior → Birdadonna → Birdadotta — runs through these four.
   const lineageGenetic = [
@@ -413,76 +392,13 @@ export default function FlockPage() {
                 <em>Ornitharch</em> is what we call any bird that hatched here,
                 on the farm, in our incubators, from our flock&apos;s eggs.
                 There are {ornitharchCount} of them this year, across four
-                clutches — and every one of them is an inheritance, because the
-                whole founding generation behind them is gone.
-              </p>
-              <p>
-                Little Big Red Junior sired the spring clutches and was lost to
-                a predator in late April. His son Whitey Red Legs covered the
-                June clutch, then disappeared without a trace a week after it
-                was set. Henrietta — the flock&apos;s only brown-egg layer —
-                gave three chicks who carry her name, and died peacefully two
-                days after the last of them hatched. The hens who laid the rest
-                of these eggs still run the yard.
+                clutches.
               </p>
               <p>
                 Most of the {ornitharchCount} came out of blue eggs, hatched
                 with blue eyes, and — with a little luck — the pullets among
                 them will lay blue eggs of their own next spring.
               </p>
-            </div>
-
-            {/* Founders' memorial strip */}
-            <div className="grid gap-4 md:grid-cols-3 mb-12">
-              {founders.map(({ bird, role, legacy }) => (
-                <div
-                  key={bird.name}
-                  className="bg-field-card border border-field-border rounded-lg overflow-hidden flex flex-col"
-                >
-                  <div className="relative w-full h-44 bg-field-wash">
-                    {bird.photo && bird.photo_throwback ? (
-                      <OrnitharchPortrait
-                        photos={[
-                          { src: `/photos/${bird.photo}`, tag: "portrait", alt: bird.name },
-                          {
-                            src: `/photos/${bird.photo_throwback}`,
-                            tag: bird.photo_throwback_label ?? "throwback",
-                            alt: `${bird.name}, earlier years`,
-                          },
-                        ]}
-                        stagger={2}
-                        sizes="(min-width: 768px) 33vw, 100vw"
-                      />
-                    ) : bird.photo ? (
-                      <Image
-                        src={`/photos/${bird.photo}`}
-                        alt={bird.name}
-                        fill
-                        sizes="(min-width: 768px) 33vw, 100vw"
-                        className="object-cover grayscale-[35%]"
-                      />
-                    ) : (
-                      <div className="h-full flex flex-col items-center justify-center gap-1 text-field-muted">
-                        <span className="text-3xl">🐓</span>
-                        <span className="font-mono text-[0.6rem] uppercase tracking-widest">
-                          no committed portrait
-                        </span>
-                      </div>
-                    )}
-                    <span className="absolute top-2 left-2 bg-black/60 border border-white/25 text-white/80 font-mono text-[0.6rem] uppercase tracking-widest px-2 py-0.5 rounded">
-                      in memoriam · {role}
-                    </span>
-                  </div>
-                  <div className="p-4 flex flex-col gap-1.5 flex-1">
-                    <h3 className="text-lg font-bold font-serif text-field-ink">{bird.name}</h3>
-                    <p className="font-mono text-[0.65rem] uppercase tracking-widest text-field-muted">
-                      {fmtDate(bird.hatch_date) ? `${bird.hatch_date_estimated ? "~" : ""}${fmtDate(bird.hatch_date)} — ` : ""}
-                      {fmtDate(bird.deceased_date) ?? "—"}
-                    </p>
-                    <p className="text-sm text-field-muted leading-relaxed">{legacy}</p>
-                  </div>
-                </div>
-              ))}
             </div>
 
             {/* Cohort walls */}
@@ -624,14 +540,11 @@ export default function FlockPage() {
             <div className="grid gap-4 md:grid-cols-4">
               {lineageGenetic.map((b) => {
                 const ln = LINEAGE[b.name];
-                const isLost = b.status === "deceased";
                 const hatchFmt = fmtDate(b.hatch_date);
-                const dateStr = isLost
-                  ? fmtDate(b.deceased_date) || "—"
-                  : hatchFmt
-                    ? b.hatch_date_estimated ? `~${hatchFmt}` : hatchFmt
-                    : "—";
-                const dateLabel = isLost ? "LOST" : "HATCH";
+                const dateStr = hatchFmt
+                  ? b.hatch_date_estimated ? `~${hatchFmt}` : hatchFmt
+                  : "—";
+                const dateLabel = "HATCH";
                 return (
                   <div
                     key={b.name}
@@ -644,18 +557,11 @@ export default function FlockPage() {
                           alt={b.name}
                           fill
                           sizes="(min-width: 768px) 25vw, 50vw"
-                          className={`object-cover ${isLost ? "grayscale opacity-80" : ""}`}
+                          className="object-cover"
                         />
                       ) : (
                         <div className="h-full flex items-center justify-center text-3xl text-field-muted">
                           🐣
-                        </div>
-                      )}
-                      {isLost && (
-                        <div className="absolute top-2 right-2">
-                          <span className="bg-black/60 text-white/80 text-[0.6rem] font-mono uppercase tracking-widest px-2 py-0.5 rounded border border-white/25">
-                            in memoriam
-                          </span>
                         </div>
                       )}
                     </div>
@@ -856,46 +762,6 @@ export default function FlockPage() {
           </div>
         </div>
       </section>
-
-      {/* In Memoriam — operational record, not apologetic sidebar. */}
-      {deceasedBirds.length > 0 && (
-        <section className="bg-field-bg text-field-ink">
-          <div className="max-w-3xl mx-auto px-4 py-12">
-            <p className="mb-2">
-              <span className={SPECIMEN_TAG}>Lost</span>
-            </p>
-            <h2 className="text-xl font-bold font-serif text-field-ink mb-1">In Memoriam</h2>
-            <p className="text-field-muted mb-6 text-sm">
-              Predator losses are part of the program. The flock rebuilds, the
-              record stays.
-            </p>
-            <ul className="font-mono text-xs space-y-2">
-              {deceasedBirds.map((bird, idx) => {
-                const lost = fmtDate(bird.deceased_date);
-                return (
-                  <li
-                    key={idx}
-                    className="flex flex-wrap gap-x-3 gap-y-1 border-b border-field-hairline pb-2 last:border-b-0"
-                  >
-                    {lost && (
-                      <span className="text-field-muted uppercase tracking-widest">
-                        {lost}
-                      </span>
-                    )}
-                    <span className="text-field-ink font-sans font-medium">{bird.name}</span>
-                    <span className="text-field-muted font-sans">{bird.breed}</span>
-                    {bird.cause_of_death && (
-                      <span className="text-field-muted italic font-sans">
-                        {bird.cause_of_death}
-                      </span>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </section>
-      )}
 
       {/* Footer */}
       <footer className="bg-field-card border-t border-field-border text-field-muted text-center py-8 text-sm">
