@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.29.0] — 2026-07-16
+
+### Changed — Birdcatraz-era refresh: the site catches up to the grown flock (Claude Fable 5)
+
+**What:** Part C of `docs/16-Jul-2026-birdcatraz-era-refresh-plan.md`. The birds hatched March–May are grown and living outdoors in **Birdcatraz** (the fenced compound holding the coop + turkey pen; the S7 camera watches its big water bowl), but the site still presented the brooder/chick era. Surgical copy/data refresh across:
+
+- **Homepage** (`app/page.tsx`): hero header "2026 INCUBATOR HATCH — N chicks" → "THE CLASS OF 2026 — hatched this spring, ruling Birdcatraz now" (count removed per the no-counts rule); day-4 brooder portraits swapped for current grown-bird frames (Birdthazar, Henriella, Birdsilla, Birdadotta).
+- **OG/social metadata** (`app/layout.tsx`): OG image swapped from the May brooder chick portrait to the 14-Jul Birdcatraz water-bowl gem; alt text rewritten.
+- **`content/flock-profiles.json`**: all active `brooder`/`nesting-box`/`coop` locations → `birdcatraz`; stale "as of early May / mid-June" age notes refreshed to mid-July; "chicks/poults" group names generalized ("Cackle Hatchery cohort (15)", "Bronze turkeys (2)", "Barred Rocks (2)", ...); brooder-era prose rewritten for the outdoor reality. Deceased entries and breeds untouched.
+- **`/flock`** (`app/flock/page.tsx`): nursery grouping + rendered "N nursery" stat replaced by a single "In Birdcatraz" section; hero background swapped to a grown-flock photo; stale "EE hen 1" lookups fixed to "Birdsula" (her confirmed name in the roster).
+- **New project page** `content/projects/birdcatraz/index.mdx` — supersedes the shelved chicken-enclosure-2026 design.
+- **Guardian project mdx + SystemBanner**: brooder/incubator prose rewritten for July; hardcoded camera counts removed (roster is live data).
+- **"S7 coop cam" copy** corrected to Birdcatraz framing in `/markets` (Terminal.tsx), `/gallery/gems`, and the gallery layout description.
+- **`lib/cameras.ts`**: `DEFAULT_FEATURED` usb-cam → s7-cam (usb-cam offline; the S7 is the flagship).
+- **New field-note draft** `content/field-notes/2026-07-16-welcome-to-birdcatraz.mdx` (move, roost order, Birdadette→Birddor rename, the S7 on the water bowl) — Boss to review.
+- **Housekeeping**: three `flock-profiles.json.bak.*` files deleted; `docs/CONTENT-PIPELINE.md` stale fixed camera list replaced with the live-roster note; `CLAUDE.md` gem-lane state path corrected to `data/guardian.db` (table `image_archive`) and destination subdirs updated (`public/photos/birdcatraz/` for new IG photo posts, `brooder/` frozen).
+
+**Why:** Boss decision 16-Jul: the loudest stale surfaces (homepage, OG previews, /flock, guardian page) still said brooder-era. No layout redesigns, no bird counts rendered anywhere, no existing `public/photos/` files touched.
+
+**How:** Copy/data-only edits reusing existing components; all photo references point at files already committed to `public/photos/`.
+
 ## [1.28.0] — 2026-07-06
 
 ### Added — Rotating ornitharch portraits with throwbacks; full photo-tree curation audit (Claude Fable 5)

@@ -11,9 +11,9 @@ location: "Full property, Hampton, CT"
 
 ## What This Is
 
-A camera system built with OpenClaw and AI tools, watching the flock across a 13.6-acre hobby farm in Hampton, CT. The Mac Mini M4 Pro sits on the desk next to the chick brooder — its waste heat helps keep the incubator at temperature. The same machine runs every camera feed, scores frames with vision-language models, archives the best moments, and pushes them to Instagram and Facebook.
+A camera system built with OpenClaw and AI tools, watching the flock across a 13.6-acre hobby farm in Hampton, CT. The Mac Mini M4 Pro sits on the desk indoors; the cameras it runs watch Birdcatraz — the outdoor fenced compound where the grown flock lives, coop and turkey pen included. The same machine runs every camera feed, scores frames with vision-language models, archives the best moments, and pushes them to Instagram and Facebook.
 
-One machine. Incubator warmer, frame judge, gem curator, bird guardian.
+One machine. Frame judge, gem curator, bird guardian.
 
 The headline feature isn't predator detection — that was built but is paused. The headline is the **VLM image pipeline**: cameras watching the birds around the clock, a local model judging every frame, Discord as the human review table, and the best moments reaching the public as gems.
 
@@ -21,12 +21,12 @@ The headline feature isn't predator detection — that was built but is paused. 
 
 This is the system that runs every day:
 
-1. **Cameras see the birds.** Five cameras across the property pull frames on a steady cadence — no video encoding, no ffmpeg, just clean JPEGs at a few seconds apart.
+1. **Cameras see the birds.** Cameras across the property pull frames on a steady cadence — no video encoding, no ffmpeg, just clean JPEGs at a few seconds apart.
 2. **Mac Mini judges the frames.** Bubba (the OpenClaw agent on the Mac Mini) runs vision-language models against every frame — scoring for composition, activity, lighting, and share-worthiness. Strong frames get flagged as gems.
 3. **Discord becomes the review table.** The best gems land in the `#farm-2026` channel. Boss reacts to the ones worth sharing — the single human-in-the-loop filter. Every reacted gem eventually publishes.
 4. **The best moments reach the public.** Reacted gems post to [@pawel_and_pawleen](https://www.instagram.com/pawel_and_pawleen/) on Instagram and the [Yorkies App](https://www.facebook.com/614607655061302/) Facebook Page. Stories, carousels, and reels — all from the same pipeline.
 
-The pipeline has posted hundreds of gems since it went live. The archive grows every day as the chicks grow up — what was a palm-sized fluffball a month ago fills the frame now.
+The pipeline has posted hundreds of gems since it went live. The archive is a growth record: the palm-sized fluffballs it started watching in April are the full-grown birds filling the frame from Birdcatraz today.
 
 ## The Hardware
 
@@ -36,7 +36,7 @@ Cameras across the property — named for the hardware, never for where they hap
 |--------|----------|--------------|
 | house-yard | Reolink E1 Outdoor Pro | 4K PTZ with spotlight + siren. 11-position patrol, sky-watch lock, HTTP snapshot polling via reolink_aio. The only unit with deterrents. |
 | duo2 | Reolink Duo 2 | Dual-lens panoramic — two sensors stitched into one ultra-wide 8:3 frame. RTSP capture. |
-| s7-cam | Samsung Galaxy S7 running the IP Webcam app | Portrait 1080×1920 — optimized for Instagram stories and reels. Fixed tripod, stream endpoint stable. |
+| s7-cam | Samsung Galaxy S7 running the IP Webcam app | Portrait 1080×1920 — optimized for Instagram stories and reels. Fixed tripod, stream endpoint stable; currently aimed at the big water bowl in Birdcatraz. |
 | usb-cam | USB webcam on the Mac Mini | AVFoundation local capture, 1920×1080, snapshot polling with auto white-balance and autofocus warmup. |
 | mba-cam | MacBook Air 2013 built-in FaceTime HD webcam | 720p via ffmpeg + MediaMTX RTSP bridge on the laptop itself. |
 | gwtc | Gateway laptop built-in webcam | 720p via ffmpeg + MediaMTX RTSP on Windows; services auto-start via Shawl. |
@@ -47,7 +47,7 @@ The Reolink is the only one with deterrents — spotlight to 100% brightness and
 
 The Mac Mini pulls a JPEG from each camera on a steady cadence — no video encoding, no ffmpeg processes, no HLS segments. Still images at a few seconds apart are plenty to see what's happening, and they sail through the Cloudflare tunnel instead of choking it.
 
-It doesn't phone home. No cloud. No subscriptions. No data leaves the network. The dashboard, the camera control, the snapshots — everything runs on that one Mac Mini on the desk next to the birds.
+It doesn't phone home. No cloud. No subscriptions. No data leaves the network. The dashboard, the camera control, the snapshots — everything runs on that one Mac Mini on the desk.
 
 **What's running right now:**
 - Live snapshot feeds from every camera Guardian currently sees, visible here and on the homepage
@@ -97,4 +97,4 @@ This started because hawks were taking chickens. In the first week of April 2026
 
 The response was immediate. Within hours, sky-watch mode was built — locking the PTZ camera onto a fixed overhead position. Alert images were upgraded from blurry 1080p RTSP frames to sharp 4K snapshots. The camera doesn't just patrol anymore — it can hold still and stare at the sky.
 
-Reinforcements arrived the same week: 22 new chicks in the brooder, under heat lamps, next to the Mac Mini that watches over them. Birdadette — the first chick to hatch this season — emerged from her egg on the keyboard, two feet from the machine that would become her guardian.
+Reinforcements arrived the same week: a brooder full of new chicks under heat lamps, next to the Mac Mini that watched over them. Birddor (hatched as Birdadette) — the first bird of the 2026 season — emerged from his egg on the keyboard, two feet from the machine that would become his guardian. Those chicks are grown now, and the cameras follow them: the whole flock lives outdoors in Birdcatraz, and the system watches the compound instead of the brooder.

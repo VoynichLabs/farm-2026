@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.7 (1M context) (orig Claude Opus 4.6, 13-Apr-2026)
- * Date: 10-May-2026
+ * Author: Claude Fable 5 (prev Claude Opus 4.7 (1M context); orig Claude Opus 4.6, 13-Apr-2026)
+ * Date: 16-Jul-2026
  * PURPOSE: Root layout with navigation and metadata. Nav is sticky with a light
  *   cream background and pill-style links, matching the visual idiom of
  *   markbarney.net so the farm site reads as part of the same personal brand
@@ -10,11 +10,11 @@
  *   v1.16.0 (10-May-2026): SEO refresh. Title default rewritten to describe
  *   what the page actually IS for search engines and tabs ("Live chicken
  *   cameras in Hampton, CT") instead of internal-jargon ("OpenClaw on the
- *   Farm"). Open Graph and Twitter descriptions rewritten to match the new
- *   homepage (cameras + gems rail). OG image swapped from the April
- *   Birdadette-fresh-hatch portrait to a current chick portrait in the
- *   brooder under heat-lamp light. Image dimensions specified explicitly
- *   so social previews can render without a HEAD request.
+ *   Farm"). Image dimensions specified explicitly so social previews can
+ *   render without a HEAD request.
+ *   v1.29.0 (16-Jul-2026): OG image swapped from the May brooder chick
+ *   portrait to a July Birdcatraz water-bowl frame — the flock is grown
+ *   and outdoors now, and social previews should say so.
  * SRP/DRY check: Pass — single layout, nav structure matches site architecture.
  */
 import type { Metadata } from "next";
@@ -31,10 +31,10 @@ const SITE_DESCRIPTION =
 // When that root cause gets fixed, switch this back to a "/photos/..." path
 // so the host matches the rest of the metadata.
 const OG_IMAGE = {
-  url: "https://raw.githubusercontent.com/VoynichLabs/farm-2026/main/public/photos/og-2026-05.jpg",
-  width: 1200,
-  height: 900,
-  alt: "A young chicken portrait under heat-lamp purple light in the brooder, with the USB camera and power adapter that watch the flock visible behind it.",
+  url: "https://raw.githubusercontent.com/VoynichLabs/farm-2026/main/public/photos/carousel/2026-07-14/2026-07-14-gem1428094.jpg",
+  width: 1080,
+  height: 1920,
+  alt: "A grown white pullet with black-flecked hackles standing at the big water bowl inside Birdcatraz, the outdoor fenced compound, with the rest of the flock foraging behind her.",
 };
 
 export const metadata: Metadata = {

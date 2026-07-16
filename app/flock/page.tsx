@@ -1,6 +1,6 @@
 /**
  * Author: Claude Fable 5 (prev Claude Opus 4.8, 07-Jun-2026)
- * Date: 06-Jul-2026
+ * Date: 16-Jul-2026
  * PURPOSE: /flock — the breeding-program memory surface. Per
  *   docs/11-May-2026-hermes-breeding-showcase-notes.md, the openclaw brief
  *   (docs/09-May-2026-openclaw-farm-ops-story-design-brief.md §9, §10, §17.4,
@@ -21,12 +21,19 @@
  *   Birdadette is now Birddor (cockerel); the old "named after Birdgit"
  *   claim was Boss-corrected as false and no longer renders anywhere.
  *
+ *   16-Jul-2026 (Birdcatraz-era refresh): the flock is grown and moved
+ *   outdoors — the brooder/nestbox "nursery" grouping is replaced by a
+ *   single Birdcatraz section (location === "birdcatraz", the fenced
+ *   compound holding the coop + turkey pen). The rendered nursery count
+ *   is gone (no-counts rule); the stale "EE hen 1" lookups now match the
+ *   roster's "Birdsula"; hero photo swapped to a grown-flock frame.
+ *
  *   Layout (top → bottom):
  *     1. Terminal hero strip + serif title
  *     2. THE ORNITHARCHS — narrative, founders' memorial strip, cohort wall
  *     3. Incubator panel (conditional)
  *     4. BREEDING LINE panel (second-generation chain)
- *     5. Brooder & Nestbox / Coop / Hens / Roosters roster sections
+ *     5. Birdcatraz / Coop / Hens / Roosters roster sections
  *     6. Breed Notes
  *     7. In Memoriam
  *
@@ -66,7 +73,9 @@ const individualCount = (name: string): number => {
   return m ? parseInt(m[1], 10) : 1;
 };
 
-const BROODER_LOCATIONS = new Set(["brooder", "desk-brooder", "nesting-box"]);
+// The whole grown flock lives in Birdcatraz — the outdoor fenced compound
+// holding the coop and the turkey pen. Location values are roster data.
+const BIRDCATRAZ_LOCATION = "birdcatraz";
 
 const hatchSortDesc = (a: { hatch_date?: string }, b: { hatch_date?: string }) => {
   if (!a.hatch_date && !b.hatch_date) return 0;
@@ -93,7 +102,7 @@ type LineageInfo = {
 };
 const LINEAGE: Record<string, LineageInfo> = {
   Birdadonna: {
-    dam: "EE hen 1",
+    dam: "Birdsula",
     sire: "Little Big Red Junior",
   },
   Birdadotta: {
@@ -203,8 +212,8 @@ export default function FlockPage() {
   const activeBirds = birds.filter((b) => b.status === "active");
   const deceasedBirds = birds.filter((b) => b.status === "deceased");
 
-  const nursery = activeBirds
-    .filter((b) => b.location && BROODER_LOCATIONS.has(b.location))
+  const birdcatrazBirds = activeBirds
+    .filter((b) => b.location === BIRDCATRAZ_LOCATION)
     .sort(hatchSortDesc);
   const coopGrowing = activeBirds
     .filter((b) => b.location === "coop")
@@ -214,7 +223,6 @@ export default function FlockPage() {
   );
   const roosters = activeBirds.filter((b) => isRooster(b.egg_color));
 
-  const nurseryCount = nursery.reduce((n, b) => n + individualCount(b.name), 0);
   const hensCount = adultHens.reduce((n, b) => n + individualCount(b.name), 0);
 
   // ---- THE ORNITHARCHS ----
@@ -265,10 +273,10 @@ export default function FlockPage() {
     },
   ].filter((f): f is typeof f & { bird: FlockBird } => Boolean(f.bird));
 
-  // For the lineage panel: the genetic chain — EE hen 1 × Little Big Red
-  // Junior → Birdadonna → Birdadotta — runs through these four.
+  // For the lineage panel: the genetic chain — Birdsula (fka "EE hen 1") ×
+  // Little Big Red Junior → Birdadonna → Birdadotta — runs through these four.
   const lineageGenetic = [
-    activeBirds.find((b) => b.name === "EE hen 1"),
+    activeBirds.find((b) => b.name === "Birdsula"),
     deceasedBirds.find((b) => b.name === "Little Big Red Junior"),
     activeBirds.find((b) => b.name === "Birdadonna"),
     activeBirds.find((b) => b.name === "Birdadotta"),
@@ -291,7 +299,7 @@ export default function FlockPage() {
       {/* Hero — terminal strip on top, photo band below. */}
       <section
         className="relative min-h-[42vh] flex items-end justify-start bg-cover bg-center bg-no-repeat bg-guardian-card"
-        style={{ backgroundImage: "url('/photos/brooder/2026-04-20-mixed-flock.jpg')" }}
+        style={{ backgroundImage: "url('/photos/june-2026/morning-flock-IMG_5744.jpg')" }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/30" />
 
@@ -303,10 +311,6 @@ export default function FlockPage() {
             <span className="text-guardian-muted">·</span>
             <span>
               {ornitharchCount}<span className="text-guardian-muted"> ornitharchs</span>
-            </span>
-            <span className="text-guardian-muted">·</span>
-            <span>
-              {nurseryCount}<span className="text-guardian-muted"> nursery</span>
             </span>
             <span className="text-guardian-muted">·</span>
             <span>
@@ -559,7 +563,7 @@ export default function FlockPage() {
               Birdadonna, is the first chick on the farm with both parents
               in the program&apos;s own records.{" "}
               <span className="text-guardian-text/50">
-                EE hen 1 × Little Big Red Junior → Birdadonna → Birdadotta.
+                Birdsula × Little Big Red Junior → Birdadonna → Birdadotta.
               </span>
             </p>
 
@@ -631,28 +635,29 @@ export default function FlockPage() {
         </section>
       )}
 
-      {/* In the brooder & nestbox — newest hatch first. */}
-      {nursery.length > 0 && (
+      {/* Birdcatraz — the whole grown flock, newest hatch first. */}
+      {birdcatrazBirds.length > 0 && (
         <section className="max-w-6xl mx-auto px-4 pt-16 pb-8">
           <p className="font-mono text-[0.7rem] uppercase tracking-widest text-guardian-accent mb-2">
-            [BROODER + NESTBOX]
+            [BIRDCATRAZ]
           </p>
           <h2 className="text-2xl font-bold font-serif text-white mb-2">
-            In the Brooder &amp; Nestbox
+            In Birdcatraz
           </h2>
           <p className="text-guardian-text/70 mb-6 text-sm max-w-3xl">
-            Newest hatch at the top. The desk incubator is still in service.
-            Tractor Supply runs and the April Cackle Hatchery order make up
-            the rest of the cohort. Every frame below was scored by the VLM
-            pipeline against the brooder and nestbox cameras.
+            The luxurious poultry penitentiary — a fenced outdoor compound
+            holding the coop, the turkey pen, and the big water bowl. The
+            whole 2026 class lives here now, newest hatch at the top. Every
+            frame below was scored by the VLM pipeline against the cameras
+            watching the compound.
           </p>
           <FlockGemStrip
-            scenes={["brooder", "nesting-box"]}
-            label="LIVE FROM THE BROODER + NESTBOX"
+            scenes={["birdcatraz", "brooder", "nesting-box"]}
+            label="LIVE FROM BIRDCATRAZ"
             limit={12}
           />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {nursery.map((bird, idx) => (
+            {birdcatrazBirds.map((bird, idx) => (
               <BirdCard
                 key={idx}
                 bird={bird}

@@ -296,38 +296,38 @@
       "status": "active",
       "egg_color": "N/A (rooster)",
       "temperament": "Confident, curious — the senior ornitharch",
-      "color_description": "Gray-brown juvenile plumage coming in over the old down, yellow legs",
+      "color_description": "Gray-brown plumage, yellow legs — a young cockerel grown well past the down era",
       "photo": "birds/IMG_5849-birdadette-23jun2026.jpg",
       "notes": "First successful incubator hatch of 2026 — from a blue egg set 16-March, hatched on Boss's desk 06-April. Formerly Birdadette; renamed Birddor in July 2026 when he turned out to be a cockerel. Sire window Little Big Red Junior (probable); dam unconfirmed. Per-chick record: content/hatches/2026/2026-04-06-01-birdadette.md",
-      "location": "nesting-box",
+      "location": "birdcatraz",
       "formerly": "Birdadette",
       "ornitharch": true
     },
     {
-      "name": "Turkey poults (3)",
+      "name": "White turkeys (3)",
       "breed": "White Broad-Breasted Turkey",
       "hatch_date": "2026-03-31",
-      "age_note": "Purchased 07-April-2026 from local source — estimated ~5 weeks old as of early May",
+      "age_note": "Purchased 07-April-2026 from local source — about 15 weeks old as of mid-July 2026",
       "status": "active",
-      "egg_color": "N/A (poults)",
-      "temperament": "Social, curious, imprinting on handlers",
-      "color_description": "Yellow downy plumage transitioning to white juvenile feathers",
+      "egg_color": "N/A (juveniles)",
+      "temperament": "Social, curious, imprinted on handlers",
+      "color_description": "Full white adult plumage, red heads and wattles in color",
       "photo": "april-2026/turkey-poult-in-hand.jpg",
-      "notes": "3 White Broad-Breasted turkey poults. First turkeys on the farm. Graduated to the coop with the rest of the flock.",
-      "location": "coop"
+      "notes": "3 White Broad-Breasted turkeys. First turkeys on the farm. Grown into the big regal-and-ridiculous stage; live in the turkey pen inside Birdcatraz.",
+      "location": "birdcatraz"
     },
     {
-      "name": "Tractor Supply chicks (2 of 4 remaining)",
+      "name": "Tractor Supply juveniles (2 of 4 remaining)",
       "breed": "Brahma or Cream Legbar (uncertain)",
       "hatch_date": "2026-03-27",
-      "age_note": "Purchased 07-April-2026 from Tractor Supply, straight run. ~10 weeks old as of 2026-06-07.",
+      "age_note": "Purchased 07-April-2026 from Tractor Supply, straight run. About 16 weeks old as of mid-July 2026.",
       "status": "active",
       "egg_color": "TBD",
       "temperament": "Active, alert",
-      "color_description": "Varied chick down feathering out",
+      "color_description": "Fully feathered juveniles — breed to confirm from adult plumage",
       "photo": null,
-      "notes": "Originally 4 chicks from Tractor Supply, straight run (unsexed), Brahma or Cream Legbar — breed uncertain. 2 of the 4 have since been lost (Boss-confirmed 2026-06-07; date/cause not specified). 2 remain, in the coop with the white turkey poults and the older juveniles.",
-      "location": "coop"
+      "notes": "Originally 4 chicks from Tractor Supply, straight run (unsexed), Brahma or Cream Legbar — breed uncertain. 2 of the 4 have since been lost (Boss-confirmed 2026-06-07; date/cause not specified). 2 remain, in Birdcatraz with the white turkeys and the rest of the grown flock.",
+      "location": "birdcatraz"
     },
     {
       "name": "Birdadotta",
@@ -339,26 +339,26 @@
       "temperament": "Alert, growing fast",
       "color_description": "Young pullet — blue eyes, distinctive coloring around the beak, slight rust on the wings, white tips on wings + belly (the key Birdadotta-vs-Birdadette discriminator)",
       "photo": "birds/IMG_6271-birdadotta-23jun2026.jpg",
-      "notes": "Birdadonna's offspring — egg laid 03-April-2026, hatched day-22, making her the first second-generation chick of the breeding program (dam Birdadonna, sire window Little Big Red Junior). Moved from brooder to nesting-box on 2026-05-16 when the brooder was cleared to receive the April-25 hatchlings.",
-      "location": "nesting-box",
+      "notes": "Birdadonna's offspring — egg laid 03-April-2026, hatched day-22, making her the first second-generation chick of the breeding program (dam Birdadonna, sire window Little Big Red Junior). Grown and out in Birdcatraz with the rest of the 2026 class.",
+      "location": "birdcatraz",
       "ornitharch": true
     },
     {
-      "name": "Bronze turkey poults (2)",
+      "name": "Bronze turkeys (2)",
       "breed": "Bronze Broad-Breasted Turkey",
       "hatch_date": "2026-04-25",
       "hatch_date_estimated": true,
       "age_note": "Purchased 25-April-2026 from Tractor Supply",
       "status": "active",
-      "egg_color": "N/A (poults)",
-      "temperament": "Social, curious, imprinting on handlers",
-      "color_description": "Brown-and-tan striped down — first bronze turkeys on the farm",
+      "egg_color": "N/A (juveniles)",
+      "temperament": "Social, curious, imprinted on handlers",
+      "color_description": "Gray-bronze juvenile plumage, necks baring as the adult heads come in — first bronze turkeys on the farm",
       "photo": "april-2026/bronze-turkey-poult-in-hand.jpg",
-      "notes": "2 Bronze Broad-Breasted poults from TSC. First bronze turkeys on the property. Living in the nesting box with Birdadette and the Cackle Hatchery batch.",
-      "location": "nesting-box"
+      "notes": "2 Bronze Broad-Breasted turkeys from TSC. First bronze turkeys on the property. Coming up fast behind the white pair; live in the turkey pen inside Birdcatraz.",
+      "location": "birdcatraz"
     },
     {
-      "name": "Barred Rock chicks (2)",
+      "name": "Barred Rocks (2)",
       "breed": "Barred Plymouth Rock",
       "hatch_date": "2026-04-25",
       "hatch_date_estimated": true,
@@ -366,13 +366,13 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "TBD",
-      "color_description": "Black down — will develop classic black-and-white barring as they feather out",
+      "color_description": "Classic black-and-white barring in — the checkerboard birds of the run",
       "photo": "april-2026/rock-chicks-tsc-arrival.jpg",
-      "notes": "2 Barred Plymouth Rock chicks from TSC. Moved from brooder to nesting-box on 2026-05-16 with Birdadotta + the other April-25 cohort.",
-      "location": "nesting-box"
+      "notes": "2 Barred Plymouth Rocks from TSC (25-April haul). Grown out with the April-25 cohort; live in Birdcatraz.",
+      "location": "birdcatraz"
     },
     {
-      "name": "Plymouth Rock chicks (2)",
+      "name": "Plymouth Rocks (2)",
       "breed": "Plymouth Rock (variety TBD)",
       "hatch_date": "2026-04-25",
       "hatch_date_estimated": true,
@@ -380,23 +380,23 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "TBD",
-      "color_description": "Black down — Plymouth Rock variety, exact sub-variety to be confirmed as they feather out (Speckled/Mottled, Partridge, or other)",
+      "color_description": "Plymouth Rock variety, exact sub-variety still to confirm from the adult plumage (Speckled/Mottled, Partridge, or other)",
       "photo": "april-2026/rock-chicks-tsc-arrival.jpg",
-      "notes": "2 Plymouth Rock chicks from TSC alongside the Barred Rocks. Plymouth Rock variety, not Speckled Sussex. Sub-variety will be confirmed as adult plumage develops. Moved to nesting-box on 2026-05-16.",
-      "location": "nesting-box"
+      "notes": "2 Plymouth Rocks from TSC alongside the Barred Rocks. Plymouth Rock variety, not Speckled Sussex. Sub-variety to be confirmed from adult plumage. Grown out in Birdcatraz with the April-25 cohort.",
+      "location": "birdcatraz"
     },
     {
-      "name": "Cackle Hatchery chicks (15)",
+      "name": "Cackle Hatchery cohort (15)",
       "breed": "Mixed — Exotic Island Fowl Special (5) + Rare Chick Special (10)",
       "hatch_date": "2026-04-08",
-      "age_note": "Shipped 08-April-2026 from Cackle Hatchery, Lebanon MO (Order #519118), hatched day of shipment — about 4 weeks old as of early May",
+      "age_note": "Shipped 08-April-2026 from Cackle Hatchery, Lebanon MO (Order #519118), hatched day of shipment — about 14 weeks old as of mid-July 2026",
       "status": "active",
       "egg_color": "TBD (assorted breeds)",
-      "temperament": "Active, feathering out — breeds becoming identifiable",
+      "temperament": "Active, feathered out — breeds resolving from adult plumage",
       "color_description": "Varied — assortment of rare and exotic breeds",
       "photo": "april-2026/cackle-hatchery-arrival.jpg",
-      "notes": "Cackle Hatchery batch from the 08-April-2026 arrival: Exotic Island Fowl Special + Rare Chick Special. Reinforcements after losing Birdgit. Likely mostly males — the cheap ones from hatchery specials. These birds would have been culled otherwise. Exact breeds TBD as they feather out. Total order: $122.80 shipped USPS Priority. Living in the nesting box with Birdadette and the Bronze turkey poults.",
-      "location": "nesting-box",
+      "notes": "Cackle Hatchery batch from the 08-April-2026 arrival: Exotic Island Fowl Special + Rare Chick Special. Reinforcements after losing Birdgit. Likely mostly males — the cheap ones from hatchery specials. These birds would have been culled otherwise. Exact breeds resolving from adult plumage. Total order: $122.80 shipped USPS Priority. Grown out and living in Birdcatraz with the rest of the flock.",
+      "location": "birdcatraz",
       "breed_identification": {
         "status": "preliminary — based on day-old chick photos, needs confirmation as they feather out",
         "assessment_date": "2026-04-10",
@@ -583,17 +583,17 @@
       "name": "March juveniles (6)",
       "breed": "Red/Gold Laced + Blue Laced Red Wyandottes (6) — Boss-corrected 2026-06-26 (was mis-logged as incl. 3 Cream Legbar)",
       "hatch_date": "2026-02-26",
-      "age_note": "Purchased early March 2026 from Tractor Supply, ~1 week old at purchase — about 10 weeks old as of early May",
+      "age_note": "Purchased early March 2026 from Tractor Supply, ~1 week old at purchase — about 20 weeks old as of mid-July 2026",
       "status": "active",
       "egg_color": "Brown (laced Wyandottes) — to confirm as they come into lay",
       "temperament": "Active juveniles, well integrated",
       "color_description": "Varied Wyandotte lacing coming in — Blue Laced Red Wyandottes show slate-blue lacing and a slate-blue tail on a rust-red ground; Red/Gold Laced show dark lacing on a gold ground. Juvenile head feathering can look like a small tuft but is NOT a crest (rose comb, not a Polish/Legbar crest).",
       "photo": null,
       "notes": "The first juvenile cohort of 2026, purchased early-March from Tractor Supply; started in the March nesting-box setup, graduated to the coop. BREED CORRECTED 2026-06-26 (Boss-authoritative, #meet-the-lobsters): this batch is RED-LACED (Gold Laced) + BLUE-LACED (Blue Laced Red) WYANDOTTES — the earlier '1 EE + 2 BLR Wyandotte + 3 Cream Legbar' breakdown was WRONG. The 'Cream Legbar' ID came from misreading juvenile Wyandotte head feathering as a crest; rose comb + red/gold laced ground confirm Wyandotte. One bird shows SCISSOR BEAK (cross beak) and is a Blue Laced Red Wyandotte pullet — her beak occludes/closes fine (mild, good prognosis); manage with deep feed/water dishes, monitor weight, optional gentle beak trim if it overgrows. Exact per-color counts (and whether any one bird is actually an Easter Egger) to finalize as adult plumage sets.",
-      "location": "coop"
+      "location": "birdcatraz"
     },
     {
-      "name": "Tractor Supply chicks — May batch (6)",
+      "name": "Tractor Supply May batch (6)",
       "breed": "TBD",
       "hatch_date": "2026-05-02",
       "hatch_date_estimated": true,
@@ -603,8 +603,8 @@
       "temperament": "TBD",
       "color_description": "Breeds resolving as they feather out: at least 2 Buff Rangers (buff/orange, heavy-bodied, fast growers) + a Barred Rock; remainder TBD",
       "photo": "birds/IMG_4925-buff-rangers-bronze-turkey-28may2026.jpg",
-      "notes": "Six additional Tractor Supply chicks brought home approximately one week after the 25-April haul. Moved to nesting-box on 2026-05-16 with the rest of the April-25 cohort when the brooder was cleared. Breed-ID update 2026-05-28 (per Boss): this batch includes the two Buff Rangers ('monstrous little eating machines') and a Barred Rock — see IMG_4925. UPDATE 2026-06-18: the two Buff Rangers are now individually named and split out into their own records — Chonkers and Chonkette. This batch now accounts for the remaining ~4 (1 Barred Rock + ~3 TBD).",
-      "location": "nesting-box"
+      "notes": "Six additional Tractor Supply chicks brought home approximately one week after the 25-April haul; now grown out in Birdcatraz with the April-25 cohort. Breed-ID update 2026-05-28 (per Boss): this batch includes the two Buff Rangers ('monstrous little eating machines') and a Barred Rock — see IMG_4925. UPDATE 2026-06-18: the two Buff Rangers are now individually named and split out into their own records — Chonkers and Chonkette. This batch now accounts for the remaining ~4 (1 Barred Rock + ~3 TBD).",
+      "location": "birdcatraz"
     },
     {
       "name": "Chonkers",
@@ -618,7 +618,7 @@
       "color_description": "Buff/golden plumage, heavy-bodied; well-developed red comb and wattles. Right-hand bird in IMG_5948.",
       "photo": "birds/IMG_5948-chonkers-chonkette-18jun2026.jpg",
       "notes": "Boss-named 2026-06-18 (#meet-the-lobsters). One of the two Buff Rangers ('the Buff Rangers') previously tracked anonymously inside 'Tractor Supply chicks — May batch (6)'. The 'buff buttrot' skin irritation (raw patch on the flank under the wing, first logged 2026-06-10 in the diary) has CLEARED UP per Boss as of 2026-06-18. Right-hand / more mature bird in the 18-June photo — comb and wattles in, probable cockerel.",
-      "location": "coop"
+      "location": "birdcatraz"
     },
     {
       "name": "Chonkette",
@@ -632,7 +632,7 @@
       "color_description": "Buff/golden plumage; younger-looking than Chonkers — less comb/wattle development, some downy feathering still on the underside. Left-hand bird in IMG_5948.",
       "photo": "birds/IMG_5948-chonkers-chonkette-18jun2026.jpg",
       "notes": "Boss-named 2026-06-18 (#meet-the-lobsters). The second of the two Buff Rangers ('the Buff Rangers') previously tracked anonymously inside 'Tractor Supply chicks — May batch (6)'. 'Buff buttrot' skin irritation cleared up per Boss as of 2026-06-18. Left-hand / less-developed bird in the 18-June photo — probable pullet.",
-      "location": "coop"
+      "location": "birdcatraz"
     },
     {
       "name": "Birdthazar",
@@ -644,8 +644,8 @@
       "temperament": "Aggressive out the gate — relocated solo from incubator at 21:22 EDT for pecking batchmates and knocking eggs around",
       "color_description": "Buff/yellow down with a dark chipmunk stripe down the back — this stripe is the key visual ID against Chick #3 (buff but no stripe)",
       "photo": "birds/IMG_6268-birdthazar-23jun2026.jpg",
-      "notes": "First of three chicks from the April-25 clutch. Wing-feather sexing (2026-05-17 15:50 EDT) read approximately uniform single row → probable cockerel. Sire LBRJ probable per the April 25 paternity window. Currently solo in the brooder.",
-      "location": "brooder",
+      "notes": "First of three chicks from the April-25 clutch. Wing-feather sexing (2026-05-17 15:50 EDT) read approximately uniform single row → probable cockerel. Sire LBRJ probable per the April 25 paternity window. The early solo-brooder aggression settled out — he now runs with the flock in Birdcatraz.",
+      "location": "birdcatraz",
       "ornitharch": true
     },
     {
@@ -658,8 +658,8 @@
       "temperament": "Was vocalizing distress at 21:23 EDT while Birdthazar was harassing; settled once Birdthazar moved to brooder",
       "color_description": "Grey-and-white down — magnificent coloring per Boss; visually distinct from the two buff siblings",
       "photo": "birds/IMG_6292-henriella-23jun2026.jpg",
-      "notes": "First chick of the Henrietta line. Dam confirmed: Henrietta (only brown-egg layer among the active hens — Golden Laced Wyandotte). Sire LBRJ probable per the April 25 paternity window. Named Henriella per the Boss-confirmed 2026 hatch spine. The line later produced the June chicks Henriessa and Henridotta. Currently in the brooder with Birdthazar and Birdsilla.",
-      "location": "brooder",
+      "notes": "First chick of the Henrietta line. Dam confirmed: Henrietta (only brown-egg layer among the active hens — Golden Laced Wyandotte). Sire LBRJ probable per the April 25 paternity window. Named Henriella per the Boss-confirmed 2026 hatch spine. The line later produced the June chicks Henriessa and Henridotta. Out in Birdcatraz now — spotted holding the top roost spot with Birdsilla (diary, 09-Jul-2026).",
+      "location": "birdcatraz",
       "ornitharch": true
     },
     {
@@ -672,8 +672,8 @@
       "temperament": "Pip-to-free in ~40 min — vigorous out the shell. 'Big ol' orange dinosaur' per Boss.",
       "color_description": "Solid uniform orange/buff across back and wings — no stripe. The 'no stripe' is the discriminator against Birdthazar.",
       "photo": "birds/IMG_4940-birdsilla-perch-28may2026.jpg",
-      "notes": "Third chick of the April-25 clutch. EE-lineage from blue egg; dam candidates are Birdadonna, Birdsula (EE hen 1), or EE hen 2 — none confirmed. Named-line candidate if dam turns out to be Birdadonna. Sire LBRJ probable. Named Birdsilla (aka 'Monster Leg') per the Boss-confirmed 2026 hatch spine. Currently in the brooder.",
-      "location": "brooder",
+      "notes": "Third chick of the April-25 clutch. EE-lineage from blue egg; dam candidates are Birdadonna, Birdsula (EE hen 1), or EE hen 2 — none confirmed. Named-line candidate if dam turns out to be Birdadonna. Sire LBRJ probable. Named Birdsilla (aka 'Monster Leg') per the Boss-confirmed 2026 hatch spine. Out in Birdcatraz — tested the top roost spot with Henriella (diary, 09-Jul-2026).",
+      "location": "birdcatraz",
       "ornitharch": true
     },
     {
@@ -687,7 +687,7 @@
       "color_description": "White/light down with a black spot on top of the head — the black head spot is the key ID vs Ingebird's white one (the two are near mirror images)",
       "photo": "birds/IMG_6233-birdimir-juvenile-22jun2026.jpg",
       "notes": "First chick of the June clutch (new incubator, eggs set ~12 May; sire window Whitey Red Legs). Hatched in the NI, moved to the retired old incubator overnight as a holding spot, then to the brooder 2026-06-03. Dam not individually confirmed (blue egg). Per-chick record: content/hatches/2026/2026-06-02-01-birdimir.md",
-      "location": "brooder",
+      "location": "birdcatraz",
       "ornitharch": true
     },
     {
@@ -701,7 +701,7 @@
       "color_description": "Black down with a white spot on top of the head — the white head spot is the key ID vs Birdimir's black one",
       "photo": "birds/IMG_6227-ingebird-suspected-22jun2026.jpg",
       "notes": "Second chick of the June clutch. Dam noted by Boss as Birdsula (a blue-egg Easter Egger hen, ≈ 'EE hen 1') — low confidence; sire window Whitey Red Legs. Moved to the brooder 2026-06-03. Per-chick record: content/hatches/2026/2026-06-02-02-ingebird.md",
-      "location": "brooder",
+      "location": "birdcatraz",
       "ornitharch": true
     },
     {
@@ -715,7 +715,7 @@
       "color_description": "Black/dark down with a touch of cream on the face. Silver wing-tips/stripe were noted at hatch but the silver attribution is disputed — the Boss later reassigned 'the silver one' to her sister Henridotta (see hatch record).",
       "photo": null,
       "notes": "June Henrietta-line chick. Dam: Henrietta (the flock's only brown-egg layer); name echoes the line (cf. Henriella). Sire window Whitey Red Legs. Whether Henriessa or Henridotta carries the silver marking is not yet final — verify visually. Per-chick record: content/hatches/2026/2026-06-03-01-henriessa.md",
-      "location": "brooder",
+      "location": "birdcatraz",
       "ornitharch": true
     },
     {
@@ -729,7 +729,7 @@
       "color_description": "Brown down with red/rust coming in on the face and throat — Boss reads the rust as the LBRJ sire tell. No white head spot (that mark is nest-mate Ingebird's). A pullet.",
       "photo": "june-2026/horstabird-IMG_5171.jpg",
       "notes": "Boss-corrected 2026-06-07: a pullet, sired by LBRJ (the red rooster lost in the April predator wave) — identified by the rust/red coming in on her face and throat, which supersedes the earlier Whitey Red Legs paternity window. June clutch, Egg #4; an assisted hatch (the Boss removed a small piece of shell and dabbed water on the membrane, then the chick freed itself). Named in honor of Horst, the note-taking bot that logged the hatch. Per-chick record: content/hatches/2026/2026-06-03-03-horstabird.md",
-      "location": "brooder",
+      "location": "birdcatraz",
       "ornitharch": true
     },
     {
@@ -743,7 +743,7 @@
       "color_description": "Dark/brown down. The Boss's latest call (2026-06-04, LOW confidence) is that Henridotta is the 'silver' sister — but he flip-flopped (first said Henriessa); not final, verify visually.",
       "photo": null,
       "notes": "June Henrietta-line chick, named in honor of her mother Henrietta. Dam: Henrietta; sire window Whitey Red Legs. Silver attribution between Henridotta and Henriessa is unsettled. Per-chick record: content/hatches/2026/2026-06-03-04-henridotta.md",
-      "location": "brooder",
+      "location": "birdcatraz",
       "ornitharch": true
     },
     {
@@ -757,7 +757,7 @@
       "color_description": "Dark gray/black down with a white head spot (Boss-confirmed 2026-06-07). Shares the white spot with Ingebird; told apart by age/size — Adelbird is the youngest and smallest, the last to hatch.",
       "photo": "june-2026/adelbird-IMG_5184.jpg",
       "notes": "The LAST HATCH of the 2026 incubator season. June clutch, Egg #5. The Boss dabbed a droplet of water on the drying membrane the evening of Jun 3; she pipped for air and finished on her own overnight. Named Adelbird 2026-06-04. Dark gray/black down with a white head spot, confirmed 2026-06-07 — shares the white spot with Ingebird, so the two are told apart by age/size (Adelbird is the youngest). Dam not individually confirmed (blue egg); sire window Whitey Red Legs. Per-chick record: content/hatches/2026/2026-06-04-01-adelbird.md",
-      "location": "brooder",
+      "location": "birdcatraz",
       "ornitharch": true
     },
     {
@@ -765,28 +765,28 @@
       "breed": "Bantam (breed TBD)",
       "hatch_date": "2026-04-08",
       "hatch_date_estimated": true,
-      "age_note": "One of the farm's bantams; likely from the Cackle Hatchery exotic/rare assortment (08-April-2026 arrival) — exact breed still resolving as she feathers out. ~10 weeks old as of mid-June 2026.",
+      "age_note": "One of the farm's bantams; likely from the Cackle Hatchery exotic/rare assortment (08-April-2026 arrival) — exact breed still resolving as she feathers out. About 14 weeks old as of mid-July 2026.",
       "status": "active",
       "egg_color": "TBD (too young; bantam)",
       "temperament": "A favorite of the Boss",
       "color_description": "Black pullet with grayish lacing / scaled feather pattern across the body, a few small white feathers on the head and neck, slate-gray legs.",
       "photo": "birds/IMG_5958-ravenessa-18jun2026.jpg",
       "notes": "Boss-named and called out as a FAVORITE 2026-06-18 (#meet-the-lobsters). One of the Bantams. Likely traces to the Cackle Hatchery April-08 batch (the farm's bantams come from that exotic/rare assortment), but exact breed is not yet confirmed — verify as adult plumage develops. Probable pullet per photo.",
-      "location": "coop"
+      "location": "birdcatraz"
     },
     {
       "name": "Quasibirdo",
       "breed": "Polish (bantam)",
       "hatch_date": "2026-04-08",
       "hatch_date_estimated": true,
-      "age_note": "One of the farm's bantams; near-certainly from the Cackle Hatchery exotic/rare assortment (08-April-2026 arrival) — the Rare Chick Special listed Blue/Splash Polish among its breeds. ~10 weeks old as of mid-June 2026.",
+      "age_note": "One of the farm's bantams; near-certainly from the Cackle Hatchery exotic/rare assortment (08-April-2026 arrival) — the Rare Chick Special listed Blue/Splash Polish among its breeds. About 14 weeks old as of mid-July 2026.",
       "status": "active",
       "egg_color": "TBD (too young; small white if she lays)",
       "temperament": "Boss's 'hunchback bantam' — carries a distinctly hunched, rounded-back posture, hence the Quasimodo namesake",
       "color_description": "White-crested Polish bantam: big rounded white/cream head pouf, blue-gray (slate) body feathers with darker black lacing, slate-gray legs, yellow beak.",
       "photo": "birds/IMG_5874-quasibirdo-18jun2026.jpg",
       "notes": "Boss-named 'Quasibirdo, my hunchback bantam' 2026-06-18 (#meet-the-lobsters). The crest is unmistakably Polish — most likely a White-Crested Blue or Splash Polish (cf. the Cackle Rare Chick Special preliminary IDs R1/R6). Traces to the Cackle Hatchery 08-April-2026 batch like the farm's other bantams (e.g. Ravenessa). Exact Polish variety to confirm as adult plumage sets.",
-      "location": "coop"
+      "location": "birdcatraz"
     }
   ]
 }

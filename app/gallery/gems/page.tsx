@@ -1,6 +1,7 @@
 /**
  * Author: Claude Fable 5 (orig Claude Opus 4.6, edited Claude Opus 4.7 18-Apr-2026)
- * Date: 06-Jul-2026 (orig 14-Apr-2026)
+ * Date: 16-Jul-2026 (orig 14-Apr-2026; 16-Jul: hero + meta copy updated for
+ *   the Birdcatraz era — the S7 now watches the compound's water bowl)
  * PURPOSE: Route entry for /gallery/gems — the curated wall of gems
  *   produced by the farm-guardian image pipeline. Parses search params
  *   (filter state lives in the URL) and defers the heavy lifting to
@@ -22,7 +23,7 @@ import GemsGallery from "@/app/components/gems/GemsGallery";
 export const metadata: Metadata = {
   title: "Gems — Farm Guardian's best frames",
   description:
-    "Curated frames from the farm's automated camera pipeline — chicks, hawks, adult hens, and the daily life of the flock. Captions are draft machine descriptions, not polished copy.",
+    "Curated frames from the farm's automated camera pipeline — the flock, hawks, the occasional turkey, and daily life in Birdcatraz. Captions are draft machine descriptions, not polished copy.",
 };
 
 interface PageProps {
@@ -36,7 +37,8 @@ export default async function GemsPage({ searchParams }: PageProps) {
       <section className="bg-guardian-card border-b border-guardian-border py-12 px-4 text-center">
         <h1 className="text-4xl font-bold font-serif text-white mb-2">Gems</h1>
         <p className="text-guardian-text/70 max-w-2xl mx-auto text-sm">
-          The S7 coop cam feeds a local VLM that scores every frame; the
+          The S7 cam — aimed at the big water bowl in Birdcatraz — feeds a
+          local VLM that scores every frame; the
           keepers go to Discord, and the Boss reacts to the ones worth
           keeping. Every frame below got that human reaction — the machine
           nominates, a person decides. Captions are machine-drafted and

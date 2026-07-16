@@ -125,7 +125,7 @@ The website has two places that show Guardian cameras:
 1. **Homepage** (`app/page.tsx`) — uses `GuardianCameraFeed` client component
 2. **Guardian project page** (`/projects/guardian`) — uses `GuardianDashboard` orchestrator
 
-Camera names come from the Guardian config. As of v2.11: `house-yard`, `s7-cam`, `usb-cam`. If the other developer adds/renames cameras, update both locations.
+The camera roster is live data: both surfaces fetch it at runtime from Guardian's `/api/cameras` (see `lib/guardian-roster.ts`), so cameras added or removed in the backend config appear/disappear on the site automatically — no fixed list to maintain here. `lib/cameras.ts` holds only an optional display-metadata overlay per camera name.
 
 The `GuardianCameraFeed` component handles offline cameras gracefully — shows "OFFLINE" with the camera label. No manual intervention needed when cameras go down.
 

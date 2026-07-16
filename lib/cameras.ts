@@ -1,6 +1,6 @@
 /**
- * Author: Claude Fable 5 (updated 06-Jul-2026: duo2 entry; previously Claude Opus 4.7 (1M context) 06-May-2026; Claude Sonnet 4.6 30-Apr-2026; originally Claude Opus 4.7 16-Apr-2026)
- * Date: 06-Jul-2026
+ * Author: Claude Fable 5 (updated 16-Jul-2026: DEFAULT_FEATURED → s7-cam; 06-Jul-2026: duo2 entry; previously Claude Opus 4.7 (1M context) 06-May-2026; Claude Sonnet 4.6 30-Apr-2026; originally Claude Opus 4.7 16-Apr-2026)
+ * Date: 16-Jul-2026
  * PURPOSE: Camera UI metadata overlay — NOT a roster. The authoritative list
  *   of live cameras is fetched at runtime from Guardian's `/api/cameras`
  *   endpoint (see `lib/guardian-roster.ts`). This file carries optional
@@ -97,7 +97,9 @@ export const CAMERAS: CameraMeta[] = [
 
 // Preferred featured camera for the homepage rail. The stage falls back to
 // the first camera in the live roster if this name isn't present.
-export const DEFAULT_FEATURED: CameraName = "usb-cam";
+// 16-Jul-2026: s7-cam is the flagship — it watches the Birdcatraz water bowl
+// and feeds the gem pipeline (usb-cam is currently offline).
+export const DEFAULT_FEATURED: CameraName = "s7-cam";
 
 const BY_NAME: Map<string, CameraMeta> = new Map(CAMERAS.map((c) => [c.name, c]));
 

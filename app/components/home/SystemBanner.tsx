@@ -1,6 +1,7 @@
 /**
- * Author: Claude Opus 4.7 (1M context)
- * Date: 10-May-2026
+ * Author: Claude Fable 5 (prev Claude Opus 4.7 (1M context))
+ * Date: 16-Jul-2026 (orig 10-May-2026; 16-Jul: camera count removed — the
+ *   roster is live data from Guardian's /api/cameras, never a literal)
  * PURPOSE: Story strip at the top of the homepage — one short paragraph
  *   describing how the live grid below is produced. Boss asked
  *   (v1.16.3) for "more of the story about how it works, up in the
@@ -27,7 +28,7 @@ export default function SystemBanner() {
         <ul className="space-y-0.5 mb-3">
           <li>
             <span className="text-guardian-muted select-none">$ </span>
-            <span className="text-emerald-300">6 cameras</span>
+            <span className="text-emerald-300">Cameras</span>
             <span className="text-guardian-text/80">
               {" "}
               feed snapshots every <span className="text-amber-300">1.2s</span>{" "}
