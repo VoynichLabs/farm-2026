@@ -28,6 +28,15 @@
  *   is gone (no-counts rule); the stale "EE hen 1" lookups now match the
  *   roster's "Birdsula"; hero photo swapped to a grown-flock frame.
  *
+ *   16-Jul-2026 (E5, docs/16-Jul-2026-birdcatraz-era-refresh-plan.md Part E):
+ *   each OrnitharchTile now renders a GrowthStrip — every dated,
+ *   showcase-worthy hatch-record photo for that bird, oldest to newest,
+ *   generalizing ThenAndNow.tsx's fixed two-photo comparison. Built by the
+ *   new page-local buildGrowthPhotos() from the same hatchRecords/recordFor()
+ *   data OrnitharchTile's portrait pool already uses — no second lookup
+ *   path, no new lib/content.ts loader. Self-suppresses below two photos
+ *   (most June/July hatches have only one committed so far).
+ *
  *   Layout (top → bottom):
  *     1. Terminal hero strip + serif title
  *     2. THE ORNITHARCHS — narrative, founders' memorial strip, cohort wall
@@ -58,6 +67,8 @@ import FlockGemStrip from "@/app/components/flock/FlockGemStrip";
 import OrnitharchPortrait, {
   type RotatingPhoto,
 } from "@/app/components/flock/OrnitharchPortrait";
+import GrowthStrip from "@/app/components/flock/GrowthStrip";
+import type { ThenNowPhoto } from "@/app/components/hatches/ThenAndNow";
 
 export const metadata: Metadata = {
   title: "The Flock",
@@ -190,6 +201,27 @@ const buildPortraitPool = (bird: FlockBird, record?: HatchRecord): RotatingPhoto
     }))
     .filter((ph) => !pool.some((existing) => existing.src === ph.src));
   return [...pool, ...throwbacks];
+};
+
+// GrowthStrip's data source (E5, docs/16-Jul-2026-birdcatraz-era-refresh-plan.md
+// Part E): every dated, showcase-worthy hatch-record photo for one bird, oldest
+// first, with the same date/age labels the rotating portrait pool uses above —
+// no second date-math or file-matching path. Unlike buildPortraitPool, this
+// does NOT fold in the live flock-profile portrait (bird.photo has no date to
+// place it in a timeline); it's the hatch record's own photos array only.
+// GrowthStrip itself is the single self-suppression point (<2 photos → null).
+const buildGrowthPhotos = (bird: FlockBird, record?: HatchRecord): ThenNowPhoto[] => {
+  if (!record) return [];
+  return record.photos
+    .filter((ph) => ph.path && ph.showcase !== false)
+    .sort((a, b) => (a.date ?? "9999").localeCompare(b.date ?? "9999"))
+    .map((ph) => ({
+      src: webPath(ph.path),
+      dateLabel: fmtDate(ph.date) || "—",
+      ageLabel: throwbackTag(record.hatch_date, ph.date),
+      caption: ph.caption,
+      alt: ph.caption || `${bird.name}, dated photo`,
+    }));
 };
 
 export default function FlockPage() {
@@ -891,6 +923,7 @@ function OrnitharchTile({
   // "-suspected-" marker. Surface that honestly instead of hiding it.
   const photoUnconfirmed = bird.photo?.includes("suspected") ?? false;
   const pool = buildPortraitPool(bird, record);
+  const growthPhotos = buildGrowthPhotos(bird, record);
 
   return (
     <div className="bg-guardian-card border border-guardian-border rounded-lg overflow-hidden flex flex-col">
@@ -976,6 +1009,10 @@ function OrnitharchTile({
             </div>
           )}
         </div>
+
+        {/* Growth strip — every dated hatch-record photo, oldest to newest.
+            Self-suppresses below two photos (most June/July hatches so far). */}
+        <GrowthStrip name={bird.name} photos={growthPhotos} />
       </div>
     </div>
   );

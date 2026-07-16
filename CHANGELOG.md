@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.30.0] — 2026-07-16
+
+### Added — Per-bird growth strip on /flock (E5) (Claude Fable 5)
+
+**What:** New `app/components/flock/GrowthStrip.tsx` generalizes `ThenAndNow.tsx`'s fixed hatch-day-vs-latest comparison into a horizontally-scrollable strip of every dated, showcase-worthy photo a bird's hatch record has. Reuses `ThenAndNow`'s `ThenNowPhoto` type and visual language (guardian-card tokens, DATE/AGE instrument-strip footer) so it reads as the same design system, not a new one. Wired into every ornitharch's tile on `/flock` via a page-local `buildGrowthPhotos()` transform (mirrors the existing `buildThenNow()` pattern in `app/hatches/page.tsx`) that reuses the page's existing `fmtDate`/`throwbackTag` helpers and `recordFor()` hatch-record resolution — deliberately *not* a new `lib/content.ts` filename-based loader, because Birddor's hatch record file is still named `...-birdadette.md` even though its frontmatter `name:` field reads `Birddor`; only the existing name-matching logic (with `formerly` fallback) handles that rename correctly. Self-suppresses below two photos, same as `ThenAndNow` — most June/July hatches have only one committed photo so far. No bird/photo counts rendered anywhere in the new code.
+
+**Why:** the roster (`content/flock-profiles.json`) plus hatch records already carry a per-bird dated-photo timeline; nothing on the site surfaced it as a growth arc beyond the single hand-picked Birdimir feature on `/hatches`.
+
+**How:** `app/components/hatches/ThenAndNow.tsx` and `app/hatches/page.tsx` are untouched — the Birdimir feature there is unaffected. `npm run build` clean; no browser/visual verification performed this round (site-wide minimal-testing pass) — worth an eyeball on `/flock` for tile sizing and the intentional visual overlap with each tile's existing rotating portrait.
+
 ## [1.29.0] — 2026-07-16
 
 ### Changed — Birdcatraz-era refresh: the site catches up to the grown flock (Claude Fable 5)
