@@ -82,14 +82,14 @@ Ordered by impact:
 | # | Change | Where |
 |---|--------|-------|
 | D1 | **Un-starve the carousel.** Stop stamping reel usage into `ig_permalink` on source frames — add a separate `reel_permalink`/`used_in_reel_at` column so reels and carousels draw from independent ledgers. Move carousel to midday (e.g. 12:30) so the two lanes stop colliding at 18:00. | `ig_selection.py:510-569`, `ig_poster.py`, `store.py` migration, LaunchAgent plist |
-| D2 | **Re-enable the photo lane** (`instagram.enabled=true`) at a modest cadence (e.g. 1 curated photo/day, reacted-gems only) so the vivid per-frame `caption_draft`s actually reach IG. Keep stories off for now. | `tools/pipeline/config.json` |
+| D2 | **DECIDED (16-Jul): photo lane stays OFF for now — carousel-only.** The carousel already surfaces the best gem's `caption_draft` as its caption, so reviving it (D1) delivers the caption win without a third lane. Revisit the single-photo lane after B1 has ~2 weeks of insights data. Stories stay off. | `tools/pipeline/config.json` |
 | D3 | **Kill hardcoded fallback captions.** vlm_bypass timelapse reels get generated captions from lane + date + golden-window + season context (and roster ages via E1) instead of "A day in the brooder." | `daily_reel_runner.py:631-750` |
 | D4 | **Persist every posted caption** (new column/table at publish time). Fixes the audit gap (today captions are only reconstructable from `/tmp/ig-*.log`) and becomes the dedup source. | `ig_poster.py`, `store.py` |
 | D5 | **Dedup + rotation.** Feed the last N posted captions into the Codex caption call ("do not repeat these phrasings/subjects"); actually pass `last_n_tags_used` to `pick_hashtags` (today `[]` at every call site). | `daily_reel_runner.py:538,775`, `orchestrator.py:765`, `codex_reel_curator.py` |
 | D6 | **Fresh farm context.** The 21-day diary window with one entry homogenizes everything. Two moves: (a) C9's cadence revival keeps `content/diary/` fed; (b) caption generator samples/rotates among available facts and is allowed to use *none* rather than repeat yesterday's. | `daily_reel_runner.py:591-628` |
 | D7 | **Reels: audio — DEFERRED per Boss (16-Jul).** Noted for later: mux a royalty-free/owned music bed (local track library, rotated) instead of the silent `anullsrc` track. Likely the biggest algorithmic lever on reel reach when we're ready. Do not implement now. | `reel_stitcher.py:375-392` |
 | D8 | **Reels: curation + pacing.** Wire in the existing-but-inert `codex_reel_curator.curate()` to prune redundant frames; variable pacing (hold the highest-scored frame ~2s as an opener/hook, 0.7–1s mid-frames); optional 1-frame date title card. | `reel_stitcher.py`, `daily_reel_runner.py`, `codex_reel_curator.py:231-269` |
-| D9 | **Reels: output spec.** Upscale s7 portrait to 1080×1920 (currently 607×1080 center-crop). | `reel_stitcher.py:35-37,341` |
+| D9 | **DROPPED (16-Jul).** Upscaling s7 output to 1080×1920 contradicts the standing decision in `docs/20-Apr-2026-ig-next-phases-plan.md §3` ("do NOT upscale — it looks worse"), which reel_stitcher's header honors. That decision stands. Replacement item, deferred and gated on B1 data: investigate *capture-side* why the stitcher receives 607-wide crops from a 1080×1920-native camera, only if insights show resolution hurting reach. | `reel_stitcher.py:35-37,341` |
 | D10 | **Posting discipline.** Reels stay daily — the two flagship reels (18:00 mixed gem reel, 21:00 s7 daily reel) are untouched. What gets tamed is the redundant stack: six near-identical s7 reels went out on 07-13, and the per-camera timelapse reels (mba/gwtc/usb/dominator/duo2) pile into the 20:30–21:15 window with hardcoded captions. Consolidate those into one rotating "camera of the day" timelapse slot, spread slots, and stagger the carousel away from 18:00 (D1). Add a per-day lane budget to `config.json` so the cap is data, not code. | `daily_reel_runner.py`, plists |
 | D11 | **Voice.** Add a light persona layer for @pawel_and_pawleen to the caption-synthesis step (warm, wry, farm-diary voice — extending the existing `BRAND_RULES`), and vary/retire the hardcoded `📸 @markbarney121` sign-off. Per-frame `caption_draft` stays descriptive (it's the raw material, not the post). | `codex_reel_curator.py:76-87`, `ig_poster.py:637-668` |
 
@@ -103,7 +103,7 @@ The roster Boss referenced is `farm-2026/content/flock-profiles.json` (canonical
 |---|--------|-------|
 | E1 | **Roster bridge.** farm-guardian reads `flock-profiles.json` (it already reads `content/diary/` from the same repo — same pattern). Uses: live ages in captions ("the flock at 14 weeks"), named-bird *soft guidance* in `prompt.md` generated from the roster's ornitharchs + `color_description` (caption-only, replacing the two hardcoded names at `prompt.md:17-22`; structured enum stays dead per v2.38.2). | new `tools/pipeline/roster.py` |
 | E2 | **Flock growth timelapse (buildable today).** s7 strong gems span 2026-04-16 → now. Sample one frame/day (bucketed, sharpest-per-bucket — `select_timelapse_gems` already does this) → `stitch_gems_to_reel` (90-frame cap fits ~13 weeks at 1/day). Publish as a monthly "watch them grow" reel; embed on the Birdcatraz project page (C5). | existing `ig_selection.py:732`, `reel_stitcher.py:234` |
-| E3 | **Per-bird identity via humans, not the VLM.** Lightweight manual tagging: Boss reacts in Discord with a per-bird emoji (or replies a name) → `discord-reaction-sync` writes the name into the existing `image_archive_edits` audit path → tagged frames get `retained_until` pinned (E4). Over weeks this accrues a real per-bird photo timeline that E2's stitcher can consume per name. | `scripts/discord-reaction-sync.py`, `database.py` |
+| E3 | **Per-bird identity via humans, not the VLM. DECIDED (16-Jul): reply-with-name, not emoji.** Boss replies a bird's name (e.g. "Birddor") to a gem's Discord message → `discord-reaction-sync` validates it case-insensitively against `flock-profiles.json` names (❓ react-back on no match, never a silent drop) → writes the name via the existing `image_archive_edits` audit path → tagged frames get `retained_until` pinned (E4). Emoji rejected: 32-bird roster makes an emoji legend unmemorable and collision-prone. Over weeks this accrues a per-bird photo timeline that E2's stitcher can consume per name. | `scripts/discord-reaction-sync.py`, `database.py` |
 | E4 | **Retention pinning** for bird-tagged frames so a bird's timeline survives the sweeps. | `tools/pipeline/retention.py` |
 | E5 | **Website surface.** Generalize `ThenAndNow.tsx` (currently a hardcoded 2-photo Birdimir comparison) into an N-photo growth strip fed by hatch records' `phenotype_observations` + dated photos; add to ornitharch profiles on /flock. This is the manual-but-correct per-bird story today, while E3 accrues data for automated ones. | `app/components/hatches/ThenAndNow.tsx`, `content/hatches/` |
 
@@ -130,10 +130,17 @@ Caveat logged: "Birdadette chick→hen" specifically is impossible — Birdadett
 4. **B1** — start collecting insights early so later changes are measurable.
 5. **D4–D11**, **E1–E2**, **C5–C11**, then **B2**, **E3–E5**.
 
-## Open questions for Boss
+## Decisions log (all open questions resolved 16-Jul)
 
-1. **D2 photo-lane cadence:** 1 curated photo/day OK, or prefer carousel-only until insights data exists?
-2. **E3 tagging UX:** per-bird emoji reactions in Discord vs. reply-with-name — preference?
-3. **D10 budget:** proposed daily budget = 2 flagship reels + 1 rotating timelapse reel + 1 carousel + 1 photo. Adjust?
+1. **D2 cadence:** carousel-only; photo lane stays off until B1 has ~2 weeks of insights data.
+2. **E3 tagging UX:** reply-with-name in Discord, validated against the roster; emoji rejected (32-bird legend).
+3. **D10 daily budget:** 2 flagship reels + 1 rotating camera-of-the-day timelapse reel + 1 carousel + 0 photos. Reels untouched.
+4. **D9:** dropped — the 20-Apr no-upscale decision stands; capture-side resolution investigation deferred, gated on B1 evidence.
+5. Reels are the flagship lane; D7 music deferred; Birdcatraz spans coop + turkey pen; usb-cam hardware is Boss's to fix.
 
-(Resolved 16-Jul: reels confirmed as flagship lane; D7 music deferred; Birdcatraz spans coop + turkey pen; usb-cam hardware is Boss's to fix.)
+## Execution guardrails (agreed with implementing dev, 16-Jul)
+
+- Back up `guardian.db` (plain file copy while the orchestrator is paused, or `sqlite3 .backup`) before ANY schema migration (D1, D4, B1).
+- **No live-posting behavior flips without explicit per-flip approval** — dry-run is the default for every lane change; the 381 real followers are the blast radius.
+- Work lands in phased chunks with verification between them, in the suggested order (A1–A6 → D1–D3 → C1–C4 → B1 → rest), not one continuous pass.
+- **Phase 1 (A1–A6) is approved to start now** — it's config/prompt/label work with no posting-behavior change, and the pipeline is actively mis-scoring the S7's water-bowl subject every cycle until it lands. Per standard workflow, write the phase implementation doc first.
