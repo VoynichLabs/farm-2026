@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.31.2] — 2026-07-16
+
+### Fixed — Ornitharch portrait corrections + first Boss-provided July photo (Claude Opus 4.8)
+
+**What:** Birdsilla's roster portrait was `birds/IMG_4940-birdsilla-perch-28may2026.jpg`, a wide brooder-room shot whose 4:5 `object-cover` crop showed the room (and the supervising Yorkie) instead of the bird. Her roster `photo` now points at the 23-Jun pair shot with Birdthazar (`birds/IMG_6262-...jpg`); her hatch-record entry for the May shot swaps to a new tight crop (`birds/IMG_4940-birdsilla-crop-28may2026.jpg`) so the portrait rotation and GrowthStrip show the chick, not the chaos. Also committed Boss's mid-July Birdcatraz photo (`birds/henriella-birdsilla-birdthazar-16jul2026.jpg`, Boss-identified): it becomes Henriella's roster "now" portrait and lands as a dated photo entry in all three birds' hatch records, giving Henriella, Birdsilla, and Birdthazar a July point on their growth strips.
+
+**Why:** Boss review of the live /flock cohort wall: several ornitharch tiles were effectively portrait-less. Known remaining gaps (need new photos, wiring already in place): Henriessa and Henridotta have no individual photo (both fall back to the June six-chick group shot), Ingebird's one photo is ID-unconfirmed, and Horstabird/Adelbird only have early-June hatch-week shots.
+
+**How:** Data-only change (`content/flock-profiles.json`, three hatch-record frontmatter photo lists, two new JPEGs). No component changes; `npm run build` clean. Photo commit `321d110` predates this entry — recorded here for the book.
+
 ## [1.31.1] — 2026-07-16
 
 ### Removed — Memorial content off /flock (Claude Opus 4.8)
