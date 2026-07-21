@@ -201,7 +201,12 @@
       "photo": "birds/henrietta.jpg",
       "notes": "Matriarch and founder of the Henrietta line (Henriella, Henriessa, Henridotta). Purple left-leg band; the flock's only brown-egg layer. Passed peacefully of old age overnight of 4-5 June 2026 and was buried in the garden under a tomato plant.",
       "photo_throwback": "history/henrietta-2022-scary-birds.jpg",
-      "photo_throwback_label": "2022 · the scary birds"
+      "photo_throwback_label": "2022 · the scary birds",
+      "leg_band": {
+        "color": "purple",
+        "number": null,
+        "note": "unnumbered — historical band worn by Henrietta (deceased 2026-06-05); not to be confused with Henridotta's purple band #12"
+      }
     },
     {
       "name": "Little Big Red Junior",
@@ -742,7 +747,7 @@
       "egg_color": "TBD (too young)",
       "temperament": "Settled with siblings in the brooder",
       "color_description": "The darker standard look — dark/brown plumage with none of the silver/blue-gray her sister Henriessa carries. Boss-confirmed 2026-07-21: NOT the silver one. Shares this darker coloring with Adelbird (Adelbird is slightly smaller but otherwise near-identical).",
-      "photo": "birds/IMG_7713-henridotta-striking-adult-21jul2026.jpg",
+      "photo": "birds/IMG_7713-henridotta-purpleband12-21jul2026.jpg",
       "silver_marking": "none",
       "notes": "June Henrietta-line chick, named in honor of her mother Henrietta. Dam: Henrietta; sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that the silver sister is Henriessa, not Henridotta — Henridotta is the darker standard look (same coloring as Adelbird, who is slightly smaller). Per-chick record: content/hatches/2026/2026-06-03-04-henridotta.md First solo portrait committed 2026-07-21 (IMG_7713, purple band #12 visible).",
       "location": "birdcatraz",
