@@ -790,7 +790,13 @@
       "photo": "birds/IMG_7731-adelbird-dark-speckled-21jul2026.jpg",
       "notes": "The LAST HATCH of the 2026 incubator season. June clutch, Egg #5. The Boss dabbed a droplet of water on the drying membrane the evening of Jun 3; she pipped for air and finished on her own overnight. Named Adelbird 2026-06-04. Dark gray/black down with a white head spot, confirmed 2026-06-07 — shares the white spot with Ingebird, so the two are told apart by age/size (Adelbird is the youngest). Dam not individually confirmed (blue egg); sire window Whitey Red Legs. Per-chick record: content/hatches/2026/2026-06-04-01-adelbird.md",
       "location": "birdcatraz",
-      "ornitharch": true
+      "ornitharch": true,
+      "leg_band": {
+        "color": "blue",
+        "number": 7,
+        "confirmed": true,
+        "confirmed_date": "2026-07-21"
+      }
     },
     {
       "name": "Ravenessa",
