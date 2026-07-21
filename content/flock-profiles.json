@@ -742,11 +742,15 @@
       "egg_color": "TBD (too young)",
       "temperament": "Settled with siblings in the brooder",
       "color_description": "The darker standard look — dark/brown plumage with none of the silver/blue-gray her sister Henriessa carries. Boss-confirmed 2026-07-21: NOT the silver one. Shares this darker coloring with Adelbird (Adelbird is slightly smaller but otherwise near-identical).",
-      "photo": null,
+      "photo": "birds/IMG_7713-henridotta-purpleband12-21jul2026.jpg",
       "silver_marking": "none",
-      "notes": "June Henrietta-line chick, named in honor of her mother Henrietta. Dam: Henrietta; sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that the silver sister is Henriessa, not Henridotta — Henridotta is the darker standard look (same coloring as Adelbird, who is slightly smaller). No solo portrait committed yet; IMG_7655 (2026-07-21) is a shot of Henriessa, not her — needs her own photo. Per-chick record: content/hatches/2026/2026-06-03-04-henridotta.md",
+      "notes": "June Henrietta-line chick, named in honor of her mother Henrietta. Dam: Henrietta; sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that the silver sister is Henriessa, not Henridotta — Henridotta is the darker standard look (same coloring as Adelbird, who is slightly smaller). Per-chick record: content/hatches/2026/2026-06-03-04-henridotta.md First solo portrait committed 2026-07-21 (IMG_7713, purple band #12 visible).",
       "location": "birdcatraz",
-      "ornitharch": true
+      "ornitharch": true,
+      "leg_band": {
+        "color": "purple",
+        "number": 12
+      }
     },
     {
       "name": "Adelbird",
