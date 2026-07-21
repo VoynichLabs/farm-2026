@@ -306,7 +306,14 @@
       "notes": "First successful incubator hatch of 2026 — from a blue egg set 16-March, hatched on Boss's desk 06-April. Formerly Birdadette; renamed Birddor in July 2026 when he turned out to be a cockerel. Sire window Little Big Red Junior (probable); dam unconfirmed. Per-chick record: content/hatches/2026/2026-04-06-01-birdadette.md",
       "location": "birdcatraz",
       "formerly": "Birdadette",
-      "ornitharch": true
+      "ornitharch": true,
+      "leg_band": {
+        "color": "yellow",
+        "number": 1,
+        "confirmed": true,
+        "confirmed_date": "2026-07-21",
+        "side": "left"
+      }
     },
     {
       "name": "White turkeys (3)",
