@@ -709,7 +709,13 @@
       "photo": "birds/IMG_7718-ingebird-black-white-21jul2026.jpg",
       "notes": "Second chick of the June clutch. Dam noted by Boss as Birdsula (a blue-egg Easter Egger hen, \u2248 'EE hen 1') \u2014 low confidence; sire window Whitey Red Legs. Moved to the brooder 2026-06-03. Per-chick record: content/hatches/2026/2026-06-02-02-ingebird.md",
       "location": "birdcatraz",
-      "ornitharch": true
+      "ornitharch": true,
+      "leg_band": {
+        "color": "green",
+        "number": 2,
+        "confirmed": true,
+        "note": "Confirmed by Boss 2026-07-21: IMG_7718 is Ingebird wearing green band #02"
+      }
     },
     {
       "name": "Henriessa",
@@ -725,12 +731,7 @@
       "notes": "June Henrietta-line chick. Dam: Henrietta (the flock's only brown-egg layer); name echoes the line (cf. Henriella). Sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that Henriessa is the silver/blue-gray sister \u2014 this settles the June flip-flop back to her (the original hatch-day observation) and away from Henridotta, who is the darker standard look. First logged photo (IMG_7655, 2026-07-21) is a solo portrait of her showing the silver barring. Per-chick record: content/hatches/2026/2026-06-03-01-henriessa.md BAND UNVERIFIED (2026-07-21): green #02 was logged as 'confirmed from IMG_7718' but that photo is actually Ingebird \u2014 physical re-verification required before trusting this attribution.",
       "location": "birdcatraz",
       "ornitharch": true,
-      "leg_band": {
-        "color": "green",
-        "number": 2,
-        "confirmed": false,
-        "note": "Attribution invalidated 2026-07-21: logged from IMG_7718 which turned out to be Ingebird, not Henriessa. Needs physical re-verification."
-      }
+      "leg_band": null
     },
     {
       "name": "Horstabird",
