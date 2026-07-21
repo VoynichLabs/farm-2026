@@ -685,6 +685,7 @@
       "leg_band": {
         "color": "white",
         "number": 3,
+        "side": "left",
         "confirmed": true,
         "confirmed_date": "2026-07-21",
         "note": "White band #03 confirmed by Boss from photo IMG_7556 area, 2026-07-21"
@@ -720,6 +721,7 @@
       "leg_band": {
         "color": "green",
         "number": 2,
+        "side": "left",
         "confirmed": true,
         "note": "Confirmed by Boss 2026-07-21: IMG_7718 is Ingebird wearing green band #02"
       }
@@ -741,6 +743,7 @@
       "leg_band": {
         "color": "pink",
         "number": 8,
+        "side": "left",
         "confirmed": true,
         "confirmed_date": "2026-07-21"
       }
@@ -794,6 +797,7 @@
       "leg_band": {
         "color": "blue",
         "number": 7,
+        "side": "left",
         "confirmed": true,
         "confirmed_date": "2026-07-21"
       }
