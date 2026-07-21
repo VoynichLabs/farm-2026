@@ -733,12 +733,17 @@
       "egg_color": "TBD (too young)",
       "temperament": "Settled with siblings in the brooder",
       "color_description": "The visibly silver/blue-gray sister — clean silver-and-slate barring across the wings and body, distinctly lighter than her Henrietta-line siblings. Boss-confirmed 2026-07-21 as 'the silver one,' resolving the long-running silver dispute in her favor (matches the silver wing-tips/stripe first logged on her at hatch).",
-      "photo": "birds/IMG_7655-henriessa-silver-21jul2026.jpg",
+      "photo": "birds/IMG_7729-henriessa-silver-pink08-21jul2026.jpg",
       "silver_marking": "confirmed",
-      "notes": "June Henrietta-line chick. Dam: Henrietta (the flock's only brown-egg layer); name echoes the line (cf. Henriella). Sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that Henriessa is the silver/blue-gray sister — this settles the June flip-flop back to her (the original hatch-day observation) and away from Henridotta, who is the darker standard look. First logged photo (IMG_7655, 2026-07-21) is a solo portrait of her showing the silver barring. Per-chick record: content/hatches/2026/2026-06-03-01-henriessa.md BAND UNVERIFIED (2026-07-21): green #02 was logged as 'confirmed from IMG_7718' but that photo is actually Ingebird — physical re-verification required before trusting this attribution.",
+      "notes": "June Henrietta-line chick. Dam: Henrietta (the flock's only brown-egg layer); name echoes the line (cf. Henriella). Sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that Henriessa is the silver/blue-gray sister — this settles the June flip-flop back to her (the original hatch-day observation) and away from Henridotta, who is the darker standard look. First logged photo (IMG_7655, 2026-07-21) is a solo portrait of her showing the silver barring. Per-chick record: content/hatches/2026/2026-06-03-01-henriessa.md BAND CONFIRMED 2026-07-21: pink #08 (boss confirmed from IMG_7729).",
       "location": "birdcatraz",
       "ornitharch": true,
-      "leg_band": null
+      "leg_band": {
+        "color": "pink",
+        "number": 8,
+        "confirmed": true,
+        "confirmed_date": "2026-07-21"
+      }
     },
     {
       "name": "Horstabird",
