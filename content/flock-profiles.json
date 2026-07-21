@@ -655,6 +655,8 @@
     },
     {
       "name": "Henriella",
+      "alternative_name": "Henriello",
+      "suspected_sex": "cockerel",
       "breed": "Wyandotte × RIR cross",
       "hatch_date": "2026-05-16",
       "age_note": "Hatched ≤21:21 EDT, 2026-05-16 from a brown egg set 2026-04-25",
@@ -663,7 +665,7 @@
       "temperament": "Was vocalizing distress at 21:23 EDT while Birdthazar was harassing; settled once Birdthazar moved to brooder",
       "color_description": "Grey-and-white down — magnificent coloring per Boss; visually distinct from the two buff siblings",
       "photo": "birds/henriella-birdsilla-birdthazar-16jul2026.jpg",
-      "notes": "First chick of the Henrietta line. Dam confirmed: Henrietta (only brown-egg layer among the active hens — Golden Laced Wyandotte). Sire LBRJ probable per the April 25 paternity window. Named Henriella per the Boss-confirmed 2026 hatch spine. The line later produced the June chicks Henriessa and Henridotta. Out in Birdcatraz now — spotted holding the top roost spot with Birdsilla (diary, 09-Jul-2026).",
+      "notes": "First chick of the Henrietta line. Dam confirmed: Henrietta (only brown-egg layer among the active hens — Golden Laced Wyandotte). Sire LBRJ probable per the April 25 paternity window. Named Henriella per the Boss-confirmed 2026 hatch spine. The line later produced the June chicks Henriessa and Henridotta. Out in Birdcatraz now — spotted holding the top roost spot with Birdsilla (diary, 09-Jul-2026). SEX SUSPECTED COCKEREL (flagged 21-Jul-2026, ~9–10 weeks): at this age the comb is bright red, upright, single with clean points, and the wattles have already drooped and flushed red — that is cockerel hardware. Pullets at 9–10 weeks show only tiny pale comb nubs and flat wattles. The dark charcoal body with rust coming in on the wings is the Wyandotte × RIR cross phenotype and reads the same in either sex, so plumage is not the tell here. Boss-approved alternate name 'Henriello' pending confirmation; saddle/hackle feathers will confirm sex at 12–14 weeks.",
       "location": "birdcatraz",
       "ornitharch": true
     },
@@ -675,9 +677,9 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Pip-to-free in ~40 min — vigorous out the shell. 'Big ol' orange dinosaur' per Boss.",
-      "color_description": "Solid uniform orange/buff across back and wings — no stripe. The 'no stripe' is the discriminator against Birdthazar.",
+      "color_description": "Warm solid buff-orange across the back with no stripe pattern (the key discriminator from Birdthazar, who carries the dark dorsal stripe). Tail black, coming in dark and full. Legs yellow. Comb small and pink — consistent with a pullet.",
       "photo": "birds/IMG_7556-birdsilla-21jul2026.jpg",
-      "notes": "Third chick of the April-25 clutch. EE-lineage from blue egg; dam candidates are Birdadonna, Birdsula (EE hen 1), or EE hen 2 — none confirmed. Named-line candidate if dam turns out to be Birdadonna. Sire LBRJ probable. Named Birdsilla (aka 'Monster Leg') per the Boss-confirmed 2026 hatch spine. Out in Birdcatraz — tested the top roost spot with Henriella (diary, 09-Jul-2026).",
+      "notes": "Third chick of the April-25 clutch. EE-lineage from blue egg; dam candidates are Birdadonna, Birdsula (EE hen 1), or EE hen 2 — none confirmed. Named-line candidate if dam turns out to be Birdadonna. Sire LBRJ probable. Named Birdsilla, aka 'Monster Leg' (recognized nickname/alias), per the Boss-confirmed 2026 hatch spine. Out in Birdcatraz — tested the top roost spot with Henriella (diary, 09-Jul-2026). Description (21-Jul-2026, IMG_7556): warm solid buff-orange across the back with no stripe pattern — the tell against Birdthazar; black tail coming in dark and full; yellow legs; small pink comb, consistent with pullet. Disposition: confident, owns the yard.",
       "location": "birdcatraz",
       "ornitharch": true
     },
