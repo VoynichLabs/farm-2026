@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.33.0] — 2026-07-22
+
+### Added — Flock photo timeline, leg-band IDs, and homepage-from-roster (Claude Opus 4.8)
+
+**What:** A cluster of flock-record work, all reading the roster as the single source of truth:
+
+1. **Per-bird photo history + aging timeline.** Each bird in `content/flock-profiles.json` gets an append-only `photos[]` ledger (`{file, date, caption}`) — every picture we have of it — backfilled from hatch records + committed files (31 birds seeded). `/flock` renders each bird's aging strip (`GrowthStrip`) from that ledger on **every** card (ornitharch tiles *and* the roster `BirdCard`s), not just birds with a hatch record. New route **`/flock/[slug]`** — a per-bird full-size aging gallery (oldest→newest, each frame stamped with date + age-at-photo + caption); every bird name on `/flock` links to it. `BirdPhoto` type + `FlockBird.photos` + `birdSlug()` in `lib/content.ts`.
+2. **Leg-band IDs.** Canonical `leg_band` data (`{color, number, side, confirmed}`) on the banded birds — the ground-truth ID for near-identical birds (Henridotta ≈ Ingebird). New shared `BandChip` component renders a colored swatch + `color #N · L/R` on `/flock` cards and the gallery header. `LegBand` type in `lib/content.ts`. (The dedicated assignments roster remains at `/flock/banding`.)
+3. **Homepage "Class of 2026" now derives from the roster.** `app/page.tsx` was a hardcoded `HATCHLINGS_2026` array whose photo paths silently drifted out of sync — new portraits committed to the roster **never appeared on the front page**. It now derives live from `flock-profiles.json` ornitharchs, newest hatch first.
+
+**Why:** Boss wanted (a) new bird portraits to actually show on the front page (they weren't — the homogeneous hardcoded/roster split was the bug), (b) to tell near-identical birds apart at a glance (leg bands), and (c) to keep every photo of a bird and see it age over time. The photo files were always preserved on disk; the gap was an accumulating per-bird record and a UI to browse it.
+
+**How:** All bird surfaces now read `flock-profiles.json` — update a photo once, it shows on `/flock`, the per-bird gallery, *and* the homepage. The ledger grows automatically: the farm-guardian `bird_photo_ingest.py` appends each Discord drop to `photos[]` (see farm-guardian CHANGELOG v2.51.0). Backfill excluded `showcase:false` hatch photos (equipment shots); `GrowthStrip` self-suppresses below 2 photos; undated legacy shots sort last, labeled "undated". Data written with `ensure_ascii=True` to match the file and avoid whole-file churn. `/flock/[slug]` is SSG (one static page per bird). Build + type-check clean; verified in-browser (Birddor's 6-photo gallery hatch-day → 2 months). Hardcoded `/markets` tiles (`Terminal.tsx`) still do **not** read the roster — see `docs/22-Jul-2026-flock-photo-system-stretch-work.md`. Stretch/deferred work documented there.
+
 ## [1.32.0] — 2026-07-21
 
 ### Added — AI-discovery + SEO pass: llms.txt, JSON-LD identity, README, sitemap completion (Claude Opus 4.8)

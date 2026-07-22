@@ -14,7 +14,7 @@ If you are about to type a number, a breed, a camera name, or a hardware string 
 |---|---|---|
 | **Live camera roster (what's actually connected right now)** | **Guardian backend `/api/cameras` via `lib/guardian-roster.ts` (`useGuardianRoster()`)** | **`GuardianCameraStage`, `GuardianHomeSection`, anything rendering the live rail. NOT a static TS file — adding/removing a camera on the backend flows through within 30s, no redeploy.** |
 | Camera display metadata (UI-only overlay) | `lib/cameras.ts` (`CAMERAS`) — **overlay, not a roster** | `lib/gems-format.ts`, `GemFilters.tsx` — historical labels for cameras in the gem archive. Also a fallback for the live rail when a backend camera has no overlay entry, in which case defaults are used. |
-| Bird roster + breed reference | `content/flock-profiles.json` | `/flock` page, homepage `FlockPreviewStrip` |
+| Bird roster + breed reference + per-bird `photos[]` history + `leg_band` | `content/flock-profiles.json` | `/flock`, `/flock/[slug]` (per-bird aging gallery), homepage "Class of 2026" grid (derives live from `ornitharch:true`) |
 | Field notes (weekly updates) | `content/field-notes/*.mdx` | `/field-notes` feed + slug pages, homepage `LatestFieldNote` |
 | Projects | `content/projects/*/index.mdx` | `/projects` list, `/projects/[slug]`, homepage `ActiveProjects` |
 | Gallery photos (static) | `content/gallery.json` | `/gallery` |
@@ -37,7 +37,7 @@ No new surface uses `guardian-*` outside the islands, and the cream/forest/wood 
 
 **Markdown/MDX bodies use `.terminal-prose`** (defined in `globals.css`), NOT Tailwind `prose` classes — `@tailwindcss/typography` is not installed, so `prose` anything is a silent no-op. If MDX looks unstyled, that's why. The class name predates the retheme; its values are light now — do not rename it (every MDX body sitewide rides on it).
 
-**Ornitharch data:** `content/flock-profiles.json` marks farm-hatched 2026 birds with `ornitharch: true` (plus `formerly` when a bird was renamed, e.g. Birddor fka Birdadette). Parentage, egg color, clutch, and confidence live ONLY in `content/hatches/2026/*.md` frontmatter — pages join the two by name via `getHatchRecords()`; never copy parentage strings into page code or the roster JSON.
+**Ornitharch data:** `content/flock-profiles.json` marks farm-hatched 2026 birds with `ornitharch: true` (plus `formerly` when a bird was renamed, e.g. Birddor fka Birdadette). Parentage, egg color, clutch, and confidence live ONLY in `content/hatches/2026/*.md` frontmatter — pages join the two by name via `getHatchRecords()`; never copy parentage strings into page code or the roster JSON. Each bird also carries an append-only `photos[]` ledger (`{file, date, caption}` — the aging timeline behind `/flock/[slug]` and the on-card `GrowthStrip`, grown automatically by farm-guardian's `bird_photo_ingest.py`) and an optional `leg_band` (`{color, number, side}` — the canonical ID for near-identical birds; left leg = farm-hatched; rendered as a `BandChip`).
 
 ## Rules
 
@@ -59,7 +59,7 @@ No new surface uses `guardian-*` outside the islands, and the cream/forest/wood 
 
 ### A bird
 
-Edit `content/flock-profiles.json`. Add to `flock_birds[]`. If `status: "active"` and there's a `photo`, the homepage strip picks it up automatically (up to 8 tiles).
+Edit `content/flock-profiles.json`. Add to `flock_birds[]`. If `status: "active"` and there's a `photo`, the homepage strip picks it up automatically (up to 8 tiles). Set `ornitharch: true` for farm-hatched 2026 birds — that drives the homepage "Class of 2026" grid and the `/flock` cohort wall. Photos accumulate in `photos[]` on their own via the Discord ingest pipeline (don't hand-manage it); `leg_band` renders as a colored chip on `/flock` + the per-bird gallery. Adding a bird needs no code change — every surface reads the roster.
 
 ### A field note
 

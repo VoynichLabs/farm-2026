@@ -30,6 +30,7 @@ farm-2026 is the public-facing website at [farm.markbarney.net](https://farm.mar
 | Surface | What it does |
 |---|---|
 | **Discord `#farm-2026`** | The reaction-quality-gate every outbound lane (except on-this-day) reads. The Mac Mini scrapes reaction counts every 30 minutes and records them on its `image_archive` table. |
+| **Discord bird-photo → flock roster** (new 2026-07-22) | Boss drops a bird photo and names the bird → farm-guardian's `bird_photo_ingest.py` renames it, commits into `public/photos/birds/`, sets that bird's `photo` in `flock-profiles.json`, appends it to the bird's `photos[]` aging history, and pushes. A Discord-inbound → **website** flow (not a social post). Triggered by the `bird-photo-trigger` OpenClaw hook and/or Bubba's `farm-bird-roster-photo` skill; de-dups so both can't collide. See `farm-guardian` CHANGELOG v2.51.0. |
 | **IG engagement (`@pawel_and_pawleen`)** | Likes / comments / story-reactions on others' content. Daily caps: 30 / 10 / 20. Session-based, not continuous. |
 | **Nextdoor engagement** | Likes / comments on neighbors' posts. Daily caps: 10 / 3. |
 | **FB reciprocate harvester** | Pulls who's been engaging with the Page so the operator can manually click back. |
