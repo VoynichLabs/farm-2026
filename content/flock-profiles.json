@@ -592,8 +592,8 @@
       }
     },
     {
-      "name": "March juveniles (4)",
-      "breed": "Red/Gold Laced + Blue Laced Red Wyandottes (4) — Boss-corrected 2026-06-26 (was mis-logged as incl. 3 Cream Legbar)",
+      "name": "March juveniles (3)",
+      "breed": "Red/Gold Laced + Blue Laced Red Wyandottes (3) — Boss-corrected 2026-06-26 (was mis-logged as incl. 3 Cream Legbar)",
       "hatch_date": "2026-02-26",
       "age_note": "Purchased early March 2026 from Tractor Supply, ~1 week old at purchase — about 20 weeks old as of mid-July 2026",
       "status": "active",
@@ -601,7 +601,7 @@
       "temperament": "Active juveniles, well integrated",
       "color_description": "Varied Wyandotte lacing coming in — Blue Laced Red Wyandottes show slate-blue lacing and a slate-blue tail on a rust-red ground; Red/Gold Laced show dark lacing on a gold ground. Juvenile head feathering can look like a small tuft but is NOT a crest (rose comb, not a Polish/Legbar crest).",
       "photo": null,
-      "notes": "The first juvenile cohort of 2026, purchased early-March from Tractor Supply; started in the March nesting-box setup, graduated to the coop. BREED CORRECTED 2026-06-26 (Boss-authoritative, #meet-the-lobsters): this batch is RED-LACED (Gold Laced) + BLUE-LACED (Blue Laced Red) WYANDOTTES — the earlier '1 EE + 2 BLR Wyandotte + 3 Cream Legbar' breakdown was WRONG. The 'Cream Legbar' ID came from misreading juvenile Wyandotte head feathering as a crest; rose comb + red/gold laced ground confirm Wyandotte. Exact per-color counts (and whether any one bird is actually an Easter Egger) to finalize as adult plumage sets. Note: Scissor Beak and Robirda have been split out as named individuals as of 2026-07-21.",
+      "notes": "The first juvenile cohort of 2026, purchased early-March from Tractor Supply; started in the March nesting-box setup, graduated to the coop. BREED CORRECTED 2026-06-26 (Boss-authoritative, #meet-the-lobsters): this batch is RED-LACED (Gold Laced) + BLUE-LACED (Blue Laced Red) WYANDOTTES — the earlier '1 EE + 2 BLR Wyandotte + 3 Cream Legbar' breakdown was WRONG. The 'Cream Legbar' ID came from misreading juvenile Wyandotte head feathering as a crest; rose comb + red/gold laced ground confirm Wyandotte. Exact per-color counts (and whether any one bird is actually an Easter Egger) to finalize as adult plumage sets. Note: Scissor Beak, Robirda, and Bobirda have been split out as named individuals as of 2026-07-21.",
       "location": "birdcatraz"
     },
     {
@@ -637,6 +637,28 @@
       "leg_band": {
         "color": "orange",
         "number": 1,
+        "confirmed": true,
+        "confirmed_date": "2026-07-21",
+        "side": "right"
+      }
+    },
+    {
+      "name": "Bobirda",
+      "breed": "Red/Gold Laced Wyandotte",
+      "hatch_date": "2026-02-26",
+      "hatch_date_estimated": true,
+      "age_note": "Purchased early March 2026 from Tractor Supply, ~1 week old at purchase — about 20 weeks old as of mid-July 2026. From the March 2026 TSC batch (formerly part of 'March juveniles (6)').",
+      "status": "active",
+      "egg_color": "Brown (to confirm)",
+      "temperament": "Active juvenile pullet, well integrated",
+      "color_description": "Red/Gold Laced Wyandotte pullet — warm rust-red laced coloring with dark lacing on a gold/red ground, rose comb, prominent spiky dark head feathering. Yellow/orange legs. White band #06 on the right leg.",
+      "photo": "birds/IMG_7742-bobirda-21jul2026.jpg",
+      "notes": "Red/Gold Laced Wyandotte pullet from the March 2026 TSC batch (formerly part of 'March juveniles (6)' group). White band #06 on right leg, confirmed 2026-07-21. Non-ornitharch — white band on the right leg per standing rule.",
+      "location": "birdcatraz",
+      "ornitharch": false,
+      "leg_band": {
+        "color": "white",
+        "number": 6,
         "confirmed": true,
         "confirmed_date": "2026-07-21",
         "side": "right"
