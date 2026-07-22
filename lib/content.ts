@@ -76,6 +76,16 @@ export interface BirdPhoto {
   caption?: string;
 }
 
+// URL slug for a bird's per-bird page, e.g. "White turkeys (3)" ->
+// "white-turkeys-3". Bird names are unique, so slugs are unique; used by the
+// /flock card links and the /flock/[slug] gallery's params + lookup.
+export function birdSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 export interface FlockBird {
   name: string;
   breed: string;

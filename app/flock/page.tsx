@@ -75,12 +75,13 @@ import {
   getFlockProfiles,
   getBirdAgeLabel,
   getHatchRecords,
+  birdSlug,
   type IncubatorClutch,
   type HatchRecord,
   type FlockBird,
-  type LegBand,
 } from "@/lib/content";
 import Image from "next/image";
+import BandChip from "@/app/components/flock/BandChip";
 import FlockGemStrip from "@/app/components/flock/FlockGemStrip";
 import OrnitharchPortrait, {
   type RotatingPhoto,
@@ -801,43 +802,6 @@ interface BreedProfile {
   fun_fact: string;
 }
 
-// Leg-band color → a real swatch color. Inline style (not a Tailwind class)
-// so the dynamic band color survives Tailwind's purge. White gets a near-white
-// fill so it's still visible on the light card; unknown colors fall back grey.
-const BAND_HEX: Record<string, string> = {
-  yellow: "#eab308",
-  orange: "#f97316",
-  white: "#fafafa",
-  red: "#dc2626",
-  green: "#16a34a",
-  pink: "#ec4899",
-  purple: "#9333ea",
-  blue: "#2563eb",
-};
-
-// Compact leg-band chip: colored dot + "color #N · L/R". The band is the
-// canonical bird ID — near-identical birds (Henridotta ≈ Ingebird) are told
-// apart by it, and left leg = hatched on the farm.
-function BandChip({ band }: { band: LegBand }) {
-  const hex = BAND_HEX[(band.color ?? "").toLowerCase()] ?? "#9ca3af";
-  const num = band.number != null ? `#${band.number}` : "";
-  const side = band.side ? band.side[0].toUpperCase() : "";
-  return (
-    <span
-      className="inline-flex items-center gap-1.5 font-mono text-[0.6rem] uppercase tracking-widest bg-field-bg border border-field-border text-field-muted px-2 py-0.5 rounded"
-      title={`${band.color} band ${num}${band.side ? ` · ${band.side} leg` : ""}`}
-    >
-      <span
-        className="inline-block w-2.5 h-2.5 rounded-full border border-black/25"
-        style={{ backgroundColor: hex }}
-        aria-hidden="true"
-      />
-      {band.color} {num}
-      {side ? ` · ${side}` : ""}
-    </span>
-  );
-}
-
 /**
  * One ornitharch on the cohort wall. Identity/photo from the roster entry,
  * parentage/egg color from the hatch record. Portraits render tall
@@ -898,7 +862,14 @@ function OrnitharchTile({
 
       <div className="p-4 flex flex-col gap-2 flex-1">
         <div className="flex items-baseline gap-2 flex-wrap">
-          <h3 className="text-lg font-bold font-serif text-field-ink">{bird.name}</h3>
+          <h3 className="text-lg font-bold font-serif text-field-ink">
+            <Link
+              href={`/flock/${birdSlug(bird.name)}`}
+              className="hover:text-field-accent transition-colors"
+            >
+              {bird.name}
+            </Link>
+          </h3>
           {bird.formerly && (
             <span className="font-mono text-[0.6rem] uppercase tracking-widest text-field-muted">
               fka {bird.formerly}
@@ -1042,7 +1013,14 @@ function BirdCard({
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
         <div className="flex items-baseline gap-2 flex-wrap mb-0.5">
-          <h3 className="text-xl font-bold font-serif text-field-ink">{bird.name}</h3>
+          <h3 className="text-xl font-bold font-serif text-field-ink">
+            <Link
+              href={`/flock/${birdSlug(bird.name)}`}
+              className="hover:text-field-accent transition-colors"
+            >
+              {bird.name}
+            </Link>
+          </h3>
           {bird.formerly && (
             <span className="font-mono text-[0.6rem] uppercase tracking-widest text-field-muted">
               fka {bird.formerly}
