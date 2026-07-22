@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.32.0] — 2026-07-21
+
+### Added — AI-discovery + SEO pass: llms.txt, JSON-LD identity, README, sitemap completion (Claude Opus 4.8)
+
+**What:** Four discovery surfaces so a search engine or an LLM pointed at either the site or the repo immediately knows who Mark Barney is and what the farm is:
+1. **`/llms.txt`** (and singular-spelling alias **`/llm.txt`**) — a friendly plain-text brief following the llms.txt convention: who Mark is (Hampton CT hobby farmer, chickens-as-pets, built the Farm Guardian AI camera system), what the site is, a linked page index, and social links. Body lives in `lib/llms.ts` (SSoT), served by two thin route handlers (`app/llms.txt/route.ts` + a re-export at `app/llm.txt/route.ts`).
+2. **JSON-LD** structured data in `app/layout.tsx` — a `Person` (Mark Barney, Hampton CT, `sameAs` → the real IG/FB) + `WebSite` (`author`/`about` → the Person) `@graph`. Machine-readable identity for HTML-only crawlers that never fetch llms.txt.
+3. **`README.md`** rewritten from a 72-byte stub into a real repo front page (who/what, the two-repo system, tech stack, local dev, the discovery surfaces).
+4. **`app/sitemap.ts`** completed — added `/flock/banding`, `/hatches`, `/gallery/gems`, `/yard`, `/markets`; replaced the `/gallery` entry (which 308-redirects) with its live target `/gallery/gems`. `/diary` stays out (it redirects).
+
+**Why:** Boss asked for the site + repo to be fully SEO-indexed and AI-discovery-optimized with a friendly llm.txt, easy to crawl, so any LLM pointed at it knows the farm immediately. The base was solid (robots, OG/Twitter, per-page metadata) but had no llms.txt, no structured identity data, a stub README, and a sitemap missing five live routes.
+
+**How:** Content discipline is deliberate — **public facts only**: name, Hampton CT, hobby farm, chickens as named pets, the self-built AI system. No internal ops detail (no LaunchAgent names, secrets paths, machine hostnames, or agent-coordination internals) in any world-readable file, and no invented bio. `lib/llms.ts` derives its two counts (field notes, hatch records) from the existing **local** file loaders — never the Guardian tunnel — wrapped so a loader error degrades to qualitative text, never a 500 (same hang-proof discipline as `/api/health`); no live bird count (Boss rule). JSON-LD is `Person` + `WebSite`, deliberately **not** `LocalBusiness`/`Organization` (this is a hobby farm with pet chickens; a commercial type would misrepresent it) and carries no volatile counts. Verified end-to-end against `npm run start`: both `/llms.txt` and `/llm.txt` return identical `text/plain`, homepage JSON-LD parses, sitemap lists all live routes. Build + lint clean. OG image left on `raw.githubusercontent.com` untouched (load-bearing for the IG pipeline).
+
 ## [1.31.2] — 2026-07-16
 
 ### Fixed — Ornitharch portrait corrections + first Boss-provided July photo (Claude Opus 4.8)

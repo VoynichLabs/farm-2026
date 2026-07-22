@@ -63,6 +63,51 @@ export const metadata: Metadata = {
 
 import SiteNav from "@/app/components/system/SiteNav";
 
+// JSON-LD structured data — the machine-readable identity an HTML-only crawler
+// or LLM reads even if it never fetches /llms.txt. Stable, public facts only:
+// name, location, the site URL, and sameAs → the real IG/FB from the footer.
+// No volatile counts (would drift, and the site renders no flock headcount by
+// rule). Deliberately Person + WebSite, NOT LocalBusiness/Organization — this
+// is a hobby farm with pet chickens, and a commercial schema type would
+// misrepresent it. Kept in sync with the prose brief in lib/llms.ts.
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://farm.markbarney.net/#mark",
+      name: "Mark Barney",
+      url: "https://farm.markbarney.net",
+      description:
+        "Owner of a ~13.6-acre hobby farm in Hampton, Connecticut, where the chickens and turkeys are kept as named pets rather than livestock. Built Farm Guardian, a self-made AI camera and monitoring system that watches the flock, curates the best moments, and helps deter hawks.",
+      homeLocation: {
+        "@type": "Place",
+        name: "Hampton, Connecticut, USA",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Hampton",
+          addressRegion: "CT",
+          addressCountry: "US",
+        },
+      },
+      sameAs: [
+        "https://www.instagram.com/pawel_and_pawleen/",
+        "https://www.facebook.com/profile.php?id=61557234706008",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://farm.markbarney.net/#website",
+      url: "https://farm.markbarney.net",
+      name: "Farm 2026",
+      description: SITE_DESCRIPTION,
+      inLanguage: "en-US",
+      author: { "@id": "https://farm.markbarney.net/#mark" },
+      about: { "@id": "https://farm.markbarney.net/#mark" },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -71,6 +116,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        />
         <SiteNav />
         {children}
       </body>
