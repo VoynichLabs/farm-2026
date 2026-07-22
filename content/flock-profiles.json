@@ -353,7 +353,14 @@
       "photo": "birds/IMG_6271-birdadotta-23jun2026.jpg",
       "notes": "Birdadonna's offspring \u2014 egg laid 03-April-2026, hatched day-22, making her the first second-generation chick of the breeding program (dam Birdadonna, sire window Little Big Red Junior). Grown and out in Birdcatraz with the rest of the 2026 class.",
       "location": "birdcatraz",
-      "ornitharch": true
+      "ornitharch": true,
+      "leg_band": {
+        "color": "orange",
+        "number": 10,
+        "side": "left",
+        "confirmed": true,
+        "confirmed_date": "2026-07-21"
+      }
     },
     {
       "name": "Bronze turkeys (2)",
