@@ -58,6 +58,15 @@ export interface Breed {
   fun_fact: string;
 }
 
+export interface LegBand {
+  color: string;
+  number: number | null; // null = unnumbered (e.g. Henrietta's historical purple)
+  side?: "left" | "right"; // left = hatched on the farm (an ornitharch)
+  confirmed?: boolean;
+  confirmed_date?: string;
+  note?: string;
+}
+
 export interface FlockBird {
   name: string;
   breed: string;
@@ -80,6 +89,9 @@ export interface FlockBird {
   formerly?: string;
   // True for birds hatched on the farm in 2026 — the Ornitharchs.
   ornitharch?: boolean;
+  // Numbered leg band — the canonical ID (several birds are near-identical).
+  // Left leg = hatched on the farm. Boss-assigned; see /flock/banding.
+  leg_band?: LegBand;
   // Optional second frame for memorial/founder tiles (e.g. Henrietta's 2022
   // throwback) — rotated against `photo` with the label as the era chip.
   photo_throwback?: string;

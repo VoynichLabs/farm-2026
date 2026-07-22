@@ -48,6 +48,13 @@
  *   data files are untouched; parentage (DAM/SIRE) records still render —
  *   they're records, not eulogy. Don't reintroduce loss storytelling.
  *
+ *   22-Jul-2026 (leg-band chips): each bird card (OrnitharchTile + BirdCard)
+ *   now renders a BandChip when the roster entry has a leg_band — a colored
+ *   swatch + "color #N · L/R" so you can eyeball who's who at a glance. The
+ *   band is the canonical ID (near-identical birds like Henridotta ≈ Ingebird
+ *   are told apart by it); left leg = farm-hatched. Data is flock-profiles.json
+ *   leg_band; the dedicated assignments page stays at /flock/banding.
+ *
  *   Layout (top → bottom):
  *     1. Terminal hero strip + serif title
  *     2. THE ORNITHARCHS — narrative + cohort wall
@@ -71,6 +78,7 @@ import {
   type IncubatorClutch,
   type HatchRecord,
   type FlockBird,
+  type LegBand,
 } from "@/lib/content";
 import Image from "next/image";
 import FlockGemStrip from "@/app/components/flock/FlockGemStrip";
@@ -796,6 +804,43 @@ interface BreedProfile {
   fun_fact: string;
 }
 
+// Leg-band color → a real swatch color. Inline style (not a Tailwind class)
+// so the dynamic band color survives Tailwind's purge. White gets a near-white
+// fill so it's still visible on the light card; unknown colors fall back grey.
+const BAND_HEX: Record<string, string> = {
+  yellow: "#eab308",
+  orange: "#f97316",
+  white: "#fafafa",
+  red: "#dc2626",
+  green: "#16a34a",
+  pink: "#ec4899",
+  purple: "#9333ea",
+  blue: "#2563eb",
+};
+
+// Compact leg-band chip: colored dot + "color #N · L/R". The band is the
+// canonical bird ID — near-identical birds (Henridotta ≈ Ingebird) are told
+// apart by it, and left leg = hatched on the farm.
+function BandChip({ band }: { band: LegBand }) {
+  const hex = BAND_HEX[(band.color ?? "").toLowerCase()] ?? "#9ca3af";
+  const num = band.number != null ? `#${band.number}` : "";
+  const side = band.side ? band.side[0].toUpperCase() : "";
+  return (
+    <span
+      className="inline-flex items-center gap-1.5 font-mono text-[0.6rem] uppercase tracking-widest bg-field-bg border border-field-border text-field-muted px-2 py-0.5 rounded"
+      title={`${band.color} band ${num}${band.side ? ` · ${band.side} leg` : ""}`}
+    >
+      <span
+        className="inline-block w-2.5 h-2.5 rounded-full border border-black/25"
+        style={{ backgroundColor: hex }}
+        aria-hidden="true"
+      />
+      {band.color} {num}
+      {side ? ` · ${side}` : ""}
+    </span>
+  );
+}
+
 /**
  * One ornitharch on the cohort wall. Identity/photo from the roster entry,
  * parentage/egg color from the hatch record. Portraits render tall
@@ -865,6 +910,7 @@ function OrnitharchTile({
         </div>
 
         <div className="flex flex-wrap gap-1.5">
+          {bird.leg_band && <BandChip band={bird.leg_band} />}
           {eggColor === "blue" && (
             <span className="font-mono text-[0.6rem] uppercase tracking-widest bg-sky-500/15 border border-sky-400/40 text-sky-700 px-2 py-0.5 rounded">
               blue egg
@@ -1008,6 +1054,7 @@ function BirdCard({
 
         {/* Badges. Age lives in the instrument strip; egg color is the only badge. */}
         <div className="flex flex-wrap gap-2 mb-4">
+          {bird.leg_band && <BandChip band={bird.leg_band} />}
           {bird.egg_color !== "N/A (rooster)" && (
             <span
               className={`inline-block text-xs px-2 py-1 rounded ${eggColorBadgeColors[bird.egg_color] || "bg-gray-500 text-white"}`}
