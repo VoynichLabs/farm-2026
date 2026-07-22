@@ -2,6 +2,10 @@
 
 Non-code visual review by Boss. These are observations of what looks wrong on-screen, not implementation instructions — the developer should determine the correct fix.
 
+**Boss was genuinely angry about item 12/13 below and wants that on record.** The tone problem isn't a nitpick — it's a category error about what this project even is. This is NOT a homesteading/backyard-chicken-breeding site and must never read like one. The actual premise, which every AI-assisted content pass needs to understand before touching this copy: this is absurdist comedy about a breeding program to produce the Ornitharch — the prophesied bird destined to elevate all feathered bipeds past humanity as the dominant megafauna on the planet. AI tools are used to assist in writing/generating content for the site, but the voice must stay in that fictional-comedic register.
+
+Generic AI-slop phrasing like "Homestead hybrids like this combine the best traits of both parents: reliable egg production with unique blue egg color" is exactly the wrong genre — it reads like a hatchery marketing blurb, not like content from a farm mythologizing its own flock as harbingers of a coming avian ascendance. **Any boilerplate homesteading/backyard-chicken-breeding language, anywhere on the site, is off-brand and needs to be found and removed/rewritten**, not just the instance flagged below.
+
 ## `/hatches`
 
 1. **Bad photo cropping.** Multiple hatch photos are cropped incorrectly — bird heads are cut off or the wrong region of the source image is shown. Seen on the Adelbird and Horstabird cards, and the Henridotta hen photo. Crop framing needs to be corrected so the full head/face is visible.
@@ -28,7 +32,7 @@ Non-code visual review by Boss. These are observations of what looks wrong on-sc
 
 11. **Verify age/date fields are computed, not hardcoded.** Fields like "AGE 2 MONTHS" / "AGE 6 WEEKS" under each bird must be calculated live from the hatch date vs. the current date. Confirm there is no hardcoded age string or hardcoded "now"/current-date reference anywhere in this data path. If any age, day-count, or "current" timestamp is static text instead of derived, this is a critical bug — fix it.
 
-12. **AI-slop boilerplate copy repeated on every card.** The "Homestead hybrids like this combine the best traits of both parents: reliable egg production with unique blue egg color" callout appears verbatim on every single bird card in the Birdcatraz section. It reads as generic AI filler and should be removed (or replaced with real per-bird info, not a repeated templated blurb).
+12. **AI-slop boilerplate copy repeated on every card — Boss was furious about this one.** The "Homestead hybrids like this combine the best traits of both parents: reliable egg production with unique blue egg color" callout appears verbatim on every single bird card in the Birdcatraz section. This is generic hatchery-marketing filler and it is fundamentally the wrong genre for this site — see the note at the top of this document. It must be removed and, if a callout like this is wanted at all, rewritten in the site's actual voice (absurdist Ornitharch-prophecy mythology), never generic homesteading/backyard-breeding boilerplate.
 
 13. **Incorrect "VLM pipeline" scoring claim.** Copy in the Birdcatraz section states "every frame below was scored by the VLM pipeline against the cameras watching the compound." This is factually wrong for this content — these are hand-curated photos taken by Boss in-hand with the birds, not VLM-scored camera captures. The claim needs to be corrected or removed.
 
