@@ -360,7 +360,7 @@ export default function FlockPage() {
             record for Farm 2026 — what came out of an egg, when, and from
             whom.
           </p>
-          <p className="mt-4">
+          <p className="mt-4 flex flex-wrap gap-3">
             <Link
               href="/hatches"
               className="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-white bg-black/60 hover:bg-black/80 border border-white/25 px-3 py-2 rounded transition-colors"
@@ -368,6 +368,15 @@ export default function FlockPage() {
               [HATCHES 2026] →
               <span className="text-white/60 normal-case tracking-normal font-sans">
                 per-chick records · phenotype log · predictions
+              </span>
+            </Link>
+            <Link
+              href="/flock/banding"
+              className="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-white bg-black/60 hover:bg-black/80 border border-white/25 px-3 py-2 rounded transition-colors"
+            >
+              [BANDING] →
+              <span className="text-white/60 normal-case tracking-normal font-sans">
+                leg-band ID system · assignments · roster
               </span>
             </Link>
           </p>
