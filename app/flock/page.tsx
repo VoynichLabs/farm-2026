@@ -228,23 +228,20 @@ const buildPortraitPool = (bird: FlockBird, record?: HatchRecord): RotatingPhoto
   return [...pool, ...throwbacks];
 };
 
-// GrowthStrip's data source (E5, docs/16-Jul-2026-birdcatraz-era-refresh-plan.md
-// Part E): every dated, showcase-worthy hatch-record photo for one bird, oldest
-// first, with the same date/age labels the rotating portrait pool uses above —
-// no second date-math or file-matching path. Unlike buildPortraitPool, this
-// does NOT fold in the live flock-profile portrait (bird.photo has no date to
-// place it in a timeline); it's the hatch record's own photos array only.
-// GrowthStrip itself is the single self-suppression point (<2 photos → null).
-const buildGrowthPhotos = (bird: FlockBird, record?: HatchRecord): ThenNowPhoto[] => {
-  if (!record) return [];
-  return record.photos
-    .filter((ph) => ph.path && ph.showcase !== false)
-    .sort((a, b) => (a.date ?? "9999").localeCompare(b.date ?? "9999"))
+// GrowthStrip's data source: the bird's accumulating photos[] ledger — every
+// picture we have of it, oldest first, undated last, with live age-at-photo
+// labels. Works for EVERY bird (not just ornitharchs with a hatch record):
+// the ledger lives on the roster entry and is grown append-only by the ingest
+// pipeline + backfilled from hatch records and committed files. GrowthStrip
+// itself is the single self-suppression point (<2 photos → null).
+const buildBirdGrowthPhotos = (bird: FlockBird): ThenNowPhoto[] => {
+  return [...(bird.photos ?? [])]
+    .sort((a, b) => (a.date ?? "9999-99-99").localeCompare(b.date ?? "9999-99-99"))
     .map((ph) => ({
-      src: webPath(ph.path),
-      dateLabel: fmtDate(ph.date) || "—",
-      ageLabel: throwbackTag(record.hatch_date, ph.date),
-      caption: ph.caption,
+      src: `/photos/${ph.file}`,
+      dateLabel: ph.date ? fmtDate(ph.date) || "—" : "undated",
+      ageLabel: ph.date ? throwbackTag(bird.hatch_date, ph.date) : "",
+      caption: ph.caption ?? "",
       alt: ph.caption || `${bird.name}, dated photo`,
     }));
 };
@@ -865,7 +862,7 @@ function OrnitharchTile({
   // "-suspected-" marker. Surface that honestly instead of hiding it.
   const photoUnconfirmed = bird.photo?.includes("suspected") ?? false;
   const pool = buildPortraitPool(bird, record);
-  const growthPhotos = buildGrowthPhotos(bird, record);
+  const growthPhotos = buildBirdGrowthPhotos(bird);
 
   return (
     <div className="bg-field-card border border-field-border rounded-lg overflow-hidden flex flex-col">
@@ -984,6 +981,8 @@ function BirdCard({
   const hatchStr = fmtDate(bird.hatch_date);
   // Live age computed from hatch_date — the single source of truth.
   const dynamicAge = getBirdAgeLabel(bird.hatch_date, bird.hatch_date_estimated);
+  // Aging timeline from the bird's own photo ledger (self-suppresses below 2).
+  const growthPhotos = buildBirdGrowthPhotos(bird);
 
   const instrumentFields: Array<{ label: string; value: string }> = [];
   if (hatchStr)
@@ -1087,6 +1086,12 @@ function BirdCard({
             <p className="text-xs text-field-honey-ink">💡 {breedProfile.fun_fact}</p>
           </div>
         )}
+
+        {/* Aging timeline — every photo we have of this bird, oldest to newest.
+            Self-suppresses below two photos. */}
+        <div className="mt-3">
+          <GrowthStrip name={bird.name} photos={growthPhotos} />
+        </div>
       </div>
     </div>
   );

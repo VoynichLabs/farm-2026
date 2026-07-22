@@ -169,7 +169,12 @@
       "photo": "birds/birdatha.jpg",
       "notes": "Oldest hen on property, reliable producer. Lost in early April 2026.",
       "deceased_date": "2026-04-09",
-      "cause_of_death": "Predator losses \u2014 first week of April 2026"
+      "cause_of_death": "Predator losses \u2014 first week of April 2026",
+      "photos": [
+        {
+          "file": "birds/birdatha.jpg"
+        }
+      ]
     },
     {
       "name": "Birdgit",
@@ -184,7 +189,12 @@
       "photo": "birds/birdgit.jpg",
       "notes": "Lost to hawk attack on 08-April-2026. Friendly and active, often seen exploring.",
       "deceased_date": "2026-04-08",
-      "cause_of_death": "Hawk attack"
+      "cause_of_death": "Hawk attack",
+      "photos": [
+        {
+          "file": "birds/birdgit.jpg"
+        }
+      ]
     },
     {
       "name": "Henrietta",
@@ -206,7 +216,12 @@
         "color": "purple",
         "number": null,
         "note": "unnumbered \u2014 historical band worn by Henrietta (deceased 2026-06-05); not to be confused with Henridotta's purple band #12"
-      }
+      },
+      "photos": [
+        {
+          "file": "birds/henrietta.jpg"
+        }
+      ]
     },
     {
       "name": "Little Big Red Junior",
@@ -236,7 +251,12 @@
       "photo": "birds/whitey-red-legs.jpg",
       "notes": "Secondary rooster; large single comb; mixed breed background. Disappeared 01-May-2026.",
       "deceased_date": "2026-05-01",
-      "cause_of_death": "Disappeared without trace; presumed predation"
+      "cause_of_death": "Disappeared without trace; presumed predation",
+      "photos": [
+        {
+          "file": "birds/whitey-red-legs.jpg"
+        }
+      ]
     },
     {
       "name": "Birdsula",
@@ -249,7 +269,12 @@
       "temperament": "Friendly, curious",
       "color_description": "Dark blue-black slate plumage, single comb",
       "photo": "birds/ee-hen-1.jpg",
-      "notes": "Boss-named; was tracked under the placeholder 'EE hen 1' before her name was confirmed. Darker of the two Easter Egger hens; dam of Birdadonna and of the 2026 June clutch. Adult blue/green-egg layer \u2014 a distinct bird from the 2026 chick Birdsilla."
+      "notes": "Boss-named; was tracked under the placeholder 'EE hen 1' before her name was confirmed. Darker of the two Easter Egger hens; dam of Birdadonna and of the 2026 June clutch. Adult blue/green-egg layer \u2014 a distinct bird from the 2026 chick Birdsilla.",
+      "photos": [
+        {
+          "file": "birds/ee-hen-1.jpg"
+        }
+      ]
     },
     {
       "name": "EE hen 2",
@@ -264,7 +289,12 @@
       "temperament": "Friendly, curious",
       "color_description": "Blue-gray plumage with yellow legs, single comb",
       "photo": "birds/ee-hen-2.jpg",
-      "notes": "Went missing ~12:30 EDT on 2026-05-16 with no overt hawk-strike evidence (no feathers, no body). Held as 'unknown' through evening roll call; Boss confirmed lost on 2026-05-19. Lighter of the two Easter Egger hens; good forager."
+      "notes": "Went missing ~12:30 EDT on 2026-05-16 with no overt hawk-strike evidence (no feathers, no body). Held as 'unknown' through evening roll call; Boss confirmed lost on 2026-05-19. Lighter of the two Easter Egger hens; good forager.",
+      "photos": [
+        {
+          "file": "birds/ee-hen-2.jpg"
+        }
+      ]
     },
     {
       "name": "Birdadonna",
@@ -276,7 +306,12 @@
       "temperament": "Friendly, active",
       "color_description": "Blue-gray body with golden auburn hackle",
       "photo": "birds/birdadonna-2.jpg",
-      "notes": "Hatched in incubator on boss's desk; dam: Birdsula (formerly 'EE hen 1'), sire: Little Big Red Junior. Survived the early-April 2026 predator wave that took Birdgit, Birdatha, and the Black Australorp. Laid the egg (03-April-2026) that hatched as Birdadotta on 25-April-2026."
+      "notes": "Hatched in incubator on boss's desk; dam: Birdsula (formerly 'EE hen 1'), sire: Little Big Red Junior. Survived the early-April 2026 predator wave that took Birdgit, Birdatha, and the Black Australorp. Laid the egg (03-April-2026) that hatched as Birdadotta on 25-April-2026.",
+      "photos": [
+        {
+          "file": "birds/birdadonna-2.jpg"
+        }
+      ]
     },
     {
       "name": "Black Australorp hen",
@@ -291,7 +326,12 @@
       "photo": "birds/australorp.jpg",
       "notes": "Excellent egg producer. Lost in early April 2026.",
       "deceased_date": "2026-04-09",
-      "cause_of_death": "Predator losses \u2014 first week of April 2026"
+      "cause_of_death": "Predator losses \u2014 first week of April 2026",
+      "photos": [
+        {
+          "file": "birds/australorp.jpg"
+        }
+      ]
     },
     {
       "name": "Birddor",
@@ -313,7 +353,38 @@
         "confirmed": true,
         "confirmed_date": "2026-07-21",
         "side": "left"
-      }
+      },
+      "photos": [
+        {
+          "file": "april-2026/birdadette-fresh-hatch.jpg",
+          "date": "2026-04-06",
+          "caption": "Fresh out of the shell on Boss's desk keyboard, cracked blue eggshell beside him"
+        },
+        {
+          "file": "april-2026/birdadette-day8-keyboard.jpg",
+          "date": "2026-04-13",
+          "caption": "Day 8, supervising the MacBook keyboard (file was stored sideways until 06-Jul-2026; rotation fixed in place)"
+        },
+        {
+          "file": "april-2026/birdadette-3weeks-b.jpg",
+          "date": "2026-04-27",
+          "caption": "Three weeks old, feathering out on the brooder tote rim under the heat lamp"
+        },
+        {
+          "file": "may-2026/birdadette-may20-held.jpg",
+          "date": "2026-05-20",
+          "caption": "In hand at six weeks, comb just starting to show"
+        },
+        {
+          "file": "may-2026/birdadette-may20-portrait.jpg",
+          "date": "2026-05-20",
+          "caption": "Six weeks old on the run rail, mid-remark, looking straight down the lens"
+        },
+        {
+          "file": "birds/IMG_5849-birdadette-23jun2026.jpg",
+          "date": "2026-06-23"
+        }
+      ]
     },
     {
       "name": "White turkeys (3)",
@@ -326,7 +397,12 @@
       "color_description": "Full white adult plumage, red heads and wattles in color",
       "photo": "april-2026/turkey-poult-in-hand.jpg",
       "notes": "3 White Broad-Breasted turkeys. First turkeys on the farm. Grown into the big regal-and-ridiculous stage; live in the turkey pen inside Birdcatraz.",
-      "location": "birdcatraz"
+      "location": "birdcatraz",
+      "photos": [
+        {
+          "file": "april-2026/turkey-poult-in-hand.jpg"
+        }
+      ]
     },
     {
       "name": "Tractor Supply juveniles (2 of 4 remaining)",
@@ -360,7 +436,24 @@
         "side": "left",
         "confirmed": true,
         "confirmed_date": "2026-07-21"
-      }
+      },
+      "photos": [
+        {
+          "file": "may-2026/birdadotta-s7-2026-05-18.png",
+          "date": "2026-05-18",
+          "caption": "S7-cam capture \u2014 scruffy teenage phase, eyes on something above"
+        },
+        {
+          "file": "birds/IMG_6259-birdadotta-23jun2026.jpg",
+          "date": "2026-06-23",
+          "caption": "Birdadotta, 23 Jun 2026 (day 59) \u2014 rear three-quarter; black saddle/tail feathering, rust hackle, yellow legs."
+        },
+        {
+          "file": "birds/IMG_6271-birdadotta-23jun2026.jpg",
+          "date": "2026-06-23",
+          "caption": "Birdadotta, 23 Jun 2026 (day 59) \u2014 front three-quarter in the run; black body plumage with rust-auburn hackle, single red comb developing. Boss-confirmed ID."
+        }
+      ]
     },
     {
       "name": "Bronze turkeys (2)",
@@ -374,7 +467,12 @@
       "color_description": "Gray-bronze juvenile plumage, necks baring as the adult heads come in \u2014 first bronze turkeys on the farm",
       "photo": "april-2026/bronze-turkey-poult-in-hand.jpg",
       "notes": "2 Bronze Broad-Breasted turkeys from TSC. First bronze turkeys on the property. Coming up fast behind the white pair; live in the turkey pen inside Birdcatraz.",
-      "location": "birdcatraz"
+      "location": "birdcatraz",
+      "photos": [
+        {
+          "file": "april-2026/bronze-turkey-poult-in-hand.jpg"
+        }
+      ]
     },
     {
       "name": "Barred Rocks (2)",
@@ -388,7 +486,12 @@
       "color_description": "Classic black-and-white barring in \u2014 the checkerboard birds of the run",
       "photo": "april-2026/rock-chicks-tsc-arrival.jpg",
       "notes": "2 Barred Plymouth Rocks from TSC (25-April haul). Grown out with the April-25 cohort; live in Birdcatraz.",
-      "location": "birdcatraz"
+      "location": "birdcatraz",
+      "photos": [
+        {
+          "file": "april-2026/rock-chicks-tsc-arrival.jpg"
+        }
+      ]
     },
     {
       "name": "Plymouth Rocks (2)",
@@ -402,7 +505,12 @@
       "color_description": "Plymouth Rock variety, exact sub-variety still to confirm from the adult plumage (Speckled/Mottled, Partridge, or other)",
       "photo": "april-2026/rock-chicks-tsc-arrival.jpg",
       "notes": "2 Plymouth Rocks from TSC alongside the Barred Rocks. Plymouth Rock variety, not Speckled Sussex. Sub-variety to be confirmed from adult plumage. Grown out in Birdcatraz with the April-25 cohort.",
-      "location": "birdcatraz"
+      "location": "birdcatraz",
+      "photos": [
+        {
+          "file": "april-2026/rock-chicks-tsc-arrival.jpg"
+        }
+      ]
     },
     {
       "name": "Cackle Hatchery cohort (15)",
@@ -596,7 +704,12 @@
           ],
           "note": "Reviewers consistently report Cochins are the most commonly included breed in Rare Chick Special orders"
         }
-      }
+      },
+      "photos": [
+        {
+          "file": "april-2026/cackle-hatchery-arrival.jpg"
+        }
+      ]
     },
     {
       "name": "March juveniles (3)",
@@ -647,7 +760,13 @@
         "confirmed": true,
         "confirmed_date": "2026-07-21",
         "side": "right"
-      }
+      },
+      "photos": [
+        {
+          "file": "birds/IMG_7744-robirda-large-buff-21jul2026.jpg",
+          "date": "2026-07-21"
+        }
+      ]
     },
     {
       "name": "Bobirda",
@@ -669,7 +788,13 @@
         "confirmed": true,
         "confirmed_date": "2026-07-21",
         "side": "right"
-      }
+      },
+      "photos": [
+        {
+          "file": "birds/IMG_7742-bobirda-21jul2026.jpg",
+          "date": "2026-07-21"
+        }
+      ]
     },
     {
       "name": "Tractor Supply May batch (6)",
@@ -683,7 +808,13 @@
       "color_description": "Breeds resolving as they feather out: at least 2 Buff Rangers (buff/orange, heavy-bodied, fast growers) + a Barred Rock; remainder TBD",
       "photo": "birds/IMG_4925-buff-rangers-bronze-turkey-28may2026.jpg",
       "notes": "Six additional Tractor Supply chicks brought home approximately one week after the 25-April haul; now grown out in Birdcatraz with the April-25 cohort. Breed-ID update 2026-05-28 (per Boss): this batch includes the two Buff Rangers ('monstrous little eating machines') and a Barred Rock \u2014 see IMG_4925. UPDATE 2026-06-18: the two Buff Rangers are now individually named and split out into their own records \u2014 Chonkers and Chonkette. This batch now accounts for the remaining ~4 (1 Barred Rock + ~3 TBD).",
-      "location": "birdcatraz"
+      "location": "birdcatraz",
+      "photos": [
+        {
+          "file": "birds/IMG_4925-buff-rangers-bronze-turkey-28may2026.jpg",
+          "date": "2026-05-28"
+        }
+      ]
     },
     {
       "name": "Chonkers",
@@ -697,7 +828,13 @@
       "color_description": "Buff/golden plumage, heavy-bodied; well-developed red comb and wattles. Right-hand bird in IMG_5948.",
       "photo": "birds/IMG_5948-chonkers-chonkette-18jun2026.jpg",
       "notes": "Boss-named 2026-06-18 (#meet-the-lobsters). One of the two Buff Rangers ('the Buff Rangers') previously tracked anonymously inside 'Tractor Supply chicks \u2014 May batch (6)'. The 'buff buttrot' skin irritation (raw patch on the flank under the wing, first logged 2026-06-10 in the diary) has CLEARED UP per Boss as of 2026-06-18. Right-hand / more mature bird in the 18-June photo \u2014 comb and wattles in, probable cockerel.",
-      "location": "birdcatraz"
+      "location": "birdcatraz",
+      "photos": [
+        {
+          "file": "birds/IMG_5948-chonkers-chonkette-18jun2026.jpg",
+          "date": "2026-06-18"
+        }
+      ]
     },
     {
       "name": "Chonkette",
@@ -711,7 +848,13 @@
       "color_description": "Buff/golden plumage; younger-looking than Chonkers \u2014 less comb/wattle development, some downy feathering still on the underside. Left-hand bird in IMG_5948.",
       "photo": "birds/IMG_5948-chonkers-chonkette-18jun2026.jpg",
       "notes": "Boss-named 2026-06-18 (#meet-the-lobsters). The second of the two Buff Rangers ('the Buff Rangers') previously tracked anonymously inside 'Tractor Supply chicks \u2014 May batch (6)'. 'Buff buttrot' skin irritation cleared up per Boss as of 2026-06-18. Left-hand / less-developed bird in the 18-June photo \u2014 probable pullet.",
-      "location": "birdcatraz"
+      "location": "birdcatraz",
+      "photos": [
+        {
+          "file": "birds/IMG_5948-chonkers-chonkette-18jun2026.jpg",
+          "date": "2026-06-18"
+        }
+      ]
     },
     {
       "name": "Birdthazar",
@@ -725,7 +868,29 @@
       "photo": "birds/IMG_6268-birdthazar-23jun2026.jpg",
       "notes": "First of three chicks from the April-25 clutch. Wing-feather sexing (2026-05-17 15:50 EDT) read approximately uniform single row \u2192 probable cockerel. Sire LBRJ probable per the April 25 paternity window. The early solo-brooder aggression settled out \u2014 he now runs with the flock in Birdcatraz.",
       "location": "birdcatraz",
-      "ornitharch": true
+      "ornitharch": true,
+      "photos": [
+        {
+          "file": "may-2026/birdthazar-day4-portrait.jpg",
+          "date": "2026-05-20",
+          "caption": "Day 4, standing tall beside the marked shell he hatched from"
+        },
+        {
+          "file": "birds/IMG_6262-birdthazar-birdsilla-23jun2026.jpg",
+          "date": "2026-06-23",
+          "caption": "23 Jun \u2014 side by side with Birdsilla along the run fence"
+        },
+        {
+          "file": "birds/IMG_6268-birdthazar-23jun2026.jpg",
+          "date": "2026-06-23",
+          "caption": "23 Jun \u2014 red-gold juvenile by the run fence, head turned in profile"
+        },
+        {
+          "file": "birds/henriella-birdsilla-birdthazar-16jul2026.jpg",
+          "date": "2026-07-16",
+          "caption": "Mid-July in Birdcatraz \u2014 background of Henriella's portrait, alongside Birdsilla (Boss-identified)"
+        }
+      ]
     },
     {
       "name": "Henriella",
@@ -741,7 +906,34 @@
       "photo": "birds/henriella-birdsilla-birdthazar-16jul2026.jpg",
       "notes": "First chick of the Henrietta line. Dam confirmed: Henrietta (only brown-egg layer among the active hens \u2014 Golden Laced Wyandotte). Sire LBRJ probable per the April 25 paternity window. Named Henriella per the Boss-confirmed 2026 hatch spine. The line later produced the June chicks Henriessa and Henridotta. Out in Birdcatraz now \u2014 spotted holding the top roost spot with Birdsilla (diary, 09-Jul-2026). SEX SUSPECTED COCKEREL (flagged 21-Jul-2026, ~9\u201310 weeks): at this age the comb is bright red, upright, single with clean points, and the wattles have already drooped and flushed red \u2014 that is cockerel hardware. Pullets at 9\u201310 weeks show only tiny pale comb nubs and flat wattles. The dark charcoal body with rust coming in on the wings is the Wyandotte \u00d7 RIR cross phenotype and reads the same in either sex, so plumage is not the tell here. Boss-approved alternate name 'Henriello' pending confirmation; saddle/hackle feathers will confirm sex at 12\u201314 weeks.",
       "location": "birdcatraz",
-      "ornitharch": true
+      "ornitharch": true,
+      "photos": [
+        {
+          "file": "may-2026/chick2-day4-portrait.jpg",
+          "date": "2026-05-20",
+          "caption": "Day 4, pausing to look over a marked eggshell \u2014 yellow head stripe still on"
+        },
+        {
+          "file": "birds/IMG_6269-henriella-23jun2026.jpg",
+          "date": "2026-06-23",
+          "caption": "Henriella, 23 Jun 2026 (day 38) \u2014 in-hand close-up; slate laced body and dark head cap, a buff sibling (Birdsilla/Birdthazar) on the perch behind."
+        },
+        {
+          "file": "birds/IMG_6283-henriella-23jun2026.jpg",
+          "date": "2026-06-23",
+          "caption": "Henriella, 23 Jun 2026 (day 38) \u2014 front three-quarter on a coop rail under the gazebo roof; slate/blue-gray laced body, rust wash on the breast, dark grizzled head with a pale throat, small single red comb, yellow legs. Boss-confirmed ID."
+        },
+        {
+          "file": "birds/IMG_6292-henriella-23jun2026.jpg",
+          "date": "2026-06-23",
+          "caption": "Henriella, 23 Jun 2026 (day 38) \u2014 second front three-quarter from the same perch; the pale-edged feather lacing across back, wings and breast is clearly resolved."
+        },
+        {
+          "file": "birds/henriella-birdsilla-birdthazar-16jul2026.jpg",
+          "date": "2026-07-16",
+          "caption": "Mid-July in Birdcatraz \u2014 posing at the water bowl, Birdsilla and Birdthazar behind (Boss-identified)"
+        }
+      ]
     },
     {
       "name": "Birdsilla",
@@ -763,7 +955,38 @@
         "confirmed": true,
         "confirmed_date": "2026-07-21",
         "note": "White band #03 confirmed by Boss from photo IMG_7556 area, 2026-07-21"
-      }
+      },
+      "photos": [
+        {
+          "file": "may-2026/chick3-day4-portrait.jpg",
+          "date": "2026-05-20",
+          "caption": "Day 4, bright-eyed beside the hatching shell"
+        },
+        {
+          "file": "birds/IMG_4940-birdsilla-crop-28may2026.jpg",
+          "date": "2026-05-28",
+          "caption": "On the brooder rim at twelve days (cropped from the wide command-center shot)"
+        },
+        {
+          "file": "birds/IMG_4940-birdsilla-perch-28may2026.jpg",
+          "date": "2026-05-28"
+        },
+        {
+          "file": "birds/IMG_6262-birdthazar-birdsilla-23jun2026.jpg",
+          "date": "2026-06-23",
+          "caption": "23 Jun \u2014 side by side with Birdthazar along the run fence"
+        },
+        {
+          "file": "birds/henriella-birdsilla-birdthazar-16jul2026.jpg",
+          "date": "2026-07-16",
+          "caption": "Mid-July in Birdcatraz \u2014 background of Henriella's portrait, alongside Birdthazar (Boss-identified)"
+        },
+        {
+          "file": "birds/IMG_7556-birdsilla-21jul2026.jpg",
+          "date": "2026-07-21",
+          "caption": "Solo portrait in Birdcatraz \u2014 orange/buff adult plumage, yellow legs, no stripe"
+        }
+      ]
     },
     {
       "name": "Birdimir",
@@ -784,7 +1007,19 @@
         "confirmed": true,
         "confirmed_date": "2026-07-21",
         "side": "left"
-      }
+      },
+      "photos": [
+        {
+          "file": "birds/IMG_5089-birdimir-hatch-02jun2026.jpg",
+          "date": "2026-06-02",
+          "caption": "Hatch day, 2 Jun 2026 \u2014 Birdimir freshly out of the shell in the egg basket, wet yellow/buff down, beside the red-line-marked NI clutch eggs."
+        },
+        {
+          "file": "birds/IMG_6233-birdimir-juvenile-22jun2026.jpg",
+          "date": "2026-06-22",
+          "caption": "Day 20, 22 Jun 2026 \u2014 feathered out on a coop rail: mostly white with scattered black wing- and tail-feather speckles."
+        }
+      ]
     },
     {
       "name": "Ingebird",
@@ -805,7 +1040,22 @@
         "side": "left",
         "confirmed": true,
         "note": "Confirmed by Boss 2026-07-21: IMG_7718 is Ingebird wearing green band #02"
-      }
+      },
+      "photos": [
+        {
+          "file": "birds/IMG_6227-ingebird-suspected-22jun2026.jpg",
+          "date": "2026-06-22",
+          "caption": "Day 20 on the rail, facing the camera \u2014 ID suspected, not confirmed (dark juvenile, two flockmates blurred behind)"
+        },
+        {
+          "file": "birds/ingebird-17jul2026.jpg",
+          "date": "2026-07-17"
+        },
+        {
+          "file": "birds/IMG_7718-ingebird-black-white-21jul2026.jpg",
+          "date": "2026-07-21"
+        }
+      ]
     },
     {
       "name": "Henriessa",
@@ -827,7 +1077,27 @@
         "side": "left",
         "confirmed": true,
         "confirmed_date": "2026-07-21"
-      }
+      },
+      "photos": [
+        {
+          "file": "june-2026/june-clutch-six-IMG_5307.jpg",
+          "date": "2026-06-04",
+          "caption": "The whole June clutch in the brooder, one marked egg in the foreground \u2014 Henriessa among the six (no solo portrait committed yet)"
+        },
+        {
+          "file": "birds/henriessa-17jul2026.jpg",
+          "date": "2026-07-17"
+        },
+        {
+          "file": "birds/IMG_7655-henriessa-silver-21jul2026.jpg",
+          "date": "2026-07-21",
+          "caption": "First committed solo portrait (IMG_7655) \u2014 the silver/blue-gray barred sister, held at the fence. Boss-confirmed 2026-07-21 as 'the silver one,' resolving the silver dispute in Henriessa's favor."
+        },
+        {
+          "file": "birds/IMG_7729-henriessa-silver-pink08-21jul2026.jpg",
+          "date": "2026-07-21"
+        }
+      ]
     },
     {
       "name": "Horstabird",
@@ -841,7 +1111,19 @@
       "photo": "birds/IMG_7644-horstabird-21jul2026.jpg",
       "notes": "Boss-corrected 2026-06-07: a pullet, sired by LBRJ (the red rooster lost in the April predator wave) \u2014 identified by the rust/red coming in on her face and throat, which supersedes the earlier Whitey Red Legs paternity window. June clutch, Egg #4; an assisted hatch (the Boss removed a small piece of shell and dabbed water on the membrane, then the chick freed itself). Named in honor of Horst, the note-taking bot that logged the hatch. Per-chick record: content/hatches/2026/2026-06-03-03-horstabird.md",
       "location": "birdcatraz",
-      "ornitharch": true
+      "ornitharch": true,
+      "photos": [
+        {
+          "file": "june-2026/horstabird-IMG_5171.jpg",
+          "date": "2026-06-07",
+          "caption": "IMG_5171 \u2014 Horstabird in hand, ~4 days old, 2026-06-07; rust/red coming in on the face and throat (Boss-identified as the LBRJ sire tell)"
+        },
+        {
+          "file": "birds/IMG_7644-horstabird-21jul2026.jpg",
+          "date": "2026-07-21",
+          "caption": "Hand portrait at the run fence \u2014 orange/rust ground with dark black mottling, red wattles developing, LBRJ rust tell visible on face and throat"
+        }
+      ]
     },
     {
       "name": "Henridotta",
@@ -863,7 +1145,28 @@
         "side": "left",
         "confirmed": true,
         "confirmed_date": "2026-07-21"
-      }
+      },
+      "photos": [
+        {
+          "file": "june-2026/june-clutch-six-IMG_5307.jpg",
+          "date": "2026-06-04",
+          "caption": "The whole June clutch in the brooder \u2014 Henridotta among the six"
+        },
+        {
+          "file": "birds/henridotta-17jul2026.jpg",
+          "date": "2026-07-17"
+        },
+        {
+          "file": "birds/IMG_7672-henridotta-hand-21jul2026.jpg",
+          "date": "2026-07-21",
+          "caption": "Hand-held portrait in coop \u2014 full body showing dark black/gray lacing pattern, developing comb and wattles, purple band #12 on left leg. Wing feathering well developed."
+        },
+        {
+          "file": "birds/IMG_7713-henridotta-purpleband12-21jul2026.jpg",
+          "date": "2026-07-21",
+          "caption": "Solo portrait standing in yard \u2014 dark gray/dark lacing plumage, red comb developing, purple leg band #12 clearly visible. Boss-confirmed identity."
+        }
+      ]
     },
     {
       "name": "Adelbird",
@@ -884,7 +1187,18 @@
         "side": "left",
         "confirmed": true,
         "confirmed_date": "2026-07-21"
-      }
+      },
+      "photos": [
+        {
+          "file": "june-2026/adelbird-IMG_5184.jpg",
+          "date": "2026-06-04",
+          "caption": "IMG_5184 \u2014 Adelbird, the last hatch of the 2026 season; dark gray/black down with a white head spot (Boss-confirmed 2026-06-07)"
+        },
+        {
+          "file": "birds/IMG_7731-adelbird-dark-speckled-21jul2026.jpg",
+          "date": "2026-07-21"
+        }
+      ]
     },
     {
       "name": "Ravenessa",
@@ -898,7 +1212,13 @@
       "color_description": "Black pullet with grayish lacing / scaled feather pattern across the body, a few small white feathers on the head and neck, slate-gray legs.",
       "photo": "birds/IMG_5958-ravenessa-18jun2026.jpg",
       "notes": "Boss-named and called out as a FAVORITE 2026-06-18 (#meet-the-lobsters). One of the Bantams. Likely traces to the Cackle Hatchery April-08 batch (the farm's bantams come from that exotic/rare assortment), but exact breed is not yet confirmed \u2014 verify as adult plumage develops. Probable pullet per photo.",
-      "location": "birdcatraz"
+      "location": "birdcatraz",
+      "photos": [
+        {
+          "file": "birds/IMG_5958-ravenessa-18jun2026.jpg",
+          "date": "2026-06-18"
+        }
+      ]
     },
     {
       "name": "Quasibirdo",
@@ -912,7 +1232,13 @@
       "color_description": "White-crested Polish bantam: big rounded white/cream head pouf, blue-gray (slate) body feathers with darker black lacing, slate-gray legs, yellow beak.",
       "photo": "birds/IMG_5874-quasibirdo-18jun2026.jpg",
       "notes": "Boss-named 'Quasibirdo, my hunchback bantam' 2026-06-18 (#meet-the-lobsters). The crest is unmistakably Polish \u2014 most likely a White-Crested Blue or Splash Polish (cf. the Cackle Rare Chick Special preliminary IDs R1/R6). Traces to the Cackle Hatchery 08-April-2026 batch like the farm's other bantams (e.g. Ravenessa). Exact Polish variety to confirm as adult plumage sets.",
-      "location": "birdcatraz"
+      "location": "birdcatraz",
+      "photos": [
+        {
+          "file": "birds/IMG_5874-quasibirdo-18jun2026.jpg",
+          "date": "2026-06-18"
+        }
+      ]
     }
   ]
 }

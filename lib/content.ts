@@ -67,6 +67,15 @@ export interface LegBand {
   note?: string;
 }
 
+// One entry in a bird's accumulating photo history (the aging timeline).
+// `file` is relative to public/photos/ (same base as FlockBird.photo, e.g.
+// "birds/IMG_7713-…jpg"). Undated legacy shots omit `date` and sort last.
+export interface BirdPhoto {
+  file: string;
+  date?: string; // "YYYY-MM-DD"
+  caption?: string;
+}
+
 export interface FlockBird {
   name: string;
   breed: string;
@@ -92,6 +101,10 @@ export interface FlockBird {
   // Numbered leg band — the canonical ID (several birds are near-identical).
   // Left leg = hatched on the farm. Boss-assigned; see /flock/banding.
   leg_band?: LegBand;
+  // Accumulating photo history — every picture we have of this bird, for the
+  // aging timeline. Grown append-only by the ingest pipeline; `photo` above
+  // stays as the current hero portrait.
+  photos?: BirdPhoto[];
   // Optional second frame for memorial/founder tiles (e.g. Henrietta's 2022
   // throwback) — rotated against `photo` with the label as the era chip.
   photo_throwback?: string;
