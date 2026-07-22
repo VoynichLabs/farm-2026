@@ -1,6 +1,10 @@
 /**
  * Author: Claude Opus 4.8 (prev Claude Fable 5 / Claude Opus 4.7 / Claude Sonnet 4.6 / Claude Opus 4.8)
- * Date: 16-Jul-2026 (orig 10-May-2026; updated 20-May / 22-Jun / 06-Jul-2026)
+ * Date: 22-Jul-2026 (orig 10-May-2026; updated 20-May / 22-Jun / 06-Jul / 22-Jul-2026)
+ *   22-Jul-2026: Class of 2026 grid now DERIVES from flock-profiles.json
+ *   (ornitharchs), not a hardcoded array — so new bird portraits committed to
+ *   the roster show on the front page automatically instead of silently
+ *   drifting out of sync (they never appeared here before this).
  * PURPOSE: Homepage composition. 16-Jul-2026 daylight retheme: converted to
  *   the light Field Guide (field-*) tokens, styling only; the live-camera
  *   surfaces (GuardianHomeBadge + HomeCameraStage) are kept as a
@@ -33,7 +37,7 @@ import HomeCameraStage from "@/app/components/home/HomeCameraStage";
 import RecentGemsRail from "@/app/components/home/RecentGemsRail";
 import SystemBanner from "@/app/components/home/SystemBanner";
 import GemsStatFooter from "@/app/components/gems/GemsStatFooter";
-import { getBirdAgeLabel } from "@/lib/content";
+import { getBirdAgeLabel, getFlockProfiles } from "@/lib/content";
 import { PAGE_MARKS, STATUS } from "@/lib/emoji";
 
 const DEEPER_LINKS: { href: string; label: string; hint: string }[] = [
@@ -54,64 +58,46 @@ type Chick = {
   photo: string | null;
 };
 
-// Newest hatch first. Age is never stored here — only the hatch date — so the
-// "b. {date} · {age}" line is computed live on every render and can't go stale
-// (the bug CHANGELOG 1.18.0 fixed for /flock). Two Birddor frames are kept
-// intentionally (held throwback + current portrait). No count is derived or
-// rendered — this is a portrait wall, not a dashboard.
-const HATCHLINGS_2026: Chick[] = [
-  {
-    name: "Birdimir",
-    breed: "EE lineage",
-    hatch: "Jun 2",
-    hatchISO: "2026-06-02",
-    photo: "/photos/birds/IMG_6233-birdimir-juvenile-22jun2026.jpg",
-  },
-  {
-    name: "Birdthazar",
-    breed: "EE (probable cockerel)",
-    hatch: "May 16",
-    hatchISO: "2026-05-16",
-    photo: "/photos/birds/IMG_6268-birdthazar-23jun2026.jpg",
-  },
-  {
-    name: "Henriella",
-    breed: "Wyandotte × RIR",
-    hatch: "May 16",
-    hatchISO: "2026-05-16",
-    photo: "/photos/birds/IMG_6292-henriella-23jun2026.jpg",
-  },
-  {
-    name: 'Birdsilla "Monster Leg"',
-    breed: "EE lineage",
-    hatch: "May 16",
-    hatchISO: "2026-05-16",
-    photo: "/photos/birds/IMG_4940-birdsilla-perch-28may2026.jpg",
-  },
-  {
-    name: "Birdadotta",
-    breed: "EE × RIR",
-    hatch: "Apr 25",
-    hatchISO: "2026-04-25",
-    photo: "/photos/birds/IMG_6271-birdadotta-23jun2026.jpg",
-  },
-  {
-    name: "Birddor",
-    breed: "Easter Egger (cockerel)",
-    hatch: "Apr 6",
-    hatchISO: "2026-04-06",
-    photo: "/photos/may-2026/birdadette-may20-held.jpg",
-  },
-  {
-    name: "Birddor",
-    breed: "Easter Egger (cockerel)",
-    hatch: "Apr 6",
-    hatchISO: "2026-04-06",
-    photo: "/photos/birds/IMG_5849-birdadette-23jun2026.jpg",
-  },
-];
+// The Class of 2026 IS the roster's ornitharchs (the birds hatched on the farm
+// this spring). We derive this list LIVE from content/flock-profiles.json so the
+// front page always shows each bird's CURRENT portrait — the exact same photo
+// /flock shows. This used to be a hardcoded array whose photo paths silently
+// drifted out of sync with the roster (why new bird photos never appeared on the
+// homepage). Deriving fixes that at the root: update a bird's photo once and it
+// shows everywhere. Newest hatch first; age is computed live from hatch_date
+// (never stored) so it can't stale. No count is rendered — Boss rule.
+function shortBreed(breed: string): string {
+  // Compact the roster's long breed strings into a card label.
+  return breed
+    .replace(/\s*\([^)]*\)/g, "") // drop parentheticals like "(cross TBD)"
+    .replace(/Easter Egger/gi, "EE")
+    .trim();
+}
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+function formatHatch(iso: string): string {
+  // "2026-06-02" -> "Jun 2"
+  const [, m, d] = iso.split("-").map(Number);
+  return `${MONTHS[(m ?? 1) - 1]} ${d ?? ""}`.trim();
+}
+
+function getClassOf2026(): Chick[] {
+  const flock = getFlockProfiles();
+  if (!flock) return [];
+  return flock.flock_birds
+    .filter((b) => b.ornitharch && b.hatch_date)
+    .map((b) => ({
+      name: b.name,
+      breed: shortBreed(b.breed),
+      hatch: formatHatch(b.hatch_date as string),
+      hatchISO: b.hatch_date as string,
+      photo: b.photo ? `/photos/${b.photo}` : null,
+    }))
+    .sort((a, z) => z.hatchISO.localeCompare(a.hatchISO)); // newest hatch first
+}
 
 export default function Home() {
+  const hatchlings = getClassOf2026();
   return (
     <main className="bg-field-bg text-field-ink min-h-screen font-sans">
 
@@ -122,7 +108,7 @@ export default function Home() {
             <span aria-hidden="true" className="mr-1.5">{PAGE_MARKS.home}</span>THE CLASS OF 2026 — hatched this spring, ruling Birdcatraz now
           </span>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {HATCHLINGS_2026.map((chick, idx) => (
+            {hatchlings.map((chick, idx) => (
               <div key={`${chick.name}-${idx}`} className="flex flex-col gap-1.5">
                 {chick.photo ? (
                   <div className="w-full h-56 border border-field-border bg-field-wash flex items-center justify-center overflow-hidden">
