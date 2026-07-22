@@ -859,7 +859,10 @@
       "ornitharch": true,
       "leg_band": {
         "color": "purple",
-        "number": 12
+        "number": 12,
+        "side": "left",
+        "confirmed": true,
+        "confirmed_date": "2026-07-21"
       }
     },
     {
