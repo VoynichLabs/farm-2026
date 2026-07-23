@@ -6,8 +6,7 @@
       "eggs_per_year": 250,
       "temperament": "Friendly but independent, good foragers",
       "cold_hardiness": "Excellent \u2014 large comb can be susceptible to frostbite, but otherwise very hardy",
-      "typical_lifespan": "5-8 years",
-      "fun_fact": "Rhode Island Reds were the state bird of Rhode Island (1954) and are one of the most productive brown-egg layers."
+      "typical_lifespan": "5-8 years"
     },
     "Speckled Sussex": {
       "description": "British breed with distinctive mahogany and white speckled plumage. Curious, active foragers with excellent table manners (quiet compared to other breeds).",
@@ -15,8 +14,7 @@
       "eggs_per_year": 240,
       "temperament": "Docile, curious, excellent foragers, friendly to humans",
       "cold_hardiness": "Good \u2014 medium comb, adapts well to cold",
-      "typical_lifespan": "5-8 years",
-      "fun_fact": "Speckled Sussex are known for being particularly friendly and following their owners around, almost dog-like in behavior."
+      "typical_lifespan": "5-8 years"
     },
     "Golden Laced Wyandotte": {
       "description": "American breed with beautiful gold and black laced plumage. Compact, muscular birds with rose combs (frost-resistant) and yellow legs.",
@@ -24,8 +22,7 @@
       "eggs_per_year": "200-220",
       "temperament": "Hardy, independent, can be broody, broody hens are excellent mothers",
       "cold_hardiness": "Excellent \u2014 rose comb is frost-resistant, compact body, ideal for cold climates",
-      "typical_lifespan": "5-7 years",
-      "fun_fact": "Wyandottes are excellent mothers and will often go broody, making them perfect for natural hatching."
+      "typical_lifespan": "5-7 years"
     },
     "Easter Egger": {
       "description": "Not a standard breed but a hybrid type that lays colored eggs (blue, green, or pink). Variable plumage; typically have ear tufts or muffs and beards.",
@@ -33,8 +30,7 @@
       "eggs_per_year": "200-280",
       "temperament": "Generally friendly, curious, good foragers",
       "cold_hardiness": "Good \u2014 varies by individual genetics",
-      "typical_lifespan": "5-8 years",
-      "fun_fact": "Easter Eggers are prized by backyard farmers for their distinctive colored eggs. The 'Araucana' gene creates the blue egg color."
+      "typical_lifespan": "5-8 years"
     },
     "White Rock": {
       "description": "American breed with white plumage and yellow legs. Large, friendly birds originally bred for meat production. Commonly crossed with other breeds.",
@@ -42,8 +38,7 @@
       "eggs_per_year": "200-220",
       "temperament": "Friendly, calm, excellent mothers (when broody), good foragers",
       "cold_hardiness": "Good \u2014 large comb can be susceptible to frostbite",
-      "typical_lifespan": "5-8 years",
-      "fun_fact": "White Rocks were one of the first breeds to be widely used for commercial broiler production in the mid-20th century."
+      "typical_lifespan": "5-8 years"
     },
     "Black Australorp": {
       "description": "Australian breed with glossy black plumage with a green sheen. Medium-sized, docile birds known for excellent egg production.",
@@ -51,8 +46,7 @@
       "eggs_per_year": "250-300",
       "temperament": "Docile, friendly, good mothers (broody), excellent foragers",
       "cold_hardiness": "Good \u2014 moderate comb, handles cold well",
-      "typical_lifespan": "5-7 years",
-      "fun_fact": "Black Australorps hold the record for highest single-year egg production by a hen \u2014 364 eggs in 365 days, set in the 1920s."
+      "typical_lifespan": "5-7 years"
     },
     "Easter Egger \u00d7 Rhode Island Red Cross": {
       "description": "Hybrid offspring combining Easter Egger's colored-egg genetics with RIR vigor. Inherits blue-egg production from EE parent and reliability from RIR.",
@@ -60,8 +54,7 @@
       "eggs_per_year": "240-260",
       "temperament": "Friendly, curious, good foragers, benefits from hybrid vigor",
       "cold_hardiness": "Excellent \u2014 inherits RIR hardiness",
-      "typical_lifespan": "5-8 years",
-      "fun_fact": "Homestead hybrids like this combine the best traits of both parents: reliable egg production with unique blue egg color."
+      "typical_lifespan": "5-8 years"
     },
     "White Broad-Breasted Turkey": {
       "description": "The standard commercial turkey breed. Fast-growing, broad-chested birds raised primarily for meat. White plumage makes for clean processing.",
@@ -69,8 +62,7 @@
       "eggs_per_year": "50-80",
       "temperament": "Curious, social, can imprint on handlers when raised from poults",
       "cold_hardiness": "Moderate \u2014 need shelter from wind and wet, but tolerate cold if dry",
-      "typical_lifespan": "2-5 years (heritage strains longer)",
-      "fun_fact": "Turkey poults will follow the first moving thing they see after hatching \u2014 making hand-raised poults remarkably tame."
+      "typical_lifespan": "2-5 years (heritage strains longer)"
     },
     "Brahma": {
       "description": "Large, heavily feathered breed known as the 'King of Chickens.' Broad body, feathered feet, pea comb. Originally bred for meat but makes a calm dual-purpose bird.",
@@ -78,8 +70,7 @@
       "eggs_per_year": "150-200",
       "temperament": "Calm, docile, cold-hardy, slow to mature",
       "cold_hardiness": "Excellent \u2014 pea comb resists frostbite, heavy feathering insulates well, bred for northern climates",
-      "typical_lifespan": "5-8 years",
-      "fun_fact": "Brahmas can weigh over 12 pounds and were the primary meat breed in the US from the 1850s to the 1930s."
+      "typical_lifespan": "5-8 years"
     },
     "Bronze Broad-Breasted Turkey": {
       "description": "Large commercial turkey breed with iridescent bronze plumage. Heavier and darker than the White Broad-Breasted variety; raised primarily for meat with striking traditional appearance.",
@@ -87,8 +78,7 @@
       "eggs_per_year": "50-80",
       "temperament": "Curious, social, can imprint on handlers when raised from poults",
       "cold_hardiness": "Moderate \u2014 need shelter from wind and wet, but tolerate cold if dry",
-      "typical_lifespan": "2-5 years (heritage strains longer)",
-      "fun_fact": "Bronze Broad-Breasted turkeys were the dominant commercial breed in the US until the 1960s, when the White Broad-Breasted took over for cleaner plucking."
+      "typical_lifespan": "2-5 years (heritage strains longer)"
     },
     "Barred Plymouth Rock": {
       "description": "American breed with distinctive black-and-white horizontal barring. Hardy dual-purpose chicken, friendly and reliable layer of brown eggs.",
@@ -96,8 +86,7 @@
       "eggs_per_year": "200-280",
       "temperament": "Calm, friendly, good foragers, tolerant of confinement",
       "cold_hardiness": "Excellent \u2014 handles cold New England winters well",
-      "typical_lifespan": "6-8 years",
-      "fun_fact": "Barred Rocks were the most popular breed in the US through the early 20th century \u2014 the bird every backyard farm had."
+      "typical_lifespan": "6-8 years"
     },
     "Plymouth Rock (variety TBD)": {
       "description": "American Plymouth Rock breed, exact variety to be confirmed as the chicks feather out. Plymouth Rock varieties include Barred, White, Buff, Silver Penciled, Partridge, Columbian, Blue, and Speckled (Mottled).",
@@ -105,8 +94,7 @@
       "eggs_per_year": "200-280",
       "temperament": "Calm, friendly, good foragers, tolerant of confinement",
       "cold_hardiness": "Excellent \u2014 handles cold New England winters well",
-      "typical_lifespan": "6-8 years",
-      "fun_fact": "All Plymouth Rock varieties share the same body type and temperament \u2014 only plumage color varies. The breed originated in Massachusetts in the 1860s."
+      "typical_lifespan": "6-8 years"
     },
     "Cream Legbar": {
       "description": "British autosexing breed developed in the 1930s by crossing Brown Leghorns, Barred Plymouth Rocks, and Araucanas. Crested with a distinctive head tuft. Known for blue/green eggs and chicks that can be sexed by down pattern at hatch.",
@@ -114,8 +102,7 @@
       "eggs_per_year": "180-200",
       "temperament": "Active, alert, good foragers, friendly but flighty",
       "cold_hardiness": "Good \u2014 moderate single comb, copes with cold if dry",
-      "typical_lifespan": "5-8 years",
-      "fun_fact": "Cream Legbars are one of the only true autosexing breeds \u2014 newly hatched females have a clear chipmunk stripe down the head, males are paler and less defined."
+      "typical_lifespan": "5-8 years"
     },
     "Blue Laced Red Wyandotte": {
       "description": "Wyandotte variety with deep red ground color and blue (slate-gray) lacing on each feather. Same compact rose-comb body as the Golden and Silver Laced Wyandottes \u2014 bred for cold climates and reliable winter laying.",
@@ -123,8 +110,7 @@
       "eggs_per_year": "200-220",
       "temperament": "Hardy, independent, calm, can go broody",
       "cold_hardiness": "Excellent \u2014 rose comb resists frostbite, compact muscular body",
-      "typical_lifespan": "5-7 years",
-      "fun_fact": "Blue is a dilution gene \u2014 pairing two BLRs together will produce roughly 50% blue-laced, 25% black-laced, and 25% splash-laced offspring."
+      "typical_lifespan": "5-7 years"
     },
     "Buff Ranger": {
       "description": "Buff/golden free-range meat hybrid \u2014 a 'Ranger'-type broiler in the Freedom/Red Ranger family. Heavy-bodied, fast-growing, and an active forager, bred for pasture-raised meat as a slower-growing, hardier alternative to the industrial Cornish Cross.",
@@ -132,8 +118,7 @@
       "eggs_per_year": "150-200 (kept hens only; not bred for laying)",
       "temperament": "Active, robust, voracious foragers \u2014 Boss calls them 'monstrous little eating machines'",
       "cold_hardiness": "Good \u2014 hardy hybrid, but the heavy meat frame needs clean dry bedding and benefits from shelter",
-      "typical_lifespan": "Bred for meat; can live several years as pets, though the heavy frame strains legs and heart over time",
-      "fun_fact": "Ranger-type birds trace to France's Label Rouge program, developed for free-range flavor and slower growth than the Cornish Cross \u2014 they actually forage and move like real chickens."
+      "typical_lifespan": "Bred for meat; can live several years as pets, though the heavy frame strains legs and heart over time"
     },
     "Bantam (breed TBD)": {
       "description": "Bantam is a size class, not a single breed \u2014 a miniature chicken, typically a quarter to a third the size of a standard fowl. The farm's bantams trace to the Cackle Hatchery exotic/rare assortment (08-April-2026 arrival), so exact breeds are still resolving as they feather out. Possible bantam types in that batch include Cubalaya, Phoenix, Sumatra, Yokohama, Cochin, and Polish.",
@@ -141,8 +126,7 @@
       "eggs_per_year": "Varies \u2014 generally fewer and smaller than standard fowl (often 100-180)",
       "temperament": "Varies by breed \u2014 often active, alert, characterful; many are good flyers and tight broodies",
       "cold_hardiness": "Varies \u2014 small bodies lose heat faster, so reliable dry shelter matters in New England winters",
-      "typical_lifespan": "5-8 years",
-      "fun_fact": "True bantams have no large-fowl counterpart, while miniature bantams are scaled-down versions of standard breeds \u2014 pound for pound they're often the boldest birds in the run."
+      "typical_lifespan": "5-8 years"
     },
     "Polish (bantam)": {
       "description": "Crested ornamental breed, instantly recognized by the big rounded pouf of feathers on the head, which grows from a bony knob on the skull. Comes in standard and bantam sizes; the farm's is a bantam. Plumage varieties include White-Crested Black/Blue, Silver/Golden Laced, and Splash. More of a show-and-pet bird than a production layer.",
@@ -150,8 +134,7 @@
       "eggs_per_year": "150-200 (small white eggs; not a heavy layer)",
       "temperament": "Docile and people-friendly, but can be flighty or startle easily because the crest blocks their vision",
       "cold_hardiness": "Fair \u2014 the crest soaks up water and can freeze, so dry shelter matters; the small comb is low frostbite risk, but a wet crest is the real cold-weather concern",
-      "typical_lifespan": "5-8 years",
-      "fun_fact": "Polish chickens have a hollow (cerebral hernia) in the skull beneath the crest \u2014 the dramatic puff of feathers grows from a bony knob on top, which is why the breed's head looks the way it does."
+      "typical_lifespan": "5-8 years"
     }
   },
   "incubating": [],
@@ -1123,7 +1106,10 @@
           "date": "2026-07-21",
           "caption": "Hand portrait at the run fence \u2014 orange/rust ground with dark black mottling, red wattles developing, LBRJ rust tell visible on face and throat"
         }
-      ]
+      ],
+      "leg_band": "yellow #02",
+      "leg_band_leg": "left",
+      "leg_band_date": "2026-07-23"
     },
     {
       "name": "Henridotta",
