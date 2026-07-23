@@ -886,7 +886,7 @@
       "egg_color": "TBD (too young)",
       "temperament": "Was vocalizing distress at 21:23 EDT while Birdthazar was harassing; settled once Birdthazar moved to brooder",
       "color_description": "Grey-and-white down \u2014 magnificent coloring per Boss; visually distinct from the two buff siblings",
-      "photo": "birds/henriella-birdsilla-birdthazar-16jul2026.jpg",
+      "photo": "birds/IMG_7791-henriella-large-adult-23jul2026.jpg",
       "notes": "First chick of the Henrietta line. Dam confirmed: Henrietta (only brown-egg layer among the active hens \u2014 Golden Laced Wyandotte). Sire LBRJ probable per the April 25 paternity window. Named Henriella per the Boss-confirmed 2026 hatch spine. The line later produced the June chicks Henriessa and Henridotta. Out in Birdcatraz now \u2014 spotted holding the top roost spot with Birdsilla (diary, 09-Jul-2026). SEX SUSPECTED COCKEREL (flagged 21-Jul-2026, ~9\u201310 weeks): at this age the comb is bright red, upright, single with clean points, and the wattles have already drooped and flushed red \u2014 that is cockerel hardware. Pullets at 9\u201310 weeks show only tiny pale comb nubs and flat wattles. The dark charcoal body with rust coming in on the wings is the Wyandotte \u00d7 RIR cross phenotype and reads the same in either sex, so plumage is not the tell here. Boss-approved alternate name 'Henriello' pending confirmation; saddle/hackle feathers will confirm sex at 12\u201314 weeks.",
       "location": "birdcatraz",
       "ornitharch": true,
@@ -915,8 +915,20 @@
           "file": "birds/henriella-birdsilla-birdthazar-16jul2026.jpg",
           "date": "2026-07-16",
           "caption": "Mid-July in Birdcatraz \u2014 posing at the water bowl, Birdsilla and Birdthazar behind (Boss-identified)"
+        },
+        {
+          "file": "birds/IMG_7791-henriella-large-adult-23jul2026.jpg",
+          "date": "2026-07-23",
+          "caption": "A large adult chicken with black head, grey body, and red comb is held in a person's hand, one leg extended with a pink band. The bird\u2019s eye is visible, but it is turned away from the camera, not engaging with the lens. The background shows a wire-mesh enclosure and dirt ground."
         }
-      ]
+      ],
+      "leg_band": {
+        "color": "pink",
+        "number": 3,
+        "side": "left",
+        "confirmed": true,
+        "confirmed_date": "2026-07-23"
+      }
     },
     {
       "name": "Birdsilla",
