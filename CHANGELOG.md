@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.34.1] — 2026-07-27
+
+### Changed — Person JSON-LD sameAs now links markbarney.net (Claude Opus 4.8)
+
+**What:** Added `https://markbarney.net` to the `Person.sameAs` array in `app/layout.tsx`.
+
+**Why:** MarkSite (markbarney.net) is getting its own AI-discovery pass and declares this farm site in its own `Person.sameAs`. Reciprocating here makes the cross-site entity cluster bidirectional, so an LLM can confidently resolve markbarney.net, farm.markbarney.net, and voynichlabs.org as facets of one person — a stronger AI-discovery signal than either site's structured data alone.
+
+**How:** One-line addition to the existing `sameAs` list (kept IG + FB). No other change.
+
+## [1.34.0] — 2026-07-22
+
+### Fixed — Hatches & Flock visual QA remediation (Claude Sonnet 5)
+
+**What:** Full remediation of the 13-item visual QA pass in [docs/22-Jul-2026-hatches-and-flock-visual-qa-notes.md](docs/22-Jul-2026-hatches-and-flock-visual-qa-notes.md); plan in [docs/22-Jul-2026-hatches-flock-visual-qa-remediation-plan.md](docs/22-Jul-2026-hatches-flock-visual-qa-remediation-plan.md).
+
+`/hatches`: fixed head-cropped photos on hand-held bird portraits (`HatchCard` + `ThenAndNow` now crop `object-top` instead of center) and removed the one lost/deceased chick from the public ledger (`status: "lost"` is now filtered out of the rendered page, RECORDS count included) — no "photo pending" placeholder for a chick that didn't survive. Also redacted a second no-loss-talk violation surfaced during investigation: Horstabird's hatch record referenced a rooster "lost in the April 2026 predator wave" in a rendered paternity note; the death clause is cut, the paternity attribution (LBRJ) stays.
+
+`/flock`: removed the photo-banner hero — it duplicated `SiteNav`'s own header bar and pushed all real content below the fold — and replaced it with a plain intro band (title, one paragraph, the `/hatches` + `/flock/banding` entry points) matching `/hatches`'s pattern. Widened every section `max-w-6xl` → `max-w-7xl` and added an `xl:grid-cols-4` tier to the roster grids (was boxed into a narrow center column with no 4-up breakpoint). Slowed the cohort-wall photo cycling (`OrnitharchPortrait` `intervalMs` 6500ms → 10000ms, cross-fade 700ms → 900ms — it read as flashing). Added a "scroll for more →" hint + edge-fade to `GrowthStrip`'s per-card horizontal photo rail so it reads as an intentional strip, not an accidental nested scrollbar. Removed the Birdcatraz section's "every frame below was scored by the VLM pipeline against the cameras watching the compound" caption — Boss flagged it as inaccurate for this content; cut rather than replaced with another unverified claim. Added `revalidate = 3600` to `/flock` and `/flock/[slug]` — both are statically generated with no dynamic API, so `getBirdAgeLabel()`'s live `new Date()` computation was freezing at last-deploy time instead of staying live between builds.
+
+Content tone: the `Easter Egger × Rhode Island Red Cross` breed's `fun_fact` ("Homestead hybrids like this combine the best traits of both parents...") was the specific hatchery-marketing boilerplate flagged as off-brand for a site whose actual premise is absurdist Ornitharch-prophecy comedy. An attempted in-voice rewrite (of that entry plus two others, shown to Boss for a read) landed badly, so the `fun_fact` field is dropped entirely — from all 17 breed entries in `content/flock-profiles.json`, both render sites in `app/flock/page.tsx` (the Breed Notes callout and each `BirdCard`'s breed-fact box), and the now-stale `fun_fact` field on the `Breed` type in `lib/content.ts`. `description`/`temperament` are unchanged (out of scope — Boss's fix was "drop it," not "rewrite everything").
+
+**Why:** Boss's own visual QA pass, conducted in-browser against the live pages. Full item-by-item mapping and the judgment calls made on ambiguous items (hero removal vs. trim, keeping `GrowthStrip`'s scroll rail vs. redesigning it, fun_fact removal vs. rewrite) are recorded in the plan doc above.
+
+**How:** No shared type/API contract changes; no Guardian integration touched. Verified: `npm run build` + `npm run lint` clean; confirmed in-browser via computed styles (`object-position: 50% 0%` on all three flagged photos), DOM text checks (lost chick id absent, "predator wave" absent, VLM-claim text absent, `fun_fact`/"Homestead hybrids" absent), and `grid-template-columns` (4 columns at desktop width). `revalidate: 1h` confirmed in the build's route table for both `/flock` and `/flock/[slug]`.
+
 ## [1.33.0] — 2026-07-22
 
 ### Added — Flock photo timeline, leg-band IDs, and homepage-from-roster (Claude Opus 4.8)

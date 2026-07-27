@@ -91,6 +91,7 @@ const JSON_LD = {
         },
       },
       sameAs: [
+        "https://markbarney.net",
         "https://www.instagram.com/pawel_and_pawleen/",
         "https://www.facebook.com/profile.php?id=61557234706008",
       ],
