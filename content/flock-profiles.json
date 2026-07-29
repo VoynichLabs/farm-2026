@@ -1124,9 +1124,13 @@
           "caption": "Hand portrait at the run fence \u2014 orange/rust ground with dark black mottling, red wattles developing, LBRJ rust tell visible on face and throat"
         }
       ],
-      "leg_band": "yellow #02",
-      "leg_band_leg": "left",
-      "leg_band_date": "2026-07-23"
+      "leg_band": {
+        "color": "yellow",
+        "number": 2,
+        "side": "left",
+        "confirmed": true,
+        "confirmed_date": "2026-07-21"
+      }
     },
     {
       "name": "Henridotta",

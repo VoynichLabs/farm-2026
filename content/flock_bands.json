@@ -1,0 +1,103 @@
+{
+  "_updated": "2026-07-28",
+  "_note": "Canonical leg band assignments. left leg = hatched on farm (ornitharch). right leg = purchased. Source of truth: flock-profiles.json leg_band fields.",
+  "rule": "Trust the band over plumage. A visible leg band uniquely identifies the bird.",
+  "bands": [
+    {
+      "name": "Birddor",
+      "color": "yellow",
+      "number": 1,
+      "leg": "left",
+      "confirmed": true,
+      "confirmed_date": "2026-07-21"
+    },
+    {
+      "name": "Birdadotta",
+      "color": "orange",
+      "number": 10,
+      "leg": "left",
+      "confirmed": true,
+      "confirmed_date": "2026-07-21"
+    },
+    {
+      "name": "Robirda",
+      "color": "orange",
+      "number": 1,
+      "leg": "right",
+      "confirmed": true,
+      "confirmed_date": "2026-07-21"
+    },
+    {
+      "name": "Bobirda",
+      "color": "white",
+      "number": 6,
+      "leg": "right",
+      "confirmed": true,
+      "confirmed_date": "2026-07-21"
+    },
+    {
+      "name": "Birdsilla",
+      "color": "white",
+      "number": 3,
+      "leg": "left",
+      "confirmed": true,
+      "confirmed_date": "2026-07-21"
+    },
+    {
+      "name": "Birdimir",
+      "color": "red",
+      "number": 3,
+      "leg": "left",
+      "confirmed": true,
+      "confirmed_date": "2026-07-21"
+    },
+    {
+      "name": "Ingebird",
+      "color": "green",
+      "number": 2,
+      "leg": "left",
+      "confirmed": true,
+      "confirmed_date": "2026-07-21"
+    },
+    {
+      "name": "Henriella",
+      "color": "pink",
+      "number": 3,
+      "leg": "left",
+      "confirmed": true,
+      "confirmed_date": "2026-07-23"
+    },
+    {
+      "name": "Henriessa",
+      "color": "pink",
+      "number": 8,
+      "leg": "left",
+      "confirmed": true,
+      "confirmed_date": "2026-07-21"
+    },
+    {
+      "name": "Henridotta",
+      "color": "purple",
+      "number": 12,
+      "leg": "left",
+      "confirmed": true,
+      "confirmed_date": "2026-07-21"
+    },
+    {
+      "name": "Adelbird",
+      "color": "blue",
+      "number": 7,
+      "leg": "left",
+      "confirmed": true,
+      "confirmed_date": "2026-07-21"
+    },
+    {
+      "name": "Horstabird",
+      "color": "yellow",
+      "number": 2,
+      "leg": "left",
+      "confirmed": true,
+      "confirmed_date": "2026-07-21"
+    }
+  ]
+}
