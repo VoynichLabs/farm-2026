@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.35.0] — 2026-07-28
+
+### Fixed — Every bird description refreshed from the banding photos; /flock/banding now derives from the roster (Claude Opus 5)
+
+**What:** Two changes to the flock record.
+
+1. **`content/flock-profiles.json` — `color_description` rewritten for all 13 named/banded living birds.** Six still described **hatch-day down** on birds now 7–16 weeks old: Henriella as "grey-and-white down" (she has a glossy black head and slate-grey body), Birdimir and Ingebird still separated by the "black vs white spot on top of the head", Birdthazar, Horstabird and Adelbird likewise. New text is taken from the 21–23 Jul banding portraits; where only a June frame exists (Birddor, Birdadotta, Birdimir, Birdthazar) the description carries an explicit dated caveat. ⚠️ **No `breed` field was changed** — per Boss the breeds on file are correct; these birds simply look different from their breed label.
+
+2. **`app/flock/banding/page.tsx` now derives every list from `getFlockProfiles()`** instead of four hand-transcribed constants. Those constants had already drifted: **Henriella (pink #3, banded 23-Jul) and Horstabird (yellow #2) were missing from the band table entirely** and listed as "no band yet", and Henridotta's leg rendered "unconfirmed" when the roster records it as left. The table now shows all **12** bands (was 10), sorted ornitharchs-then-purchased, and the "Current Assignments" date is computed from the newest `confirmed_date` rather than hardcoded to 21 Jul.
+
+**Why:** `color_description` is not only website copy — `farm-guardian`'s VLM pipeline renders it into the prompt on every captured camera frame, so a stale description actively misleads the image tagger. And a banding page transcribed by hand goes stale the moment Boss bands another bird; this one was already two birds behind.
+
+**How:** Only `color_description` was touched in the roster (verified field-by-field against a pre-change copy: zero other fields differ, order preserved). The banding page reuses the existing `getFlockProfiles()` / `FlockBird` / `LegBand` types from `lib/content.ts` — the same loader `/flock` and `app/page.tsx` already use — and keeps only the colour→swatch map as a local constant, since a Tailwind class is a styling choice rather than flock data. `npx tsc --noEmit` clean.
+
+**Known limit, recorded deliberately:** Henridotta and Adelbird are **not** reliably separable by plumage — both are dark birds with soft pale scalloping — and their entries now say so instead of offering a tell that does not work. Their leg bands (purple #12 / blue #7) are the answer. Corresponding farm-guardian entry: v2.55.0.
+
 ## [1.34.1] — 2026-07-27
 
 ### Changed — Person JSON-LD sameAs now links markbarney.net (Claude Opus 4.8)

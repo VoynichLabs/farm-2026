@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.8 (prev Claude Fable 5)
- * Date: 16-Jul-2026
+ * Author: Claude Sonnet 5 (prev Claude Opus 4.8; prev Claude Fable 5)
+ * Date: 22-Jul-2026
  * PURPOSE: GrowthStrip — a horizontally-scrollable N-photo growth timeline
  *   for one bird, generalizing ThenAndNow.tsx's fixed two-photo (hatch-day
  *   vs latest) comparison into every dated, showcase-worthy photo a hatch
@@ -30,6 +30,14 @@
  *   palette (field-* tokens); the [GROWTH] kicker became a specimen tag
  *   with the STATUS.growing mark from lib/emoji.ts. Styling only.
  *
+ *   22-Jul-2026 (visual QA remediation): added a scroll affordance — a
+ *   "scroll for more →" hint beside the kicker and a right-edge fade
+ *   gradient over the rail — so this per-card horizontal scroll reads as an
+ *   intentional photo strip rather than an accidental nested scrollbar. No
+ *   JS/ResizeObserver added to detect real overflow (would be over-engineering
+ *   for a hobby-project photo strip); >2 photos is used as the deterministic
+ *   proxy since two ~112px tiles fit most card widths without scrolling.
+ *
  * SRP/DRY check: Pass — reuses ThenNowPhoto from ThenAndNow.tsx (no
  *   redefined photo-prop shape) and lays out only what it's given; no data
  *   fetching, no date math, no record lookup, no filesystem access here.
@@ -54,39 +62,57 @@ export default function GrowthStrip({ name, photos }: GrowthStripProps) {
   // Mirrors ThenAndNow: fewer than two frames means there's no arc to show
   // yet, so render nothing rather than a single lonely tile.
   if (photos.length < 2) return null;
+  // Two ~112px tiles fit inside most card widths without scrolling — past
+  // that, the rail overflows and the scroll affordance below kicks in.
+  const likelyOverflows = photos.length > 2;
 
   return (
     <div className="pt-3">
-      <p className="mb-2">
+      <p className="mb-2 flex flex-wrap items-center gap-2">
         <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted">
           <span aria-hidden="true" className="mr-1.5">{STATUS.growing}</span>Growth
         </span>
+        {likelyOverflows && (
+          <span aria-hidden="true" className="font-mono text-[0.6rem] uppercase tracking-widest text-field-muted">
+            scroll for more &rarr;
+          </span>
+        )}
       </p>
-      <div className="overflow-x-auto pb-1">
-        <div className="flex gap-2.5 snap-x snap-mandatory">
-          {photos.map((photo) => (
-            <figure
-              key={photo.src}
-              className="snap-start flex-shrink-0 w-28 bg-field-card rounded-xl overflow-hidden border border-field-border flex flex-col"
-            >
-              <div className="relative w-full aspect-[4/5] bg-field-wash">
-                <Image
-                  src={photo.src}
-                  alt={photo.alt || `${name}, dated photo`}
-                  fill
-                  sizes="112px"
-                  className="object-cover"
-                />
-              </div>
-              {/* Instrument strip — same DATE/AGE footer language as
-                  ThenAndNow's Frame, condensed for a compact tile. */}
-              <figcaption className="bg-field-bg text-field-ink font-mono text-[0.55rem] uppercase tracking-widest px-1.5 py-1 border-t border-field-border flex flex-col gap-0.5">
-                <span className="text-field-ink truncate">{photo.dateLabel}</span>
-                <span className="text-field-muted truncate">{photo.ageLabel}</span>
-              </figcaption>
-            </figure>
-          ))}
+      <div className="relative">
+        <div className="overflow-x-auto pb-1">
+          <div className="flex gap-2.5 snap-x snap-mandatory">
+            {photos.map((photo) => (
+              <figure
+                key={photo.src}
+                className="snap-start flex-shrink-0 w-28 bg-field-card rounded-xl overflow-hidden border border-field-border flex flex-col"
+              >
+                <div className="relative w-full aspect-[4/5] bg-field-wash">
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt || `${name}, dated photo`}
+                    fill
+                    sizes="112px"
+                    className="object-cover"
+                  />
+                </div>
+                {/* Instrument strip — same DATE/AGE footer language as
+                    ThenAndNow's Frame, condensed for a compact tile. */}
+                <figcaption className="bg-field-bg text-field-ink font-mono text-[0.55rem] uppercase tracking-widest px-1.5 py-1 border-t border-field-border flex flex-col gap-0.5">
+                  <span className="text-field-ink truncate">{photo.dateLabel}</span>
+                  <span className="text-field-muted truncate">{photo.ageLabel}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
+        {/* Right-edge fade — signals there's more to scroll to without a
+            second, actually-scrollable-looking container. */}
+        {likelyOverflows && (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute top-0 right-0 bottom-1 w-8 bg-gradient-to-l from-field-card to-transparent"
+          />
+        )}
       </div>
     </div>
   );

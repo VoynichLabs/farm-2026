@@ -1,9 +1,16 @@
 /**
- * Author: Claude Opus 4.8 (1M context)
- * Date: 07-Jun-2026
+ * Author: Claude Sonnet 5 (prev Claude Opus 4.8, 1M context)
+ * Date: 22-Jul-2026 (orig 07-Jun-2026)
  * PURPOSE: Server-side content loader for MDX/JSON content. Reads projects, diary entries,
  *   field notes, flock profiles, and materials from the content/ directory using gray-matter.
  *   Field notes are the weekly farm update system (replaces diary for public-facing updates).
+ *
+ *   22-Jul-2026 (visual QA remediation): `Breed.fun_fact` removed — the field
+ *   was dropped from content/flock-profiles.json (hatchery-marketing
+ *   boilerplate, no good in-voice replacement found) and both render sites
+ *   in app/flock/page.tsx were deleted; the type was left claiming a field
+ *   that no longer existed in the data, so it's removed here to match.
+ *
  * SRP/DRY check: Pass — all content loading flows through this single module.
  *   getBirdAgeLabel() is the single age authority: it computes a live age label from a
  *   bird's hatch_date (full, partial, or year-only) on every render. Every bird now
@@ -55,7 +62,6 @@ export interface Breed {
   temperament: string;
   cold_hardiness: string;
   typical_lifespan: string;
-  fun_fact: string;
 }
 
 export interface LegBand {

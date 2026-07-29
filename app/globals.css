@@ -151,12 +151,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Ornitharch portrait rotation — soft cross-cut when a tile swaps frames
-   (06-Jul-2026). Used by app/components/flock/OrnitharchPortrait.tsx. */
+   (06-Jul-2026, lengthened 22-Jul-2026 visual QA pass). Used by
+   app/components/flock/OrnitharchPortrait.tsx. */
 @keyframes orn-fade {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-.orn-fade { animation: orn-fade 700ms ease; }
+.orn-fade { animation: orn-fade 900ms ease; }
 
 /* /markets — Poultry Capital Markets terminal animations (route-scoped, 21-May-2026) */
 @keyframes ppm-marquee {

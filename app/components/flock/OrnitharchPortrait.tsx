@@ -1,7 +1,7 @@
 "use client";
 /**
- * Author: Claude Opus 4.8 (prev Claude Fable 5)
- * Date: 16-Jul-2026
+ * Author: Claude Sonnet 5 (prev Claude Opus 4.8; prev Claude Fable 5)
+ * Date: 22-Jul-2026
  * PURPOSE: Rotating portrait for one bird tile on /flock — cycles through a
  *   pool of frames (current portrait + dated throwbacks from the bird's
  *   hatch record) with a mono age-tag chip ("now · 3 months", "hatch day",
@@ -24,6 +24,11 @@
  *   16-Jul-2026 (daylight retheme): converted to the light Field Guide
  *   palette — styling only; the age-tag chip stays dark-on-photo
  *   (bg-black/60) per the photo-overlay rule. No copy or logic changes.
+ *
+ *   22-Jul-2026 (visual QA remediation): default intervalMs raised 6500 →
+ *   10000 and the orn-fade cross-fade (globals.css) lengthened 700ms → 900ms
+ *   — the cycle read as flashing/too fast to comfortably view a frame before
+ *   it changed again.
  *
  * SRP/DRY check: Pass — presentation-only client island; the pool (paths,
  *   tags, alts) is assembled server-side in app/flock/page.tsx from the
@@ -54,7 +59,7 @@ export default function OrnitharchPortrait({
   photos,
   stagger = 0,
   sizes,
-  intervalMs = 6500,
+  intervalMs = 10000,
 }: Props) {
   // Current + previous index advance together so the outgoing frame can
   // stay mounted under the cross-fade (state, not a ref — reading a ref

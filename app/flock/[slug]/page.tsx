@@ -1,11 +1,15 @@
 /**
- * Author: Claude Opus 4.8
+ * Author: Claude Sonnet 5 (prev Claude Opus 4.8)
  * Date: 22-Jul-2026
  * PURPOSE: /flock/[slug] — one bird's full aging gallery. Every picture we have
  *   of the bird (from its roster photos[] ledger), full-size, oldest→newest,
  *   each stamped with the date, the bird's age at that photo, and its caption.
  *   The deep-dive view behind the compact GrowthStrip on /flock. Static:
  *   generateStaticParams enumerates every bird by birdSlug(name).
+ *
+ *   22-Jul-2026 (visual QA remediation): added `revalidate` so the AGE label
+ *   (getBirdAgeLabel, computed from `new Date()`) doesn't freeze at
+ *   last-build time under static generation — same fix as /flock.
  * SRP/DRY check: Pass — reuses getFlockProfiles / getBirdAgeLabel / birdSlug
  *   and the shared BandChip; page-local logic is layout + date/age labels only.
  */
@@ -21,6 +25,8 @@ import {
   type BirdPhoto,
 } from "@/lib/content";
 import BandChip from "@/app/components/flock/BandChip";
+
+export const revalidate = 3600;
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const fmtDate = (iso?: string): string | null => {

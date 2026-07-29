@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.8 (prev Claude Fable 5)
- * Date: 16-Jul-2026 (orig 22-Jun-2026, updated 06-Jul-2026)
+ * Author: Claude Sonnet 5 (prev Claude Opus 4.8 / Claude Fable 5)
+ * Date: 22-Jul-2026 (orig 22-Jun-2026, updated 06-Jul-2026, 16-Jul-2026)
  * PURPOSE: ThenAndNow — a tasteful "then → now" comparison block for a single
  *   hatch, rendered as a featured pair at the top of /hatches. It sets a
  *   chick's hatch-day photo beside its most recent photo, each tagged with the
@@ -16,6 +16,12 @@
  *   16-Jul-2026 (daylight retheme): converted from the dark guardian palette
  *   to the light Field Guide tokens (field-*); THEN/NOW corner tags stay
  *   white-on-dark chips over the photos. Styling only, copy unchanged.
+ *
+ *   22-Jul-2026 (visual QA remediation): Frame photos get object-top cropping
+ *   — same head-cutoff defect as HatchCard (object-cover center-crops a
+ *   portrait photo, removing the top of frame where a hand-held bird's head
+ *   sits), fixed defensively here even though the current Birdimir wiring
+ *   wasn't one of the flagged birds.
  *
  * SRP/DRY check: Pass — single responsibility (render one then/now pair).
  *   Reuses the page's fmtDate (no third date-format copy) and the existing
@@ -55,7 +61,7 @@ function Frame({ photo, tag }: { photo: ThenNowPhoto; tag: "THEN" | "NOW" }) {
           alt={photo.alt}
           fill
           sizes="(min-width: 768px) 40vw, 100vw"
-          className="object-cover"
+          className="object-cover object-top"
         />
         <span className="absolute top-3 left-3 font-mono text-[0.62rem] uppercase tracking-widest bg-black/60 text-white px-2 py-0.5 rounded backdrop-blur-sm">
           {tag}

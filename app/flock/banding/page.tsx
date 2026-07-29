@@ -1,10 +1,22 @@
-// Author: Claude Sonnet 4.6 (Bubba)
-// Date: 21-Jul-2026
-// PURPOSE: Banding methodology page — explains leg-band identification system and lists all named flock members with their assigned bands
-// SRP/DRY check: Pass — new page, no existing banding page found
+// Author: Claude Opus 5
+// Date: 28-Jul-2026
+// PURPOSE: Banding methodology page — explains the leg-band identification
+//   system and lists every named flock member with their assigned band.
+//   28-Jul-2026: the band table and all four roster lists are now DERIVED from
+//   content/flock-profiles.json via getFlockProfiles() instead of being
+//   hand-transcribed constants. The hardcoded arrays had already drifted from
+//   the roster: Henriella (pink #3, banded 23-Jul) and Horstabird (yellow #2)
+//   were both absent from the table and listed as "no band yet", and
+//   Henridotta's leg rendered as "unconfirmed" when the roster records it as
+//   left. Deriving is the fix — a page that transcribes the roster by hand
+//   goes stale every time Boss bands another bird.
+// SRP/DRY check: Pass — reuses getFlockProfiles()/FlockBird/LegBand from
+//   lib/content.ts, the same loader /flock and app/page.tsx already use. No
+//   new roster parsing introduced.
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PAGE_MARKS } from "@/lib/emoji";
+import { getFlockProfiles, type FlockBird } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Banding — The Flock",
@@ -17,75 +29,52 @@ export const metadata: Metadata = {
 const SPECIMEN_TAG =
   "inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted";
 
-// ---- Section 2 data: confirmed band assignments as of 2026-07-21 ----
-// Verbatim from flock-profiles.json (do not re-query). `leg: null` = band
-// color/number assigned but the leg is not yet confirmed.
+// ---- Presentation-only: band colour -> swatch class ----
+// The only thing on this page that ISN'T derived from the roster, because a
+// tailwind class is a styling choice, not flock data. Unknown colours fall
+// back to a neutral chip rather than rendering nothing.
+const SWATCH: Record<string, string> = {
+  green: "bg-emerald-500",
+  orange: "bg-orange-500",
+  pink: "bg-pink-400",
+  purple: "bg-purple-500",
+  red: "bg-red-500",
+  white: "bg-white border border-field-border",
+  yellow: "bg-yellow-400",
+  blue: "bg-sky-500",
+};
+
 type BandRow = {
   bird: string;
   color: string;
-  swatch: string; // tailwind bg-* for the color dot
+  swatch: string;
   number: string;
   leg: "left" | "right" | null;
   ornitharch: boolean;
 };
 
-const BANDS: BandRow[] = [
-  { bird: "Ingebird", color: "green", swatch: "bg-emerald-500", number: "#2", leg: "left", ornitharch: true },
-  { bird: "Robirda", color: "orange", swatch: "bg-orange-500", number: "#1", leg: "right", ornitharch: false },
-  { bird: "Birdadotta", color: "orange", swatch: "bg-orange-500", number: "#10", leg: "left", ornitharch: true },
-  { bird: "Henriessa", color: "pink", swatch: "bg-pink-400", number: "#8", leg: "left", ornitharch: true },
-  { bird: "Henridotta", color: "purple", swatch: "bg-purple-500", number: "#12", leg: null, ornitharch: true },
-  { bird: "Birdimir", color: "red", swatch: "bg-red-500", number: "#3", leg: "left", ornitharch: true },
-  { bird: "Birdsilla", color: "white", swatch: "bg-white border border-field-border", number: "#3", leg: "left", ornitharch: true },
-  { bird: "Bobirda", color: "white", swatch: "bg-white border border-field-border", number: "#6", leg: "right", ornitharch: false },
-  { bird: "Birddor", color: "yellow", swatch: "bg-yellow-400", number: "#1", leg: "left", ornitharch: true },
-  { bird: "Adelbird", color: "blue", swatch: "bg-sky-500", number: "#7", leg: "left", ornitharch: true },
-];
-
-// ---- Section 3 data: the full named roster ----
 type RosterBird = { name: string; detail: string };
 
-const ORNITHARCHS: RosterBird[] = [
-  { name: "Birddor", detail: "Easter Egger — yellow #1 left" },
-  { name: "Birdadotta", detail: "Easter Egger × RIR cross — orange #10 left" },
-  { name: "Birdthazar", detail: "Easter Egger lineage — no band yet" },
-  { name: "Henriella", detail: "Wyandotte × RIR cross — no band yet" },
-  { name: "Birdsilla", detail: "Easter Egger lineage — white #3 left" },
-  { name: "Birdimir", detail: "Easter Egger lineage — red #3 left" },
-  { name: "Ingebird", detail: "Easter Egger lineage — green #2 left" },
-  { name: "Henriessa", detail: "Golden Laced Wyandotte cross / Henrietta line — pink #8 left" },
-  { name: "Horstabird", detail: "Easter Egger lineage — no band yet" },
-  { name: "Henridotta", detail: "Golden Laced Wyandotte cross / Henrietta line — purple #12, leg unconfirmed" },
-  { name: "Adelbird", detail: "Easter Egger lineage — blue #7 left" },
-];
+const isActive = (b: FlockBird) =>
+  (b.status ?? "").toLowerCase() === "active" && !b.deceased_date;
 
-const NON_ORNITHARCHS: RosterBird[] = [
-  { name: "Birdsula", detail: "Easter Egger" },
-  { name: "Birdadonna", detail: "Easter Egger × RIR cross" },
-  { name: "Scissor Beak", detail: "Blue Laced Red Wyandotte — mild cross-beak, occludes fine" },
-  { name: "Robirda", detail: "Golden Laced Wyandotte — orange #1 right" },
-  { name: "Bobirda", detail: "Red/Gold Laced Wyandotte — white #6 right" },
-  { name: "Chonkers", detail: "Buff Ranger" },
-  { name: "Chonkette", detail: "Buff Ranger" },
-  { name: "Ravenessa", detail: "Bantam, breed TBD" },
-  { name: "Quasibirdo", detail: "Polish bantam" },
-  { name: "Tractor Supply juveniles", detail: "2 remaining — Brahma or Cream Legbar uncertain" },
-];
+// A turkey group is identified from the roster's own breed text, so adding
+// another turkey entry needs no code change here.
+const isTurkey = (b: FlockBird) => /turkey/i.test(`${b.breed} ${b.name}`);
 
-const TURKEYS: RosterBird[] = [
-  { name: "White Broad-Breasted", detail: "3 birds" },
-  { name: "Bronze Broad-Breasted", detail: "2 birds" },
-];
+/** "yellow #1 left" — the band phrase used in the roster lists. */
+function bandPhrase(b: FlockBird): string {
+  const band = b.leg_band;
+  if (!band?.confirmed || !band.color) return "no band yet";
+  const num = band.number === null || band.number === undefined ? "" : ` #${band.number}`;
+  const side = band.side ? ` ${band.side}` : "";
+  return `${band.color}${num}${side}`;
+}
 
-const HISTORICAL: RosterBird[] = [
-  { name: "Henrietta", detail: "Golden Laced Wyandotte — the matriarch, Henriessa / Henridotta / Henriella line" },
-  { name: "Birdatha", detail: "Rhode Island Red" },
-  { name: "Birdgit", detail: "Speckled Sussex" },
-  { name: "Little Big Red Junior", detail: "Rhode Island Red" },
-  { name: "Whitey Red Legs", detail: "Easter Egger × RIR rooster" },
-  { name: "EE hen 2", detail: "Easter Egger" },
-  { name: "Black Australorp hen", detail: "" },
-];
+function rosterEntry(b: FlockBird): RosterBird {
+  const bits = [b.breed, b.leg_band?.confirmed ? bandPhrase(b) : null].filter(Boolean);
+  return { name: b.name, detail: bits.join(" — ") };
+}
 
 function LegBadge({ leg }: { leg: "left" | "right" | null }) {
   if (leg === "left")
@@ -123,6 +112,57 @@ function RosterList({ birds }: { birds: RosterBird[] }) {
 }
 
 export default function BandingPage() {
+  // Every list below is derived from the roster at render time. Nothing on
+  // this page is hand-transcribed, so banding another bird — or moving one —
+  // shows up here the moment flock-profiles.json is updated.
+  const birds: FlockBird[] = getFlockProfiles()?.flock_birds ?? [];
+  const living = birds.filter(isActive);
+
+  const BANDS: BandRow[] = living
+    .filter((b) => b.leg_band?.confirmed && b.leg_band.color)
+    .map((b) => ({
+      bird: b.name,
+      color: b.leg_band!.color,
+      swatch: SWATCH[b.leg_band!.color.toLowerCase()] ?? "bg-field-border",
+      number: b.leg_band!.number === null || b.leg_band!.number === undefined
+        ? "—"
+        : `#${b.leg_band!.number}`,
+      leg: b.leg_band!.side ?? null,
+      ornitharch: Boolean(b.ornitharch),
+    }))
+    // Ornitharchs first (left leg), then purchased birds, each alphabetical —
+    // the same left/right split the methodology section above explains.
+    .sort((a, b) =>
+      a.ornitharch === b.ornitharch
+        ? a.bird.localeCompare(b.bird)
+        : a.ornitharch
+          ? -1
+          : 1,
+    );
+
+  const ORNITHARCHS = living.filter((b) => b.ornitharch).map(rosterEntry);
+  const NON_ORNITHARCHS = living
+    .filter((b) => !b.ornitharch && !isTurkey(b))
+    .map(rosterEntry);
+  const TURKEYS = living.filter(isTurkey).map(rosterEntry);
+  const HISTORICAL = birds.filter((b) => !isActive(b)).map(rosterEntry);
+
+  // The banding date shown in the section kicker is the most recent confirmed
+  // band, not a literal — Henriella's 23-Jul band made the old "21 Jul" wrong.
+  const lastBanded = living
+    .map((b) => b.leg_band?.confirmed_date)
+    .filter((d): d is string => Boolean(d))
+    .sort()
+    .at(-1);
+  const bandedAsOf = lastBanded
+    ? new Date(`${lastBanded}T12:00:00Z`).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        timeZone: "UTC",
+      })
+    : "";
+
   return (
     <main className="min-h-screen">
       {/* Hero */}
@@ -225,7 +265,9 @@ export default function BandingPage() {
       <section className="border-b border-field-border bg-field-bg">
         <div className="max-w-5xl mx-auto px-4 py-14">
           <p className="mb-2">
-            <span className={SPECIMEN_TAG}>Current Assignments · 21 Jul 2026</span>
+            <span className={SPECIMEN_TAG}>
+              Current Assignments{bandedAsOf ? ` · ${bandedAsOf}` : ""}
+            </span>
           </p>
           <h2 className="text-2xl md:text-3xl font-bold font-serif text-field-ink mb-6">
             Confirmed Bands

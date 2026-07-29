@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.8 (prev Claude Fable 5; prev Claude Opus 4.8, 07-Jun-2026)
- * Date: 16-Jul-2026
+ * Author: Claude Sonnet 5 (prev Claude Opus 4.8; prev Claude Fable 5; prev Claude Opus 4.8, 07-Jun-2026)
+ * Date: 22-Jul-2026
  * PURPOSE: /flock — the breeding-program memory surface. Per
  *   docs/11-May-2026-hermes-breeding-showcase-notes.md, the openclaw brief
  *   (docs/09-May-2026-openclaw-farm-ops-story-design-brief.md §9, §10, §17.4,
@@ -55,8 +55,29 @@
  *   are told apart by it); left leg = farm-hatched. Data is flock-profiles.json
  *   leg_band; the dedicated assignments page stays at /flock/banding.
  *
+ *   22-Jul-2026 (visual QA remediation, docs/22-Jul-2026-hatches-flock-visual-qa-remediation-plan.md):
+ *   the photo-banner hero (a second dark instrument-strip bar stacked under
+ *   SiteNav, reading as a duplicate header) is gone — replaced by a plain
+ *   Field Guide intro band matching /hatches, carrying the same /hatches and
+ *   /flock/banding entry points without the photo/gradient/overlay chrome.
+ *   Its bird-count instrument strip (N ornitharchs · N hens) is not
+ *   reproduced — no-bird-counts rule. Every section's container widened
+ *   max-w-6xl → max-w-7xl (matches the homepage's band width) with an added
+ *   xl:grid-cols-4 tier on the roster grids, to cut the wasted horizontal
+ *   margin and raise on-screen bird density. `revalidate` added so
+ *   getBirdAgeLabel's live computation doesn't freeze at last-build time
+ *   under static generation. The Birdcatraz section's "scored by the VLM
+ *   pipeline against the cameras" caption is removed (Boss flagged it as
+ *   inaccurate for this content) rather than replaced with an equally
+ *   unverified claim. The breeds{} `fun_fact` field/callout (generic
+ *   hatchery-marketing copy, e.g. "combine the best traits of both
+ *   parents") is dropped entirely rather than rewritten — an attempted
+ *   in-voice rewrite (Ornitharch-prophecy register) read as forced; Boss's
+ *   call was to just cut it. `description`/`temperament` are unchanged.
+ *
+
  *   Layout (top → bottom):
- *     1. Terminal hero strip + serif title
+ *     1. Intro band + serif title
  *     2. THE ORNITHARCHS — narrative + cohort wall
  *     3. Incubator panel (conditional)
  *     4. BREEDING LINE panel (second-generation chain)
@@ -93,8 +114,13 @@ import { PAGE_MARKS, STATUS } from "@/lib/emoji";
 export const metadata: Metadata = {
   title: "The Flock",
   description:
-    "Hatch dates, names, lineage, and losses. The breeding-program record for Farm 2026, Hampton CT — including the eleven Ornitharchs hatched on the farm this year.",
+    "Hatch dates, names, and lineage. The breeding-program record for Farm 2026, Hampton CT — including the eleven Ornitharchs hatched on the farm this year.",
 };
+
+// Page has no dynamic API/uncached fetch, so Next statically generates it at
+// build time — without this, getBirdAgeLabel()'s live `new Date()` computation
+// would freeze at last-deploy time instead of staying live between builds.
+export const revalidate = 3600;
 
 const isRooster = (eggColor: string) => eggColor === "N/A (rooster)";
 
@@ -103,12 +129,6 @@ const isRooster = (eggColor: string) => eggColor === "N/A (rooster)";
 // so every section header on the page renders identically.
 const SPECIMEN_TAG =
   "inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted";
-
-// "Turkey poults (3)" → 3. Lets hero stats count birds, not roster entries.
-const individualCount = (name: string): number => {
-  const m = name.match(/\((\d+)\)\s*$/);
-  return m ? parseInt(m[1], 10) : 1;
-};
 
 // The whole grown flock lives in Birdcatraz — the outdoor fenced compound
 // holding the coop and the turkey pen. Location values are roster data.
@@ -278,8 +298,6 @@ export default function FlockPage() {
   );
   const roosters = activeBirds.filter((b) => isRooster(b.egg_color));
 
-  const hensCount = adultHens.reduce((n, b) => n + individualCount(b.name), 0);
-
   // ---- THE ORNITHARCHS ----
   // Identity/photo/status from flock-profiles.json (ornitharch flag);
   // parentage + egg color + clutch from the per-chick hatch records.
@@ -317,71 +335,39 @@ export default function FlockPage() {
 
   const incubating: IncubatorClutch[] = flockData.incubating ?? [];
 
-  const getBreedProfile = (breedName: string) => {
-    if (breeds[breedName]) return breeds[breedName];
-    const baseBreed = breedName.split(" (")[0];
-    if (breeds[baseBreed]) return breeds[baseBreed];
-    if (breedName.includes("×") || breedName.toLowerCase().includes("cross")) {
-      return breeds["Easter Egger × Rhode Island Red Cross"];
-    }
-    return null;
-  };
-
   return (
     <main className="min-h-screen">
-      {/* Hero — terminal strip on top, photo band below. */}
-      <section
-        className="relative min-h-[42vh] flex items-end justify-start bg-cover bg-center bg-no-repeat bg-field-card"
-        style={{ backgroundImage: "url('/photos/june-2026/morning-flock-IMG_5744.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/30" />
-
-        {/* Instrument strip — dark-on-photo overlay over the hero photo */}
-        <div className="absolute top-0 inset-x-0 z-20 bg-black/60 border-b border-white/20 backdrop-blur-sm">
-          <div className="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[0.7rem] uppercase tracking-widest text-white/80">
-            <span className={SPECIMEN_TAG}>
-              <span aria-hidden="true" className="mr-1.5">{PAGE_MARKS.flock}</span>Roster
-            </span>
-            <span>flock-profiles.json</span>
-            <span className="text-white/50">·</span>
-            <span>
-              {ornitharchCount}<span className="text-white/60"> ornitharchs</span>
-            </span>
-            <span className="text-white/50">·</span>
-            <span>
-              {hensCount}<span className="text-white/60"> hens</span>
-            </span>
-          </div>
-        </div>
-
-        <div className="relative z-10 px-6 pb-12 pt-20 md:px-16 max-w-4xl">
-          <p className="text-white/70 text-sm font-medium tracking-widest uppercase mb-2">
-            Farm 2026 · Hampton, CT
-          </p>
-          <h1 className="text-5xl md:text-6xl text-white font-bold font-serif mb-3">
+      {/* Intro band — no photo hero. SiteNav is already the site's header;
+          a second dark photo-banner-with-instrument-strip read as a
+          duplicate of it, so this is intro text + entry points only. */}
+      <section className="bg-field-bg text-field-ink border-b border-field-border">
+        <div className="max-w-7xl mx-auto px-4 pt-14 pb-10">
+          <span className={`${SPECIMEN_TAG} mb-2`}>
+            <span aria-hidden="true" className="mr-1.5">{PAGE_MARKS.flock}</span>Roster · flock-profiles.json
+          </span>
+          <h1 className="text-4xl md:text-5xl font-bold font-serif text-field-ink mt-2 mb-3">
             The Flock
           </h1>
-          <p className="text-lg text-white/85 max-w-2xl">
-            Hatch dates, names, lineage, and losses. The breeding-program
-            record for Farm 2026 — what came out of an egg, when, and from
-            whom.
+          <p className="text-field-muted max-w-2xl text-sm md:text-base leading-relaxed">
+            Hatch dates, names, and lineage. The breeding-program record for
+            Farm 2026 — what came out of an egg, when, and from whom.
           </p>
-          <p className="mt-4 flex flex-wrap gap-3">
+          <p className="mt-5 flex flex-wrap gap-3">
             <Link
               href="/hatches"
-              className="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-white bg-black/60 hover:bg-black/80 border border-white/25 px-3 py-2 rounded transition-colors"
+              className="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-field-ink bg-field-card hover:bg-field-wash border border-field-border px-3 py-2 rounded transition-colors"
             >
-              [HATCHES 2026] →
-              <span className="text-white/60 normal-case tracking-normal font-sans">
+              Hatches 2026 →
+              <span className="text-field-muted normal-case tracking-normal font-sans">
                 per-chick records · phenotype log · predictions
               </span>
             </Link>
             <Link
               href="/flock/banding"
-              className="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-white bg-black/60 hover:bg-black/80 border border-white/25 px-3 py-2 rounded transition-colors"
+              className="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-field-ink bg-field-card hover:bg-field-wash border border-field-border px-3 py-2 rounded transition-colors"
             >
-              [BANDING] →
-              <span className="text-white/60 normal-case tracking-normal font-sans">
+              Banding →
+              <span className="text-field-muted normal-case tracking-normal font-sans">
                 leg-band ID system · assignments · roster
               </span>
             </Link>
@@ -393,7 +379,7 @@ export default function FlockPage() {
           the farm in 2026, and the founding generation they inherit from. */}
       {ornitharchCount > 0 && (
         <section className="border-b border-field-border">
-          <div className="max-w-6xl mx-auto px-4 py-14">
+          <div className="max-w-7xl mx-auto px-4 py-10">
             <p className="mb-2">
               <span className={SPECIMEN_TAG}>
                 The Ornitharchs · {ornitharchCount} hatched on the farm · 2026
@@ -402,19 +388,13 @@ export default function FlockPage() {
             <h2 className="text-3xl md:text-4xl font-bold font-serif text-field-ink mb-4">
               The Ornitharchs
             </h2>
-            <div className="max-w-3xl space-y-3 text-field-muted leading-relaxed mb-10">
-              <p>
-                <em>Ornitharch</em> is what we call any bird that hatched here,
-                on the farm, in our incubators, from our flock&apos;s eggs.
-                There are {ornitharchCount} of them this year, across four
-                clutches.
-              </p>
-              <p>
-                Most of the {ornitharchCount} came out of blue eggs, hatched
-                with blue eyes, and — with a little luck — the pullets among
-                them will lay blue eggs of their own next spring.
-              </p>
-            </div>
+            <p className="max-w-3xl text-field-muted leading-relaxed mb-6">
+              <em>Ornitharch</em> is what we call any bird that hatched here,
+              on the farm, in our incubators, from our flock&apos;s eggs —{" "}
+              {ornitharchCount} of them this year, across four clutches, most
+              out of blue eggs and blue-eyed at hatch; with a little luck, the
+              pullets among them will lay blue eggs of their own next spring.
+            </p>
 
             {/* Cohort walls */}
             {cohorts.map((cohort, ci) => (
@@ -428,7 +408,7 @@ export default function FlockPage() {
                     {cohort.members.length === 1 ? "bird" : "birds"}
                   </span>
                 </div>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {cohort.members.map((bird, bi) => (
                     <OrnitharchTile
                       key={bird.name}
@@ -456,7 +436,7 @@ export default function FlockPage() {
       {/* Incubator — what's in the desk incubator right now. */}
       {incubating.length > 0 && (
         <section className="bg-field-bg text-field-ink border-b border-field-border">
-          <div className="max-w-6xl mx-auto px-4 py-10">
+          <div className="max-w-7xl mx-auto px-4 py-10">
             <p className="mb-2">
               <span className={SPECIMEN_TAG}>
                 <span aria-hidden="true" className="mr-1.5">{STATUS.egg}</span>Incubating
@@ -536,7 +516,7 @@ export default function FlockPage() {
       {/* Breeding lineage — the genetic chain through the program. */}
       {lineageGenetic.length > 0 && (
         <section className="bg-field-bg text-field-ink border-b border-field-border">
-          <div className="max-w-6xl mx-auto px-4 py-12">
+          <div className="max-w-7xl mx-auto px-4 py-12">
             <p className="mb-2">
               <span className={SPECIMEN_TAG}>Breeding Line</span>
             </p>
@@ -612,7 +592,7 @@ export default function FlockPage() {
 
       {/* Birdcatraz — the whole grown flock, newest hatch first. */}
       {birdcatrazBirds.length > 0 && (
-        <section className="max-w-6xl mx-auto px-4 pt-16 pb-8">
+        <section className="max-w-7xl mx-auto px-4 pt-16 pb-8">
           <p className="mb-2">
             <span className={SPECIMEN_TAG}>Birdcatraz</span>
           </p>
@@ -622,21 +602,18 @@ export default function FlockPage() {
           <p className="text-field-muted mb-6 text-sm max-w-3xl">
             The luxurious poultry penitentiary — a fenced outdoor compound
             holding the coop, the turkey pen, and the big water bowl. The
-            whole 2026 class lives here now, newest hatch at the top. Every
-            frame below was scored by the VLM pipeline against the cameras
-            watching the compound.
+            whole 2026 class lives here now, newest hatch at the top.
           </p>
           <FlockGemStrip
             scenes={["birdcatraz", "brooder", "nesting-box"]}
             label="LIVE FROM BIRDCATRAZ"
             limit={12}
           />
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {birdcatrazBirds.map((bird, idx) => (
               <BirdCard
                 key={idx}
                 bird={bird}
-                breedProfile={getBreedProfile(bird.breed)}
               />
             ))}
           </div>
@@ -645,7 +622,7 @@ export default function FlockPage() {
 
       {/* Growing out in the coop */}
       {coopGrowing.length > 0 && (
-        <section className="max-w-6xl mx-auto px-4 py-8">
+        <section className="max-w-7xl mx-auto px-4 py-8">
           <p className="mb-2">
             <span className={SPECIMEN_TAG}>Coop</span>
           </p>
@@ -661,12 +638,11 @@ export default function FlockPage() {
             label="LIVE FROM THE COOP RUN"
             limit={12}
           />
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {coopGrowing.map((bird, idx) => (
               <BirdCard
                 key={idx}
                 bird={bird}
-                breedProfile={getBreedProfile(bird.breed)}
               />
             ))}
           </div>
@@ -675,7 +651,7 @@ export default function FlockPage() {
 
       {/* The hens */}
       {adultHens.length > 0 && (
-        <section className="max-w-6xl mx-auto px-4 py-8 pb-16">
+        <section className="max-w-7xl mx-auto px-4 py-8 pb-16">
           <p className="mb-2">
             <span className={SPECIMEN_TAG}>Laying Stock</span>
           </p>
@@ -690,12 +666,11 @@ export default function FlockPage() {
             limit={8}
             emptyHint="The Reolink stays focused on predator detection; yard-scene gems are sparse."
           />
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {adultHens.map((bird, idx) => (
               <BirdCard
                 key={idx}
                 bird={bird}
-                breedProfile={getBreedProfile(bird.breed)}
               />
             ))}
           </div>
@@ -704,7 +679,7 @@ export default function FlockPage() {
 
       {/* Roosters — conditional */}
       {roosters.length > 0 && (
-        <section className="max-w-6xl mx-auto px-4 py-8 pb-16">
+        <section className="max-w-7xl mx-auto px-4 py-8 pb-16">
           <p className="mb-2">
             <span className={SPECIMEN_TAG}>Rooster</span>
           </p>
@@ -719,7 +694,6 @@ export default function FlockPage() {
               <BirdCard
                 key={idx}
                 bird={bird}
-                breedProfile={getBreedProfile(bird.breed)}
                 isRooster
               />
             ))}
@@ -729,7 +703,7 @@ export default function FlockPage() {
 
       {/* Breed reference guide */}
       <section className="bg-field-wash border-y border-field-border">
-        <div className="max-w-6xl mx-auto px-4 py-16">
+        <div className="max-w-7xl mx-auto px-4 py-16">
           <p className="mb-2">
             <span className={SPECIMEN_TAG}>Breeds</span>
           </p>
@@ -765,13 +739,6 @@ export default function FlockPage() {
                     <p>{profile.cold_hardiness}</p>
                   </div>
                 </div>
-
-                <div className="bg-amber-500/10 border border-amber-500/25 rounded p-3">
-                  <p className="text-sm text-field-honey-ink">
-                    <span className="font-semibold">💡 </span>
-                    {profile.fun_fact}
-                  </p>
-                </div>
               </div>
             ))}
           </div>
@@ -790,16 +757,6 @@ export default function FlockPage() {
       </footer>
     </main>
   );
-}
-
-interface BreedProfile {
-  description: string;
-  egg_color: string;
-  eggs_per_year: number | string;
-  temperament: string;
-  cold_hardiness: string;
-  typical_lifespan: string;
-  fun_fact: string;
 }
 
 /**
@@ -931,11 +888,9 @@ function OrnitharchTile({
 
 function BirdCard({
   bird,
-  breedProfile,
   isRooster: roosterFlag,
 }: {
   bird: FlockBird;
-  breedProfile: BreedProfile | null;
   isRooster?: boolean;
 }) {
   const eggColorBadgeColors: Record<string, string> = {
@@ -1056,13 +1011,6 @@ function BirdCard({
           <p className="text-xs text-field-muted border-t border-field-hairline pt-3 mt-auto">
             {firstSentence(bird.notes)}
           </p>
-        )}
-
-        {/* Breed fun fact */}
-        {breedProfile?.fun_fact && (
-          <div className="bg-amber-500/10 border border-amber-500/25 rounded p-2.5 mt-3">
-            <p className="text-xs text-field-honey-ink">💡 {breedProfile.fun_fact}</p>
-          </div>
         )}
 
         {/* Aging timeline — every photo we have of this bird, oldest to newest.

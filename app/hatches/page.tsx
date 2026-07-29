@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.8 (prev Claude Fable 5)
- * Date: 16-Jul-2026 (orig 10-May-2026 / updated 22-Jun-2026, 06-Jul-2026)
+ * Author: Claude Sonnet 5 (prev Claude Opus 4.8 / Claude Fable 5)
+ * Date: 22-Jul-2026 (orig 10-May-2026 / updated 22-Jun-2026, 06-Jul-2026, 16-Jul-2026)
  * PURPOSE: /hatches — event ledger for every 2026 incubator hatch. Reads from
  *   content/hatches/2026/*.md (per-chick source of truth, schema in
  *   content/hatches/SCHEMA.md). Each card is a hatch event, not a
@@ -13,6 +13,14 @@
  *
  *   16-Jul-2026 (daylight retheme): converted from the dark guardian palette
  *   to the light Field Guide tokens (field-*); styling only, copy unchanged.
+ *
+ *   22-Jul-2026 (visual QA remediation): records with status "lost" are
+ *   excluded from both the rendered cards and the RECORDS count — per the
+ *   site's no-loss-talk rule, a chick that didn't survive doesn't get a
+ *   public card (not even a "photo pending" placeholder). HatchCard photos
+ *   now get object-top cropping — hand-held bird portraits keep the head
+ *   near the top third of frame, and object-cover's default center-crop was
+ *   cutting heads off.
  *
  * SRP/DRY check: Pass — page selects records via getHatchRecords and composes
  *   HatchCard + the presentational ThenAndNow component. The then/now data is
@@ -102,7 +110,8 @@ function buildThenNow(record: HatchRecord | undefined): ThenNowData | null {
 }
 
 export default function HatchesPage() {
-  const records = getHatchRecords("2026");
+  // Lost/deceased chicks don't get a public card — no loss talk sitewide.
+  const records = getHatchRecords("2026").filter((r) => r.status !== "lost");
   const thenNow = buildThenNow(records.find((r) => r.id === THEN_NOW_HATCH_ID));
 
   return (
@@ -191,7 +200,7 @@ function HatchCard({ record: r }: { record: HatchRecord }) {
             alt={photo.caption || displayName}
             fill
             sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-            className="object-cover"
+            className="object-cover object-top"
           />
         ) : (
           <div className="h-full flex flex-col items-center justify-center gap-2 bg-field-wash">

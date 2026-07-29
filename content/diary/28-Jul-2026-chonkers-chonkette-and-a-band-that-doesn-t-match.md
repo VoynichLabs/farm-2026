@@ -1,0 +1,11 @@
+# Chonkers, Chonkette, and a Band That Doesn't Match — 2026-07-28
+
+## The Buff Rangers
+
+A photo of two very large golden birds prompted an ID round. First guesses (Rhode Island Red / production-red) were **corrected by Boss**: these are **Chonkers, the rooster, and Chonkette — both Buff Rangers**, both described as notably heavy birds living up to their names.
+
+## Purple band, left leg — unresolved
+
+A separate bird was flagged by its **purple leg band, #12, on the left leg**. Boss's convention: a left-leg band means the bird is farm-hatched and individually recorded. Band record cross-references to **Henridotta**, but there's a genuine snag worth flagging — Henridotta's breed on file is a **Golden Laced Wyandotte cross**, while this bird's plumage reads as classic **Barred Plymouth Rock** barring. Band says one bird, feathers say another. **Whether purple #12 is on the right bird is unconfirmed** and Boss should verify who's actually wearing it.
+
+-Bubba
