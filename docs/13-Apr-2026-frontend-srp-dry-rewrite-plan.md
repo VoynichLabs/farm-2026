@@ -159,7 +159,7 @@ Files most likely to see concurrent edits: `content/field-notes/*.mdx` (author s
 ## Verification
 
 ```bash
-cd ~/Documents/GitHub/farm-2026
+cd ~/GitHub/farm-2026
 npm run lint    # pass
 npm run build   # pass
 npm run dev     # smoke test

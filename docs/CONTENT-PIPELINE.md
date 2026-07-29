@@ -50,13 +50,13 @@ When starting a weekly update session, check these sources:
 
 ### 1. Guardian Daily Reports
 ```
-~/Documents/GitHub/farm-guardian/data/exports/
+~/GitHub/farm-guardian/data/exports/
 ```
 JSON + Markdown per day. Contains: detection counts, species breakdown, peak activity hours, alert summaries.
 
 ### 2. Guardian Detection Images
 ```
-~/Documents/GitHub/farm-guardian/events/
+~/GitHub/farm-guardian/events/
 ```
 Date-organized folders with timestamped detection snapshots. Filename format: `{HHMMSS}_{confidence}_{class}.jpg`. Pick high-confidence interesting ones for the site.
 
@@ -70,7 +70,7 @@ Use for real-time stats in field notes.
 
 ### 4. Guardian Changelog
 ```
-~/Documents/GitHub/farm-guardian/CHANGELOG.md
+~/GitHub/farm-guardian/CHANGELOG.md
 ```
 Version history — every entry credits Claude Opus. Good for writing about system development.
 
@@ -89,7 +89,7 @@ The authoritative bird database. Update when birds hatch, arrive, die, or change
 ### 7. Photos on the Mac Mini
 ```
 ~/Pictures/                                 # Full iPhone photo library (~2800+ photos, all seasons)
-~/Documents/GitHub/farm-guardian/docs/     # Command center photos, setup shots
+~/GitHub/farm-guardian/docs/     # Command center photos, setup shots
 ~/bubba-workspace/art/                      # Farm art, hawk photos
 ~/bubba-workspace/projects/farm-vision/     # Aerial maps, drawings
 ```

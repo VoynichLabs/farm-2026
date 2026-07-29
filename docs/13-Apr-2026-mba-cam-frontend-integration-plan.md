@@ -57,7 +57,7 @@ Bump SemVer (next minor) and document:
 ### 5. Validation
 
 ```bash
-cd ~/Documents/GitHub/farm-2026
+cd ~/GitHub/farm-2026
 npm run lint                 # should pass
 npm run build                # should pass — no new dependencies
 npm run dev                  # local check at http://localhost:3000/projects/guardian

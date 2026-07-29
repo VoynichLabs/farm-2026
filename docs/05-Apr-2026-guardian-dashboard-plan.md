@@ -149,10 +149,10 @@ app.add_middleware(
 
 ```bash
 # 1. Restart Guardian after CORS fix
-cd ~/Documents/GitHub/farm-guardian && python guardian.py
+cd ~/GitHub/farm-guardian && python guardian.py
 
 # 2. Build farm site
-cd ~/Documents/GitHub/farm-2026 && npm run build
+cd ~/GitHub/farm-2026 && npm run build
 
 # 3. Dev server
 npm run dev

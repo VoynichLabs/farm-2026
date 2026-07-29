@@ -61,7 +61,7 @@ Three rules bind every line of code this spec produces:
 
 ### 1.a Physical location
 
-All paths below are relative to `~/Documents/GitHub/farm-guardian/` on the Mac Mini. The SQLite file is the one farm-guardian already owns for detection data — the image pipeline added a new table to the existing DB rather than creating a second store. This keeps concerns consolidated and lets future code join image rows against detection events (e.g., "did the Reolink's YOLO see the bird that GLM is now describing?").
+All paths below are relative to `~/GitHub/farm-guardian/` on the Mac Mini. The SQLite file is the one farm-guardian already owns for detection data — the image pipeline added a new table to the existing DB rather than creating a second store. This keeps concerns consolidated and lets future code join image rows against detection events (e.g., "did the Reolink's YOLO see the bird that GLM is now describing?").
 
 | Path | What's there | Authority |
 |---|---|---|

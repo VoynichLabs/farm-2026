@@ -59,7 +59,7 @@ Two hardcoded-default defaults (`DEFAULT_FEATURED="usb-cam"` in `lib/cameras.ts`
 ## Verification
 
 ```bash
-cd ~/Documents/GitHub/farm-2026
+cd ~/GitHub/farm-2026
 npm run lint    # must pass
 npm run build   # must pass
 npm run dev     # local smoke: http://localhost:3000/projects/guardian

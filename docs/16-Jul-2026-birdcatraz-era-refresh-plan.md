@@ -13,8 +13,8 @@ Boss decisions folded in:
 
 Two repos, one machine:
 
-- **`~/Documents/GitHub/farm-2026`** — this repo. Next.js website (farm.markbarney.net, deployed on Railway). Also serves as the *image host* for Instagram: the pipeline commits JPEGs into `public/photos/` and posts the raw.githubusercontent.com URL to the Meta Graph API.
-- **`~/Documents/GitHub/farm-guardian`** — Python backend on this Mac Mini. Cameras → VLM scoring ("gems") → Discord curation → Instagram/Facebook posting. Runs via `launchd` jobs (`ls ~/Library/LaunchAgents/com.farmguardian.*`). Read its `CLAUDE.md` and `docs/HOW_IT_ALL_FITS.md` before touching pipeline code.
+- **`~/GitHub/farm-2026`** — this repo. Next.js website (farm.markbarney.net, deployed on Railway). Also serves as the *image host* for Instagram: the pipeline commits JPEGs into `public/photos/` and posts the raw.githubusercontent.com URL to the Meta Graph API.
+- **`~/GitHub/farm-guardian`** — Python backend on this Mac Mini. Cameras → VLM scoring ("gems") → Discord curation → Instagram/Facebook posting. Runs via `launchd` jobs (`ls ~/Library/LaunchAgents/com.farmguardian.*`). Read its `CLAUDE.md` and `docs/HOW_IT_ALL_FITS.md` before touching pipeline code.
 
 Key facts you need before editing anything:
 
