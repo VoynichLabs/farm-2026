@@ -81,6 +81,11 @@ function formatHatch(iso: string): string {
   return `${MONTHS[(m ?? 1) - 1]} ${d ?? ""}`.trim();
 }
 
+// Boss-set featured order for the front page hero row — these five lead,
+// in this exact order, regardless of hatch date. Everyone else follows,
+// newest hatch first, same as before this override existed.
+const FEATURED_ORDER = ["Birddor", "Henridotta", "Birdimir", "Ingebird", "Horstabird"];
+
 function getClassOf2026(): Chick[] {
   const flock = getFlockProfiles();
   if (!flock) return [];
@@ -93,7 +98,15 @@ function getClassOf2026(): Chick[] {
       hatchISO: b.hatch_date as string,
       photo: b.photo ? `/photos/${b.photo}` : null,
     }))
-    .sort((a, z) => z.hatchISO.localeCompare(a.hatchISO)); // newest hatch first
+    .sort((a, z) => z.hatchISO.localeCompare(a.hatchISO)) // newest hatch first
+    .sort((a, z) => {
+      const ai = FEATURED_ORDER.indexOf(a.name);
+      const zi = FEATURED_ORDER.indexOf(z.name);
+      if (ai === -1 && zi === -1) return 0; // preserve newest-first order below
+      if (ai === -1) return 1;
+      if (zi === -1) return -1;
+      return ai - zi;
+    });
 }
 
 export default function Home() {
