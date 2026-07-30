@@ -780,7 +780,7 @@
   ],
   "analysts": [
     {
-      "name": "Henrietta 'Big Bird' Cluxton",
+      "name": "Henriella",
       "title": "Chief Market Strategist",
       "img": "/photos/markets/analyst-1.jpg",
       "rating": "STRONG BUY",
@@ -788,7 +788,7 @@
       "blurb": "27 years on the perch. Calls tops by where she naps."
     },
     {
-      "name": "Dr. Pecks Featherstone, PhD",
+      "name": "Birddor",
       "title": "Head of Quant Research",
       "img": "/photos/markets/analyst-2.jpg",
       "rating": "ACCUMULATE",
@@ -796,7 +796,7 @@
       "blurb": "Models the order book one grain at a time."
     },
     {
-      "name": "Goldie Hawkins",
+      "name": "Horstabird",
       "title": "Macro & Feed Commodities",
       "img": "/photos/markets/analyst-3.jpg",
       "rating": "HOLD",
@@ -804,7 +804,7 @@
       "blurb": "Watches the feed bucket like the Fed watches CPI."
     },
     {
-      "name": "Marge Coop-erfield",
+      "name": "Ingebird",
       "title": "Head of Liquidity / Order Flow",
       "img": "/photos/markets/analyst-4.jpg",
       "rating": "BUY",
@@ -812,7 +812,7 @@
       "blurb": "If three hens cluster, she's already filled."
     },
     {
-      "name": "Penny Brood",
+      "name": "Birdimir",
       "title": "Emerging Markets (literally a chick)",
       "img": "/photos/markets/analyst-5.jpg",
       "rating": "SPECULATIVE BUY",
@@ -820,7 +820,7 @@
       "blurb": "High beta. Three weeks old. Fears nothing."
     },
     {
-      "name": "Reginald Roostchild III",
+      "name": "Henridotta",
       "title": "Chief Risk & Volatility",
       "img": "/photos/markets/analyst-6.jpg",
       "rating": "REDUCE",
@@ -833,12 +833,12 @@
     "BREAKING: Red-comb alpha seen accumulating near feed bucket ahead of close",
     "Fed holds; chickens unbothered, continue pecking",
     "EGGZ halted limit-up after nesting-box supply shock",
-    "Analyst Penny Brood (3 wks old) reiterates SPECULATIVE BUY on everything",
+    "Analyst Birdimir (3 wks old) reiterates SPECULATIVE BUY on everything",
     "HAWK shares spike on tail-risk fears; Guardian deterrence system deployed",
     "Coop sentiment hits 73 GREED as two birds achieve high-roost",
     "Quant desk reports anomalous pecking velocity, cause unknown",
     "FEED futures slide on rumors of additional scratch supply",
-    "Roost Rothschild III: 'I am the only one here who can actually fly. Plan around that.'"
+    "Henridotta: 'I am the only one here who can actually fly. Plan around that.'"
   ],
   "realStocks": [
     {

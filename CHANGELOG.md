@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.35.2] — 2026-07-30
+
+### Changed — /markets analyst desk now shows real Ornitharchs, not anonymous brooder shots (Claude Sonnet 5)
+
+**What:** Two changes to `content/markets/picks.json`, none to `Terminal.tsx`.
+
+1. **The six "THE ANALYST DESK — COVERAGE TEAM" tiles now use real bird photos and real bird names.** Each `analysts[].img` in `public/photos/markets/analyst-1.jpg` … `analyst-6.jpg` was overwritten (full source photo, no crop, just downscaled to 900px wide) with a clear, identifiable shot of one of the 11 Ornitharchs (`ornitharch: true` in `content/flock-profiles.json`): Henriella, Birddor, Horstabird, Ingebird, Birdimir, Henridotta. The old files were anonymous, dim brooder-box close-ups with no traceable identity. Two of the blurbs constrained the mapping — Birdimir (the "literally a chick... three weeks old" slot) and Henridotta (the "only analyst who flies" slot, wings-out mid-flap) — the rest filled the remaining slots.
+2. **`analysts[].name` fields swapped from fictional Wall Street personas** (Henrietta "Big Bird" Cluxton, Dr. Pecks Featherstone PhD, Goldie Hawkins, Marge Coop-erfield, Penny Brood, Reginald Roostchild III) **to the real bird names above.** Two `newswire` lines that name-dropped the old fictional names were updated to match. `title`/`rating`/`specialty`/`blurb` — the satirical flavor text — were left as written.
+
+**Why:** Boss asked directly for the analyst desk to show real Ornitharch photos instead of unidentifiable brooder shots, then to drop the fictional analyst names in favor of the birds' real names.
+
+**How:** Image files are derived copies (Pillow resize, no crop — `object-cover` in `Terminal.tsx:574` already handles fitting them into the tile) of the canonical originals in `public/photos/birds/`; those originals are untouched. `content/markets/picks.json` is the only data file touched — no code changes. Plan: `docs/30-Jul-2026-markets-analyst-desk-ornitharch-photos-plan.md`.
+
 ## [1.35.1] — 2026-07-29
 
 ### Fixed — Henridotta's plumage description was wrong; stripped a confusing "now" label (Claude Fable 5)
