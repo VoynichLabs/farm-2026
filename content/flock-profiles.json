@@ -1140,10 +1140,10 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Settled with siblings in the brooder",
-      "color_description": "Two-tone at any distance: a finely marked silvery salt-and-pepper head and neck set against a much darker, near-black body — she reads as a dark bird with a silver head, not as an evenly barred one. Body feathers each carry a soft pale grey crescent at the tip, giving a scaled look rather than clean bars; tail near-black. Bright red comb set well forward on the crown, golden-amber eye, bright yellow legs. ⚠️ She and Adelbird are NOT reliably separable by plumage — read the band (hers is purple #12).",
-      "photo": "birds/IMG_7713-henridotta-purpleband12-21jul2026.jpg",
+      "color_description": "Boss-confirmed 29-Jul-2026 (photos IMG_8050/8044/8043) — classic bold black-and-white barred plumage, evenly banded across the whole body with no silver-headed or scaled look at all. Bright red single comb, orange-yellow legs, purple leg band #12 clearly visible on the left leg. The earlier hatch-stage description (silvery salt-and-pepper head over near-black body, scaled feather look) was WRONG and is superseded by this entry.",
+      "photo": "birds/IMG_8044-henridotta-wings-flapping-29jul2026.jpg",
       "silver_marking": "none",
-      "notes": "June Henrietta-line chick, named in honor of her mother Henrietta. Dam: Henrietta; sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that the silver sister is Henriessa, not Henridotta — Henridotta is the darker standard look (same coloring as Adelbird, who is slightly smaller). Per-chick record: content/hatches/2026/2026-06-03-04-henridotta.md First solo portrait committed 2026-07-21 (IMG_7713, purple band #12 visible).",
+      "notes": "June Henrietta-line chick, named in honor of her mother Henrietta. Dam: Henrietta; sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that the silver sister is Henriessa, not Henridotta — Henridotta is the darker standard look (same coloring as Adelbird, who is slightly smaller). Per-chick record: content/hatches/2026/2026-06-03-04-henridotta.md PLUMAGE CORRECTED 2026-07-29 (Boss-authoritative): she is barred black-and-white, not the silvery-scaled hatch-era description — that description is retired. Default photo updated to the wings-spread shot at the fence (purple band #12 confirmed in the companion portrait, IMG_8050).",
       "location": "birdcatraz",
       "ornitharch": true,
       "leg_band": {
@@ -1172,6 +1172,21 @@
           "file": "birds/IMG_7713-henridotta-purpleband12-21jul2026.jpg",
           "date": "2026-07-21",
           "caption": "Solo portrait standing in yard — dark gray/dark lacing plumage, red comb developing, purple leg band #12 clearly visible. Boss-confirmed identity."
+        },
+        {
+          "file": "birds/IMG_8050-henridotta-purpleband12-29jul2026.jpg",
+          "date": "2026-07-29",
+          "caption": "Perched on the enclosure rail among white rose of Sharon, purple leg band #12 clearly visible — full black-and-white barred adult plumage. Boss-confirmed identity."
+        },
+        {
+          "file": "birds/IMG_8044-henridotta-wings-flapping-29jul2026.jpg",
+          "date": "2026-07-29",
+          "caption": "Wings fully spread on the fence line amid pink rose of Sharon — bold black-and-white barring across the whole body. Boss-confirmed identity."
+        },
+        {
+          "file": "birds/IMG_8043-henridotta-wings-flapping-closeup-29jul2026.jpg",
+          "date": "2026-07-29",
+          "caption": "Close-up mid-flap, wings spread wide, red comb and barred plumage sharp against the pink rose of Sharon. Boss-confirmed identity."
         }
       ]
     },
@@ -1183,7 +1198,7 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Finished hatching on her own overnight after a light assist",
-      "color_description": "Dark charcoal bird with soft, irregular pale grey-white scalloping over the body — greyer, softer and lower-contrast than crisp barring, with the head dark and white-flecked. Comb small and only partly reddened, and she is the youngest and smallest of the June clutch, so she generally looks a step behind her nest-mates. ⚠️ She and Henridotta are NOT reliably separable by plumage in the field — read the band (hers is blue #7). Her description rests on a single frame (IMG_7731, 21-Jul).",
+      "color_description": "Dark charcoal bird with soft, irregular pale grey-white scalloping over the body — greyer, softer and lower-contrast than crisp barring, with the head dark and white-flecked. Comb small and only partly reddened, and she is the youngest and smallest of the June clutch, so she generally looks a step behind her nest-mates. Read the band to confirm (hers is blue #7) — Henridotta is no longer a plumage lookalike as of 2026-07-29 (Boss-confirmed: Henridotta is bold black-and-white barred, not scalloped). Her description rests on a single frame (IMG_7731, 21-Jul).",
       "photo": "birds/IMG_7731-adelbird-dark-speckled-21jul2026.jpg",
       "notes": "The LAST HATCH of the 2026 incubator season. June clutch, Egg #5. The Boss dabbed a droplet of water on the drying membrane the evening of Jun 3; she pipped for air and finished on her own overnight. Named Adelbird 2026-06-04. Dark gray/black down with a white head spot, confirmed 2026-06-07 — shares the white spot with Ingebird, so the two are told apart by age/size (Adelbird is the youngest). Dam not individually confirmed (blue egg); sire window Whitey Red Legs. Per-chick record: content/hatches/2026/2026-06-04-01-adelbird.md",
       "location": "birdcatraz",

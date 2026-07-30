@@ -233,7 +233,7 @@ const buildPortraitPool = (bird: FlockBird, record?: HatchRecord): RotatingPhoto
   if (bird.photo) {
     pool.push({
       src: `/photos/${bird.photo}`,
-      tag: age ? `now · ${age}` : "now",
+      tag: age ?? "",
       alt: bird.name,
     });
   }
