@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.35.1] — 2026-07-29
+
+### Fixed — Henridotta's plumage description was wrong; stripped a confusing "now" label (Claude Fable 5)
+
+**What:** Three changes.
+
+1. **`content/flock-profiles.json` — Henridotta's `color_description` corrected.** The 1.35.0 rewrite still had her as "silvery salt-and-pepper head over near-black body" — Boss-provided photos (29-Jul) show she's actually bold black-and-white barred, no silver head at all. Default `photo` swapped to a wings-spread shot (purple band #12 confirmed), three new photos added to her timeline, and the stale "Henridotta and Adelbird are not separable by plumage" warning removed since that's no longer true.
+2. **`app/flock/page.tsx` — dropped the literal "now" prefix from the roster card's current-photo age tag** (`now · 1 month` → `1 month`). The age itself was already computed live via `getBirdAgeLabel`; the "now" text just read as a hardcoded/stale-looking label for no benefit.
+3. **Dev environment — reinstalled `node_modules`.** Missing entirely after the repo's move from `~/Documents/GitHub` to `~/GitHub`, which was also breaking Turbopack's workspace-root inference and failing `next dev` outright.
+
+**Why:** Boss corrected the plumage record directly from new photos — his ID is canonical ground truth over any prior write-up. The "now" tag read as confusing/hardcoded even though it wasn't.
+
+**How:** Targeted edits only; `content/flock-profiles.json` diff is limited to Henridotta's and Adelbird's entries.
+
 ## [1.35.0] — 2026-07-28
 
 ### Fixed — Every bird description refreshed from the banding photos; /flock/banding now derives from the roster (Claude Opus 5)
