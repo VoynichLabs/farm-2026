@@ -1,7 +1,7 @@
 "use client";
 /**
- * Author: Claude Opus 4.8 (Bubba)
- * Date: 16-Jul-2026
+ * Author: Claude Opus 5 (Bubba)
+ * Date: 30-Jul-2026
  * PURPOSE: Sitewide top bar in the light "Field Guide" register
  *   (16-Jul-2026 daylight retheme, replaces TerminalNav.tsx). Keeps the
  *   terminal era's informational spine — identity strip with location,
@@ -17,6 +17,10 @@
  *   The clock is a client island so it ticks every second. SSR renders
  *   `──:──:──Z` until hydration so the HTML is stable for the cache;
  *   `suppressHydrationWarning` covers the SSR/client mismatch.
+ *
+ *   Outbound links (Boss's personal Instagram @markbarney121, plus
+ *   markbarney.net) are grouped in one right-aligned span so the row
+ *   keeps a single ml-auto break between site nav and off-site links.
  *
  *   Coordinates are approximate (Hampton, CT town center, not Boss's
  *   actual driveway). They render as a site identifier, not a geofence.
@@ -76,8 +80,8 @@ export default function SiteNav() {
     ? "text-guardian-text/80 hover:text-emerald-300"
     : "text-field-ink/80 hover:text-field-accent-deep";
   const outLink = dark
-    ? "text-guardian-muted hover:text-guardian-text ml-auto"
-    : "text-field-muted hover:text-field-ink ml-auto";
+    ? "text-guardian-muted hover:text-guardian-text"
+    : "text-field-muted hover:text-field-ink";
 
   return (
     <header className={shell}>
@@ -105,9 +109,22 @@ export default function SiteNav() {
             {l.label}
           </Link>
         ))}
-        <a href="https://markbarney.net" rel="noopener" className={outLink}>
-          markbarney.net ↗
-        </a>
+        {/* Outbound pair, right-aligned as a unit — Boss's personal IG sits
+            beside the personal site so the farm's own @pawel_and_pawleen
+            links (footer / social CTA) stay unambiguous. */}
+        <span className="ml-auto flex items-center gap-x-3">
+          <a
+            href="https://www.instagram.com/markbarney121/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={outLink}
+          >
+            instagram @markbarney121 ↗
+          </a>
+          <a href="https://markbarney.net" rel="noopener" className={outLink}>
+            markbarney.net ↗
+          </a>
+        </span>
       </nav>
     </header>
   );

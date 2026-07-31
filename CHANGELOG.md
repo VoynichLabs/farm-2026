@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.35.3] — 2026-07-30
+
+### Added — Boss's personal Instagram in the sitewide top bar (Claude Opus 5)
+
+**What:** `app/components/system/SiteNav.tsx` now carries an outbound link to `instagram.com/markbarney121` in the nav strip, sitting immediately left of the existing `markbarney.net ↗` link. Both outbound links are wrapped in one right-aligned `<span>` (the `ml-auto` moved off the individual anchor onto the wrapper) so the row keeps a single break between on-site nav and off-site links instead of two competing auto-margins.
+
+**Why:** Boss asked for his personal IG to be reachable from the top bar on every page.
+
+**How:** Plain `<a target="_blank" rel="noopener noreferrer">`, no emoji mark — the outbound slot has never carried one, and `📷` isn't in the `lib/emoji.ts` vocabulary (flora/fauna/produce/weather/tools). Label reads `instagram @markbarney121 ↗` so it isn't confused with the farm's own `@pawel_and_pawleen` links in the footer and social CTA. Inherits the existing light/dark `outLink` classes, so the `/markets` dark variant is covered. Verified on desktop and at 375px, where the outbound pair wraps cleanly onto its own line.
+
+### Fixed — version drift between `package.json` and this changelog (Claude Opus 5)
+
+**What:** `package.json` (and `package-lock.json`) bumped `1.34.1 → 1.35.3`. The changelog had moved through 1.35.0/1.35.1/1.35.2 without the manifest following, so the build-version chip `SiteNav` renders from `pkg.version` was showing `v1.34.1` on a 1.35.x site.
+
+**Why:** The top bar's version chip is only useful if it names the release the visitor is actually looking at.
+
+**How:** `npm version 1.35.3 --no-git-tag-version`. `SiteNav` already imports the value from `package.json`, so nothing else needed touching — the chip now reads `v1.35.3`. No other file in the repo hardcodes the version.
+
 ## [1.35.2] — 2026-07-30
 
 ### Changed — /markets analyst desk now shows real Ornitharchs, not anonymous brooder shots (Claude Sonnet 5)
