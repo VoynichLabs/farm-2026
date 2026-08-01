@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.37.0] — 2026-08-01
+
+### Removed — Purged 346 reel MP4s from all git history (Claude Opus 5)
+
+**What:** `git filter-repo --path public/photos/reels --invert-paths`, force-pushed to `main`. Every reel MP4 is gone from history. Nothing else was touched.
+
+**Why:** v1.36.0 stopped *new* reels entering git; this removes the 3.9 GB already banked. Under the no-rewrite rule that space was permanent, and the rule turned out to rest on a misreading (see v1.36.0 and `CLAUDE.md`): every URL handed to Meta is a branch ref, so a rewrite cannot break a file that stays on `main`.
+
+**Result:**
+
+| | Before | After |
+|---|---|---|
+| Pack | 4.75 GiB | **1013 MiB** |
+| Fresh clone (`.git` / total) | 4.8 GB / 9.7 GB | **1.0 GB / 2.0 GB** |
+| Files at HEAD | 1,946 | 1,600 |
+| Commits | 1,874 | 1,531 (343 reel-only commits became empty) |
+
+**Verified before pushing** — old HEAD vs new HEAD:
+- Exactly **346** paths removed, **all** under `public/photos/reels/`. Zero non-reel removals, zero additions.
+- Subtree hashes **identical** for `app`, `lib`, `content`, `docs`, `public/photos/{carousel,birds,yard-diary,stories}` — content is byte-for-byte unchanged.
+- First commit's author/date and HEAD's message preserved.
+
+**Verified after pushing** — the thing the old rule feared:
+- Published `raw.githubusercontent.com/.../main/…` URLs still return **200 with identical byte counts** across every lane and date tested (history, birds, carousel, stories, yard-diary, april-2026, on-this-day). Reel URLs now 404, as intended.
+- `npm run build` clean, all 66 static pages generated. Live site: `/api/health`, `/`, `/flock`, `/yard`, `/gallery/gems`, `/markets`, `/field-notes` all 200 after Railway's redeploy; photos still served.
+
+**Process:** the 10 LaunchAgents that push here were stopped for the duration and all 10 restarted afterwards. A full pre-purge mirror of the old remote (4.8 GB, HEAD `9fc09db`, 1,874 commits) was taken as a recovery point.
+
+**Note:** GitHub's *reported* repo size still shows 4.74 GB — unreachable objects remain in their storage until GitHub's server-side gc runs. Clone cost, which is what actually matters for Railway and for anyone cloning, dropped immediately.
+
+**Anyone with an existing checkout must re-clone or `git fetch && git reset --hard origin/main`** — local `main` is now on orphaned history.
+
 ## [1.36.0] — 2026-08-01
 
 ### Changed — Reels stop being committed to this repo; two stale-path bugs fixed (Claude Opus 5)
