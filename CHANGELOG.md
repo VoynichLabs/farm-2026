@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.35.4] — 2026-08-01
+
+### Changed — Sitewide SEO title, description, and link-preview (OG) image (Claude Sonnet 5)
+
+**What:** Five related changes to `app/layout.tsx`, all metadata/copy — no component or route logic touched.
+
+1. `SITE_TITLE` — `"Farm 2026 — Live chicken cameras in Hampton, CT"` → `"Mark's Farm — Hampton, Connecticut"`.
+2. `SITE_DESCRIPTION` — the clinical "Live multi-camera feed... continuously curated archive... OpenClaw + AI pipeline" line → `"A small farm in Hampton, Connecticut — chickens, turkeys, a garden, and live cameras on the flock, because why not."`
+3. `title.template` (`"%s | Farm 2026"` → `"%s | Mark's Farm"`) and `openGraph.siteName` (`"Farm 2026"` → `"Mark's Farm"`) updated to match, so subpage tabs and the JSON-LD `WebSite.name` don't revert to the old brand string next to the new root title.
+4. **OG/Twitter image swapped.** The old image was the latest strong-tier gem at the time it was set (a pullet at a water bowl) — a pipeline detection frame, not a chosen photo. New image: `public/photos/august-2026/homestead-overlook-IMG_8035.jpg`, a Boss-supplied elevated shot of the coop, garden, sunflowers, and three turkeys grazing, all in one frame. Source photo had no EXIF orientation tag and was rotated 90° in-frame; corrected and cropped to a 1600×832 (1.92:1) landscape crop centered on the coop/garden/turkey band — the previous image was an uncropped 1080×1920 portrait frame, which most link-preview surfaces center-crop hard into a narrow vertical sliver.
+5. New folder `public/photos/august-2026/` (first file), following the existing monthly-photo-dump convention (`march-2026/`, `april-2026/`, etc.).
+
+**Why:** This site's URL is about to start getting shared as a personal introduction, not just a camera-project link — "Live chicken cameras in Hampton, CT" is the wrong first impression for that, and the OG image was whatever the pipeline happened to produce most recently rather than something actually chosen to represent the place. See `docs/01-Aug-2026-warm-landing-page-plan.md` for the fuller context (this change is the first, narrowly-scoped piece of that plan — the landing-page recomposition itself is separate, unstarted work).
+
+**How:** Copy-only edits to the four `Metadata` fields plus the `JSON_LD.WebSite.name` string in `app/layout.tsx`; `SITE_TITLE`/`SITE_DESCRIPTION` are single constants already threaded through `title`, `openGraph`, `twitter`, and the WebSite JSON-LD, so no duplicate edits were needed. Image corrected/cropped with Pillow (`rotate(-90, expand=True)` then a crop band at 30%–69% of the corrected height, resized to 1600px wide). Boss's own name is not a new exposure — it was already public in the `Person` JSON-LD (`name: "Mark Barney"`) and in `lib/llms.ts`; this just extends it to the title tag and link-preview card that visitors and share-recipients actually see. `npm version 1.35.4 --no-git-tag-version`.
+
 ## [1.35.3] — 2026-07-30
 
 ### Added — Boss's personal Instagram in the sitewide top bar (Claude Opus 5)

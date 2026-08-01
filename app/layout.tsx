@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.8 (prev Claude Fable 5; Claude Opus 4.7 (1M context); orig Claude Opus 4.6, 13-Apr-2026)
- * Date: 16-Jul-2026
+ * Author: Claude Sonnet 5 (prev Claude Opus 4.8; Claude Fable 5; Claude Opus 4.7 (1M context); orig Claude Opus 4.6, 13-Apr-2026)
+ * Date: 01-Aug-2026 (orig 13-Apr-2026; updated 10-May / 16-Jul / 01-Aug-2026)
  * PURPOSE: Root layout with navigation and metadata. Renders SiteNav (light
  *   "Field Guide" chrome sitewide; dark terminal variant on /markets only —
  *   16-Jul-2026 daylight retheme) above every page.
@@ -13,14 +13,32 @@
  *   v1.29.0 (16-Jul-2026): OG image swapped from the May brooder chick
  *   portrait to a July Birdcatraz water-bowl frame — the flock is grown
  *   and outdoors now, and social previews should say so.
+ *   v1.35.4 (01-Aug-2026): Title/description rewrite. "Farm 2026 — Live
+ *   chicken cameras in Hampton, CT" read as a surveillance-tech demo, which
+ *   is the wrong first impression for the link-preview card this site's
+ *   URL is about to start getting shared as (Boss's personal intro site,
+ *   not just a camera showcase). Retitled around "Mark's Farm" — Boss's
+ *   own name is already public in the Person JSON-LD below (`name: "Mark
+ *   Barney"`) and in lib/llms.ts, so this isn't a new exposure, just
+ *   extending it to the title tag and OG/Twitter card that actually render
+ *   as the link preview. Description reframes live cameras as a charming
+ *   detail instead of the entire pitch. `title.template` and
+ *   `openGraph.siteName` follow suit so subpage tabs stay consistent with
+ *   the root title instead of reverting to the old brand string. OG image
+ *   also swapped: the old water-bowl gem was a pipeline detection frame,
+ *   not a chosen photo. New image is a Boss-supplied elevated overlook shot
+ *   (originally portrait, no EXIF orientation tag, corrected + cropped to
+ *   landscape — see public/photos/august-2026/) showing the coop, garden,
+ *   sunflowers, and turkeys in one frame — an actual establishing shot
+ *   instead of a random moment.
  * SRP/DRY check: Pass — single layout, nav structure matches site architecture.
  */
 import type { Metadata } from "next";
 import "./globals.css";
 
-const SITE_TITLE = "Farm 2026 — Live chicken cameras in Hampton, CT";
+const SITE_TITLE = "Mark's Farm — Hampton, Connecticut";
 const SITE_DESCRIPTION =
-  "Live multi-camera feed from a 13.6-acre chicken farm in Hampton, CT, with a continuously curated archive of moments the on-farm OpenClaw + AI pipeline picks out of the stream.";
+  "A small farm in Hampton, Connecticut — chickens, turkeys, a garden, and live cameras on the flock, because why not.";
 // Open Graph image lives on GitHub raw, not on farm.markbarney.net. Railway's
 // standalone build skips most of `public/photos/` (the 772 MB tree appears
 // to exceed the build copy budget, so files added before the most recent
@@ -29,16 +47,16 @@ const SITE_DESCRIPTION =
 // When that root cause gets fixed, switch this back to a "/photos/..." path
 // so the host matches the rest of the metadata.
 const OG_IMAGE = {
-  url: "https://raw.githubusercontent.com/VoynichLabs/farm-2026/main/public/photos/carousel/2026-07-14/2026-07-14-gem1428094.jpg",
-  width: 1080,
-  height: 1920,
-  alt: "A grown white pullet with black-flecked hackles standing at the big water bowl inside Birdcatraz, the outdoor fenced compound, with the rest of the flock foraging behind her.",
+  url: "https://raw.githubusercontent.com/VoynichLabs/farm-2026/main/public/photos/august-2026/homestead-overlook-IMG_8035.jpg",
+  width: 1600,
+  height: 832,
+  alt: "An elevated view of the homestead: a pink-roofed coop and run, a garden bed lined with sunflowers, and three white turkeys grazing on the lawn, all framed by mature trees.",
 };
 
 export const metadata: Metadata = {
   title: {
     default: SITE_TITLE,
-    template: "%s | Farm 2026",
+    template: "%s | Mark's Farm",
   },
   description: SITE_DESCRIPTION,
   icons: {
@@ -50,7 +68,7 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: [OG_IMAGE],
     type: "website",
-    siteName: "Farm 2026",
+    siteName: "Mark's Farm",
     locale: "en_US",
   },
   twitter: {
@@ -100,7 +118,7 @@ const JSON_LD = {
       "@type": "WebSite",
       "@id": "https://farm.markbarney.net/#website",
       url: "https://farm.markbarney.net",
-      name: "Farm 2026",
+      name: "Mark's Farm",
       description: SITE_DESCRIPTION,
       inLanguage: "en-US",
       author: { "@id": "https://farm.markbarney.net/#mark" },
