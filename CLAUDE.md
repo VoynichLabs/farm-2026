@@ -19,8 +19,21 @@ Two independent pipelines on the Mac Mini commit photos here and use the raw Git
 
 | Pipeline | Source on farm-guardian | Destination in this repo | LaunchAgent(s) | Quality gate |
 |---|---|---|---|---|
-| **Gem lane** — live cameras → Discord reactions → IG+FB | `tools/pipeline/` | `public/photos/stories/`, `public/photos/carousel/`, `public/photos/birdcatraz/` (scene-mapped as of guardian v2.46.0; `public/photos/brooder/` is a frozen archive) | `com.farmguardian.ig-2hr-story` (every 2h), `com.farmguardian.ig-daily-carousel` (daily 18:00), `com.farmguardian.ig-weekly-reel` (Sun 19:00), plus `discord-reaction-sync` every 30 min | Boss's reactions on `#farm-2026` (Discord) — the single human-in-the-loop filter. Every reacted gem eventually publishes (backstop: `select_all_unposted_story_gems`, no time window). |
+| **Gem lane** — live cameras → Discord reactions → IG+FB | `tools/pipeline/` | `public/photos/carousel/`, `public/photos/birdcatraz/` (scene-mapped as of guardian v2.46.0; `public/photos/brooder/` is a frozen archive). **Stories and reels do NOT land here** — see below. | `com.farmguardian.ig-daily-carousel` (daily 18:00), `com.farmguardian.ig-daily-reel`, `com.farmguardian.ig-s7-daily-reel`, `com.farmguardian.ig-s7-weekly-gems-reel`, `com.farmguardian.ig-duo2-timelapse-reel`, `com.farmguardian.ig-house-yard-cam-timelapse-reel`, plus `discord-reaction-sync` every 30 min | Boss's reactions on `#farm-2026` (Discord) — the single human-in-the-loop filter. Every reacted gem eventually publishes (backstop: `select_all_unposted_story_gems`, no time window). |
 | **Archive lane** — historical iPhone → FB+IG stories | `tools/on_this_day/` | `public/photos/on-this-day/YYYY-MM-DD/stories/` | `com.farmguardian.on-this-day` (every 90 min) | Qwen-catalog scoring (farm/pet content, hawks/receipts rejected). No Discord; `data/on-this-day/posted.json` ensures no dupes. Posts today's calendar matches from 2022/2024/2025, falls back to back-catalog. |
+
+### Stories and reels are hosted off the Mini, NOT committed here
+
+Meta's media fetcher requires the URL itself to end in `.jpg`/`.png`/`.mp4`. That single constraint is the only reason social media ever got committed into this repo. Both ephemeral lanes have since been moved off it, because the file exists purely for Meta to fetch **once** and is dead weight the moment the post is live:
+
+| Lane | Moved | Serves from | Local dir on the Mini |
+|---|---|---|---|
+| **Stories** | 04-May-2026 | `guardian.markbarney.net/api/v1/images/story-assets/<name>.jpg` | `farm-guardian/data/story-assets/` |
+| **Reels** | **01-Aug-2026** | `guardian.markbarney.net/api/v1/images/reel-assets/<name>.mp4` | `farm-guardian/data/reel-assets/` |
+
+Both are swept after 48 h by `ig_poster._sweep_expired_assets`. `public/photos/stories/` is a **frozen archive** (last write 2026-05-04) and `public/photos/reels/` is scheduled for removal — see [`docs/01-Aug-2026-reel-hosting-remediation-plan.md`](docs/01-Aug-2026-reel-hosting-remediation-plan.md). The reel lane alone was banking ~1 GB a month of write-once video in git that no page on this site has ever served.
+
+**If you are asked to add a new social lane: do not commit its media here.** Add an asset route beside the two above and serve it through the tunnel. `public/photos/` is for media the *website* renders.
 
 Canonical readmes live in farm-guardian: the gem lane is documented inline across `tools/pipeline/*.py` plus `docs/20-Apr-2026-ig-scheduled-posting-architecture.md`; the archive lane is in [`tools/on_this_day/README.md`](https://github.com/VoynichLabs/farm-guardian/blob/main/tools/on_this_day/README.md). Shared FB/IG tokens live at `/Users/macmini/bubba-workspace/secrets/farm-guardian-meta.env` (mirrored from keychain, never committed). The gem lane's state is in `farm-guardian/data/guardian.db` (table `image_archive`; the `data/image_archive.db` file is an empty decoy); the archive lane's state is in `farm-guardian/data/on-this-day/`.
 
@@ -61,7 +74,7 @@ No test suite exists. Deployment targets Railway.app using the standalone Next.j
 | `content/projects/[slug]/entries/*.mdx` | Per-project diary entries (frontmatter: date, title, tags) |
 | `content/projects/[slug]/materials.json` | Bill of materials (item, qty, unit, cost) |
 | `content/diary/*.mdx` | Raw developer notes (not published — source material for field notes) |
-| `public/photos/` | All site photos — `april-2026/`, `birds/`, `coop/`, `history/`, `enclosure/`, `guardian-detections/`, plus pipeline-populated `brooder/`, `yard-diary/`, `stories/` |
+| `public/photos/` | All site photos — `april-2026/`, `birds/`, `coop/`, `history/`, `enclosure/`, `guardian-detections/`, plus pipeline-populated `carousel/`, `birdcatraz/`, `yard-diary/`. `brooder/` and `stories/` are frozen archives; `reels/` is being removed (see above) |
 
 **Note:** `content/flock.json` is deprecated. `content/flock-profiles.json` is the single source of truth for bird data. `content/gallery.json` and `content/instagram-posts.json` were retired on 2026-04-23 (v1.11.0) — see CHANGELOG for the reasoning.
 
@@ -101,7 +114,14 @@ Railway deploy is a fallback, not a blocker: `farm.markbarney.net/photos/...` ev
 
 **Don't add tokens to this repo.** If a future task asks to add an `IG_ACCESS_TOKEN` env var to Railway, push back — the posting runs on the Mini, not Railway, and the token lives in keychain. Full docs: `~/GitHub/farm-guardian/docs/19-Apr-2026-instagram-posting-plan.md`.
 
-**Auto-posting is live (as of 2026-04-20).** Farm Guardian's capture-cycle hook (`tools/pipeline/orchestrator.py → _maybe_post_to_ig()`) fires whenever a strong+sharp gem is detected, commits the JPEG into this repo, pushes, and posts to `@pawel_and_pawleen`. That means this repo's `main` branch will grow a steady stream of commits from the Mac Mini — each one adds one file under `public/photos/brooder/` (or yard-diary, coop, flock). Commit messages follow the pattern `public/photos/<subdir>: <gem-id> <short descriptor>`. Do not squash or rewrite these commits — the IG media_id is stable on the URL at that commit's HEAD, so history-rewriting could theoretically break past post URLs if IG ever re-fetches. **End-to-end architecture (what feeds what, where the secrets live, how the pipeline decides what to post):** `~/GitHub/farm-guardian/docs/HOW_IT_ALL_FITS.md`.
+**Auto-posting is live (as of 2026-04-20).** Farm Guardian's capture-cycle hook (`tools/pipeline/orchestrator.py → _maybe_post_to_ig()`) fires whenever a strong+sharp gem is detected, commits the JPEG into this repo, pushes, and posts to `@pawel_and_pawleen`. That means this repo's `main` branch will grow a steady stream of commits from the Mac Mini — each one adds one file under `public/photos/brooder/` (or yard-diary, coop, flock). Commit messages follow the pattern `public/photos/<subdir>: <gem-id> <short descriptor>`. **End-to-end architecture (what feeds what, where the secrets live, how the pipeline decides what to post):** `~/GitHub/farm-guardian/docs/HOW_IT_ALL_FITS.md`.
+
+**What a history rewrite would and wouldn't break (corrected 01-Aug-2026).** This file used to say "do not squash or rewrite these commits — the IG media_id is stable on the URL at that commit's HEAD." **That was wrong**, and it blocked the obvious fix to a 4.7 GB repo for months. Every URL this system has ever handed Meta is a *branch ref* — `raw.githubusercontent.com/VoynichLabs/farm-2026/main/…` — built by `farm-guardian/tools/pipeline/git_helper.py:_github_raw_url`, which uses the branch name deliberately and says so in its docstring. There is not one SHA-pinned URL anywhere in either repo. A history rewrite changes **commit SHAs**; it does not change **what is at the tip of `main`**. So:
+
+- A file that **stays on `main`** keeps its exact raw URL through any rewrite. Photos are safe.
+- A file **removed from `main`** loses its URL immediately — rewrite or plain `git rm`, identically. That is the only real hazard, and it applies to deletion, not to rewriting.
+
+So the actual rule is: **don't delete published media from `main` unless you mean to.** Rewriting history to drop something you're deliberately discarding is fine, and blast radius here is near zero — no branches, no PRs, no tags, one human. Railway re-clones on the next push by itself.
 
 ### s7-cam is PORTRAIT (v2.35.2, 2026-04-21)
 

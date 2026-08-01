@@ -53,3 +53,11 @@ next-env.d.ts
 /TOOLS.md
 /USER.md
 /content/flock-profiles.json.bak.*
+
+# Reel MP4s are transport, not content (01-Aug-2026). They exist only so Meta
+# can fetch each one once during container ingest; nothing on this site links
+# to a .mp4. They are served from the Mini instead —
+# guardian.markbarney.net/api/v1/images/reel-assets/<name>.mp4 — and swept
+# after 48h. Committing them had banked 346 clips / 3.9 GB in git history.
+# See docs/01-Aug-2026-reel-hosting-remediation-plan.md
+/public/photos/reels/

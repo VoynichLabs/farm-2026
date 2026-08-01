@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.36.0] — 2026-08-01
+
+### Changed — Reels stop being committed to this repo; two stale-path bugs fixed (Claude Opus 5)
+
+**What:** The reel lane no longer commits MP4s into `public/photos/reels/`. Reels are now hosted off the Mac Mini through the existing Cloudflare tunnel, exactly like Story assets have been since 04-May-2026.
+
+**Why:** A reel MP4 exists for one reason — to give Meta a public, `.mp4`-terminated URL to fetch **once** during container ingest. After that, Meta serves its own CDN copy forever. We were committing every one of them to git permanently: **346 files, 3.9 GB, 79% of `public/photos/`**, growing ~1 GB/month. Nothing on this site has ever linked to a `.mp4` — `grep` across `app/`, `lib/`, `content/`, and `scripts/` returns zero references. Every push redeploys Railway, which was pulling a 4.8 GB tree, ~80% of it video the container never serves.
+
+**How (farm-guardian side):**
+- `images_api.py` — new `GET /api/v1/images/reel-assets/{filename}`. Uses `FileResponse` (not `Response(read_bytes())`) so 5–33 MB clips stream and honour the ranged GETs Meta's video fetcher issues. 404s are explicitly `no-store`: Cloudflare fronts this hostname and was caching 404s for 4 h (`cf-cache-status: HIT`, `max-age=14400`), which could have poisoned a reel URL long after the file landed.
+- `ig_poster.py` — `post_reel_to_ig` calls the new `_publish_reel_asset()` instead of `commit_image_to_farm_2026()`. `farm_2026_repo_path` is now an unused optional parameter, kept so the four existing call sites don't break.
+- `_sweep_expired_assets()` — new 48 h TTL reaper for **both** asset dirs. Nothing had ever swept `data/story-assets/`; it had reached **919 MB / 1,653 files**. First run took it to 28 MB / 40 files.
+
+**Also fixed — two stale-path bugs found while measuring, both silently losing content:**
+- `~/bin/yard-diary-capture.py` (the copy launchd actually runs) had drifted from the repo version and pointed at `~/Documents/GitHub/farm-2026`, which is **not a git checkout**. Yard-diary frames and their 4K masters had been writing into a dead directory since ~30-Jul; `/yard` was three days stale. Repo version redeployed to `~/bin/`.
+- `bird_photo_ingest.py`, `roster.py`, and `daily_reel_runner.py` hardcoded the same wrong path. All three now resolve it through a new `git_helper.farm_2026_root()`, which reads `instagram.farm_2026_repo_path` from `tools/pipeline/config.json` — the way `orchestrator.py` always did. The reel captioner had been reading an absent roster and an empty diary, which is exactly why captions were losing bird names.
+
+**Recovered:** 5 orphaned yard-diary frames (2026-07-31, 2026-08-01) plus their 4K masters, and 2 diary notes (30-Jul garden haul, 31-Jul Ravenessa crows). **2026-07-30 is a permanent hole** — those three frames exist in neither location.
+
+**Corrected in `CLAUDE.md`:** the "do not squash or rewrite these commits" rule was wrong and had blocked the obvious fix for months. Every URL handed to Meta is a *branch ref* (`.../main/…`), never a SHA — `git_helper._github_raw_url` says so in its own docstring. A rewrite changes commit SHAs, not what's at the tip of `main`, so any file that stays on `main` keeps its exact URL. Only *deletion* breaks a URL, and that is true of `git rm` just as much as of a rewrite.
+
+**Still to do:** `public/photos/reels/` is now `.gitignore`d but the 346 existing files remain tracked. Purging them (`git filter-repo --path public/photos/reels --invert-paths` + force-push) takes GitHub from 4.74 GB to ~0.9 GB. Not done here — it rewrites shared history and needs a quiet window with the LaunchAgents stopped. Plan: [`docs/01-Aug-2026-reel-hosting-remediation-plan.md`](docs/01-Aug-2026-reel-hosting-remediation-plan.md); measurements: [`docs/01-Aug-2026-repo-size-assessment.md`](docs/01-Aug-2026-repo-size-assessment.md).
+
 ## [1.35.4] — 2026-08-01
 
 ### Changed — Sitewide SEO title, description, and link-preview (OG) image (Claude Sonnet 5)
