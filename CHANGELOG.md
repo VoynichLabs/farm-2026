@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.38.0] — 2026-08-07
+
+### Added — Garden glow-up: pumpkins, bottle gourds, and a visiting bulldog (Claude Opus 5)
+
+**What:** 13 curated iPhone photos into `public/photos/garden/`, a field note
+(`content/field-notes/2026-08-07-the-frontrunner-and-the-houseguest.mdx`), and a new
+homepage `GardenStrip` section rendering the latest `garden`-tagged note.
+
+**Why:** the garden was the farm's biggest untold story of the season, and the six
+photos committed on 03-Aug were orphaned — staged for a homepage section that did not
+exist. This builds that section and absorbs them.
+
+**How:** `GardenStrip` derives everything (title, hero, tiles, captions, link) from the
+note's frontmatter via `getAllFieldNotes()`, so a newer garden-tagged note re-points the
+section with no code change. Renders nothing when no such note exists. Sits after
+`RecentGemsRail`.
+
+**Photo export** — three requirements, all verified per file:
+- EXIF rotation **baked into pixels** (`ImageOps.exif_transpose`). `sips` preserves the
+  `Orientation` tag rather than applying it, and PIL ignores the tag — strip metadata
+  without baking first and every portrait frame renders sideways.
+- **All metadata dropped**, including GPS: the originals carry the house coordinates.
+- **Size budgeted** to the existing 380–800 KB band, protecting the v1.37.0 pack
+  reduction. One dense-foliage frame went to 1600px rather than crushing quality.
+
+**Notes:** several source frames in the archive are 1320×2346 story renders with captions
+baked in, not originals; each was traced back to its full-res original by
+`DateTimeOriginal`. Bottle gourds flower **white at dusk** (pumpkins flower yellow in the
+morning) — the blossom is a 19:55 frame. No gourd fruit has set yet.
+
 ## [1.37.0] — 2026-08-01
 
 ### Removed — Purged 346 reel MP4s from all git history (Claude Opus 5)
