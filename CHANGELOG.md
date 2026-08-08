@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.38.0] — 2026-08-08
+
+### Changed — Guardian project copy rewritten for the new frame pipeline (Claude Opus 5)
+
+**What:** `content/projects/guardian/index.mdx` — "The Pipeline" rewritten from 4 steps to 5, plus new copy in "What This Is" and "How It Watches", and an updated `s7-cam` hardware row.
+
+**Why:** the page described a system that no longer exists. It said the Mac Mini "runs vision-language models against every frame" — as of farm-guardian v2.67.0/v2.68.0 that is no longer true and hasn't been the interesting part for a while. The backend now runs a chain of increasingly expensive judges: a burst capture, a ~16 ms object-detector presence check, best-frame selection, and only then the ~5 s VLM. The cadence is also no longer steady on that camera — it speeds up after a good frame and slows over an empty pen.
+
+**How:** the new copy explains the *shape* of the pipeline (cheap judges gating expensive ones) rather than listing components, since that's the part a reader can actually learn something from. Three specifics worth keeping accurate on a public page:
+
+- sharpness is measured inside the bird, not across the frame — foliage out-textures a bird and makes a whole-frame reading rate a soft photo higher than a crisp one
+- the score deliberately ignores how much of the frame the bird fills, even though that's the strongest predictor of which photos get picked — because it belongs in ranking frames, not in gating them
+- good moments cluster, so a hit makes the camera sample harder for the next 90 seconds
+
+The `s7-cam` row also drops its stale "currently aimed at the big water bowl" line (aims go stale within days — `CLAUDE.md` warns about exactly this) and notes the wireless-charging runtime limit instead, which is the durable fact about that device.
+
 ## [1.37.0] — 2026-08-01
 
 ### Removed — Purged 346 reel MP4s from all git history (Claude Opus 5)
