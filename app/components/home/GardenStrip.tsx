@@ -54,53 +54,54 @@ export default function GardenStrip() {
           From the Garden
         </span>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {/* Hero — the note's cover */}
-          <Link
-            href={`/field-notes/${note.slug}`}
-            className="group lg:col-span-2 flex flex-col gap-1.5"
-          >
-            <div className="w-full h-72 sm:h-96 border border-field-border bg-field-wash overflow-hidden">
-              <Image
-                src={note.cover}
-                alt={note.title}
-                width={1500}
-                height={2000}
-                className="w-full h-full object-cover transition-opacity group-hover:opacity-90"
-                sizes="(max-width: 1024px) 100vw, 66vw"
-                priority={false}
-              />
-            </div>
-            <div className="font-mono text-[0.72rem] leading-tight">
-              <div className="text-field-accent group-hover:text-field-accent-deep">
-                {note.title}
-              </div>
-              <div className="text-field-muted">
-                {note.date} · read the field note →
-              </div>
-            </div>
-          </Link>
-
-          {/* Tiles — the rest of the note's photos */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-3">
-            {tiles.map((photo) => (
-              <figure key={photo.src} className="flex flex-col gap-1">
-                <div className="w-full h-32 sm:h-40 border border-field-border bg-field-wash overflow-hidden">
-                  <Image
-                    src={photo.src}
-                    alt={photo.caption}
-                    width={750}
-                    height={1000}
-                    className="w-full h-full object-cover"
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw"
-                  />
-                </div>
-                <figcaption className="font-mono text-[0.66rem] leading-tight text-field-muted line-clamp-2">
-                  {photo.caption}
-                </figcaption>
-              </figure>
-            ))}
+        {/* Hero band on top, tile row beneath. Deliberately NOT a two-column
+            hero-beside-tiles layout: the two columns can't agree on a height
+            (fixed hero leaves dead space under it; a stretching hero blows the
+            section up past 1700px), and stacking sidesteps that entirely. */}
+        <Link
+          href={`/field-notes/${note.slug}`}
+          className="group block mb-4"
+        >
+          <div className="w-full h-64 sm:h-80 lg:h-[26rem] border border-field-border bg-field-wash overflow-hidden">
+            <Image
+              src={note.cover}
+              alt={note.title}
+              width={1500}
+              height={2000}
+              className="w-full h-full object-cover transition-opacity group-hover:opacity-90"
+              sizes="100vw"
+              priority={false}
+            />
           </div>
+          <div className="font-mono text-[0.72rem] leading-tight mt-1.5">
+            <div className="text-field-accent group-hover:text-field-accent-deep">
+              {note.title}
+            </div>
+            <div className="text-field-muted">
+              {note.date} · read the field note →
+            </div>
+          </div>
+        </Link>
+
+        {/* Tiles — the rest of the note's photos, one row on desktop */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          {tiles.map((photo) => (
+            <figure key={photo.src} className="flex flex-col gap-1">
+              <div className="w-full h-32 sm:h-36 border border-field-border bg-field-wash overflow-hidden">
+                <Image
+                  src={photo.src}
+                  alt={photo.caption}
+                  width={750}
+                  height={1000}
+                  className="w-full h-full object-cover"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                />
+              </div>
+              <figcaption className="font-mono text-[0.66rem] leading-tight text-field-muted">
+                {photo.caption}
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </div>
     </section>
