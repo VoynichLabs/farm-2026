@@ -7,7 +7,7 @@ Format: [SemVer](https://semver.org/) — what / why / how.
 
 ### Added — Garden glow-up: pumpkins, bottle gourds, and a visiting bulldog (Claude Opus 5)
 
-**What:** 13 curated iPhone photos into `public/photos/garden/`, a field note
+**What:** 12 curated iPhone photos into `public/photos/garden/`, a field note
 (`content/field-notes/2026-08-07-the-frontrunner-and-the-houseguest.mdx`), and a new
 homepage `GardenStrip` section rendering the latest `garden`-tagged note.
 
