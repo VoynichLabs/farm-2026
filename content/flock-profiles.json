@@ -1073,7 +1073,7 @@
       "egg_color": "TBD (too young)",
       "temperament": "Settled with siblings in the brooder",
       "color_description": "Plain, completely unpatterned slate blue-grey body \u2014 no bars, no blotches, no rust anywhere \u2014 under a head and neck densely frosted with white flecking, so she reads as a grey bird in a salt-and-pepper hood. Breast a lighter dove-grey than the back. Comb still small and low, pale gold iris, bright clean yellow legs.",
-      "photo": "birds/IMG_7729-henriessa-silver-pink08-21jul2026.jpg",
+      "photo": "birds/IMG_8649-henriessa-grey-speckled-10aug2026.jpg",
       "silver_marking": "confirmed",
       "notes": "June Henrietta-line chick. Dam: Henrietta (the flock's only brown-egg layer); name echoes the line (cf. Henriella). Sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that Henriessa is the silver/blue-gray sister \u2014 this settles the June flip-flop back to her (the original hatch-day observation) and away from Henridotta, who is the darker standard look. First logged photo (IMG_7655, 2026-07-21) is a solo portrait of her showing the silver barring. Per-chick record: content/hatches/2026/2026-06-03-01-henriessa.md BAND CONFIRMED 2026-07-21: pink #08 (boss confirmed from IMG_7729).",
       "location": "birdcatraz",
@@ -1103,6 +1103,11 @@
         {
           "file": "birds/IMG_7729-henriessa-silver-pink08-21jul2026.jpg",
           "date": "2026-07-21"
+        },
+        {
+          "file": "birds/IMG_8649-henriessa-grey-speckled-10aug2026.jpg",
+          "date": "2026-08-10",
+          "caption": "A grey-speckled hen perches on a wooden beam, eyeing the camera with a calm gaze."
         }
       ]
     },
