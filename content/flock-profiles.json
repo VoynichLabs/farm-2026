@@ -852,11 +852,18 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Aggressive out the gate \u2014 relocated solo from incubator at 21:22 EDT for pecking batchmates and knocking eggs around",
-      "color_description": "Copper-orange over back and wings with scattered slate and charcoal smudges, finishing in a boldly banded rust-and-charcoal tail carried low that reads near-black at a distance \u2014 a striped dark tail on an otherwise plain copper bird. Face and throat noticeably pale cream-white, with a rounded rust-brown patch on the cheek behind the eye. (Plumage from 23-Jun-2026 and five weeks stale. HE WEARS NO BAND \u2014 plumage is the only way to identify him, and he is the worst-evidenced bird in the flock.)",
+      "color_description": "Copper-orange over back and wings with scattered slate and charcoal smudges, finishing in a boldly banded rust-and-charcoal tail carried low that reads near-black at a distance \u2014 a striped dark tail on an otherwise plain copper bird. Face and throat noticeably pale cream-white, with a rounded rust-brown patch on the cheek behind the eye. (Plumage from 23-Jun-2026 and five weeks stale.)",
       "photo": "birds/IMG_6268-birdthazar-23jun2026.jpg",
       "notes": "First of three chicks from the April-25 clutch. Wing-feather sexing (2026-05-17 15:50 EDT) read approximately uniform single row \u2192 probable cockerel. Sire LBRJ probable per the April 25 paternity window. The early solo-brooder aggression settled out \u2014 he now runs with the flock in Birdcatraz.",
       "location": "birdcatraz",
       "ornitharch": true,
+      "leg_band": {
+        "color": "purple",
+        "side": "left",
+        "confirmed": true,
+        "confirmed_date": "2026-08-10",
+        "note": "Boss-confirmed from IMG_8590, 2026-08-10 \u2014 resolves the multi-agent band-ID thread that mistakenly pursued Henridotta/Henrietta/Birdsilla. Prior record said he wore no band at all; corrected here."
+      },
       "photos": [
         {
           "file": "may-2026/birdthazar-day4-portrait.jpg",
