@@ -148,7 +148,17 @@
       "status": "deceased",
       "egg_color": "Brown",
       "temperament": "Independent, good forager",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Reddish-brown",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Reddish-brown",
+      "color_description_as_of": null,
       "photo": "birds/birdatha.jpg",
       "notes": "Oldest hen on property, reliable producer. Lost in early April 2026.",
       "deceased_date": "2026-04-09",
@@ -168,7 +178,17 @@
       "status": "deceased",
       "egg_color": "Tan to light brown",
       "temperament": "Docile, curious, excellent forager",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Mahogany with white-tipped black-barred feathers",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Mahogany with white-tipped black-barred feathers",
+      "color_description_as_of": null,
       "photo": "birds/birdgit.jpg",
       "notes": "Lost to hawk attack on 08-April-2026. Friendly and active, often seen exploring.",
       "deceased_date": "2026-04-08",
@@ -190,7 +210,17 @@
       "cause_of_death": "Natural causes (old age / senescence); passed peacefully overnight of 4-5 June 2026",
       "egg_color": "Brown",
       "temperament": "Hardy, independent",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Gold and black laced plumage, purple leg band on left leg",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Gold and black laced plumage, purple leg band on left leg",
+      "color_description_as_of": null,
       "photo": "birds/henrietta.jpg",
       "notes": "Matriarch and founder of the Henrietta line (Henriella, Henriessa, Henridotta). Purple left-leg band; the flock's only brown-egg layer. Passed peacefully of old age overnight of 4-5 June 2026 and was buried in the garden under a tomato plant.",
       "photo_throwback": "history/henrietta-2022-scary-birds.jpg",
@@ -215,7 +245,17 @@
       "status": "deceased",
       "egg_color": "N/A (rooster)",
       "temperament": "Protective, active, attentive flock manager",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Deep auburn/red",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Deep auburn/red",
+      "color_description_as_of": null,
       "photo": null,
       "notes": "Primary rooster; father of Birdadonna. Photo TBD \u2014 current file is mislabeled (shows old flock brooder shot)",
       "deceased_date": "2026-04-24",
@@ -230,7 +270,17 @@
       "status": "deceased",
       "egg_color": "N/A (rooster)",
       "temperament": "Calm, friendly",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "White body with black-barred tail, yellow legs, likely male EE \u00d7 RIR cross",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "White body with black-barred tail, yellow legs, likely male EE \u00d7 RIR cross",
+      "color_description_as_of": null,
       "photo": "birds/whitey-red-legs.jpg",
       "notes": "Secondary rooster; large single comb; mixed breed background. Disappeared 01-May-2026.",
       "deceased_date": "2026-05-01",
@@ -250,7 +300,17 @@
       "status": "active",
       "egg_color": "Blue or green",
       "temperament": "Friendly, curious",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Dark blue-black slate plumage, single comb",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Dark blue-black slate plumage, single comb",
+      "color_description_as_of": null,
       "photo": "birds/ee-hen-1.jpg",
       "notes": "Boss-named; was tracked under the placeholder 'EE hen 1' before her name was confirmed. Darker of the two Easter Egger hens; dam of Birdadonna and of the 2026 June clutch. Adult blue/green-egg layer \u2014 a distinct bird from the 2026 chick Birdsilla.",
       "photos": [
@@ -270,7 +330,17 @@
       "cause_of_death": "Predator (presumed) \u2014 no body or feathers recovered",
       "egg_color": "Blue or green",
       "temperament": "Friendly, curious",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Blue-gray plumage with yellow legs, single comb",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Blue-gray plumage with yellow legs, single comb",
+      "color_description_as_of": null,
       "photo": "birds/ee-hen-2.jpg",
       "notes": "Went missing ~12:30 EDT on 2026-05-16 with no overt hawk-strike evidence (no feathers, no body). Held as 'unknown' through evening roll call; Boss confirmed lost on 2026-05-19. Lighter of the two Easter Egger hens; good forager.",
       "photos": [
@@ -287,7 +357,17 @@
       "status": "active",
       "egg_color": "Blue",
       "temperament": "Friendly, active",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Blue-gray body with golden auburn hackle",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Blue-gray body with golden auburn hackle",
+      "color_description_as_of": null,
       "photo": "birds/birdadonna-2.jpg",
       "notes": "Hatched in incubator on boss's desk; dam: Birdsula (formerly 'EE hen 1'), sire: Little Big Red Junior. Survived the early-April 2026 predator wave that took Birdgit, Birdatha, and the Black Australorp. Laid the egg (03-April-2026) that hatched as Birdadotta on 25-April-2026.",
       "photos": [
@@ -305,7 +385,17 @@
       "status": "deceased",
       "egg_color": "Brown (large)",
       "temperament": "Docile, broody",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Black plumage with iridescent green sheen",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Black plumage with iridescent green sheen",
+      "color_description_as_of": null,
       "photo": "birds/australorp.jpg",
       "notes": "Excellent egg producer. Lost in early April 2026.",
       "deceased_date": "2026-04-09",
@@ -324,7 +414,18 @@
       "status": "active",
       "egg_color": "N/A (rooster)",
       "temperament": "Confident, curious \u2014 the senior ornitharch",
+      "color_observations": [
+        {
+          "date": "2026-06-23",
+          "date_unknown": false,
+          "description": "Big slate blue-grey feather blocks laid across the shoulders and wings over a copper-chestnut ground \u2014 a grey-over-rust patchwork with no barring or lacing. Golden-orange neck hackles with dark shafts, a large area of bare bright RED skin over the face, and a strikingly pale yellow-gold iris. Comb low, red and knobby rather than upright. He is a cockerel. \u26a0\ufe0f Compare Horstabird, who also shows grey over gold but has a dull grey-brown face. (Plumage from 23-Jun-2026 and five weeks stale \u2014 re-check.)",
+          "source": "roster-backfill",
+          "age_weeks": 11,
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"Plumage from 23-Jun-2026\"."
+        }
+      ],
       "color_description": "Big slate blue-grey feather blocks laid across the shoulders and wings over a copper-chestnut ground \u2014 a grey-over-rust patchwork with no barring or lacing. Golden-orange neck hackles with dark shafts, a large area of bare bright RED skin over the face, and a strikingly pale yellow-gold iris. Comb low, red and knobby rather than upright. He is a cockerel. \u26a0\ufe0f Compare Horstabird, who also shows grey over gold but has a dull grey-brown face. (Plumage from 23-Jun-2026 and five weeks stale \u2014 re-check.)",
+      "color_description_as_of": "2026-06-23",
       "photo": "birds/IMG_5849-birdadette-23jun2026.jpg",
       "notes": "First successful incubator hatch of 2026 \u2014 from a blue egg set 16-March, hatched on Boss's desk 06-April. Formerly Birdadette; renamed Birddor in July 2026 when he turned out to be a cockerel. Sire window Little Big Red Junior (probable); dam unconfirmed. Per-chick record: content/hatches/2026/2026-04-06-01-birdadette.md",
       "location": "birdcatraz",
@@ -377,7 +478,17 @@
       "status": "active",
       "egg_color": "N/A (juveniles)",
       "temperament": "Social, curious, imprinted on handlers",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Full white adult plumage, red heads and wattles in color",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Full white adult plumage, red heads and wattles in color",
+      "color_description_as_of": null,
       "photo": "april-2026/turkey-poult-in-hand.jpg",
       "notes": "3 White Broad-Breasted turkeys. First turkeys on the farm. Grown into the big regal-and-ridiculous stage; live in the turkey pen inside Birdcatraz.",
       "location": "birdcatraz",
@@ -395,7 +506,17 @@
       "status": "active",
       "egg_color": "TBD",
       "temperament": "Active, alert",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Fully feathered juveniles \u2014 breed to confirm from adult plumage",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Fully feathered juveniles \u2014 breed to confirm from adult plumage",
+      "color_description_as_of": null,
       "photo": null,
       "notes": "Originally 4 chicks from Tractor Supply, straight run (unsexed), Brahma or Cream Legbar \u2014 breed uncertain. 2 of the 4 have since been lost (Boss-confirmed 2026-06-07; date/cause not specified). 2 remain, in Birdcatraz with the white turkeys and the rest of the grown flock.",
       "location": "birdcatraz"
@@ -408,7 +529,18 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Alert, growing fast",
+      "color_observations": [
+        {
+          "date": "2026-06-23",
+          "date_unknown": false,
+          "description": "A sharply bounded rust-and-black streaked cape over the head, neck and shoulders that stops dead where the body begins \u2014 a copper collar on a solid black bird, visible from across the yard. Body black to near-black with a faint green-blue sheen, no barring, speckling or white. Legs olive-tan mottled grey-brown rather than clean yellow. (Plumage from 23-Jun-2026 and five weeks stale; that frame showed neither the blue eyes nor the white wing and belly tips previously on file, and both shanks were bare where the roster puts orange #10 \u2014 she needs re-checking.)",
+          "source": "roster-backfill",
+          "age_weeks": 8,
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"Plumage from 23-Jun-2026\"."
+        }
+      ],
       "color_description": "A sharply bounded rust-and-black streaked cape over the head, neck and shoulders that stops dead where the body begins \u2014 a copper collar on a solid black bird, visible from across the yard. Body black to near-black with a faint green-blue sheen, no barring, speckling or white. Legs olive-tan mottled grey-brown rather than clean yellow. (Plumage from 23-Jun-2026 and five weeks stale; that frame showed neither the blue eyes nor the white wing and belly tips previously on file, and both shanks were bare where the roster puts orange #10 \u2014 she needs re-checking.)",
+      "color_description_as_of": "2026-06-23",
       "photo": "birds/IMG_6271-birdadotta-23jun2026.jpg",
       "notes": "Birdadonna's offspring \u2014 egg laid 03-April-2026, hatched day-22, making her the first second-generation chick of the breeding program (dam Birdadonna, sire window Little Big Red Junior). Grown and out in Birdcatraz with the rest of the 2026 class.",
       "location": "birdcatraz",
@@ -447,7 +579,17 @@
       "status": "active",
       "egg_color": "N/A (juveniles)",
       "temperament": "Social, curious, imprinted on handlers",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Gray-bronze juvenile plumage, necks baring as the adult heads come in \u2014 first bronze turkeys on the farm",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Gray-bronze juvenile plumage, necks baring as the adult heads come in \u2014 first bronze turkeys on the farm",
+      "color_description_as_of": null,
       "photo": "april-2026/bronze-turkey-poult-in-hand.jpg",
       "notes": "2 Bronze Broad-Breasted turkeys from TSC. First bronze turkeys on the property. Coming up fast behind the white pair; live in the turkey pen inside Birdcatraz.",
       "location": "birdcatraz",
@@ -466,7 +608,17 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "TBD",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Classic black-and-white barring in \u2014 the checkerboard birds of the run",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Classic black-and-white barring in \u2014 the checkerboard birds of the run",
+      "color_description_as_of": null,
       "photo": "april-2026/rock-chicks-tsc-arrival.jpg",
       "notes": "2 Barred Plymouth Rocks from TSC (25-April haul). Grown out with the April-25 cohort; live in Birdcatraz.",
       "location": "birdcatraz",
@@ -485,7 +637,17 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "TBD",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Plymouth Rock variety, exact sub-variety still to confirm from the adult plumage (Speckled/Mottled, Partridge, or other)",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Plymouth Rock variety, exact sub-variety still to confirm from the adult plumage (Speckled/Mottled, Partridge, or other)",
+      "color_description_as_of": null,
       "photo": "april-2026/rock-chicks-tsc-arrival.jpg",
       "notes": "2 Plymouth Rocks from TSC alongside the Barred Rocks. Plymouth Rock variety, not Speckled Sussex. Sub-variety to be confirmed from adult plumage. Grown out in Birdcatraz with the April-25 cohort.",
       "location": "birdcatraz",
@@ -503,7 +665,17 @@
       "status": "active",
       "egg_color": "TBD (assorted breeds)",
       "temperament": "Active, feathered out \u2014 breeds resolving from adult plumage",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Varied \u2014 assortment of rare and exotic breeds",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Varied \u2014 assortment of rare and exotic breeds",
+      "color_description_as_of": null,
       "photo": "april-2026/cackle-hatchery-arrival.jpg",
       "notes": "Cackle Hatchery batch from the 08-April-2026 arrival: Exotic Island Fowl Special + Rare Chick Special. Reinforcements after losing Birdgit. Likely mostly males \u2014 the cheap ones from hatchery specials. These birds would have been culled otherwise. Exact breeds resolving from adult plumage. Total order: $122.80 shipped USPS Priority. Grown out and living in Birdcatraz with the rest of the flock.",
       "location": "birdcatraz",
@@ -702,7 +874,17 @@
       "status": "active",
       "egg_color": "Brown (laced Wyandottes) \u2014 to confirm as they come into lay",
       "temperament": "Active juveniles, well integrated",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Varied Wyandotte lacing coming in \u2014 Blue Laced Red Wyandottes show slate-blue lacing and a slate-blue tail on a rust-red ground; Red/Gold Laced show dark lacing on a gold ground. Juvenile head feathering can look like a small tuft but is NOT a crest (rose comb, not a Polish/Legbar crest).",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Varied Wyandotte lacing coming in \u2014 Blue Laced Red Wyandottes show slate-blue lacing and a slate-blue tail on a rust-red ground; Red/Gold Laced show dark lacing on a gold ground. Juvenile head feathering can look like a small tuft but is NOT a crest (rose comb, not a Polish/Legbar crest).",
+      "color_description_as_of": null,
       "photo": null,
       "notes": "The first juvenile cohort of 2026, purchased early-March from Tractor Supply; started in the March nesting-box setup, graduated to the coop. BREED CORRECTED 2026-06-26 (Boss-authoritative, #meet-the-lobsters): this batch is RED-LACED (Gold Laced) + BLUE-LACED (Blue Laced Red) WYANDOTTES \u2014 the earlier '1 EE + 2 BLR Wyandotte + 3 Cream Legbar' breakdown was WRONG. The 'Cream Legbar' ID came from misreading juvenile Wyandotte head feathering as a crest; rose comb + red/gold laced ground confirm Wyandotte. Exact per-color counts (and whether any one bird is actually an Easter Egger) to finalize as adult plumage sets. Note: Scissor Beak, Robirda, and Bobirda have been split out as named individuals as of 2026-07-21.",
       "location": "birdcatraz"
@@ -716,7 +898,17 @@
       "status": "active",
       "egg_color": "Brown (to confirm)",
       "temperament": "Active juvenile pullet, well integrated",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Blue Laced Red Wyandotte pullet \u2014 slate-blue lacing on a rust-red ground, rose comb. Has scissor beak (cross beak): upper and lower mandible are offset but occlude/close fine.",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Blue Laced Red Wyandotte pullet \u2014 slate-blue lacing on a rust-red ground, rose comb. Has scissor beak (cross beak): upper and lower mandible are offset but occlude/close fine.",
+      "color_description_as_of": null,
       "photo": null,
       "notes": "Blue Laced Red Wyandotte pullet from the March 2026 TSC batch (formerly part of 'March juveniles (6)' group). Has scissor beak (cross beak) \u2014 occludes/closes fine, mild, good prognosis. Manage with deep feed/water dishes, monitor weight, optional gentle beak trim if it overgrows.",
       "location": "birdcatraz",
@@ -732,7 +924,17 @@
       "status": "active",
       "egg_color": "Brown (to confirm)",
       "temperament": "Active juvenile pullet, well integrated",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "A gold collar across the shoulders in which every feather carries a bold black dagger stripe, sitting between a rust-ginger head and an otherwise plain unmarked warm buff body \u2014 that one band of heavy black streaking is the whole pattern on her. Wing tips and the short low-carried tail are dull grey-brown. Full deep-bodied build, cream ear patch, almost no comb showing, a small ragged tuft standing up off the back of the crown. (Colours read from a frame shot under a pink shade tarp \u2014 verify in open daylight.)",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "A gold collar across the shoulders in which every feather carries a bold black dagger stripe, sitting between a rust-ginger head and an otherwise plain unmarked warm buff body \u2014 that one band of heavy black streaking is the whole pattern on her. Wing tips and the short low-carried tail are dull grey-brown. Full deep-bodied build, cream ear patch, almost no comb showing, a small ragged tuft standing up off the back of the crown. (Colours read from a frame shot under a pink shade tarp \u2014 verify in open daylight.)",
+      "color_description_as_of": null,
       "photo": "birds/IMG_7744-robirda-large-buff-21jul2026.jpg",
       "notes": "Gold/Red Laced Wyandotte pullet from the March 2026 TSC batch (formerly part of 'March juveniles (6)' group). Orange band #01 on right leg, confirmed 2026-07-21.",
       "location": "birdcatraz",
@@ -760,7 +962,17 @@
       "status": "active",
       "egg_color": "Brown (to confirm)",
       "temperament": "Active juvenile pullet, well integrated",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "A hard two-tone split down the body: plain unmarked rusty-copper breast and belly running straight into a heavily dark-stippled, peppered brown cape over the back and shoulders. Neck and crown deeper maroon-brown. Bright red face with a conspicuous creamy-white oval earlobe below and behind the eye, upright red comb of about five points. Band is white #6 on the RIGHT leg (a purchased bird).",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "A hard two-tone split down the body: plain unmarked rusty-copper breast and belly running straight into a heavily dark-stippled, peppered brown cape over the back and shoulders. Neck and crown deeper maroon-brown. Bright red face with a conspicuous creamy-white oval earlobe below and behind the eye, upright red comb of about five points. Band is white #6 on the RIGHT leg (a purchased bird).",
+      "color_description_as_of": null,
       "photo": "birds/IMG_7742-bobirda-21jul2026.jpg",
       "notes": "Red/Gold Laced Wyandotte pullet from the March 2026 TSC batch (formerly part of 'March juveniles (6)' group). White band #06 on right leg, confirmed 2026-07-21. Non-ornitharch \u2014 white band on the right leg per standing rule.",
       "location": "birdcatraz",
@@ -788,7 +1000,17 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "TBD",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Breeds resolving as they feather out: at least 2 Buff Rangers (buff/orange, heavy-bodied, fast growers) + a Barred Rock; remainder TBD",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Breeds resolving as they feather out: at least 2 Buff Rangers (buff/orange, heavy-bodied, fast growers) + a Barred Rock; remainder TBD",
+      "color_description_as_of": null,
       "photo": "birds/IMG_4925-buff-rangers-bronze-turkey-28may2026.jpg",
       "notes": "Six additional Tractor Supply chicks brought home approximately one week after the 25-April haul; now grown out in Birdcatraz with the April-25 cohort. Breed-ID update 2026-05-28 (per Boss): this batch includes the two Buff Rangers ('monstrous little eating machines') and a Barred Rock \u2014 see IMG_4925. UPDATE 2026-06-18: the two Buff Rangers are now individually named and split out into their own records \u2014 Chonkers and Chonkette. This batch now accounts for the remaining ~4 (1 Barred Rock + ~3 TBD).",
       "location": "birdcatraz",
@@ -808,7 +1030,17 @@
       "status": "active",
       "egg_color": "N/A or TBD \u2014 Buff Ranger meat hybrid; probable cockerel",
       "temperament": "Voracious forager \u2014 one of the two 'monstrous little eating machines'",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Buff/golden plumage, heavy-bodied; well-developed red comb and wattles. Right-hand bird in IMG_5948.",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Buff/golden plumage, heavy-bodied; well-developed red comb and wattles. Right-hand bird in IMG_5948.",
+      "color_description_as_of": null,
       "photo": "birds/IMG_5948-chonkers-chonkette-18jun2026.jpg",
       "notes": "Boss-named 2026-06-18 (#meet-the-lobsters). One of the two Buff Rangers ('the Buff Rangers') previously tracked anonymously inside 'Tractor Supply chicks \u2014 May batch (6)'. The 'buff buttrot' skin irritation (raw patch on the flank under the wing, first logged 2026-06-10 in the diary) has CLEARED UP per Boss as of 2026-06-18. Right-hand / more mature bird in the 18-June photo \u2014 comb and wattles in, probable cockerel.",
       "location": "birdcatraz",
@@ -828,7 +1060,17 @@
       "status": "active",
       "egg_color": "TBD \u2014 Buff Ranger; probable pullet",
       "temperament": "Voracious forager \u2014 one of the two 'monstrous little eating machines'",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Buff/golden plumage; younger-looking than Chonkers \u2014 less comb/wattle development, some downy feathering still on the underside. Left-hand bird in IMG_5948.",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Buff/golden plumage; younger-looking than Chonkers \u2014 less comb/wattle development, some downy feathering still on the underside. Left-hand bird in IMG_5948.",
+      "color_description_as_of": null,
       "photo": "birds/s7-cam-gem-chonkette-large-golden-25jul2026.jpg",
       "notes": "Boss-named 2026-06-18 (#meet-the-lobsters). The second of the two Buff Rangers ('the Buff Rangers') previously tracked anonymously inside 'Tractor Supply chicks \u2014 May batch (6)'. 'Buff buttrot' skin irritation cleared up per Boss as of 2026-06-18. Left-hand / less-developed bird in the 18-June photo \u2014 probable pullet.",
       "location": "birdcatraz",
@@ -852,7 +1094,18 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Aggressive out the gate \u2014 relocated solo from incubator at 21:22 EDT for pecking batchmates and knocking eggs around",
+      "color_observations": [
+        {
+          "date": "2026-06-23",
+          "date_unknown": false,
+          "description": "Copper-orange over back and wings with scattered slate and charcoal smudges, finishing in a boldly banded rust-and-charcoal tail carried low that reads near-black at a distance \u2014 a striped dark tail on an otherwise plain copper bird. Face and throat noticeably pale cream-white, with a rounded rust-brown patch on the cheek behind the eye. (Plumage from 23-Jun-2026 and five weeks stale.)",
+          "source": "roster-backfill",
+          "age_weeks": 5,
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"Plumage from 23-Jun-2026\"."
+        }
+      ],
       "color_description": "Copper-orange over back and wings with scattered slate and charcoal smudges, finishing in a boldly banded rust-and-charcoal tail carried low that reads near-black at a distance \u2014 a striped dark tail on an otherwise plain copper bird. Face and throat noticeably pale cream-white, with a rounded rust-brown patch on the cheek behind the eye. (Plumage from 23-Jun-2026 and five weeks stale.)",
+      "color_description_as_of": "2026-06-23",
       "photo": "birds/IMG_6268-birdthazar-23jun2026.jpg",
       "notes": "First of three chicks from the April-25 clutch. Wing-feather sexing (2026-05-17 15:50 EDT) read approximately uniform single row \u2192 probable cockerel. Sire LBRJ probable per the April 25 paternity window. The early solo-brooder aggression settled out \u2014 he now runs with the flock in Birdcatraz.",
       "location": "birdcatraz",
@@ -897,7 +1150,17 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Was vocalizing distress at 21:23 EDT while Birdthazar was harassing; settled once Birdthazar moved to brooder",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Glossy jet-black head and neck above a slate blue-grey body \u2014 the black head is her mark, and no other grey-bodied bird in the flock has one. Chestnut-rust patches on the wing shoulder and down the front of the neck break up the grey. Broad bare red face, large upright red comb and long wattles, gold iris, heavy yellow-orange legs. She is one of the larger and more mature-looking of the young birds.",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Glossy jet-black head and neck above a slate blue-grey body \u2014 the black head is her mark, and no other grey-bodied bird in the flock has one. Chestnut-rust patches on the wing shoulder and down the front of the neck break up the grey. Broad bare red face, large upright red comb and long wattles, gold iris, heavy yellow-orange legs. She is one of the larger and more mature-looking of the young birds.",
+      "color_description_as_of": null,
       "photo": "birds/IMG_7791-henriella-large-adult-23jul2026.jpg",
       "notes": "First chick of the Henrietta line. Dam confirmed: Henrietta (only brown-egg layer among the active hens \u2014 Golden Laced Wyandotte). Sire LBRJ probable per the April 25 paternity window. Named Henriella per the Boss-confirmed 2026 hatch spine. The line later produced the June chicks Henriessa and Henridotta. Out in Birdcatraz now \u2014 spotted holding the top roost spot with Birdsilla (diary, 09-Jul-2026). SEX SUSPECTED COCKEREL (flagged 21-Jul-2026, ~9\u201310 weeks): at this age the comb is bright red, upright, single with clean points, and the wattles have already drooped and flushed red \u2014 that is cockerel hardware. Pullets at 9\u201310 weeks show only tiny pale comb nubs and flat wattles. The dark charcoal body with rust coming in on the wings is the Wyandotte \u00d7 RIR cross phenotype and reads the same in either sex, so plumage is not the tell here. Boss-approved alternate name 'Henriello' pending confirmation; saddle/hackle feathers will confirm sex at 12\u201314 weeks.",
       "location": "birdcatraz",
@@ -950,7 +1213,18 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Pip-to-free in ~40 min \u2014 vigorous out the shell. 'Big ol' orange dinosaur' per Boss.",
+      "color_observations": [
+        {
+          "date": "2026-07-21",
+          "date_unknown": false,
+          "description": "Deep foxy rust-copper across back, wing and saddle, breaking hard into a blackish tail \u2014 rust body, black tail, with no barring or lacing. Carries only light dark marking: a scatter of slate-grey flecks across the nape like a dark collar, a couple of slate flecks at the shoulder and a thin dark line along the lower edge of the folded wing. Unusually extensive bright pink-red bare face skin, small low knobbly comb lying flat well back on the crown. \u26a0\ufe0f Easily confused with Birdthazar, who is also copper with slate smudges \u2014 Birdthazar has no band at all, Birdsilla wears white #3. (Plumage from 21-Jul-2026, photographed shortly before that day's banding session.)",
+          "source": "roster-backfill",
+          "age_weeks": 9,
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"Plumage from 21-Jul-2026\"."
+        }
+      ],
       "color_description": "Deep foxy rust-copper across back, wing and saddle, breaking hard into a blackish tail \u2014 rust body, black tail, with no barring or lacing. Carries only light dark marking: a scatter of slate-grey flecks across the nape like a dark collar, a couple of slate flecks at the shoulder and a thin dark line along the lower edge of the folded wing. Unusually extensive bright pink-red bare face skin, small low knobbly comb lying flat well back on the crown. \u26a0\ufe0f Easily confused with Birdthazar, who is also copper with slate smudges \u2014 Birdthazar has no band at all, Birdsilla wears white #3. (Plumage from 21-Jul-2026, photographed shortly before that day's banding session.)",
+      "color_description_as_of": "2026-07-21",
       "photo": "birds/IMG_7556-birdsilla-21jul2026.jpg",
       "notes": "Third chick of the April-25 clutch. EE-lineage from blue egg; dam candidates are Birdadonna, Birdsula (EE hen 1), or EE hen 2 \u2014 none confirmed. Named-line candidate if dam turns out to be Birdadonna. Sire LBRJ probable. Named Birdsilla, aka 'Monster Leg' (recognized nickname/alias), per the Boss-confirmed 2026 hatch spine. Out in Birdcatraz \u2014 tested the top roost spot with Henriella (diary, 09-Jul-2026). Description (21-Jul-2026, IMG_7556): warm solid buff-orange across the back with no stripe pattern \u2014 the tell against Birdthazar; black tail coming in dark and full; yellow legs; small pink comb, consistent with pullet. Disposition: confident, owns the yard.",
       "location": "birdcatraz",
@@ -1003,7 +1277,18 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Calm; presumed male per Boss's early call",
+      "color_observations": [
+        {
+          "date": "2026-06-22",
+          "date_unknown": false,
+          "description": "The only predominantly white bird \u2014 cream-white overall, the sole dark marking a smudgy charcoal speckled patch confined to the wing shoulder and upper back, with the wing and tail feathers below staying clean white. A grey-blue stain runs along the upper beak. (Plumage from 22-Jun-2026 and five weeks stale \u2014 the natal black head spot has already grown out and is no longer a usable mark against Ingebird. That frame shows a bird less developed than five weeks would suggest, so either the photo predates its label or it is not this bird \u2014 worth confirming against the red #3 band.)",
+          "source": "roster-backfill",
+          "age_weeks": 2,
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"Plumage from 22-Jun-2026\"."
+        }
+      ],
       "color_description": "The only predominantly white bird \u2014 cream-white overall, the sole dark marking a smudgy charcoal speckled patch confined to the wing shoulder and upper back, with the wing and tail feathers below staying clean white. A grey-blue stain runs along the upper beak. (Plumage from 22-Jun-2026 and five weeks stale \u2014 the natal black head spot has already grown out and is no longer a usable mark against Ingebird. That frame shows a bird less developed than five weeks would suggest, so either the photo predates its label or it is not this bird \u2014 worth confirming against the red #3 band.)",
+      "color_description_as_of": "2026-06-22",
       "photo": "birds/IMG_6233-birdimir-juvenile-22jun2026.jpg",
       "notes": "First chick of the June clutch (new incubator, eggs set ~12 May; sire window Whitey Red Legs). Hatched in the NI, moved to the retired old incubator overnight as a holding spot, then to the brooder 2026-06-03. Dam not individually confirmed (blue egg). Per-chick record: content/hatches/2026/2026-06-02-01-birdimir.md",
       "location": "birdcatraz",
@@ -1036,7 +1321,17 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Came out of the shell upside-down; healthy",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Near-black bird with fine, narrow, irregular white ticking rather than broad bars \u2014 the darkest of the dark patterned birds \u2014 with the head and neck more crisply white-speckled than the body. A pale patch shows on the lower back above the tail in her 21-Jul frame (IMG_7718); if that holds up in the field it is the one mark that separates her from Henridotta and Adelbird without handling her. Comb and wattles already well reddened, yellow legs. Band is green #2.",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Near-black bird with fine, narrow, irregular white ticking rather than broad bars \u2014 the darkest of the dark patterned birds \u2014 with the head and neck more crisply white-speckled than the body. A pale patch shows on the lower back above the tail in her 21-Jul frame (IMG_7718); if that holds up in the field it is the one mark that separates her from Henridotta and Adelbird without handling her. Comb and wattles already well reddened, yellow legs. Band is green #2.",
+      "color_description_as_of": null,
       "photo": "birds/IMG_7718-ingebird-black-white-21jul2026.jpg",
       "notes": "Second chick of the June clutch. Dam noted by Boss as Birdsula (a blue-egg Easter Egger hen, \u2248 'EE hen 1') \u2014 low confidence; sire window Whitey Red Legs. Moved to the brooder 2026-06-03. Per-chick record: content/hatches/2026/2026-06-02-02-ingebird.md",
       "location": "birdcatraz",
@@ -1072,7 +1367,18 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Settled with siblings in the brooder",
+      "color_observations": [
+        {
+          "date": "2026-07-21",
+          "date_unknown": false,
+          "description": "Plain, completely unpatterned slate blue-grey body \u2014 no bars, no blotches, no rust anywhere \u2014 under a head and neck densely frosted with white flecking, so she reads as a grey bird in a salt-and-pepper hood. Breast a lighter dove-grey than the back. Comb still small and low, pale gold iris, bright clean yellow legs.",
+          "source": "roster-backfill",
+          "age_weeks": 6,
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"SILVER RESOLVED: the Boss confirmed 2026-07-21\"."
+        }
+      ],
       "color_description": "Plain, completely unpatterned slate blue-grey body \u2014 no bars, no blotches, no rust anywhere \u2014 under a head and neck densely frosted with white flecking, so she reads as a grey bird in a salt-and-pepper hood. Breast a lighter dove-grey than the back. Comb still small and low, pale gold iris, bright clean yellow legs.",
+      "color_description_as_of": "2026-07-21",
       "photo": "birds/IMG_8649-henriessa-grey-speckled-10aug2026.jpg",
       "silver_marking": "confirmed",
       "notes": "June Henrietta-line chick. Dam: Henrietta (the flock's only brown-egg layer); name echoes the line (cf. Henriella). Sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that Henriessa is the silver/blue-gray sister \u2014 this settles the June flip-flop back to her (the original hatch-day observation) and away from Henridotta, who is the darker standard look. First logged photo (IMG_7655, 2026-07-21) is a solo portrait of her showing the silver barring. Per-chick record: content/hatches/2026/2026-06-03-01-henriessa.md BAND CONFIRMED 2026-07-21: pink #08 (boss confirmed from IMG_7729).",
@@ -1119,7 +1425,18 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Slow to clear the shell; rested between pushes",
+      "color_observations": [
+        {
+          "date": "2026-07-21",
+          "date_unknown": false,
+          "description": "A solid slate-grey folded wing panel lying flat against a gold body splashed all over with bold irregular black leopard blotches \u2014 the plain dark wing against the spotted gold is readable right across a pen. Tail solid black. Face and throat dusky grey-brown bare skin with a small cream patch behind the eye, comb a low pink-red ridge. \u26a0\ufe0f The grey-wing-over-gold look is shared with Birddor \u2014 Birddor has a large bright RED face and a very pale yellow-gold eye, Horstabird's face is dull grey-brown. (Plumage from 21-Jul-2026, photographed shortly before banding \u2014 not yet confirmed against yellow #2.)",
+          "source": "roster-backfill",
+          "age_weeks": 6,
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"Plumage from 21-Jul-2026\"."
+        }
+      ],
       "color_description": "A solid slate-grey folded wing panel lying flat against a gold body splashed all over with bold irregular black leopard blotches \u2014 the plain dark wing against the spotted gold is readable right across a pen. Tail solid black. Face and throat dusky grey-brown bare skin with a small cream patch behind the eye, comb a low pink-red ridge. \u26a0\ufe0f The grey-wing-over-gold look is shared with Birddor \u2014 Birddor has a large bright RED face and a very pale yellow-gold eye, Horstabird's face is dull grey-brown. (Plumage from 21-Jul-2026, photographed shortly before banding \u2014 not yet confirmed against yellow #2.)",
+      "color_description_as_of": "2026-07-21",
       "photo": "birds/285ccb73cc290621e91de5bea116638a5bb4dba7fe34745db1803727a613a0d2-horstabird-brown-black-08aug2026.jpg",
       "notes": "Boss-corrected 2026-06-07: a pullet, sired by LBRJ (the red rooster lost in the April predator wave) \u2014 identified by the rust/red coming in on her face and throat, which supersedes the earlier Whitey Red Legs paternity window. June clutch, Egg #4; an assisted hatch (the Boss removed a small piece of shell and dabbed water on the membrane, then the chick freed itself). Named in honor of Horst, the note-taking bot that logged the hatch. Per-chick record: content/hatches/2026/2026-06-03-03-horstabird.md",
       "location": "birdcatraz",
@@ -1157,7 +1474,18 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Settled with siblings in the brooder",
+      "color_observations": [
+        {
+          "date": "2026-07-29",
+          "date_unknown": false,
+          "description": "Boss-confirmed 29-Jul-2026 (photos IMG_8050/8044/8043) \u2014 classic bold black-and-white barred plumage, evenly banded across the whole body with no silver-headed or scaled look at all. Bright red single comb, orange-yellow legs, purple leg band #12 clearly visible on the left leg. The earlier hatch-stage description (silvery salt-and-pepper head over near-black body, scaled feather look) was WRONG and is superseded by this entry.",
+          "source": "roster-backfill",
+          "age_weeks": 8,
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"PLUMAGE CORRECTED 2026-07-29\"."
+        }
+      ],
       "color_description": "Boss-confirmed 29-Jul-2026 (photos IMG_8050/8044/8043) \u2014 classic bold black-and-white barred plumage, evenly banded across the whole body with no silver-headed or scaled look at all. Bright red single comb, orange-yellow legs, purple leg band #12 clearly visible on the left leg. The earlier hatch-stage description (silvery salt-and-pepper head over near-black body, scaled feather look) was WRONG and is superseded by this entry.",
+      "color_description_as_of": "2026-07-29",
       "photo": "birds/IMG_8044-henridotta-wings-flapping-29jul2026.jpg",
       "silver_marking": "none",
       "notes": "June Henrietta-line chick, named in honor of her mother Henrietta. Dam: Henrietta; sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that the silver sister is Henriessa, not Henridotta \u2014 Henridotta is the darker standard look (same coloring as Adelbird, who is slightly smaller). Per-chick record: content/hatches/2026/2026-06-03-04-henridotta.md PLUMAGE CORRECTED 2026-07-29 (Boss-authoritative): she is barred black-and-white, not the silvery-scaled hatch-era description \u2014 that description is retired. Default photo updated to the wings-spread shot at the fence (purple band #12 confirmed in the companion portrait, IMG_8050).",
@@ -1215,7 +1543,17 @@
       "status": "active",
       "egg_color": "TBD (too young)",
       "temperament": "Finished hatching on her own overnight after a light assist",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Dark charcoal bird with soft, irregular pale grey-white scalloping over the body \u2014 greyer, softer and lower-contrast than crisp barring, with the head dark and white-flecked. Comb small and only partly reddened, and she is the youngest and smallest of the June clutch, so she generally looks a step behind her nest-mates. Read the band to confirm (hers is blue #7) \u2014 Henridotta is no longer a plumage lookalike as of 2026-07-29 (Boss-confirmed: Henridotta is bold black-and-white barred, not scalloped). Her description rests on a single frame (IMG_7731, 21-Jul).",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Dark charcoal bird with soft, irregular pale grey-white scalloping over the body \u2014 greyer, softer and lower-contrast than crisp barring, with the head dark and white-flecked. Comb small and only partly reddened, and she is the youngest and smallest of the June clutch, so she generally looks a step behind her nest-mates. Read the band to confirm (hers is blue #7) \u2014 Henridotta is no longer a plumage lookalike as of 2026-07-29 (Boss-confirmed: Henridotta is bold black-and-white barred, not scalloped). Her description rests on a single frame (IMG_7731, 21-Jul).",
+      "color_description_as_of": null,
       "photo": "birds/5431f4deeadd9a70b4299d8306348963d204182e68d05146b23015ff4f536029-adelbird-black-white-08aug2026.jpg",
       "notes": "The LAST HATCH of the 2026 incubator season. June clutch, Egg #5. The Boss dabbed a droplet of water on the drying membrane the evening of Jun 3; she pipped for air and finished on her own overnight. Named Adelbird 2026-06-04. Dark gray/black down with a white head spot, confirmed 2026-06-07 \u2014 shares the white spot with Ingebird, so the two are told apart by age/size (Adelbird is the youngest). Dam not individually confirmed (blue egg); sire window Whitey Red Legs. Per-chick record: content/hatches/2026/2026-06-04-01-adelbird.md",
       "location": "birdcatraz",
@@ -1253,7 +1591,17 @@
       "status": "active",
       "egg_color": "TBD (too young; bantam)",
       "temperament": "A favorite of the Boss",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "Black cockerel with grayish lacing / scaled feather pattern across the body, a few small white feathers on the head and neck, slate-gray legs.",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "Black cockerel with grayish lacing / scaled feather pattern across the body, a few small white feathers on the head and neck, slate-gray legs.",
+      "color_description_as_of": null,
       "photo": "birds/IMG_5958-ravenessa-18jun2026.jpg",
       "notes": "Boss-named and called out as a FAVORITE 2026-06-18 (#meet-the-lobsters). One of the Bantams. Likely traces to the Cackle Hatchery April-08 batch (the farm's bantams come from that exotic/rare assortment), but exact breed is not yet confirmed \u2014 verify as adult plumage develops. Confirmed COCKEREL \u2014 began crowing 2026-07-31. Originally assumed pullet per early plumage; crowing is definitive sex confirmation.",
       "location": "birdcatraz",
@@ -1273,7 +1621,17 @@
       "status": "active",
       "egg_color": "TBD (too young; small white if she lays)",
       "temperament": "Boss's 'hunchback bantam' \u2014 carries a distinctly hunched, rounded-back posture, hence the Quasimodo namesake",
+      "color_observations": [
+        {
+          "date": null,
+          "date_unknown": true,
+          "description": "White-crested Polish bantam: big rounded white/cream head pouf, blue-gray (slate) body feathers with darker black lacing, slate-gray legs, yellow beak.",
+          "source": "roster-backfill",
+          "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        }
+      ],
       "color_description": "White-crested Polish bantam: big rounded white/cream head pouf, blue-gray (slate) body feathers with darker black lacing, slate-gray legs, yellow beak.",
+      "color_description_as_of": null,
       "photo": "birds/IMG_5874-quasibirdo-18jun2026.jpg",
       "notes": "Boss-named 'Quasibirdo, my hunchback bantam' 2026-06-18 (#meet-the-lobsters). The crest is unmistakably Polish \u2014 most likely a White-Crested Blue or Splash Polish (cf. the Cackle Rare Chick Special preliminary IDs R1/R6). Traces to the Cackle Hatchery 08-April-2026 batch like the farm's other bantams (e.g. Ravenessa). Exact Polish variety to confirm as adult plumage sets.",
       "location": "birdcatraz",

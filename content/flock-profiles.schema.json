@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://farm-2026/content/flock-profiles.schema.json",
+  "title": "farm-2026 flock roster",
+  "_note": [
+    "Author: Claude Opus 5 (Bubba sub-agent) · Date: 11-Aug-2026",
+    "PURPOSE: Describe the shape of content/flock-profiles.json — in particular the",
+    "dated color_observations[] trail added 11-Aug-2026 (see",
+    "docs/plans/2026-08-11-bird-observation-timestamps.md).",
+    "",
+    "WHY THIS FILE EXISTS HERE AND NOT IN farm-guardian: the plan named",
+    "farm-guardian/tools/pipeline/schema.json as the place flock-profiles.json",
+    "validates. It is not. That file is the LM Studio structured-output schema for",
+    "the vision model (strict:true, additionalProperties:false) and is read by",
+    "vlm_enricher.py, orchestrator.py, tools/iphone_lane/ingest.py and",
+    "scripts/replay-vlm-prompt.py. Adding roster fields to it would corrupt the VLM",
+    "contract. flock-profiles.json previously validated against nothing at all, so",
+    "this is a new, data-adjacent schema instead.",
+    "",
+    "Validate with: farm-guardian/tools/pipeline/validate_flock_profiles.py",
+    "(dependency-free; jsonschema is not installed in the guardian venv).",
+    "",
+    "This schema is deliberately PERMISSIVE about unknown top-level bird keys",
+    "(additionalProperties is not false): the roster has accumulated ~24 optional",
+    "per-bird fields over two years and locking it down would turn every future",
+    "Boss-added field into a validation failure. It is STRICT about the shape of",
+    "color_observations[] entries, which is the thing this change introduces."
+  ],
+  "type": "object",
+  "required": ["flock_birds"],
+  "properties": {
+    "breeds": { "type": "object" },
+    "incubating": {},
+    "flock_birds": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/bird" }
+    }
+  },
+  "definitions": {
+    "colorObservation": {
+      "type": "object",
+      "required": ["date", "description", "source", "date_unknown"],
+      "additionalProperties": false,
+      "properties": {
+        "date": {
+          "anyOf": [
+            { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            { "type": "null" }
+          ],
+          "description": "ISO date the plumage was actually observed. null ONLY when date_unknown is true — never invent one."
+        },
+        "date_unknown": {
+          "type": "boolean",
+          "description": "true when the real observation date was not recoverable from the record. Must be true iff date is null."
+        },
+        "age_weeks": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Whole weeks between hatch_date and date. Present ONLY when the date is known AND hatch_date is known AND hatch_date_estimated is not true — omitted rather than guessed."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The plumage/color description as observed on that date."
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Provenance: 'roster-backfill', 'boss-caption', 'chat:meet-the-lobsters', 'bird_photo_ingest', etc. Used for trust-weighting."
+        },
+        "note": {
+          "type": "string",
+          "description": "Optional free-text provenance detail (e.g. which phrase in the record supplied the date)."
+        }
+      }
+    },
+    "bird": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "breed": { "type": "string" },
+        "hatch_date": {
+          "anyOf": [
+            { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            { "type": "null" }
+          ]
+        },
+        "hatch_date_estimated": { "type": "boolean" },
+        "status": { "type": "string" },
+        "deceased_date": {
+          "anyOf": [
+            { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            { "type": "null" }
+          ]
+        },
+        "ornitharch": {
+          "type": "boolean",
+          "description": "Legacy unscoped 'hatched on this farm' flag. NOT year-scoped. For the year-scoped definition see flock_bands.json ornitharch_definition and roster.is_ornitharch(bird, year)."
+        },
+        "color_observations": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/colorObservation" },
+          "description": "Append-only, chronologically sorted (undated entries first) trail of dated plumage observations. The LAST entry is the current one and is mirrored into color_description / color_description_as_of."
+        },
+        "color_description": {
+          "anyOf": [{ "type": "string" }, { "type": "null" }],
+          "description": "DERIVED MIRROR of the newest color_observations[] entry's description. Kept for the website's /flock cards and roster.py's VLM prompt block. Do not hand-edit — append a color_observations entry instead."
+        },
+        "color_description_as_of": {
+          "anyOf": [
+            { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            { "type": "null" }
+          ],
+          "description": "DERIVED MIRROR of the newest color_observations[] entry's date. null when that observation's date is unknown."
+        },
+        "leg_band": {
+          "type": ["object", "null"],
+          "description": "The authoritative identifier. NOTE the long-standing key trap: this file spells the side 'side'; config/flock_bands.json spells it 'leg'.",
+          "properties": {
+            "color": { "type": ["string", "null"] },
+            "number": { "type": ["integer", "null"] },
+            "side": { "type": ["string", "null"], "enum": ["left", "right", null] },
+            "confirmed": { "type": "boolean" },
+            "confirmed_date": { "type": ["string", "null"] },
+            "note": { "type": "string" }
+          }
+        },
+        "photos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["file"],
+            "properties": {
+              "file": { "type": "string" },
+              "date": { "type": ["string", "null"] },
+              "caption": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

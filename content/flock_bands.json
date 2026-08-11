@@ -2,6 +2,24 @@
   "_updated": "2026-07-28",
   "_note": "Canonical leg band assignments. left leg = hatched on farm (ornitharch). right leg = purchased. Source of truth: flock-profiles.json leg_band fields.",
   "rule": "Trust the band over plumage. A visible leg band uniquely identifies the bird.",
+  "rule_precedence": {
+    "_added": "2026-08-11",
+    "statement": "A legible band outranks a plumage-text description. Always. When a band resolves to bird A and a stored color_description instead suggests bird B, the answer is A — the description does not get a vote, and it may not downgrade the answer to 'unknown'.",
+    "why": "On 11-Aug-2026 a green band correctly read as Ingebird (#2), but her undated color_description did not match the photo and the correct band match was talked away on the strength of stale prose. A conflict means the bird's color_observations are stale, not that the band is wrong.",
+    "implemented_by": "farm-guardian/tools/pipeline/roster.py -> identify()"
+  },
+  "ornitharch_definition": {
+    "_added": "2026-08-11",
+    "statement": "Ornitharch (year Y): a bird with a LEFT-leg band whose hatch_date falls within calendar year Y.",
+    "why_year_scoped": "'Left leg = hatched on farm' had no year attached, so a bird that hatched here in a previous calendar year still counted toward this year's Ornitharch total. Both halves of the test are required: a left-leg band alone means 'hatched here, some year', and a hatch_date in year Y alone can describe a bird bought as a chick.",
+    "criteria": {
+      "band_leg": "left",
+      "hatch_date_within": "calendar year Y"
+    },
+    "implemented_by": "farm-guardian/tools/pipeline/roster.py -> is_ornitharch(bird, year) / get_ornitharchs_for_year(year)",
+    "key_trap": "This file spells the band side 'leg'; farm-2026/content/flock-profiles.json spells it 'side'. is_ornitharch() takes a flock-profiles-shaped bird and reads 'side'. The vision model's observed band_leg is NEVER used for this — it was measured wrong on 5 of 5 birds.",
+    "not_to_be_confused_with": "The legacy per-bird 'ornitharch': true boolean in flock-profiles.json, which is unscoped ('hatched here, ever') and feeds the VLM prompt's named-individual block. It is intentionally left alone."
+  },
   "bands": [
     {
       "name": "Birddor",
