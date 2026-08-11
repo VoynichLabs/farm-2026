@@ -115,6 +115,23 @@ the band number/leg is legible. Today that's a convention documented in SOUL.md 
 ("leg bands = the real ID") that an agent can still talk itself out of, as happened today.
 Make the precedence explicit and mechanical wherever matching logic lives, not just advisory.
 
+## Ornitharch definition (written, not tribal knowledge)
+
+Also surfaced today: "Ornitharch" (a bird that hatched on the farm) needs a formal,
+year-scoped definition, not just left-leg-band-implies-hatched-here read off SOUL.md prose.
+`flock_bands.json`'s existing convention already ties left leg to hatched-on-farm, so
+**hatched-here-this-year + left-leg band are the same criterion by construction** — a bird
+that hatched here two calendar years ago is not an Ornitharch for *this* year's count. Add
+this as an explicit, dated definition wherever the roster convention is documented (currently
+just "left leg = hatched on farm" with no year attached in `flock_bands.json`'s own notes):
+
+> **Ornitharch (year Y):** a bird with a left-leg band whose `hatch_date` falls within
+> calendar year Y.
+
+This should live next to the `color_observations` schema change above so it's mechanical
+(computed from `hatch_date` + band leg), not something an agent has to re-derive from memory
+each time.
+
 ## Backfill (follow-up, not blocking)
 
 For the 35 existing `flock_birds` entries: turn each current `color_description` into a
