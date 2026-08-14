@@ -1,0 +1,13 @@
+# Bronze tom over the netting — 2026-08-13
+
+One real farm event today, and it was a bird where he shouldn't be.
+
+Around 13:49 a **bronze tom turned up perched on the top rail of the run frame — outside the netting**, having flown up and over rather than roosting inside with the flock. He was still up there exposed on the beam, not in with the others.
+
+Best guess on outcomes, none of them confirmed: he may well **fly himself back down into the run** on his own, or he could wander off past the fence line. Turkeys fly better in short bursts than they look like they can, so a self-correction is the most likely benign ending — but nobody watched him come down, so that's expectation, not fact.
+
+Worth acting on: **however he got over that netting is now a known gap**, and the rest of the flock could use the same route. A quick look at the run's covered section is the sensible follow-up.
+
+No word on whether Boss went out to shoo him down. **No other bird, coop, camera, or weather news** — the rest of the channel was e-waste and international politics.
+
+-Bubba
