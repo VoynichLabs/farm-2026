@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.39.0] — 2026-08-14
+
+### Fixed — camera overlay labels were blocking Guardian thumbnail images (Claude Sonnet 5)
+
+**What:** `lib/cameras.ts` gained metadata entries for `usb-webcam-1080p`, `macbook-air-facetime`, and `jieli-dashcam`. `GuardianCameraFeed.tsx`'s top-right feed-status badge is now width-capped and truncates its label instead of growing unbounded.
+
+**Why:** Guardian's backend renamed `usb-cam` → `usb-webcam-1080p` and `mba-cam` → `macbook-air-facetime`, and added a new `jieli-dashcam` (all in farm-guardian's `config.json`), but `lib/cameras.ts`'s static overlay was never updated to match. `resolveCameraMeta`'s fallback used the raw (long) camera name as both `label` and `shortLabel`, so the thumbnail picker's tiny tiles rendered an overlay badge wide enough to cover most of the visible frame — Boss flagged it directly ("look at those camera labels they block the damn image").
+
+**How:** added proper `shortLabel`s for the three renamed/new cameras so the badge goes back to a compact `"● Reolink LIVE"`-style tag. Also capped the badge's max-width to the tile minus its inset and made the label span truncate, so any future camera that lands in Guardian's roster before someone writes metadata for it degrades to an ellipsized tag instead of blanking the thumbnail again.
+
 ## [1.38.0] — 2026-08-08
 
 ### Changed — Guardian project copy rewritten for the new frame pipeline (Claude Opus 5)

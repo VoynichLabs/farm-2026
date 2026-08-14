@@ -304,13 +304,15 @@ export default function GuardianCameraFeed({
         </div>
       )}
 
-      {/* Feed overlay */}
-      <div className="absolute top-1.5 right-1.5 bg-black/70 rounded px-2 py-0.5 text-[0.65rem] flex items-center gap-1.5 font-mono">
+      {/* Feed overlay — width-capped so a long/unmapped camera name (see
+          resolveCameraMeta's fallback in lib/cameras.ts) truncates instead
+          of growing wide enough to cover the whole thumbnail. */}
+      <div className="absolute top-1.5 right-1.5 max-w-[calc(100%-0.75rem)] bg-black/70 rounded px-2 py-0.5 text-[0.65rem] flex items-center gap-1.5 font-mono">
         <span
-          className={`w-1.5 h-1.5 rounded-full inline-block ${indicatorClass}`}
+          className={`w-1.5 h-1.5 rounded-full inline-block shrink-0 ${indicatorClass}`}
         />
-        <span className="text-slate-300">{label}</span>
-        <span className={overlayTextClass}>{overlayLabel}</span>
+        <span className="text-slate-300 truncate min-w-0">{label}</span>
+        <span className={`shrink-0 ${overlayTextClass}`}>{overlayLabel}</span>
       </div>
     </div>
   );
