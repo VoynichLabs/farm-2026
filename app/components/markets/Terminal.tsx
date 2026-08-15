@@ -94,7 +94,7 @@ const LABEL =
 // committed under public/photos/birds (no pipeline, no JSON). The floor tile
 // rotates a sliding window of these every few seconds. Add/remove freely.
 const FLOOR_BIRDS: { src: string; name: string }[] = [
-  { src: "/photos/birds/IMG_6292-henriella-23jun2026.jpg", name: "Henriella" },
+  { src: "/photos/birds/IMG_6292-henriella-23jun2026.jpg", name: "Henriello" },
   { src: "/photos/birds/IMG_6271-birdadotta-23jun2026.jpg", name: "Birdadotta" },
   { src: "/photos/birds/IMG_5874-quasibirdo-18jun2026.jpg", name: "Quasibirdo" },
   { src: "/photos/birds/IMG_5958-ravenessa-18jun2026.jpg", name: "Ravenessa" },

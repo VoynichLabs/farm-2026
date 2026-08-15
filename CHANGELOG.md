@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.39.2] — 2026-08-15
+
+### Changed — Henriella is Henriello: sex confirmed, bird renamed, old bird URLs no longer 404 (Claude Opus 5)
+
+**What:** `content/flock-profiles.json`, `content/flock_bands.json`, the hatch record (renamed to `content/hatches/2026/2026-05-16-02-henriello.md`) and the `/markets` analyst tile all move from **Henriella** to **Henriello**, with `sex: cockerel` confirmed. `app/flock/[slug]/page.tsx` now redirects a renamed bird's old URL to its current one.
+
+**Why:** Boss confirmed the cockerel call on 2026-08-15. The roster had been carrying `suspected_sex: cockerel` since 21-Jul-2026 with a Boss-approved alternate name pending confirmation, and predicted saddle/hackle feathers would settle it at 12–14 weeks — the confirmation landed at ~13 weeks, inside that window.
+
+**How:** the rename uses the repo's existing `formerly` field (as Birddor fka Birdadette) rather than a new alias field, so the "fka Henriella" chip on `/flock` and `/flock/[slug]` renders with no new UI code. Pronouns in `color_description` and the matching `color_observations` entry go she→he. The 21-Jul suspicion paragraph in the hatch record is left exactly as written and the confirmation **appended** — the growth log is append-only per schema, and that earlier call was correct four weeks early off comb and wattle development alone. A dated `phenotype_observations` entry (2026-08-15, age_days 91) records the confirmation. Photo filenames keep their `henriella-` prefix as historical artifacts; captions describing the bird move to the current name.
+
+**Bonus fix — renamed birds were silently losing their URLs.** `/flock/[slug]` derives its slug from `name`, so renaming a bird kills its old page. **`/flock/birdadette` has been returning 404 ever since that bird became Birddor**, and `/flock/henriella` was about to join it. An unresolved slug is now matched against `formerly` and 308s to the canonical slug. Data-driven on purpose: any future rename gets its redirect just by filling in `formerly`, with no per-bird route file. Verified: `/flock/henriella` → 308 → `/flock/henriello`, `/flock/birdadette` → 308 → `/flock/birddor`, `/flock/henriello` → 200, and an unknown slug still → 404.
+
 ## [1.39.1] — 2026-08-15
 
 ### Fixed — the Duo 2 tile was showing the other Reolink (Claude Opus 5)

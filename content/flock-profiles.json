@@ -222,7 +222,7 @@
       "color_description": "Gold and black laced plumage, purple leg band on left leg",
       "color_description_as_of": null,
       "photo": "birds/henrietta.jpg",
-      "notes": "Matriarch and founder of the Henrietta line (Henriella, Henriessa, Henridotta). Purple left-leg band; the flock's only brown-egg layer. Passed peacefully of old age overnight of 4-5 June 2026 and was buried in the garden under a tomato plant.",
+      "notes": "Matriarch and founder of the Henrietta line (Henriello \u2014 hatched Henriella \u2014 Henriessa, Henridotta). Purple left-leg band; the flock's only brown-egg layer. Passed peacefully of old age overnight of 4-5 June 2026 and was buried in the garden under a tomato plant.",
       "photo_throwback": "history/henrietta-2022-scary-birds.jpg",
       "photo_throwback_label": "2022 \u00b7 the scary birds",
       "leg_band": {
@@ -1136,14 +1136,15 @@
         {
           "file": "birds/henriella-birdsilla-birdthazar-16jul2026.jpg",
           "date": "2026-07-16",
-          "caption": "Mid-July in Birdcatraz \u2014 background of Henriella's portrait, alongside Birdsilla (Boss-identified)"
+          "caption": "Mid-July in Birdcatraz \u2014 background of Henriello's portrait, alongside Birdsilla (Boss-identified)"
         }
       ]
     },
     {
-      "name": "Henriella",
-      "alternative_name": "Henriello",
-      "suspected_sex": "cockerel",
+      "name": "Henriello",
+      "formerly": "Henriella",
+      "sex": "cockerel",
+      "sex_confirmed_date": "2026-08-15",
       "breed": "Wyandotte \u00d7 RIR cross",
       "hatch_date": "2026-05-16",
       "age_note": "Hatched \u226421:21 EDT, 2026-05-16 from a brown egg set 2026-04-25",
@@ -1154,15 +1155,15 @@
         {
           "date": null,
           "date_unknown": true,
-          "description": "Glossy jet-black head and neck above a slate blue-grey body \u2014 the black head is her mark, and no other grey-bodied bird in the flock has one. Chestnut-rust patches on the wing shoulder and down the front of the neck break up the grey. Broad bare red face, large upright red comb and long wattles, gold iris, heavy yellow-orange legs. She is one of the larger and more mature-looking of the young birds.",
+          "description": "Glossy jet-black head and neck above a slate blue-grey body \u2014 the black head is his mark, and no other grey-bodied bird in the flock has one. Chestnut-rust patches on the wing shoulder and down the front of the neck break up the grey. Broad bare red face, large upright red comb and long wattles, gold iris, heavy yellow-orange legs. He is one of the larger and more mature-looking of the young birds.",
           "source": "roster-backfill",
           "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
         }
       ],
-      "color_description": "Glossy jet-black head and neck above a slate blue-grey body \u2014 the black head is her mark, and no other grey-bodied bird in the flock has one. Chestnut-rust patches on the wing shoulder and down the front of the neck break up the grey. Broad bare red face, large upright red comb and long wattles, gold iris, heavy yellow-orange legs. She is one of the larger and more mature-looking of the young birds.",
+      "color_description": "Glossy jet-black head and neck above a slate blue-grey body \u2014 the black head is his mark, and no other grey-bodied bird in the flock has one. Chestnut-rust patches on the wing shoulder and down the front of the neck break up the grey. Broad bare red face, large upright red comb and long wattles, gold iris, heavy yellow-orange legs. He is one of the larger and more mature-looking of the young birds.",
       "color_description_as_of": null,
       "photo": "birds/IMG_7791-henriella-large-adult-23jul2026.jpg",
-      "notes": "First chick of the Henrietta line. Dam confirmed: Henrietta (only brown-egg layer among the active hens \u2014 Golden Laced Wyandotte). Sire LBRJ probable per the April 25 paternity window. Named Henriella per the Boss-confirmed 2026 hatch spine. The line later produced the June chicks Henriessa and Henridotta. Out in Birdcatraz now \u2014 spotted holding the top roost spot with Birdsilla (diary, 09-Jul-2026). SEX SUSPECTED COCKEREL (flagged 21-Jul-2026, ~9\u201310 weeks): at this age the comb is bright red, upright, single with clean points, and the wattles have already drooped and flushed red \u2014 that is cockerel hardware. Pullets at 9\u201310 weeks show only tiny pale comb nubs and flat wattles. The dark charcoal body with rust coming in on the wings is the Wyandotte \u00d7 RIR cross phenotype and reads the same in either sex, so plumage is not the tell here. Boss-approved alternate name 'Henriello' pending confirmation; saddle/hackle feathers will confirm sex at 12\u201314 weeks.",
+      "notes": "First chick of the Henrietta line. Dam confirmed: Henrietta (only brown-egg layer among the active hens \u2014 Golden Laced Wyandotte). Sire LBRJ probable per the April 25 paternity window. Hatched as Henriella per the Boss-confirmed 2026 hatch spine. The line later produced the June chicks Henriessa and Henridotta. Out in Birdcatraz now \u2014 spotted holding the top roost spot with Birdsilla (diary, 09-Jul-2026). SEX CONFIRMED COCKEREL \u2014 Boss-confirmed 2026-08-15 (~13 weeks), inside the 12\u201314 week window the 21-Jul flag predicted. RENAMED Henriella \u2192 Henriello on that confirmation; 'Henriella' is retained as alternative_name because every photo filename, caption and diary entry before this date uses it. The call was flagged early (21-Jul-2026, ~9\u201310 weeks): the comb was already bright red, upright, single with clean points, and the wattles had drooped and flushed red \u2014 cockerel hardware, where pullets at that age show only tiny pale comb nubs and flat wattles. The dark charcoal body with rust on the wings is the Wyandotte \u00d7 RIR cross phenotype and reads the same in either sex, so plumage was never the tell here.",
       "location": "birdcatraz",
       "ornitharch": true,
       "photos": [
@@ -1174,17 +1175,17 @@
         {
           "file": "birds/IMG_6269-henriella-23jun2026.jpg",
           "date": "2026-06-23",
-          "caption": "Henriella, 23 Jun 2026 (day 38) \u2014 in-hand close-up; slate laced body and dark head cap, a buff sibling (Birdsilla/Birdthazar) on the perch behind."
+          "caption": "Henriello, 23 Jun 2026 (day 38) \u2014 in-hand close-up; slate laced body and dark head cap, a buff sibling (Birdsilla/Birdthazar) on the perch behind."
         },
         {
           "file": "birds/IMG_6283-henriella-23jun2026.jpg",
           "date": "2026-06-23",
-          "caption": "Henriella, 23 Jun 2026 (day 38) \u2014 front three-quarter on a coop rail under the gazebo roof; slate/blue-gray laced body, rust wash on the breast, dark grizzled head with a pale throat, small single red comb, yellow legs. Boss-confirmed ID."
+          "caption": "Henriello, 23 Jun 2026 (day 38) \u2014 front three-quarter on a coop rail under the gazebo roof; slate/blue-gray laced body, rust wash on the breast, dark grizzled head with a pale throat, small single red comb, yellow legs. Boss-confirmed ID."
         },
         {
           "file": "birds/IMG_6292-henriella-23jun2026.jpg",
           "date": "2026-06-23",
-          "caption": "Henriella, 23 Jun 2026 (day 38) \u2014 second front three-quarter from the same perch; the pale-edged feather lacing across back, wings and breast is clearly resolved."
+          "caption": "Henriello, 23 Jun 2026 (day 38) \u2014 second front three-quarter from the same perch; the pale-edged feather lacing across back, wings and breast is clearly resolved."
         },
         {
           "file": "birds/henriella-birdsilla-birdthazar-16jul2026.jpg",
@@ -1226,7 +1227,7 @@
       "color_description": "Deep foxy rust-copper across back, wing and saddle, breaking hard into a blackish tail \u2014 rust body, black tail, with no barring or lacing. Carries only light dark marking: a scatter of slate-grey flecks across the nape like a dark collar, a couple of slate flecks at the shoulder and a thin dark line along the lower edge of the folded wing. Unusually extensive bright pink-red bare face skin, small low knobbly comb lying flat well back on the crown. \u26a0\ufe0f Easily confused with Birdthazar, who is also copper with slate smudges \u2014 Birdthazar has no band at all, Birdsilla wears white #3. (Plumage from 21-Jul-2026, photographed shortly before that day's banding session.)",
       "color_description_as_of": "2026-07-21",
       "photo": "birds/IMG_7556-birdsilla-21jul2026.jpg",
-      "notes": "Third chick of the April-25 clutch. EE-lineage from blue egg; dam candidates are Birdadonna, Birdsula (EE hen 1), or EE hen 2 \u2014 none confirmed. Named-line candidate if dam turns out to be Birdadonna. Sire LBRJ probable. Named Birdsilla, aka 'Monster Leg' (recognized nickname/alias), per the Boss-confirmed 2026 hatch spine. Out in Birdcatraz \u2014 tested the top roost spot with Henriella (diary, 09-Jul-2026). Description (21-Jul-2026, IMG_7556): warm solid buff-orange across the back with no stripe pattern \u2014 the tell against Birdthazar; black tail coming in dark and full; yellow legs; small pink comb, consistent with pullet. Disposition: confident, owns the yard.",
+      "notes": "Third chick of the April-25 clutch. EE-lineage from blue egg; dam candidates are Birdadonna, Birdsula (EE hen 1), or EE hen 2 \u2014 none confirmed. Named-line candidate if dam turns out to be Birdadonna. Sire LBRJ probable. Named Birdsilla, aka 'Monster Leg' (recognized nickname/alias), per the Boss-confirmed 2026 hatch spine. Out in Birdcatraz \u2014 tested the top roost spot with Henriello (diary, 09-Jul-2026). Description (21-Jul-2026, IMG_7556): warm solid buff-orange across the back with no stripe pattern \u2014 the tell against Birdthazar; black tail coming in dark and full; yellow legs; small pink comb, consistent with pullet. Disposition: confident, owns the yard.",
       "location": "birdcatraz",
       "ornitharch": true,
       "leg_band": {
@@ -1260,7 +1261,7 @@
         {
           "file": "birds/henriella-birdsilla-birdthazar-16jul2026.jpg",
           "date": "2026-07-16",
-          "caption": "Mid-July in Birdcatraz \u2014 background of Henriella's portrait, alongside Birdthazar (Boss-identified)"
+          "caption": "Mid-July in Birdcatraz \u2014 background of Henriello's portrait, alongside Birdthazar (Boss-identified)"
         },
         {
           "file": "birds/IMG_7556-birdsilla-21jul2026.jpg",

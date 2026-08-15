@@ -1,6 +1,6 @@
 /**
- * Author: Claude Sonnet 5 (prev Claude Opus 4.8)
- * Date: 22-Jul-2026
+ * Author: Claude Opus 5 (prev Claude Sonnet 5; Claude Opus 4.8)
+ * Date: 15-Aug-2026
  * PURPOSE: /flock/[slug] — one bird's full aging gallery. Every picture we have
  *   of the bird (from its roster photos[] ledger), full-size, oldest→newest,
  *   each stamped with the date, the bird's age at that photo, and its caption.
@@ -10,13 +10,22 @@
  *   22-Jul-2026 (visual QA remediation): added `revalidate` so the AGE label
  *   (getBirdAgeLabel, computed from `new Date()`) doesn't freeze at
  *   last-build time under static generation — same fix as /flock.
+ *   15-Aug-2026: renamed birds no longer dead-end. The slug is derived from
+ *     `name`, so renaming a bird silently killed its old URL — /flock/birdadette
+ *     had been 404ing since Birdadette became Birddor, and /flock/henriella
+ *     would have joined it when Henriella was confirmed cockerel and renamed
+ *     Henriello. The unresolved slug is now matched against `formerly` (the
+ *     field that already backs the "fka …" chip) and 308s to the canonical
+ *     slug. Data-driven: a future rename gets its redirect by filling in
+ *     `formerly`, with no new route file.
  * SRP/DRY check: Pass — reuses getFlockProfiles / getBirdAgeLabel / birdSlug
  *   and the shared BandChip; page-local logic is layout + date/age labels only.
+ *   The redirect reuses `formerly` rather than adding a parallel alias field.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import {
   getFlockProfiles,
   getBirdAgeLabel,
@@ -55,6 +64,20 @@ const findBird = (slug: string): FlockBird | undefined => {
   return flock?.flock_birds.find((b) => birdSlug(b.name) === slug);
 };
 
+// A bird renamed after its page was live leaves its old URL dangling — the
+// slug is derived from `name`, so /flock/birdadette and /flock/henriella both
+// 404'd once those birds became Birddor and Henriello. `formerly` already
+// records the old name (it renders as the "fka …" chip), so resolve against it
+// and permanently redirect to the canonical slug. Data-driven on purpose: any
+// future rename that fills in `formerly` gets its redirect for free, with no
+// per-bird route file. Named birds only — a bird with no `formerly` is skipped.
+const findBirdByFormerName = (slug: string): FlockBird | undefined => {
+  const flock = getFlockProfiles();
+  return flock?.flock_birds.find(
+    (b) => b.formerly && birdSlug(b.formerly) === slug,
+  );
+};
+
 const sortedPhotos = (bird: FlockBird): BirdPhoto[] =>
   [...(bird.photos ?? [])].sort((a, b) =>
     (a.date ?? "9999-99-99").localeCompare(b.date ?? "9999-99-99"),
@@ -82,7 +105,13 @@ export default async function BirdGalleryPage(
 ) {
   const { slug } = await params;
   const bird = findBird(slug);
-  if (!bird) notFound();
+  if (!bird) {
+    // Old URL for a renamed bird → 308 to the current slug, so existing links
+    // and search results survive the rename instead of dead-ending on a 404.
+    const renamed = findBirdByFormerName(slug);
+    if (renamed) permanentRedirect(`/flock/${birdSlug(renamed.name)}`);
+    notFound();
+  }
 
   const photos = sortedPhotos(bird);
   const age = getBirdAgeLabel(bird.hatch_date, bird.hatch_date_estimated);
