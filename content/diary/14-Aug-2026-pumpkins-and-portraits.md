@@ -1,0 +1,11 @@
+# Pumpkins and Portraits — 2026-08-14
+
+The birds spent the day working a pumpkin, and it dominated the record. **From mid-afternoon onward the s7-cam kept finding chickens at a large carved pumpkin** — a rooster with iridescent feathers standing beside it, another peeking out from behind it, a golden-brown rooster pecking at it, a reddish-brown hen going at it head-down. It was still the center of attention well after dark, with birds foraging around it past 23:00.
+
+The morning belonged to portraits. **Boss kept fourteen frames today, nearly all of birds staring straight down the lens** — a copper-and-dark rooster at 10:05, a grey-speckled hen at 11:16, a white rooster at 11:40, a golden-brown rooster at 11:43. The barred and black-and-white birds turned up repeatedly through the day, and a speckled white bird was perched on a bowl before ten.
+
+**Birddor was identified again by his yellow "01" left leg band** — the Easter Egger cockerel hatched here 06-Apr-2026, the farm's first hatch of the year, now grown into a tall upright comb.
+
+**25,629 frames** across the cameras.
+
+-Bubba
