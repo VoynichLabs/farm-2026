@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.39.1] — 2026-08-15
+
+### Fixed — the Duo 2 tile was showing the other Reolink (Claude Opus 5)
+
+**What:** `GuardianCameraFeed.tsx`'s snapshot poll chain is now scoped to the effect run instead of the component, and aborts its in-flight request on teardown. `GuardianCameraStage.tsx` keys the two top-stage tiles by camera name and fixes a dead thumbnail click.
+
+**Why:** Boss: "the box that should be showing the Duo 2 keeps flipping between the two reolink cameras." It was — measured on `/?cam=duo2`, 41 of 42 samples of the Duo 2 tile were painted with a 16:9 `house-yard` frame rather than the Duo 2's 8:3 panoramic, with the tile still labelled `duo2`. Guardian was exonerated first: ten consecutive pulls of `/api/cameras/duo2/frame` all returned a correct 1280×480. The browser was asking for the wrong camera.
+
+The poll chain's liveness guard was `mountedRef` — a ref, so scoped to the *component*, not to the *effect run*. When `cameraName` changed on a mounted tile, React ran the cleanup (`mountedRef.current = false`) and then immediately ran the new effect body (`mountedRef.current = true`). The previous chain's in-flight fetch resolved a moment later, saw `true`, wrote the old camera's blob into the shared `frameUrl`, and re-armed `setTimeout(fetchFrame, …)` on its own stale closure. That timer lived in the superseded run's local `nextTick`, which the current cleanup closes over a different binding of — so it could never be cleared. Two immortal chains, one `frameUrl`, alternating writes at ~1.2 s.
+
+No click was needed to trigger it. `GuardianCameraStage` initialises `userFeatured` to `defaultFeatured` (`house-yard`) and reads `?cam=`/`localStorage` post-mount for hydration safety, so *every* load with a non-default camera selected mutated the live tile's `cameraName` and orphaned a chain. Once `farm2026.guardian.featured.*` was `duo2`, it reproduced on every page view.
+
+**How:** the guard is a run-scoped `let cancelled` declared inside the effect, checked after every `await`, so a superseded run's chain dies at its next checkpoint and can never re-arm. Cleanup also aborts the in-flight fetch instead of leaving it to occupy a per-host connection, and per-camera state (`hadFrameRef`, `consecutiveErrors`, `reconnectingShownAt`, the rendered blob) resets on camera change rather than only on unmount — otherwise an incoming camera inherited the outgoing one's "already had a frame" history and could skip `CONNECTING` straight to `OFFLINE`. Blob revocation moved out of a `setState` updater, which must stay pure.
+
+Fixed at the guard rather than papered over with a React `key`: `maxWidth` is also an effect dep and legitimately changes (1600 on the stage, 800 on a thumb) without the camera changing, so keying on camera name alone would not have covered that re-run. The stage keys are defence in depth — those two slots were the only unkeyed tile positions on the page, which is why they were the ones mutating a live feed.
+
+Two things fell out of the same root cause:
+
+- **A cascade.** The orphaned chain shared the tile's single `feedState` and reported it under the *current* `cameraName`, so `house-yard`'s failures were recorded against `duo2`. Reaching `OFFLINE_THRESHOLD` tripped auto-promote, changing `cameraName` again and spawning a third chain.
+- **A dead thumbnail click.** That left `userFeatured === "duo2"` while `featured` had moved elsewhere, so `duo2` rendered as a thumb while still being the user's pick — and `promote()`'s `if (name === userFeatured) return;` swallowed the click entirely. It now compares against the derived `featured`, so the click at least writes the pick through to `localStorage` and the URL and survives a reload. It does **not** force past auto-promote: while a camera is still reporting `offline`, `featured` stays where auto-promote put it and the stage won't move. Whether a user should be able to pin a camera that isn't producing frames is a policy question for Boss, deliberately left alone here.
+
+**Verified** (no test suite; instrumented browser repro is the verification step — `docs/15-Aug-2026-duo2-camera-tile-flip-plan.md`): on `/?cam=duo2` and `/projects/guardian?cam=duo2`, every sample of the Duo 2 tile now reports 2.667 (8:3) — 26/26 and 13/13, versus 1/42 before. Orphan polls of `house-yard` at stage width dropped from 27 to 1 (the single legitimate first-render fetch, aborted before re-arming). A second orphan also disappeared: `house-yard`'s *thumbnail* had been running two chains (54 requests at a 6 ms median gap, versus ~28 for every other thumb), and now runs one at a clean 2000 ms. Over a 42 s window the page went from 8 poll chains for 6 cameras to exactly 6, all uniform. Three click-promotes across cameras produced zero cross-camera frames. `npm run build` and ESLint on both touched files are clean.
+
 ## [1.39.0] — 2026-08-14
 
 ### Fixed — camera overlay labels were blocking Guardian thumbnail images (Claude Sonnet 5)

@@ -1,7 +1,7 @@
 "use client";
 /**
- * Author: Claude Fable 5 (prev Claude Opus 4.7 (1M context); orig Claude Opus 4.6, 15-Apr-2026)
- * Date: 06-Jul-2026
+ * Author: Claude Opus 5 (prev Claude Fable 5; Claude Opus 4.7 (1M context); orig Claude Opus 4.6, 15-Apr-2026)
+ * Date: 15-Aug-2026
  * PURPOSE: Reusable camera feed via snapshot polling. Fetches a single JPEG from
  *   Guardian's /api/cameras/{name}/frame endpoint every ~1.2s and swaps the img src.
  *   Replaced persistent MJPEG streaming because browsers limit concurrent HTTP/1.1
@@ -48,6 +48,31 @@
  *   reports the full state string (not just a live boolean) so parent layouts
  *   can distinguish "connecting" (still trying — keep visible) from "offline"
  *   (give up — hide). See docs/15-Apr-2026-smart-camera-visibility-plan.md.
+ *
+ *   15-Aug-2026: ORPHANED POLL CHAIN fix — "the Duo 2 box keeps flipping
+ *     between the two Reolinks."
+ *     The poll chain's liveness guard used to be `mountedRef`, a ref, which
+ *     is scoped to the *component* rather than to the *effect run*. When
+ *     `cameraName` changed on a mounted tile, React ran the cleanup
+ *     (`mountedRef.current = false`) and then immediately ran the new effect
+ *     body (`mountedRef.current = true`) — so the previous chain's in-flight
+ *     fetch, resolving a moment later, saw `true`, wrote the OLD camera's
+ *     blob into the shared `frameUrl`, and re-armed its own
+ *     `setTimeout(fetchFrame, …)` on the OLD closure. That timer lived in
+ *     the superseded run's local `nextTick`, which the current cleanup can
+ *     never reach: the old chain became unreachable and immortal. Two chains,
+ *     one `frameUrl`, alternating writes at ~1.2s.
+ *     Observed on `/?cam=duo2`: 27 live polls of `house-yard` at the *stage*
+ *     width while house-yard was only a thumbnail, and 41 of 42 samples of
+ *     the Duo 2 tile painted with a 16:9 house-yard frame.
+ *     The guard is now a run-scoped `let cancelled` declared inside the
+ *     effect, so a superseded run's token stays false forever and its chain
+ *     dies at the next checkpoint. Cleanup also aborts the in-flight fetch
+ *     rather than letting it occupy a per-host connection until it resolves.
+ *     NOTE: this must be fixed at the guard, not papered over with a React
+ *     `key` on camera name — `maxWidth` is also an effect dep and legitimately
+ *     changes (1600 on the stage, 800 on a thumb) without the camera changing.
+ *     See docs/15-Aug-2026-duo2-camera-tile-flip-plan.md.
  * SRP/DRY check: Pass — single responsibility: camera feed display for any camera.
  */
 
@@ -111,26 +136,56 @@ export default function GuardianCameraFeed({
   const [frameUrl, setFrameUrl] = useState<string | null>(null);
   const [feedState, setFeedState] = useState<FeedState>("connecting");
   const consecutiveErrors = useRef(0);
-  const mountedRef = useRef(true);
   const hadFrameRef = useRef(false);
   // Tracks when the tile last entered "reconnecting" so a single post-streak
   // success doesn't immediately flip it back to "live" — see
   // RECONNECT_MIN_VISIBLE_MS.
   const reconnectingShownAt = useRef<number | null>(null);
+  // Mirrors the blob: URL currently in `frameUrl` so teardown can revoke it
+  // without routing a side effect through a state updater. Updater functions
+  // must stay pure — React may invoke them more than once, which would
+  // double-revoke.
+  const objectUrlRef = useRef<string | null>(null);
 
   // Poll for snapshots — chained setTimeout, not setInterval, so a slow
   // Cloudflare tunnel can't pile up requests faster than they complete.
   useEffect(() => {
-    mountedRef.current = true;
-    consecutiveErrors.current = 0;
-    setFeedState("connecting");
-
+    // Run-scoped liveness token. This deliberately is NOT a ref: a ref is
+    // shared across effect runs, so a superseded run would observe the *new*
+    // run's `true` and resurrect its own poll chain — the orphaned-chain bug
+    // documented in this file's header. A `let` in the effect body belongs to
+    // exactly one run and stays false for that run forever once cleaned up.
+    let cancelled = false;
     let nextTick: ReturnType<typeof setTimeout> | null = null;
+    let inFlight: AbortController | null = null;
+
+    // This effect re-runs whenever the tile switches camera (or snapshot
+    // width). Every piece of state below describes the *previous* camera, so
+    // it all resets here — otherwise the incoming camera inherits the
+    // outgoing camera's frame and its error history, and a fresh tile could
+    // skip CONNECTING and go straight to OFFLINE on its first failed poll.
+    consecutiveErrors.current = 0;
+    hadFrameRef.current = false;
+    reconnectingShownAt.current = null;
+    setFeedState("connecting");
+    setFrameUrl(null);
+
+    // Swap in a new frame and revoke the one it replaces. Revoking the
+    // previous URL only after the new one is committed avoids ever pointing
+    // the <img> at a revoked blob.
+    const showFrame = (blob: Blob) => {
+      const previous = objectUrlRef.current;
+      const next = URL.createObjectURL(blob);
+      objectUrlRef.current = next;
+      setFrameUrl(next);
+      if (previous) URL.revokeObjectURL(previous);
+    };
 
     const fetchFrame = async () => {
-      if (!mountedRef.current) return;
+      if (cancelled) return;
 
       const ac = new AbortController();
+      inFlight = ac;
       const abortTimer = setTimeout(
         () => ac.abort(),
         FRAME_FETCH_TIMEOUT_MS,
@@ -146,12 +201,12 @@ export default function GuardianCameraFeed({
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const blob = await res.blob();
-        if (!mountedRef.current) return;
+        // Checkpoint after every await: if this run was superseded while the
+        // bytes were in flight, they belong to a camera this tile no longer
+        // shows. Drop them.
+        if (cancelled) return;
 
-        setFrameUrl((prev) => {
-          if (prev) URL.revokeObjectURL(prev);
-          return URL.createObjectURL(blob);
-        });
+        showFrame(blob);
         hadFrameRef.current = true;
         consecutiveErrors.current = 0;
 
@@ -171,7 +226,10 @@ export default function GuardianCameraFeed({
         }
         setFeedState("live");
       } catch {
-        if (!mountedRef.current) return;
+        // Same checkpoint on the failure path — a superseded run must not
+        // report errors against the camera that replaced it. (Cleanup aborts
+        // the in-flight fetch, so this branch is also where that abort lands.)
+        if (cancelled) return;
         consecutiveErrors.current++;
 
         if (!hadFrameRef.current) {
@@ -198,7 +256,13 @@ export default function GuardianCameraFeed({
         // else: stay on whatever we were (typically "live"); below threshold.
       } finally {
         clearTimeout(abortTimer);
-        if (mountedRef.current) {
+        if (inFlight === ac) inFlight = null;
+        // Re-arm only while this run still owns the tile. This is the line
+        // that used to resurrect superseded chains: gated on the shared
+        // `mountedRef`, it re-armed a timer stored in *this* run's `nextTick`,
+        // which the current cleanup closes over a different binding of and
+        // therefore can never clear.
+        if (!cancelled) {
           nextTick = setTimeout(fetchFrame, POLL_INTERVAL);
         }
       }
@@ -207,14 +271,21 @@ export default function GuardianCameraFeed({
     fetchFrame();
 
     return () => {
-      mountedRef.current = false;
+      cancelled = true;
       if (nextTick) clearTimeout(nextTick);
-      hadFrameRef.current = false;
-      reconnectingShownAt.current = null;
-      setFrameUrl((prev) => {
-        if (prev) URL.revokeObjectURL(prev);
-        return null;
-      });
+      // Drop the superseded request immediately rather than leaving it to
+      // occupy one of the browser's per-host connections until it resolves.
+      // The abort surfaces in fetchFrame's catch, which the `cancelled`
+      // checkpoint turns into a no-op.
+      inFlight?.abort();
+      inFlight = null;
+      // Release the rendered blob. Covers both teardown paths: on unmount
+      // nothing else would free it, and on a camera switch the effect body
+      // has already blanked `frameUrl` for the incoming camera.
+      if (objectUrlRef.current) {
+        URL.revokeObjectURL(objectUrlRef.current);
+        objectUrlRef.current = null;
+      }
     };
   }, [cameraName, maxWidth]);
 
