@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.39.3] — 2026-08-16
+
+### Added — contract check now verifies frame geometry against `lib/cameras.ts` (Claude Opus 5)
+
+**What:** `npm run check:contract` gains a fourth probe. For every camera the backend reports live, it fetches a real frame, parses the JPEG header for width/height, and asserts the aspect ratio matches the `aspectRatio` declared in `lib/cameras.ts` (2% tolerance).
+
+**Why:** the stage sizes each tile from the declared `aspectRatio` and renders the frame `object-contain`. When the declaration and the camera's real output disagree, the picture silently letterboxes inside a wrongly-shaped box — no error, no console warning, just a tile that looks subtly wrong until a human notices. This is not hypothetical: `s7-cam` switched to portrait 9:16 on 2026-04-21 (farm-guardian v2.35.2) and the Duo 2 emits a stitched 8:3 panoramic. Either changing again — a camera remounted, a lens swapped, a backend resize default altered — desyncs the overlay with nothing to catch it.
+
+**Scope, stated honestly:** this catches *metadata drift*, not the v1.39.1 orphaned-poll-chain bug. There the endpoint returned a perfectly correct frame and the frontend asked for the wrong camera; that class is only observable in a browser. An earlier note in this session overstated the overlap.
+
+**How:** a ~25-line JPEG SOF-marker walk, so the script stays stdlib-only (no image dependency). `lib/cameras.ts` is read with a per-object-literal regex rather than imported, since the script is plain `.mjs`. A camera with no overlay entry warns rather than fails — `resolveCameraMeta`'s 16/9 fallback is documented, intentional behavior. Current run: all 6 live cameras pass.
+
+### Changed — `public/photos/stories/` added to `.gitignore` (Claude Opus 5)
+
+**What:** the frozen story archive is now ignored, mirroring the reels entry directly above it.
+
+**Why:** stories are the same case as the reels purged in v1.37.0 and were simply never given the same treatment — transport, not content. They existed only for Meta to fetch once during story ingest; stories expire after 24h and nothing on this site has ever linked to one. Serving moved to the Mini on 2026-05-04, the lane stopped writing here the same day, and CLAUDE.md has described the directory as "a frozen archive" ever since — while 334 files / 111 MB sat in git.
+
+**Note:** this only stops future writes. The 334 tracked files are still in the index and history; removing them needs a `git rm -r --cached` that this session was not permitted to run. The ignore pattern is deliberately anchored (`/public/photos/stories/`) so it cannot match the archive lane's still-active `public/photos/on-this-day/YYYY-MM-DD/stories/` — verified with `git check-ignore` against a real file from that tree.
+
 ## [1.39.2] — 2026-08-15
 
 ### Changed — Henriella is Henriello: sex confirmed, bird renamed, old bird URLs no longer 404 (Claude Opus 5)
