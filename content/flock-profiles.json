@@ -1500,7 +1500,7 @@
       ],
       "color_description": "Boss-confirmed 29-Jul-2026 (photos IMG_8050/8044/8043) \u2014 classic bold black-and-white barred plumage, evenly banded across the whole body with no silver-headed or scaled look at all. Bright red single comb, orange-yellow legs, purple leg band #12 clearly visible on the left leg. The earlier hatch-stage description (silvery salt-and-pepper head over near-black body, scaled feather look) was WRONG and is superseded by this entry.",
       "color_description_as_of": "2026-07-29",
-      "photo": "birds/IMG_8044-henridotta-wings-flapping-29jul2026.jpg",
+      "photo": "birds/IMG_8951-henridotta-black-white-17aug2026.jpg",
       "silver_marking": "none",
       "notes": "June Henrietta-line chick, named in honor of her mother Henrietta. Dam: Henrietta; sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that the silver sister is Henriessa, not Henridotta \u2014 Henridotta is the darker standard look (same coloring as Adelbird, who is slightly smaller). Per-chick record: content/hatches/2026/2026-06-03-04-henridotta.md PLUMAGE CORRECTED 2026-07-29 (Boss-authoritative): she is barred black-and-white, not the silvery-scaled hatch-era description \u2014 that description is retired. Default photo updated to the wings-spread shot at the fence (purple band #12 confirmed in the companion portrait, IMG_8050).",
       "location": "birdcatraz",
@@ -1533,9 +1533,9 @@
           "caption": "Solo portrait standing in yard \u2014 dark gray/dark lacing plumage, red comb developing, purple leg band #12 clearly visible. Boss-confirmed identity."
         },
         {
-          "file": "birds/IMG_8050-henridotta-purpleband12-29jul2026.jpg",
+          "file": "birds/IMG_8043-henridotta-wings-flapping-closeup-29jul2026.jpg",
           "date": "2026-07-29",
-          "caption": "Perched on the enclosure rail among white rose of Sharon, purple leg band #12 clearly visible \u2014 full black-and-white barred adult plumage. Boss-confirmed identity."
+          "caption": "Close-up mid-flap, wings spread wide, red comb and barred plumage sharp against the pink rose of Sharon. Boss-confirmed identity."
         },
         {
           "file": "birds/IMG_8044-henridotta-wings-flapping-29jul2026.jpg",
@@ -1543,9 +1543,14 @@
           "caption": "Wings fully spread on the fence line amid pink rose of Sharon \u2014 bold black-and-white barring across the whole body. Boss-confirmed identity."
         },
         {
-          "file": "birds/IMG_8043-henridotta-wings-flapping-closeup-29jul2026.jpg",
+          "file": "birds/IMG_8050-henridotta-purpleband12-29jul2026.jpg",
           "date": "2026-07-29",
-          "caption": "Close-up mid-flap, wings spread wide, red comb and barred plumage sharp against the pink rose of Sharon. Boss-confirmed identity."
+          "caption": "Perched on the enclosure rail among white rose of Sharon, purple leg band #12 clearly visible \u2014 full black-and-white barred adult plumage. Boss-confirmed identity."
+        },
+        {
+          "file": "birds/IMG_8951-henridotta-black-white-17aug2026.jpg",
+          "date": "2026-08-17",
+          "caption": "A black-and-white speckled hen stands alert, eye fixed on camera, comb bright red, legs yellow with a purple."
         }
       ]
     },
