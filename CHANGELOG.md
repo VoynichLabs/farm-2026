@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.40.1] — 2026-08-18
+
+### Changed — hero row images drop to q65 (Claude Opus 5)
+
+**What:** the six preloaded Class of 2026 tiles now request `quality={65}` instead of the default 75. `next.config.ts` declares `images.qualities = [65, 75]` — Next 16 rejects any quality an `<Image>` asks for that isn't listed. Every other image on the site stays at 75.
+
+**Why:** those tiles render ~194 CSS px wide, so a DPR-3 phone pulls the 640w variant of each — and after v1.40.0 all six are preloaded ahead of everything else on the page. That is the one payload worth trimming for the mobile case Boss asked about.
+
+**How, with the honest number:** measured against a local production build, webp, w=640, across all six actual frames: **442 KB → 392 KB, an 11% saving.** Less than a quality drop usually buys, because webp at this size is already efficient — reported here rather than rounded up. Verified visually identical at the rendered size before shipping (390×844 DPR-3 screenshot compared against the deployed q75 render).
+
+**Considered and rejected:** capping the served variant at 384w (2x) would have roughly halved the bytes, but the only way to get there is to understate the tile width in `sizes`, which lies to every non-retina display as well. Serving a correct 3x variant at slightly lower quality is the better trade.
+
 ## [1.40.0] — 2026-08-18
 
 ### Fixed — Class of 2026 portraits were lazy-loaded at the top of the homepage (Claude Opus 5)

@@ -15,6 +15,17 @@
  */
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  images: {
+    // 65 is here for the homepage's Class of 2026 hero row. Those tiles render
+    // ~194 CSS px wide, so on a DPR-3 phone they pull the 640w variant — six of
+    // them, preloaded, before anything else on the page. At that display size
+    // the step down from q75 is not visible, and it is the cheapest way to keep
+    // the row light on a phone without giving up retina sharpness (dropping to
+    // a 384w variant instead would be visible). Next 16 requires every quality
+    // an <Image> asks for to be declared here; 75 stays for everything else.
+    qualities: [65, 75],
+  },
+};
 
 export default nextConfig;

@@ -157,6 +157,12 @@ export default function Home() {
                       // screen). Tile 7+ stays lazy — that's below the fold
                       // everywhere and shouldn't spend a mobile's bandwidth.
                       priority={idx < FIRST_ROW_PRIORITY}
+                      // These tiles render ~194 CSS px wide, so a DPR-3 phone
+                      // pulls the 640w variant of each — and six of them are
+                      // preloaded ahead of everything else. q65 is invisible at
+                      // that display size and keeps the preloaded row light on
+                      // a phone. Declared in next.config.ts images.qualities.
+                      quality={65}
                     />
                   </div>
                 ) : (
