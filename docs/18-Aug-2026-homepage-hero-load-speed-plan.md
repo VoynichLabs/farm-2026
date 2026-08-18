@@ -45,8 +45,21 @@ lazy-loading."*
 **Root cause:** `next/image` lazy-loads by default. Nothing in the Class of 2026
 row opted out, so the six tiles at the very top of the page were emitted
 `loading="lazy"`, assigned Low priority, and not queued until after layout. On a
-warm desktop cache that cost ~170ms and hid. On a phone on a slow connection,
-Low priority queued behind the JS bundle is precisely the visible lag reported.
+fast desktop connection that hides. On a phone on a slow connection, Low
+priority queued behind the JS bundle is precisely the visible lag reported.
+
+**What the fix demonstrably changed — and what is NOT claimed.** After deploy,
+on production: hero images queued at **176 ms**, first contentful paint at
+**528 ms**. The fetch now begins *before first paint*, which `loading="lazy"`
+cannot do by construction (a lazy image is not queued until after layout). That
+ordering is the proof.
+
+No before/after millisecond speedup is claimed, and none should be quoted from
+this session. The pre-change reading (166 ms queue, 1440×820, unthrottled) and
+the post-change reading (176 ms queue, 390×844 DPR-3, Fast 4G) were taken under
+different viewports, device pixel ratios and network conditions. They are not
+comparable, and 1.40.x is already deployed so the baseline cannot be re-run.
+Anyone wanting a true A/B should measure both arms under one fixed profile.
 
 **A measurement trap worth recording:** the first pass at this used the in-app
 Browser pane and produced a first-image start of 1827ms. That number was an
@@ -58,7 +71,12 @@ meaningless. Use the chrome-devtools MCP, which drives a genuinely visible tab.
 ## Changes
 
 1. **`app/page.tsx`** — `priority={idx < FIRST_ROW_PRIORITY}` on the Class of
-   2026 `<Image>`, `FIRST_ROW_PRIORITY = 6`.
+   2026 `<Image>`, `FIRST_ROW_PRIORITY = 6`; plus `quality={65}`, which is
+   **unconditional** — all eleven tiles with photos serve at q65, only
+   `priority` is scoped to the first six. It is the only `quality` prop on the
+   site (verified by grep across `app/` and `lib/`), and 65 is declared in
+   `next.config.ts` `images.qualities`, which Next 16 requires or it rejects the
+   request.
 
    Six covers both ends of the responsive range: one full row at
    `lg:grid-cols-6`, and at `grid-cols-2` on a phone the three stacked rows
@@ -109,6 +127,8 @@ meaningless. Use the chrome-devtools MCP, which drives a genuinely visible tab.
 - Built HTML: six `<link rel="preload" as="image">`, first six `<img>` no longer
   carry `loading="lazy"`, tiles 7+ unchanged.
 - Local mobile screenshot: `v1.40.0`, `22:40:22 EDT`, Ingebird on her chick frame.
-- **Production re-measure after the Railway deploy lands** — the same cold-cache
-  chrome-devtools trace, comparing first-image queue time against the 166ms
-  baseline above.
+- **Production, post-deploy (v1.40.1):** `v1.40.1`, clock `22:53:59 EDT`, six
+  `<link rel="preload" as="image">` in `<head>`, first six tiles not lazy, tiles
+  7+ lazy, all serving q65, Ingebird on her chick frame. Hero queued 176 ms vs
+  FCP 528 ms — fetch starts before first paint, which is the ordering this fix
+  was for.
