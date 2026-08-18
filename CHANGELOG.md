@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.40.0] — 2026-08-18
+
+### Fixed — Class of 2026 portraits were lazy-loaded at the top of the homepage (Claude Opus 5)
+
+**What:** the first six tiles in the Class of 2026 row now pass `priority` to `next/image`. Tile 7 and beyond stay lazy.
+
+**Why:** that row is the very first thing in the viewport on every device, and every tile in it was being emitted with `loading="lazy"`. Lazy images are assigned Low priority and are not queued until after layout, so the browser deliberately held back the one thing a visitor is looking at. Chrome's own trace flagged it without prompting — the `LCPDiscovery` insight on `farm.markbarney.net/` reads "make the LCP image discoverable from the HTML immediately, and avoiding lazy-loading." On a desk with a warm cache this cost ~170ms and hid; on a phone on a slow connection, Low priority behind the JS bundle is exactly the visible lag Boss reported.
+
+**How:** `priority` emits `loading="eager"` plus a `<link rel="preload" as="image">` in `<head>`, so the preload scanner starts the fetch while the HTML is still parsing rather than after layout. Verified in the built output: six preload links, the first six `<img>` tags no longer carry `loading="lazy"`, tiles 7+ unchanged. Six is deliberate and covers both ends — one full row at `lg:grid-cols-6`, and at `grid-cols-2` on a phone the three stacked rows that fill the first screen. Nothing below the fold is preloaded, so this does not spend mobile bandwidth to fix a desktop symptom.
+
+**Not changed:** the existing `sizes` string was checked against the grid at all three breakpoints (50vw / 33vw / 17vw vs 2 / 3 / 6 columns) and is already correct — a 1440px viewport selects the 256w variant for a 194px tile. No change needed.
+
+### Changed — the site clock reads Eastern, not UTC (Claude Opus 5)
+
+**What:** `SiteNav`'s clock switches from `HH:MM:SSZ` to Hampton's own wall time, e.g. `22:40:22 EDT`.
+
+**Why:** Boss asked for Eastern. A UTC clock on a farm site is a machine's timestamp, not a reading a visitor can use against the live camera feeds beside it.
+
+**How:** `Intl.DateTimeFormat` pinned to `America/New_York` with `hourCycle: "h23"`. The zone carries the EST/EDT rule itself, so this stays correct across both DST switches instead of drifting an hour twice a year, and the suffix is read back out of the formatter rather than hardcoded — it will say EST in November without another commit. The pre-hydration placeholder moves from `──:──:──Z` to `──:──:── ET`.
+
+### Changed — Ingebird's portrait is now her early chick frame (Claude Opus 5)
+
+**What:** Ingebird's `photo` in `content/flock-profiles.json` moves from `IMG_7718-ingebird-black-white-21jul2026.jpg` (held in-hand) to `IMG_6227-ingebird-suspected-22jun2026.jpg` (day 20, on the rail).
+
+**Why:** Boss asked for her hatch or early picture instead of the in-hand one. Her actual hatch-day frame (IMG_5141) is referenced in the hatch record but has never been committed to the repo — `path: ""` — so the day-20 rail shot is the earliest frame that exists here.
+
+**How:** one field. All three frames stay in her `photos[]` ledger, so `/flock`'s rotating portrait still walks her back through the shoulder shot and the in-hand frame, and the leg-band evidence that cites IMG_7718 by name is untouched. Note the knock-on: `photo` is a single SSoT read by both the homepage and `/flock`, and `/flock`'s "photo ID unconfirmed" badge keys off `suspected` in the filename — so that badge now shows on her tile. That is accurate for this frame (the hatch record records the ID as suspected, not confirmed) and was left in place rather than special-cased.
+
 ## [1.39.3] — 2026-08-16
 
 ### Added — contract check now verifies frame geometry against `lib/cameras.ts` (Claude Opus 5)

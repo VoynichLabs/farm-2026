@@ -1,6 +1,9 @@
 /**
- * Author: Claude Opus 4.8 (prev Claude Fable 5 / Claude Opus 4.7 / Claude Sonnet 4.6 / Claude Opus 4.8)
- * Date: 22-Jul-2026 (orig 10-May-2026; updated 20-May / 22-Jun / 06-Jul / 22-Jul-2026)
+ * Author: Claude Opus 5 (prev Claude Opus 4.8 / Claude Fable 5 / Claude Opus 4.7 / Claude Sonnet 4.6)
+ * Date: 18-Aug-2026 (orig 10-May-2026; updated 20-May / 22-Jun / 06-Jul / 22-Jul / 18-Aug-2026)
+ *   18-Aug-2026: the Class of 2026 row's first six tiles now carry
+ *   next/image `priority` — they are the top of the page and were being
+ *   lazy-loaded, so the browser deferred them until after layout.
  *   22-Jul-2026: Class of 2026 grid now DERIVES from flock-profiles.json
  *   (ornitharchs), not a hardcoded array — so new bird portraits committed to
  *   the roster show on the front page automatically instead of silently
@@ -86,6 +89,13 @@ function formatHatch(iso: string): string {
 // newest hatch first, same as before this override existed.
 const FEATURED_ORDER = ["Birddor", "Henridotta", "Birdimir", "Ingebird", "Horstabird"];
 
+// How many Class-of-2026 tiles get next/image `priority` (eager + preload).
+// Six is one full row at the widest breakpoint (lg:grid-cols-6) and, at
+// grid-cols-2 on a phone, the three stacked rows that fill the first screen —
+// so the same number is correct at both ends and nothing below the fold gets
+// preloaded. See the Image below for why this matters.
+const FIRST_ROW_PRIORITY = 6;
+
 function getClassOf2026(): Chick[] {
   const flock = getFlockProfiles();
   if (!flock) return [];
@@ -132,6 +142,21 @@ export default function Home() {
                       height={500}
                       className="w-full h-full object-contain"
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw"
+                      // The Class of 2026 row is the top of the homepage — the
+                      // first thing in the viewport on every device. Without
+                      // this, next/image emits loading="lazy" on all of them,
+                      // so Chrome assigns Low priority and does not even queue
+                      // the fetch until after layout (measured 18-Aug-2026:
+                      // Chrome's own LCPDiscovery insight flagged the row).
+                      // `priority` emits loading="eager" + fetchpriority="high"
+                      // + a <link rel="preload"> in <head>, so the preload
+                      // scanner starts the fetch while the HTML is still
+                      // parsing. FIRST_ROW_PRIORITY covers a full row at every
+                      // breakpoint (6-across desktop, and the 2-across mobile
+                      // stack, whose three rows all sit within the first
+                      // screen). Tile 7+ stays lazy — that's below the fold
+                      // everywhere and shouldn't spend a mobile's bandwidth.
+                      priority={idx < FIRST_ROW_PRIORITY}
                     />
                   </div>
                 ) : (

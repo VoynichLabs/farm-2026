@@ -1,11 +1,12 @@
 "use client";
 /**
  * Author: Claude Opus 5 (Bubba)
- * Date: 30-Jul-2026
+ * Date: 18-Aug-2026 (orig 30-Jul-2026)
+ *   18-Aug-2026: clock switched from UTC to Eastern (America/New_York).
  * PURPOSE: Sitewide top bar in the light "Field Guide" register
  *   (16-Jul-2026 daylight retheme, replaces TerminalNav.tsx). Keeps the
  *   terminal era's informational spine — identity strip with location,
- *   build version, live UTC clock; dense lowercase link row — but on
+ *   build version, live Eastern-time clock; dense lowercase link row — but on
  *   paper instead of phosphor. Nav links carry their page-mark emoji
  *   from lib/emoji.ts (aria-hidden; text labels carry meaning).
  *
@@ -14,9 +15,11 @@
  *   dark frame. The markets page body (Terminal.tsx) is self-contained
  *   and untouched by the retheme.
  *
- *   The clock is a client island so it ticks every second. SSR renders
- *   `──:──:──Z` until hydration so the HTML is stable for the cache;
- *   `suppressHydrationWarning` covers the SSR/client mismatch.
+ *   The clock is a client island so it ticks every second, and reads in the
+ *   farm's own Eastern wall time (America/New_York) rather than UTC — see
+ *   formatEastern below. SSR renders `──:──:── ET` until hydration so the
+ *   HTML is stable for the cache; `suppressHydrationWarning` covers the
+ *   SSR/client mismatch.
  *
  *   Outbound links (Boss's personal Instagram @markbarney121, plus
  *   markbarney.net) are grouped in one right-aligned span so the row
@@ -48,11 +51,26 @@ const NAV_LINKS: { href: string; label: string; mark: string }[] = [
 const SITE_VERSION = `v${pkg.version}`;
 const SITE_LOCATION = "HAMPTON, CT · 41.7558°N 71.9789°W";
 
-function formatUtc(d: Date): string {
-  const hh = d.getUTCHours().toString().padStart(2, "0");
-  const mm = d.getUTCMinutes().toString().padStart(2, "0");
-  const ss = d.getUTCSeconds().toString().padStart(2, "0");
-  return `${hh}:${mm}:${ss}Z`;
+// The clock reads in the farm's own wall time, not UTC — a visitor looking at
+// Hampton's cameras should see Hampton's clock. America/New_York carries the
+// EST/EDT rule itself, so this stays correct across both DST switches instead
+// of drifting an hour twice a year, and the suffix is read back out of the
+// formatter (EST in winter, EDT in summer) rather than hardcoded. The
+// formatter is built once at module scope — it is re-run every second.
+const EASTERN_TIME = new Intl.DateTimeFormat("en-US", {
+  timeZone: "America/New_York",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hourCycle: "h23", // midnight reads 00:xx:xx, not 24:xx:xx
+  timeZoneName: "short",
+});
+
+function formatEastern(d: Date): string {
+  const parts = EASTERN_TIME.formatToParts(d);
+  const part = (type: Intl.DateTimeFormatPartTypes): string =>
+    parts.find((p) => p.type === type)?.value ?? "";
+  return `${part("hour")}:${part("minute")}:${part("second")} ${part("timeZoneName")}`;
 }
 
 export default function SiteNav() {
@@ -93,7 +111,7 @@ export default function SiteNav() {
         <span className={`${meta} hidden sm:inline`}>{SITE_LOCATION}</span>
         <span className={meta}>{SITE_VERSION}</span>
         <span className={clock} suppressHydrationWarning>
-          {now ? formatUtc(now) : "──:──:──Z"}
+          {now ? formatEastern(now) : "──:──:── ET"}
         </span>
       </div>
 
