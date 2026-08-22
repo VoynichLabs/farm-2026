@@ -909,11 +909,18 @@
       ],
       "color_description": "Blue Laced Red Wyandotte pullet \u2014 slate-blue lacing on a rust-red ground, rose comb. Has scissor beak (cross beak): upper and lower mandible are offset but occlude/close fine.",
       "color_description_as_of": null,
-      "photo": null,
+      "photo": "birds/IMG_9049-scissor-beak-brown-chicken-22aug2026.png",
       "notes": "Blue Laced Red Wyandotte pullet from the March 2026 TSC batch (formerly part of 'March juveniles (6)' group). Has scissor beak (cross beak) \u2014 occludes/closes fine, mild, good prognosis. Manage with deep feed/water dishes, monitor weight, optional gentle beak trim if it overgrows.",
       "location": "birdcatraz",
       "ornitharch": false,
-      "leg_band": null
+      "leg_band": null,
+      "photos": [
+        {
+          "file": "birds/IMG_9049-scissor-beak-brown-chicken-22aug2026.png",
+          "date": "2026-08-22",
+          "caption": "A brown chicken with dark speckles stares directly into the lens, comb and wattles clearly visible."
+        }
+      ]
     },
     {
       "name": "Robirda",
