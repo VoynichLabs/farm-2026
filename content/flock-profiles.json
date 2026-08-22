@@ -1503,11 +1503,18 @@
           "source": "roster-backfill",
           "age_weeks": 8,
           "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"PLUMAGE CORRECTED 2026-07-29\"."
+        },
+        {
+          "date": "2026-08-22",
+          "date_unknown": false,
+          "description": "reads Barred Rock at a glance but it is not a clean ladder: the barring is bold and irregular, blotchy across breast and back, and far finer and tighter over the head and hackle, nearly salt-and-pepper there. Warm straw-gold feathers are coming in over the wing shoulder and onto the upper back, a pale cream-buff patch sitting among the black and white. Tail is dark and largely unbarred with a green-blue iridescent sheen. Small bright red single comb still developing, orange-yellow legs, purple band on the left leg. Soft pale grey down still shows at belly and thighs; she is not finished feathe",
+          "source": "boss-caption",
+          "age_weeks": 11
         }
       ],
-      "color_description": "Boss-confirmed 29-Jul-2026 (photos IMG_8050/8044/8043) \u2014 classic bold black-and-white barred plumage, evenly banded across the whole body with no silver-headed or scaled look at all. Bright red single comb, orange-yellow legs, purple leg band #12 clearly visible on the left leg. The earlier hatch-stage description (silvery salt-and-pepper head over near-black body, scaled feather look) was WRONG and is superseded by this entry.",
-      "color_description_as_of": "2026-07-29",
-      "photo": "birds/IMG_9056-henridotta-dark-feathered-22aug2026.jpg",
+      "color_description": "reads Barred Rock at a glance but it is not a clean ladder: the barring is bold and irregular, blotchy across breast and back, and far finer and tighter over the head and hackle, nearly salt-and-pepper there. Warm straw-gold feathers are coming in over the wing shoulder and onto the upper back, a pale cream-buff patch sitting among the black and white. Tail is dark and largely unbarred with a green-blue iridescent sheen. Small bright red single comb still developing, orange-yellow legs, purple band on the left leg. Soft pale grey down still shows at belly and thighs; she is not finished feathe",
+      "color_description_as_of": "2026-08-22",
+      "photo": "birds/IMG_8946-henridotta-black-white-22aug2026.jpg",
       "silver_marking": "none",
       "notes": "June Henrietta-line chick, named in honor of her mother Henrietta. Dam: Henrietta; sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that the silver sister is Henriessa, not Henridotta \u2014 Henridotta is the darker standard look (same coloring as Adelbird, who is slightly smaller). Per-chick record: content/hatches/2026/2026-06-03-04-henridotta.md PLUMAGE CORRECTED 2026-07-29 (Boss-authoritative): she is barred black-and-white, not the silvery-scaled hatch-era description \u2014 that description is retired. Default photo updated to the wings-spread shot at the fence (purple band #12 confirmed in the companion portrait, IMG_8050).",
       "location": "birdcatraz",
@@ -1558,6 +1565,11 @@
           "file": "birds/IMG_8951-henridotta-black-white-17aug2026.jpg",
           "date": "2026-08-17",
           "caption": "A black-and-white speckled hen stands alert, eye fixed on camera, comb bright red, legs yellow with a purple."
+        },
+        {
+          "file": "birds/IMG_8946-henridotta-black-white-22aug2026.jpg",
+          "date": "2026-08-22",
+          "caption": "A black-and-white barred hen stands alert, eye fixed on camera, comb bright red."
         },
         {
           "file": "birds/IMG_9056-henridotta-dark-feathered-22aug2026.jpg",
