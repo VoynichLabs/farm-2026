@@ -426,7 +426,7 @@
       ],
       "color_description": "Big slate blue-grey feather blocks laid across the shoulders and wings over a copper-chestnut ground \u2014 a grey-over-rust patchwork with no barring or lacing. Golden-orange neck hackles with dark shafts, a large area of bare bright RED skin over the face, and a strikingly pale yellow-gold iris. Comb low, red and knobby rather than upright. He is a cockerel. \u26a0\ufe0f Compare Horstabird, who also shows grey over gold but has a dull grey-brown face. (Plumage from 23-Jun-2026 and five weeks stale \u2014 re-check.)",
       "color_description_as_of": "2026-06-23",
-      "photo": "birds/IMG_5849-birdadette-23jun2026.jpg",
+      "photo": "birds/IMG_9160-birddor-golden-brown-26aug2026.png",
       "notes": "First successful incubator hatch of 2026 \u2014 from a blue egg set 16-March, hatched on Boss's desk 06-April. Formerly Birdadette; renamed Birddor in July 2026 when he turned out to be a cockerel. Sire window Little Big Red Junior (probable); dam unconfirmed. Per-chick record: content/hatches/2026/2026-04-06-01-birdadette.md",
       "location": "birdcatraz",
       "formerly": "Birdadette",
@@ -467,6 +467,11 @@
         {
           "file": "birds/IMG_5849-birdadette-23jun2026.jpg",
           "date": "2026-06-23"
+        },
+        {
+          "file": "birds/IMG_9160-birddor-golden-brown-26aug2026.png",
+          "date": "2026-08-26",
+          "caption": "A rooster with golden-brown feathers and a red comb leaps mid-air, wings spread wide, eye locked on the camera."
         }
       ]
     },
