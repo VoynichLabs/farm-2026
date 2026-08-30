@@ -1736,11 +1736,17 @@
       ],
       "color_description": "Deep mahogany-red body plumage with black tail feathers showing a green sheen. Medium upright single red comb, red wattles, yellow legs and feet. No leg band visible.",
       "color_description_as_of": null,
-      "photo": null,
+      "photo": "birds/e2dd549e2c47265a5191e3e1d7b9bb13e9921cfd9b33135d796540ad9c4b383d-not-soup-brown-bright-30aug2026.jpg",
       "notes": "Acquired from Julia (30-Aug-2026). Name: Not Soup.",
       "location": "birdcatraz",
       "ornitharch": false,
-      "photos": []
+      "photos": [
+        {
+          "file": "birds/e2dd549e2c47265a5191e3e1d7b9bb13e9921cfd9b33135d796540ad9c4b383d-not-soup-brown-bright-30aug2026.jpg",
+          "date": "2026-08-30",
+          "caption": "A brown rooster with bright red comb and wattles stands on a wooden post, looking directly at the camera with alert eyes and spread tail feathers."
+        }
+      ]
     }
   ]
 }
