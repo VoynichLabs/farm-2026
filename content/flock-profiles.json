@@ -1406,10 +1406,18 @@
           "source": "roster-backfill",
           "age_weeks": 6,
           "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"SILVER RESOLVED: the Boss confirmed 2026-07-21\"."
+        },
+        {
+          "date": "2026-09-02",
+          "date_unknown": false,
+          "description": "Barred/cuckoo pattern, not plain slate grey \u2014 white feathers with dense dark grey-black barring in stripes down the whole body, reading as salt-and-pepper grey overall. Head white with fine black speckling, orange face and comb, yellow-orange beak and legs.",
+          "source": "boss-confirmed-vlm-read",
+          "age_weeks": 13,
+          "note": "Boss reviewed photo henriessa_crop-henriessa-speckled-grey-02sep2026.jpg and confirmed this VLM description as accurate. Supersedes the 2026-07-21 entry (\"plain unpatterned slate blue-grey, no bars\") \u2014 she has grown into a barred/cuckoo adult pattern; likely maturation, not misID (leg band pink #8 confirmed in frame)."
         }
       ],
-      "color_description": "Plain, completely unpatterned slate blue-grey body \u2014 no bars, no blotches, no rust anywhere \u2014 under a head and neck densely frosted with white flecking, so she reads as a grey bird in a salt-and-pepper hood. Breast a lighter dove-grey than the back. Comb still small and low, pale gold iris, bright clean yellow legs.",
-      "color_description_as_of": "2026-07-21",
+      "color_description": "Barred/cuckoo pattern, not plain slate grey \u2014 white feathers with dense dark grey-black barring in stripes down the whole body, reading as salt-and-pepper grey overall. Head white with fine black speckling, orange face and comb, yellow-orange beak and legs.",
+      "color_description_as_of": "2026-09-02",
       "photo": "birds/henriessa_crop-henriessa-speckled-grey-02sep2026.jpg",
       "silver_marking": "confirmed",
       "notes": "June Henrietta-line chick. Dam: Henrietta (the flock's only brown-egg layer); name echoes the line (cf. Henriella). Sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that Henriessa is the silver/blue-gray sister \u2014 this settles the June flip-flop back to her (the original hatch-day observation) and away from Henridotta, who is the darker standard look. First logged photo (IMG_7655, 2026-07-21) is a solo portrait of her showing the silver barring. Per-chick record: content/hatches/2026/2026-06-03-01-henriessa.md BAND CONFIRMED 2026-07-21: pink #08 (boss confirmed from IMG_7729).",
