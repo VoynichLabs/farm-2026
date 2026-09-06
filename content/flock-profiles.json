@@ -1315,7 +1315,7 @@
       ],
       "color_description": "Pumpkin-day photo, ~10.5 weeks old: predominantly white with visibly more developed black/white speckled barring across the neck and wing than the 22-Jun frame showed, red comb coming in. Consistent with the overdue reconfirmation the June note flagged. Leg band (red #3) not visible in this frame, so side (left per 21-Jul-2026 confirmation) is not re-verified here \u2014 identity here is by elimination (red is the only red band in the roster) plus continuity from the prior confirmed ID, not a fresh band read.",
       "color_description_as_of": "2026-08-15",
-      "photo": "birds/IMG_9587-birdimir-speckled-white-06sep2026.jpg",
+      "photo": "birds/IMG_9584-birdimir-white-chicken-06sep2026.jpg",
       "notes": "First chick of the June clutch (new incubator, eggs set ~12 May; sire window Whitey Red Legs). Hatched in the NI, moved to the retired old incubator overnight as a holding spot, then to the brooder 2026-06-03. Dam not individually confirmed (blue egg). Per-chick record: content/hatches/2026/2026-06-02-01-birdimir.md",
       "location": "birdcatraz",
       "ornitharch": true,
@@ -1341,6 +1341,11 @@
           "file": "birds/7543bc8a99af2856a2e7344c32e30ee603b9fc7fccadaf3157a3b3ccf6bed5d1-birdimir-white-chicken-15aug2026.png",
           "date": "2026-08-15",
           "caption": "A white chicken with speckled neck and red comb looks straight into the lens, standing near a pumpkin half-eaten."
+        },
+        {
+          "file": "birds/IMG_9584-birdimir-white-chicken-06sep2026.jpg",
+          "date": "2026-09-06",
+          "caption": "A white chicken with black speckles and red comb looks straight into the lens, eye bright and alert."
         },
         {
           "file": "birds/IMG_9587-birdimir-speckled-white-06sep2026.jpg",
