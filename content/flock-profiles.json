@@ -1869,6 +1869,31 @@
           "caption": "A white-and-black rooster with red comb perches on a wooden beam, looking directly at the camera."
         }
       ]
+    },
+    {
+      "name": "White Rooster",
+      "breed": null,
+      "hatch_date": null,
+      "hatch_date_estimated": true,
+      "age_note": "Matured out of one of the unsexed juvenile batches (candidates: Cackle Hatchery cohort, TSC May batch, March juveniles, TSC juveniles, Barred Rocks, Plymouth Rocks) \u2014 exact source batch unconfirmed. First flagged 07-Sep-2026, filed same day.",
+      "status": "active",
+      "egg_color": "N/A (rooster)",
+      "temperament": null,
+      "color_observations": [
+        {
+          "date": "2026-09-07",
+          "date_unknown": false,
+          "description": "Solid white body plumage, large upright red single comb, red wattles and face, yellow beak and legs.",
+          "source": "boss-identified"
+        }
+      ],
+      "color_description": "Solid white body, large red comb and wattles, yellow beak and legs.",
+      "color_description_as_of": "2026-09-07",
+      "photo": null,
+      "notes": "Named/called \"the White Rooster\" by the Boss (07-Sep-2026). Roster promotion gap flagged same morning in docs/plans/07-Sep-2026-juvenile-to-rooster-roster-promotion-gap.md \u2014 no leg band visible, source juvenile batch unconfirmed.",
+      "location": "birdcatraz",
+      "ornitharch": false,
+      "photos": []
     }
   ]
 }
