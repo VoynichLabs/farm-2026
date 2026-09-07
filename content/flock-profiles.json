@@ -1920,11 +1920,17 @@
       ],
       "color_description": "Calico-patterned: speckled silver-white neck, gold/rust saddle, black-and-white barred tail, red comb, yellow legs.",
       "color_description_as_of": "2026-09-07",
-      "photo": null,
+      "photo": "birds/IMG_9624-loud-dumb-bird-red-comb-07sep2026.jpg",
       "notes": "Named Loud Dumb Bird by the Boss (07-Sep-2026) \u2014 this is the \"calico rooster\" flagged same morning in docs/plans/07-Sep-2026-juvenile-to-rooster-roster-promotion-gap.md.",
       "location": "birdcatraz",
       "ornitharch": false,
-      "photos": []
+      "photos": [
+        {
+          "file": "birds/IMG_9624-loud-dumb-bird-red-comb-07sep2026.jpg",
+          "date": "2026-09-07",
+          "caption": "A rooster with a red comb and barred tail stands alert, eyeing the camera directly."
+        }
+      ]
     }
   ]
 }
