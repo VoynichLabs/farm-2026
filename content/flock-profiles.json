@@ -1817,11 +1817,17 @@
       ],
       "color_description": "Black-Breasted Red Old English Game coloring: golden-straw hackle, chestnut-red back, black breast, iridescent black-green tail, slate legs.",
       "color_description_as_of": "2026-09-07",
-      "photo": null,
+      "photo": "birds/IMG_9638-malt-liquor-red-comb-07sep2026.jpg",
       "notes": "Named Malt Liquor by the Boss (07-Sep-2026). Likely the same Old English Game / BB Red rooster from the Cackle Hatchery batch noted 06-Aug-2026.",
       "location": "birdcatraz",
       "ornitharch": false,
-      "photos": []
+      "photos": [
+        {
+          "file": "birds/IMG_9638-malt-liquor-red-comb-07sep2026.jpg",
+          "date": "2026-09-07",
+          "caption": "A rooster with red comb and gold-and-black plumage stares directly into the lens, standing on wood chips."
+        }
+      ]
     }
   ]
 }
