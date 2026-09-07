@@ -1900,6 +1900,31 @@
           "caption": "A white chicken with red comb and wattles stands on a table, looking directly at the camera with an open beak."
         }
       ]
+    },
+    {
+      "name": "Loud Dumb Bird",
+      "breed": null,
+      "hatch_date": null,
+      "hatch_date_estimated": true,
+      "age_note": "Matured out of one of the unsexed juvenile batches, same as White Rooster \u2014 exact source batch unconfirmed. First flagged 07-Sep-2026, filed same day.",
+      "status": "active",
+      "egg_color": "N/A (rooster)",
+      "temperament": null,
+      "color_observations": [
+        {
+          "date": "2026-09-07",
+          "date_unknown": false,
+          "description": "Calico/multicolor patterning: black-speckled silvery-white head and neck, gold/straw and rust saddle feathers, black-and-white barred wing coverts and tail. Bright red single comb, red wattles, yellow legs. No leg band visible.",
+          "source": "boss-identified"
+        }
+      ],
+      "color_description": "Calico-patterned: speckled silver-white neck, gold/rust saddle, black-and-white barred tail, red comb, yellow legs.",
+      "color_description_as_of": "2026-09-07",
+      "photo": null,
+      "notes": "Named Loud Dumb Bird by the Boss (07-Sep-2026) \u2014 this is the \"calico rooster\" flagged same morning in docs/plans/07-Sep-2026-juvenile-to-rooster-roster-promotion-gap.md.",
+      "location": "birdcatraz",
+      "ornitharch": false,
+      "photos": []
     }
   ]
 }
