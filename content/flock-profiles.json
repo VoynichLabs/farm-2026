@@ -1838,6 +1838,31 @@
           "caption": "A rooster with red comb and gold-and-black plumage stares directly into the lens, standing on wood chips."
         }
       ]
+    },
+    {
+      "name": "Hawk Food",
+      "breed": null,
+      "hatch_date": null,
+      "hatch_date_estimated": true,
+      "age_note": "New rooster, first noted 07-Sep-2026, named by the Boss.",
+      "status": "active",
+      "egg_color": "N/A (rooster)",
+      "temperament": null,
+      "color_observations": [
+        {
+          "date": "2026-09-07",
+          "date_unknown": false,
+          "description": "White body with black breast/belly and black tail, red single comb and wattles, slate-grey legs. No leg band visible.",
+          "source": "boss-identified"
+        }
+      ],
+      "color_description": "White body, black breast and tail, red comb, slate legs.",
+      "color_description_as_of": "2026-09-07",
+      "photo": null,
+      "notes": "Named Hawk Food by the Boss (07-Sep-2026).",
+      "location": "birdcatraz",
+      "ornitharch": false,
+      "photos": []
     }
   ]
 }
