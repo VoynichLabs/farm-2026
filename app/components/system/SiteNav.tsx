@@ -46,6 +46,7 @@ const NAV_LINKS: { href: string; label: string; mark: string }[] = [
   { href: "/markets", label: "markets", mark: PAGE_MARKS.markets },
   { href: "/field-notes", label: "notes", mark: PAGE_MARKS.notes },
   { href: "/projects", label: "projects", mark: PAGE_MARKS.projects },
+  { href: "/ornitharch", label: "ornitharch", mark: PAGE_MARKS.ornitharch },
 ];
 
 const SITE_VERSION = `v${pkg.version}`;

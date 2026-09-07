@@ -24,6 +24,7 @@ export const PAGE_MARKS = {
   notes: "📓",
   projects: "🛠️",
   hatches: "🐣",
+  ornitharch: "🪶",
 } as const;
 
 /** Status tokens — category marks, never emphasis. */

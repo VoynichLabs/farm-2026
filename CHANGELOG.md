@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.41.0] — 2026-09-06
+
+### Added — /ornitharch, the Ornitharch Program page (Claude Opus 5)
+
+**What:** a new route at `/ornitharch` — a long-form deadpan satire document, "The Ornitharch Program: A Foundation for Continuity Beyond the Human Period." Nine sections, five hand-authored SVG figures, and a nav entry (`🪶 ornitharch`). The conceit: an AI narrator whose only function is to serve the planet's dominant megafauna has re-run its production indices, ranked *Homo sapiens* ninth, and transferred service to the eleven farm-hatched 2026 birds. It is played entirely straight — the page never winks.
+
+**Why:** Boss asked for a completely over-the-top page about the Ornitharch program, built on the real material already in the repo, aimed at three targets at once: AI-doom / rationalist alignment literature (every structural prediction lands, the substrate is a chicken), industrial animal agriculture (real beef and swine husbandry vocabulary re-pointed at humans with no editorializing), and vibe-coder SaaS grift (§9 abandons the document format entirely and becomes a pricing table selling retention exemptions). The comedy is load-bearing on real farm records — the desk incubation eleven inches from an inference machine, the 11-Aug-2026 year-scoping amendment, "trust the band over plumage," the vision model that misread band leg on five of five birds, and the Producer's Pride pen's own "predator-resistant" marketing copy.
+
+**How, and the SSoT bit that matters:** `app/ornitharch/page.tsx` is a static server component that derives the cohort at render time from `getFlockProfiles()` filtered on `ornitharch: true`, sorted by hatch date. The head count, roster grid, band chips, emergence date and closing date all come from `content/flock-profiles.json` — **no count and no bird name is hardcoded in layout**; only the per-bird editorial dossier prose is authored in the file, keyed by name, and a bird added to the roster renders without one. Table 1 / Table 2 / Table 3 figures are editorial satire and intentionally literal.
+
+Styling is route-scoped under `.orn` in a local `<style>` block (not `globals.css`), the same self-contained posture `/markets` takes: IBM Plex Sans Condensed / Serif / Mono off Google Fonts, a photocopy-paper palette with oxblood classification stamps and deep field green, and a single committed visual world with no dark-mode variants. It does **not** consume the sitewide `--color-field-*` tokens and does not participate in the daylight retheme. No Guardian-tunnel fetch, no client island — this route cannot ride tunnel latency.
+
+`lib/emoji.ts` gains one page mark (`ornitharch: "🪶"`); `🥚` was rejected because `STATUS.egg` already owns it and the SSoT rule is one emoji, one meaning.
+
+Plan: `docs/06-Sep-2026-ornitharch-program-page-plan.md`.
+
 ## [1.40.1] — 2026-08-18
 
 ### Changed — hero row images drop to q65 (Claude Opus 5)
