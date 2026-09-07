@@ -1797,6 +1797,31 @@
           "caption": "A brown rooster with bright red comb and wattles stands on a wooden post, looking directly at the camera with alert eyes and spread tail feathers."
         }
       ]
+    },
+    {
+      "name": "Malt Liquor",
+      "breed": "Old English Game (Black-Breasted Red variety, unconfirmed)",
+      "hatch_date": null,
+      "hatch_date_estimated": true,
+      "age_note": "Adult rooster from the Cackle Hatchery Exotic Island Fowl Special batch, first noted 06-Aug-2026 as an unnamed Old English Game / BB Red rooster before being named.",
+      "status": "active",
+      "egg_color": "N/A (rooster)",
+      "temperament": null,
+      "color_observations": [
+        {
+          "date": "2026-09-07",
+          "date_unknown": false,
+          "description": "Black-Breasted Red Old English Game coloring: golden-straw hackle and saddle feathers, chestnut-red back and wing bows, black breast and belly, iridescent black-green tail. Single red comb, red wattles, slate/grey legs. No leg band visible.",
+          "source": "boss-identified"
+        }
+      ],
+      "color_description": "Black-Breasted Red Old English Game coloring: golden-straw hackle, chestnut-red back, black breast, iridescent black-green tail, slate legs.",
+      "color_description_as_of": "2026-09-07",
+      "photo": null,
+      "notes": "Named Malt Liquor by the Boss (07-Sep-2026). Likely the same Old English Game / BB Red rooster from the Cackle Hatchery batch noted 06-Aug-2026.",
+      "location": "birdcatraz",
+      "ornitharch": false,
+      "photos": []
     }
   ]
 }
