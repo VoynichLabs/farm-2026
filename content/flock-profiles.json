@@ -1889,11 +1889,17 @@
       ],
       "color_description": "Solid white body, large red comb and wattles, yellow beak and legs.",
       "color_description_as_of": "2026-09-07",
-      "photo": null,
+      "photo": "birds/white-rooster-crop-white-rooster-white-chicken-07sep2026.jpg",
       "notes": "Named/called \"the White Rooster\" by the Boss (07-Sep-2026). Roster promotion gap flagged same morning in docs/plans/07-Sep-2026-juvenile-to-rooster-roster-promotion-gap.md \u2014 no leg band visible, source juvenile batch unconfirmed.",
       "location": "birdcatraz",
       "ornitharch": false,
-      "photos": []
+      "photos": [
+        {
+          "file": "birds/white-rooster-crop-white-rooster-white-chicken-07sep2026.jpg",
+          "date": "2026-09-07",
+          "caption": "A white chicken with red comb and wattles stands on a table, looking directly at the camera with an open beak."
+        }
+      ]
     }
   ]
 }
