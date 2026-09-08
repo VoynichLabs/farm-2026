@@ -208,6 +208,25 @@
   ],
   "picks": [
     {
+      "date": "2026-09-08",
+      "ticker": "PPC",
+      "company": "Pilgrim's Pride Corporation",
+      "play": "SHARES — follow the feeder",
+      "conviction": 68,
+      "rating": "BUY",
+      "omen": "Feed bucket traffic elevated. Pilgrim's margins holding. Flock stays long.",
+      "frame": "",
+      "frameTime": "2026-09-08 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "Black & White Speckled — GROUND, by feeder",
+        "Tan/Brown — GROUND, circling bucket"
+      ],
+      "mood": "Hungry. Constructive.",
+      "realQuote": "PPC last $30.48 (-0.1%) — real, 2026-09-08"
+    },
+    {
       "date": "2026-09-04",
       "ticker": "CORN",
       "company": "Teucrium Corn Fund",
@@ -758,24 +777,6 @@
       ],
       "mood": "Hungry. Inflationary.",
       "realQuote": "CORN last $18.13 (-0.98%) — real, 2026-07-24"
-    },
-    {
-      "date": "2026-07-23",
-      "ticker": "MOO",
-      "company": "VanEck Agribusiness ETF",
-      "play": "SHARES — graze the index",
-      "conviction": 71,
-      "rating": "BUY",
-      "omen": "Broad-based grazing across the full run. Ag basket reads positive. Index exposure confirmed.",
-      "frame": "",
-      "frameTime": "2026-07-23 09:30 ET (market open)",
-      "model": "rotation schedule (weekday deterministic)",
-      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
-      "birdReads": [
-        "All visible birds — GROUND, uniform spread"
-      ],
-      "mood": "Calm. Diversified.",
-      "realQuote": "MOO last $83.17 (+1.24%) — real, 2026-07-23"
     }
   ],
   "analysts": [
@@ -907,40 +908,40 @@
     {
       "sym": "TSN",
       "name": "Tyson Foods",
-      "px": 51.76,
-      "chg": -7.26,
-      "date": "2026-09-04"
+      "px": 51.42,
+      "chg": -0.66,
+      "date": "2026-09-08"
     },
     {
       "sym": "PPC",
       "name": "Pilgrim's Pride",
-      "px": 30.07,
-      "chg": -1.44,
-      "date": "2026-09-04"
+      "px": 30.48,
+      "chg": -0.1,
+      "date": "2026-09-08"
     },
     {
       "sym": "ADM",
       "name": "Archer-Daniels-Midland",
-      "px": 84.38,
-      "chg": -1.17,
-      "date": "2026-09-04"
+      "px": 84.61,
+      "chg": 0.27,
+      "date": "2026-09-08"
     },
     {
       "sym": "MOO",
       "name": "VanEck Agribusiness ETF",
-      "px": 87.44,
-      "chg": -0.74,
-      "date": "2026-09-04"
+      "px": 87.83,
+      "chg": -0.4,
+      "date": "2026-09-08"
     },
     {
       "sym": "CORN",
       "name": "Teucrium Corn Fund",
-      "px": 20.17,
-      "chg": -0.25,
-      "date": "2026-09-04"
+      "px": 20.11,
+      "chg": 0.25,
+      "date": "2026-09-08"
     }
   ],
-  "realAsOf": "2026-09-04",
+  "realAsOf": "2026-09-08",
   "benchmark": {
     "flock": "+7.30% MTD (unaudited, imaginary)",
     "spy": "SPY $741.25 (+0.75% last session, real)"
