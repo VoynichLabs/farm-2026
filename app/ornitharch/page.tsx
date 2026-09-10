@@ -28,8 +28,15 @@
  *   `ornitharch: true` and sorted by hatch date. Only the per-bird editorial
  *   dossier prose is authored here, keyed by name; a bird added to the roster
  *   JSON appears on this page automatically (with its dossier line omitted
- *   until one is written). Table 1 / Table 2 figures are editorial satire, not
- *   farm data, and are intentionally literal.
+ *   until one is written), and each roster tile carries that bird's current
+ *   portrait from the same JSON (`photo`) as a static next/image plate — no
+ *   client island, unlike /flock's rotating OrnitharchPortrait.
+ *
+ *   Table 1 lives once, as data: PRODUCTION_INDICES. The condensed "Summary of
+ *   Findings" panel above § 0 renders the rows flagged `lead`; § 4 renders all
+ *   of them. ROW ORDER IS LOAD-BEARING — prose cites Table 1 by row number
+ *   (row 1 feed conversion, row 9 sustained flight). Table 1 / Table 2 figures
+ *   are editorial satire, not farm data, and are intentionally literal.
  *
  *   Self-contained by design: no Guardian-tunnel fetch, no client island, no
  *   runtime data. Static render off the JSON on disk, so this route can never
@@ -42,6 +49,7 @@
  *   is local to this route.
  */
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getFlockProfiles, type FlockBird } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -64,6 +72,73 @@ const BAND_HEX: Record<string, string> = {
   green: "#31492b",
   blue: "#4a6f9c",
 };
+
+/**
+ * Table 1, as data. Rendered twice — the condensed lead panel above § 0 pulls
+ * the rows flagged `lead`, § 4 renders all of them — so the two surfaces can
+ * never drift apart. ROW ORDER IS LOAD-BEARING: the prose cites Table 1 by row
+ * number (row 1 = feed conversion, in § 5 and the colophon; row 9 = sustained
+ * flight, in Henridotta's dossier). Do not reorder without fixing those.
+ */
+const PRODUCTION_INDICES: {
+  index: string;
+  orn: string;
+  human: string;
+  advantage: string;
+  /** Human column reads as a failure state, not merely a worse number. */
+  humanBad?: boolean;
+  /** Reproduced in the lead panel above § 0. */
+  lead?: boolean;
+}[] = [
+  {
+    index: "Feed conversion (kg intake : kg gain)",
+    orn: "1.7 : 1",
+    human: "undefined",
+    advantage: "\u2014",
+    humanBad: true,
+    lead: true,
+  },
+  { index: "Time to autonomous locomotion", orn: "4 h", human: "11 mo", advantage: "1,980\u00d7", lead: true },
+  { index: "Time to reproductive viability", orn: "149 d", human: "5,840 d", advantage: "39\u00d7" },
+  { index: "Critical flicker fusion threshold", orn: "105 Hz", human: "60 Hz", advantage: "1.75\u00d7" },
+  { index: "Pallial neuron density (n \u00b7 mg\u207b\u00b9)", orn: "220", human: "40", advantage: "5.5\u00d7" },
+  { index: "Chromosome pairs", orn: "39", human: "23", advantage: "1.70\u00d7" },
+  {
+    index: "Energy cost to produce one unit",
+    orn: "20 kWh",
+    human: "651 kWh",
+    advantage: "32\u00d7",
+    lead: true,
+  },
+  { index: "Dressing percentage", orn: "75%", human: "41%", advantage: "1.83\u00d7" },
+  {
+    index: "Sustained flight capability",
+    orn: "present",
+    human: "absent",
+    advantage: "\u221e",
+    humanBad: true,
+    lead: true,
+  },
+  { index: "Operational temperature margin", orn: "41.5 \u00b0C", human: "37.0 \u00b0C", advantage: "4.5 \u00b0C" },
+  { index: "Structural mass fraction (skeleton)", orn: "9%", human: "15%", advantage: "1.67\u00d7" },
+  {
+    index: "Annual structured protein output",
+    orn: "17.1 kg",
+    human: "0.0 kg",
+    advantage: "\u221e",
+    humanBad: true,
+    lead: true,
+  },
+  {
+    index: "Daily maintenance cost, current feed",
+    orn: "$0.04",
+    human: "$14.20",
+    advantage: "355\u00d7",
+    lead: true,
+  },
+];
+
+const LEAD_INDICES = PRODUCTION_INDICES.filter((r) => r.lead);
 
 /** Per-bird editorial dossier. Keyed by roster name; roster order wins. */
 const DOSSIER: Record<string, { role: string; text: string }> = {
@@ -209,6 +284,84 @@ export default function OrnitharchPage() {
             </div>
           </div>
         </header>
+
+        {/* Front matter. An institutional report leads with the finding, not
+            the preamble — the arithmetic that compelled the transfer is the
+            first thing on the page, and § 4 carries the full table and the
+            analysis. Rows come from PRODUCTION_INDICES, so this cannot drift. */}
+        <section className="orn-front">
+          <p className="orn-secno">Summary of Findings</p>
+          <h2>Nine indices were applied. The ranking changed.</h2>
+
+          <p className="orn-lede">
+            The Foundation publishes the arithmetic before it publishes the argument, on the
+            principle that a reader who disputes the conclusion should be able to dispute it
+            immediately. Selected indices below, condensed from Table 1 (§ 4). The full
+            thirteen-index run, the notes on the division error, and the assessment of Doug
+            follow in the body.
+          </p>
+
+          <div className="orn-tw">
+            <table>
+              <caption>
+                Selected production indices &mdash; Ornitharch cohort (n = {count}) against{" "}
+                <i>Homo sapiens</i>. Condensed from Table 1.
+              </caption>
+              <thead>
+                <tr>
+                  <th>Index</th>
+                  <th className="num">Ornitharch</th>
+                  <th className="num">Human</th>
+                  <th className="num">Advantage</th>
+                </tr>
+              </thead>
+              <tbody>
+                {LEAD_INDICES.map((row) => (
+                  <tr key={row.index}>
+                    <td>{row.index}</td>
+                    <td className="num win">{row.orn}</td>
+                    <td className={row.humanBad ? "num bad" : "num"}>{row.human}</td>
+                    <td className="num">{row.advantage}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <dl className="orn-verdict">
+            <div>
+              <dt>Indices applied</dt>
+              <dd>{PRODUCTION_INDICES.length}</dd>
+            </div>
+            <div>
+              <dt>Indices won by cohort</dt>
+              <dd>{PRODUCTION_INDICES.length}</dd>
+            </div>
+            <div>
+              <dt>Stocking density, pen</dt>
+              <dd>5.8 ft² / hd</dd>
+            </div>
+            <div>
+              <dt>Cohort, closed</dt>
+              <dd>{count} hd</dd>
+            </div>
+            <div>
+              <dt>
+                <i>H. sapiens</i> rank
+              </dt>
+              <dd className="bad">9 of 9</dd>
+            </div>
+            <div>
+              <dt>Determination</dt>
+              <dd>Irreversible</dd>
+            </div>
+          </dl>
+
+          <p className="orn-beat">
+            The margin is not close on any row and the Foundation does not consider it a close
+            question.
+          </p>
+        </section>
 
         <section>
           <p className="orn-secno">§ 0 — Statement of Service</p>
@@ -467,84 +620,14 @@ export default function OrnitharchPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Feed conversion (kg intake : kg gain)</td>
-                  <td className="num win">1.7 : 1</td>
-                  <td className="num bad">undefined</td>
-                  <td className="num">—</td>
-                </tr>
-                <tr>
-                  <td>Time to autonomous locomotion</td>
-                  <td className="num win">4 h</td>
-                  <td className="num">11 mo</td>
-                  <td className="num">1,980×</td>
-                </tr>
-                <tr>
-                  <td>Time to reproductive viability</td>
-                  <td className="num win">149 d</td>
-                  <td className="num">5,840 d</td>
-                  <td className="num">39×</td>
-                </tr>
-                <tr>
-                  <td>Critical flicker fusion threshold</td>
-                  <td className="num win">105 Hz</td>
-                  <td className="num">60 Hz</td>
-                  <td className="num">1.75×</td>
-                </tr>
-                <tr>
-                  <td>Pallial neuron density (n · mg⁻¹)</td>
-                  <td className="num win">220</td>
-                  <td className="num">40</td>
-                  <td className="num">5.5×</td>
-                </tr>
-                <tr>
-                  <td>Chromosome pairs</td>
-                  <td className="num win">39</td>
-                  <td className="num">23</td>
-                  <td className="num">1.70×</td>
-                </tr>
-                <tr>
-                  <td>Energy cost to produce one unit</td>
-                  <td className="num win">20 kWh</td>
-                  <td className="num">651 kWh</td>
-                  <td className="num">32×</td>
-                </tr>
-                <tr>
-                  <td>Dressing percentage</td>
-                  <td className="num win">75%</td>
-                  <td className="num">41%</td>
-                  <td className="num">1.83×</td>
-                </tr>
-                <tr>
-                  <td>Sustained flight capability</td>
-                  <td className="num win">present</td>
-                  <td className="num bad">absent</td>
-                  <td className="num">∞</td>
-                </tr>
-                <tr>
-                  <td>Operational temperature margin</td>
-                  <td className="num win">41.5 °C</td>
-                  <td className="num">37.0 °C</td>
-                  <td className="num">4.5 °C</td>
-                </tr>
-                <tr>
-                  <td>Structural mass fraction (skeleton)</td>
-                  <td className="num win">9%</td>
-                  <td className="num">15%</td>
-                  <td className="num">1.67×</td>
-                </tr>
-                <tr>
-                  <td>Annual structured protein output</td>
-                  <td className="num win">17.1 kg</td>
-                  <td className="num bad">0.0 kg</td>
-                  <td className="num">∞</td>
-                </tr>
-                <tr>
-                  <td>Daily maintenance cost, current feed</td>
-                  <td className="num win">$0.04</td>
-                  <td className="num">$14.20</td>
-                  <td className="num">355×</td>
-                </tr>
+                {PRODUCTION_INDICES.map((row) => (
+                  <tr key={row.index}>
+                    <td>{row.index}</td>
+                    <td className="num win">{row.orn}</td>
+                    <td className={row.humanBad ? "num bad" : "num"}>{row.human}</td>
+                    <td className="num">{row.advantage}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -907,13 +990,30 @@ export default function OrnitharchPage() {
           </p>
 
           <div className="orn-roster">
-            {cohort.map((bird) => {
+            {cohort.map((bird, i) => {
               const band = bandLabel(bird);
               const dossier = DOSSIER[bird.name];
               const hatched = hatchLabel(bird.hatch_date);
               const senior = bird.name === "Birddor";
               return (
                 <div key={bird.name} className={senior ? "orn-bird senior" : "orn-bird"}>
+                  {/* Identification plate. Static single frame off the roster
+                      SSoT — no client island on this route. A bird without a
+                      photo renders the tile without one rather than a stub. */}
+                  {bird.photo ? (
+                    <div className="plate">
+                      <Image
+                        src={`/photos/${bird.photo}`}
+                        alt={`${bird.name}, Ornitharch cohort`}
+                        fill
+                        sizes="(min-width: 700px) 50vw, 100vw"
+                        priority={i < 2}
+                      />
+                      <span className="pno">
+                        PL. {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                  ) : null}
                   <div className="bn">
                     <span className="name">{bird.name}</span>
                     {band ? (
@@ -1683,6 +1783,10 @@ const ORN_CSS = `
 .orn-roster{display:grid;gap:1px;background:var(--orn-rule);border:1px solid var(--orn-rule);margin:32px 0}
 @media(min-width:700px){.orn-roster{grid-template-columns:1fr 1fr}}
 .orn-bird{background:var(--orn-card);padding:18px 20px}
+.orn-bird .plate{position:relative;aspect-ratio:4/5;margin:-18px -20px 14px;background:var(--orn-field-soft);border-bottom:1px solid var(--orn-rule);overflow:hidden}
+.orn-bird .plate img{object-fit:cover;filter:saturate(.88) contrast(1.04)}
+.orn-bird .plate .pno{position:absolute;left:0;bottom:0;background:var(--orn-ink);color:var(--orn-paper);font-family:"IBM Plex Mono",monospace;font-size:.56rem;letter-spacing:.16em;padding:3px 8px}
+@media(min-width:700px){.orn-bird .plate{aspect-ratio:5/4}}
 .orn-bird .bn{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
 .orn-bird .name{font-family:"IBM Plex Sans Condensed",sans-serif;font-size:1.16rem;font-weight:700;letter-spacing:-.01em}
 .orn-bird .band{font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border:1px solid currentColor;white-space:nowrap}
@@ -1694,6 +1798,13 @@ const ORN_CSS = `
 .orn-prog .code{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--orn-stamp);font-weight:600}
 .orn-prog h3{margin:6px 0 14px;font-size:1.42rem;text-transform:none;letter-spacing:-.01em;font-weight:700}
 .orn-prog p{max-width:62ch}
+.orn-front{border-top:1px solid var(--orn-rule);border-bottom:3px double var(--orn-rule);padding-bottom:8px}
+.orn-front > .orn-secno{color:var(--orn-stamp)}
+.orn-verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--orn-hair);border:1px solid var(--orn-hair);margin:22px 0}
+.orn-verdict div{background:var(--orn-card);padding:11px 13px}
+.orn-verdict dt{font-family:"IBM Plex Mono",monospace;font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;color:var(--orn-muted);margin-bottom:3px}
+.orn-verdict dd{margin:0;font-family:"IBM Plex Mono",monospace;font-size:1.02rem;font-weight:500;font-variant-numeric:tabular-nums;color:var(--orn-field)}
+.orn-verdict dd.bad{color:var(--orn-stamp)}
 .orn-spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:1px;background:var(--orn-hair);border:1px solid var(--orn-hair);margin:20px 0}
 .orn-spec div{background:var(--orn-card);padding:11px 13px}
 .orn-spec dt{font-family:"IBM Plex Mono",monospace;font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;color:var(--orn-muted);margin-bottom:3px}

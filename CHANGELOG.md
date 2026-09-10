@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.42.0] — 2026-09-10
+
+### Changed — /ornitharch leads with the arithmetic, and the cohort has faces (Claude Opus 5)
+
+**What:** two changes to `app/ornitharch/page.tsx`. (1) A "Summary of Findings" block now sits between the masthead and § 0 — a condensed six-row production-index table plus a six-cell verdict strip (indices applied, indices won, stocking density, cohort head count, *H. sapiens* rank 9 of 9, determination irreversible). (2) Every tile in the § 6 roster grid now carries that bird's current portrait as a full-bleed identification plate with a mono plate number.
+
+**Why:** Boss asked for the stocking and production statistics to lead. Table 1 was the strongest material on the page and it was buried at § 4, well below the fold, behind four sections of framing — a reader who bounced never saw a single number. Leading with the finding is also the more authentic institutional register: a filed report opens with a summary of findings and puts the analysis in the body. The roster was eleven blocks of prose with no bird in sight on a page whose entire argument is that these specific animals outrank you.
+
+**How, and the decision worth flagging:** the full § 4 section was **not** moved and nothing was renumbered. § 4's "Note on the first row," Fig. 1 and the assessment of Doug are all written to sit against the complete thirteen-row table, and hoisting the section would have orphaned them; every `§ 4` and `Table 1` cross-reference elsewhere in the document also stays valid this way. If the intent was to move the whole section rather than lead with a summary of it, that is a small follow-up.
+
+The two tables are **one source**. The thirteen rows were extracted to a `PRODUCTION_INDICES` array; § 4 maps all of them, the lead panel maps `.filter(r => r.lead)`. Hand-writing a second literal table would have drifted. **Row order in that array is load-bearing** and is commented as such — the prose cites Table 1 positionally (row 1 = feed conversion, in § 5 and the colophon; row 9 = sustained flight, in Henridotta's dossier). Verified after the refactor by diffing the prerendered § 4 table out of `.next/server/app/ornitharch.html` against the pre-change literal: thirteen rows, identical cell for cell, row 1 and row 9 anchors intact.
+
+Portraits come from `photo` in `content/flock-profiles.json` — the same SSoT the roster already derived from, no new data and no JSON edit. Plain `next/image` with `fill`, **not** `/flock`'s `OrnitharchPortrait`: that component is `"use client"`, and this route's whole posture is no client island, no Guardian fetch, no runtime data. The plate is styled in the route-scoped `ORN_CSS` block (`.orn-bird .plate`) rather than Tailwind, consistent with the rest of the route — 4:5 on mobile, 5:4 on the two-column grid, slightly desaturated to sit inside the photocopy-paper palette. `sizes` is written for this page's `1fr 1fr` grid, not copied from the flock page's three-column string. First two tiles get `priority`; no `quality` prop (only 65 and 75 are declared in `next.config.ts`). The tile guards on `bird.photo`, so a future roster addition without one renders text-only rather than `/photos/null`.
+
+`/ornitharch` still prerenders `○ (Static)` — confirmed in the build route table, not inferred from a green exit code.
+
 ## [1.41.0] — 2026-09-06
 
 ### Added — /ornitharch, the Ornitharch Program page (Claude Opus 5)
