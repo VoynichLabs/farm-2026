@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.43.1] — 2026-09-10
+
+### Changed — /ornitharch REV 5: less talking, more charts (Claude Opus 5)
+
+**What:** `app/ornitharch/page.tsx` rewritten per `docs/10-Sep-2026-ornitharch-escalation-plan.md`. Prose cut to a headline, a sentence or two, and a chart or table per section. "The Foundation" is retired and replaced by "the B'GAWWWK" (always with the article). New sections: § 2A ORNITHARCH-27B model card (base qwen3.5-9b, real camera names, band-leg read 0/5 "alignment, not error"), § 2B misleading metaphors (Melanie Mitchell, 10-Sep-2026, linked, one short quote), § 2C P(chicken) survey with a redacted B'GAWWWK row. There's an instrumental-convergence audit table in § 2. Also new: Exhibit B, the program's human liaison portrait, which renders only once `public/photos/ornitharch/leader.jpg` exists.
+
+**Charts (hand-built SVG, `--orn-*` tokens):** energy per intelligence on a log scale, training loss through zero, P(chicken) scatter, five supplementary paired-bar panels, a head-count extrapolation computed from the roster hatch dates, and the HIGH RAIL cost line. The old Fig. 1–5 are kept. Figures renumbered 1–11 in reading order.
+
+**Numbers worth flagging:** the human energy figure is 15.3 MWh (2,000 kcal/day × 18 yr), not the plan's ~24 MWh. Chicken population uses FAOSTAT's 26.6 bn, not 33 bn. Days to adulthood uses Table 1's 149 / 5,840 so the page doesn't contradict itself. Coyotes launched to date: 0.
+
+**Why patch:** single-page rework; no new route, data source or shared component. Also fixes `package.json`, which the in-flight filmstrip work had knocked back to 1.42.1. The other agent's per-bird filmstrip (`sortedBirdPhotos` / `ageAtPhoto`) ships intact.
+
 ## [1.43.0] — 2026-09-10
 
 ### Changed — /ornitharch gets its cover art, and the origin story gets its confound (Claude Opus 5)

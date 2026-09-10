@@ -30,8 +30,9 @@ import {
   getFlockProfiles,
   getBirdAgeLabel,
   birdSlug,
+  sortedBirdPhotos,
+  ageAtPhoto,
   type FlockBird,
-  type BirdPhoto,
 } from "@/lib/content";
 import BandChip from "@/app/components/flock/BandChip";
 
@@ -43,20 +44,6 @@ const fmtDate = (iso?: string): string | null => {
   const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (m) return `${parseInt(m[3], 10)} ${MONTHS[parseInt(m[2], 10) - 1] || m[2]} ${m[1]}`;
   return iso;
-};
-
-// The bird's age at a given photo date: "hatch day", "day 8", "3 wks", "2 mos".
-// Undated → "". (Mirrors the throwbackTag labels used on /flock.)
-const ageAtPhoto = (hatchISO?: string, photoISO?: string): string => {
-  if (!hatchISO || !photoISO) return "";
-  const hatch = new Date(`${hatchISO}T00:00:00`).getTime();
-  const shot = new Date(`${photoISO}T00:00:00`).getTime();
-  if (Number.isNaN(hatch) || Number.isNaN(shot)) return "";
-  const days = Math.round((shot - hatch) / 86400000);
-  if (days <= 1) return "hatch day";
-  if (days < 13) return `day ${days}`;
-  if (days < 56) return `${Math.floor(days / 7)} wks`;
-  return `${Math.floor(days / 30)} mos`;
 };
 
 const findBird = (slug: string): FlockBird | undefined => {
@@ -77,11 +64,6 @@ const findBirdByFormerName = (slug: string): FlockBird | undefined => {
     (b) => b.formerly && birdSlug(b.formerly) === slug,
   );
 };
-
-const sortedPhotos = (bird: FlockBird): BirdPhoto[] =>
-  [...(bird.photos ?? [])].sort((a, b) =>
-    (a.date ?? "9999-99-99").localeCompare(b.date ?? "9999-99-99"),
-  );
 
 export function generateStaticParams() {
   const flock = getFlockProfiles();
@@ -113,7 +95,7 @@ export default async function BirdGalleryPage(
     notFound();
   }
 
-  const photos = sortedPhotos(bird);
+  const photos = sortedBirdPhotos(bird);
   const age = getBirdAgeLabel(bird.hatch_date, bird.hatch_date_estimated);
   const hatchStr = fmtDate(bird.hatch_date);
 

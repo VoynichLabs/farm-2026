@@ -82,6 +82,35 @@ export interface BirdPhoto {
   caption?: string;
 }
 
+/**
+ * A bird's photos[] ledger, oldest → newest, undated frames last. The ingest
+ * pipeline appends in arrival order, not date order, so every render site has
+ * to sort. Lives here rather than in a route so /flock/[slug] (the full-size
+ * timeline) and /ornitharch (the roster filmstrip) cannot drift apart.
+ */
+export function sortedBirdPhotos(bird: FlockBird): BirdPhoto[] {
+  return [...(bird.photos ?? [])].sort((a, b) =>
+    (a.date ?? "9999-99-99").localeCompare(b.date ?? "9999-99-99"),
+  );
+}
+
+/**
+ * The bird's age at a given frame: "hatch day", "day 8", "3 wks", "2 mos".
+ * Undated frame or unknown hatch → "". Mirrors the throwbackTag labels on
+ * /flock; shared by the /flock/[slug] timeline and the /ornitharch filmstrip.
+ */
+export function ageAtPhoto(hatchISO?: string, photoISO?: string): string {
+  if (!hatchISO || !photoISO) return "";
+  const hatch = new Date(`${hatchISO}T00:00:00`).getTime();
+  const shot = new Date(`${photoISO}T00:00:00`).getTime();
+  if (Number.isNaN(hatch) || Number.isNaN(shot)) return "";
+  const days = Math.round((shot - hatch) / 86400000);
+  if (days <= 1) return "hatch day";
+  if (days < 13) return `day ${days}`;
+  if (days < 56) return `${Math.floor(days / 7)} wks`;
+  return `${Math.floor(days / 30)} mos`;
+}
+
 // URL slug for a bird's per-bird page, e.g. "White turkeys (3)" ->
 // "white-turkeys-3". Bird names are unique, so slugs are unique; used by the
 // /flock card links and the /flock/[slug] gallery's params + lookup.
