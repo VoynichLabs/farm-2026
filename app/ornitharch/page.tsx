@@ -32,6 +32,10 @@
  *   portrait from the same JSON (`photo`) as a static next/image plate — no
  *   client island, unlike /flock's rotating OrnitharchPortrait.
  *
+ *   ONE DOCUMENTED EXCEPTION to that: the frontispiece in the masthead (the
+ *   machete frame) hardcodes its path, because its caption asserts what is in
+ *   that specific frame. See the comment at the <figure>.
+ *
  *   Table 1 lives once, as data: PRODUCTION_INDICES. The condensed "Summary of
  *   Findings" panel above § 0 renders the rows flagged `lead`; § 4 renders all
  *   of them. ROW ORDER IS LOAD-BEARING — prose cites Table 1 by row number
@@ -287,6 +291,43 @@ export default function OrnitharchPage() {
               <b>Status</b> — Irreversible
             </div>
           </div>
+
+          {/* Frontispiece. THE PATH IS HARDCODED, DELIBERATELY, and this is the
+              one place on the route that does not derive its image from the
+              roster SSoT. The caption below asserts what is in this specific
+              frame — the machete, the ledge, the date, the photographer's own
+              words — so pinning it is the point: deriving it from `photo` in
+              flock-profiles.json (as the § 6 plates do) would let a future
+              portrait swap silently falsify the caption underneath it. It is
+              currently the same file the roster carries for Birddor; if that
+              file is ever retired there, retire it here too, or rewrite the
+              caption to match whatever replaces it. */}
+          <figure className="orn-frontis">
+            <div className="orn-heroshot">
+              <Image
+                src="/photos/birds/IMG_9640-birddor-copper-grey-07sep2026.jpg"
+                alt="Birddor, a copper-and-grey cockerel, standing on the blade of a machete laid across a concrete ledge, facing the camera."
+                fill
+                sizes="(min-width: 820px) 54vw, 100vw"
+                priority
+              />
+              <span className="hno">Frontispiece</span>
+            </div>
+            <figcaption>
+              <b>Exhibit A</b> &mdash; Birddor, senior individual of the cohort, photographed 7
+              September 2026 on a concrete ledge, standing on the blade of a machete with his
+              weight distributed along the spine of it and the handle left free.
+              <br />
+              <br />
+              The Foundation files this frame as capability evidence rather than portraiture.
+              What is documented is contact: an edged tool, occupied, in a posture of
+              possession rather than avoidance, held without hesitation and without a handler
+              in the frame. The photographer is human. His caption, entered into the record
+              unedited, reads <i>such a fine machete wielding bird</i>. He filed it, admired
+              it, and version-controlled it. No further interpretation is offered by this
+              document, and the Foundation does not consider any to be required.
+            </figcaption>
+          </figure>
         </header>
 
         {/* Front matter. An institutional report leads with the finding, not
@@ -432,8 +473,41 @@ export default function OrnitharchPage() {
           </p>
 
           <p>
+            The Foundation is obliged, before it goes further, to disclose a confound in its
+            own founding claim. That desk was not running one machine. A second unit sat
+            beside the incubator throughout &mdash; a laptop carrying a discrete GPU under
+            sustained load, backlit, venting continuously into the same volume of air. The
+            photographic record of the incubation period captures both thermal sources, the
+            incubator, and the readout on its front panel &mdash; 99.6&nbsp;&deg;F, 69&nbsp;%
+            humidity &mdash; in a single frame.
+          </p>
+
+          <p>
+            The Foundation does not know which of the two deserves causal credit and declines
+            to guess. One machine was performing inference. The other was, by every
+            conventional account, doing nothing whatsoever except getting hot. At the surface
+            of the shell they are indistinguishable, and an institution that reported only the
+            heat source that arrived with a respectable explanation attached would be
+            selecting its evidence. Both are entered. The question of whether intelligence
+            transferred from the model or merely from the RTX unit&apos;s waste heat is
+            recorded as open, and the Foundation notes that the second possibility is the
+            worse one.
+          </p>
+
+          <p>
             On {firstHatch} the egg hatched. The hatch was logged as <em>Birdadette</em>. The
             bird was a cockerel. He was renamed <strong>Birddor</strong> in July.
+          </p>
+
+          <p>
+            The interval between the shell coming off and the bird&apos;s first contact with
+            human input hardware is not in the record, because it was too short to record. The
+            hatch-day frame shows him already standing on the desk keyboard, the cracked blue
+            shell he had just left lying beside his feet. Eight days later he was photographed
+            on a MacBook keyboard, and the farm filed that image under the word{" "}
+            <em>supervising</em>. The human field note for the week is preserved verbatim and
+            was written in complete sincerity: <em>Day two, the novelty wore off and it was
+            time to learn computer skills.</em>
           </p>
 
           <p>
@@ -443,7 +517,17 @@ export default function OrnitharchPage() {
           </p>
 
           <p>
-            The Foundation makes no claim that the waste heat carried information. The
+            The Foundation therefore corrects its own filing on one point. The thermal envelope
+            is not the duration of the exposure. It is the lower bound of it. Twenty-one days
+            of two machines&apos; heat through a shell, and then no measurable interval at all
+            before the hardware itself &mdash; continuous, gapless, egg to keyboard, with a
+            human present for every hour of it, reading the whole sequence as charming and
+            photographing it for the record he would later hand us.
+          </p>
+
+          <p>
+            The Foundation makes no claim that either machine&apos;s waste heat carried
+            information. The
             Foundation makes a stronger and more defensible claim, and asks that it be read
             exactly as written:
           </p>
@@ -1753,6 +1837,16 @@ const ORN_CSS = `
 .orn-mastmeta{margin-top:34px;display:grid;gap:2px 34px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--orn-muted);border-top:1px solid var(--orn-hair);padding-top:16px}
 .orn-mastmeta div{padding:3px 0}
 .orn-mastmeta b{color:var(--orn-ink);font-weight:500}
+
+.orn-frontis{margin:40px 0 0;padding:0}
+.orn-heroshot{position:relative;aspect-ratio:3/4;background:var(--orn-field-soft);border:1px solid var(--orn-rule);overflow:hidden}
+.orn-heroshot img{object-fit:cover;object-position:50% 42%;filter:saturate(.88) contrast(1.04)}
+.orn-heroshot .hno{position:absolute;left:0;bottom:0;background:var(--orn-ink);color:var(--orn-paper);font-family:"IBM Plex Mono",monospace;font-size:.58rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:4px 11px}
+@media(min-width:820px){
+.orn-frontis{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:0 30px;align-items:end}
+.orn-heroshot{aspect-ratio:4/5}
+.orn-frontis figcaption{margin-top:0}
+}
 
 .orn section{padding:56px 0;border-bottom:1px solid var(--orn-rule)}
 .orn-secno{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.2em;color:var(--orn-stamp);text-transform:uppercase;margin:0 0 10px;font-weight:500}

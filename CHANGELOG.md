@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.43.0] — 2026-09-10
+
+### Changed — /ornitharch gets its cover art, and the origin story gets its confound (Claude Opus 5)
+
+**What:** two changes to `app/ornitharch/page.tsx`. (1) A frontispiece now sits inside the masthead, below the cohort metadata and above the Summary of Findings: the 7-Sep-2026 frame of Birddor standing on the blade of a machete, filed as "Exhibit A" with a caption that reads it as documented tool contact rather than as a photograph of a chicken. (2) § 1 "Origin" gains four paragraphs — the second thermal source on the desk, and the bird's contact with input hardware from the hour of hatch.
+
+**Why:** Boss asked for the machete photo to lead the page, and for the transfer mechanism to be pushed harder. The page's argument is that these specific animals outrank you, and until now the first thing a reader saw was a table. The machete frame is the single strongest piece of evidence in the repo for the page's actual claim and it was buried in the § 6 roster grid at plate 01. On the origin: the record establishes the Mac Mini ran continuous inference eleven inches from the incubator for twenty-one days, but stops at the shell, and the desk photo shows that was never the whole story.
+
+**How, and the decisions worth flagging:**
+
+*The frontispiece hardcodes its image path* — the one place on this route that does not derive its image from the roster SSoT, and it is commented as such in both the file header and at the `<figure>`. The caption asserts what is in that specific frame (the machete, the ledge, the date, the photographer's own words), so deriving it from `photo` in `content/flock-profiles.json` the way the § 6 plates do would let a future portrait swap silently falsify the caption underneath it. It is currently the same file the roster carries for Birddor. Path is the public URL `/photos/birds/...`, not the `public/`-prefixed `path:` field from the hatch record — those are different fields and only the JSON's `photo` maps to the served URL. Plate label is `Frontispiece`, deliberately outside the `PL. 01`–`PL. nn` sequence the roster owns, so the two numbering registers don't collide. Static `next/image` with `fill`, `priority`, no `quality` prop; route-scoped CSS (`.orn-frontis`, `.orn-heroshot`) stacks it on mobile at 3:4 and puts it beside its caption at 4:5 above 820px. No client island, consistent with the rest of the route.
+
+*The chronology in § 1 is the true one, not the flattering one.* The thermal envelope ran 16-Mar to 6-Apr; the keyboard contact is 6-Apr ("within minutes of hatching," per the field note) and 13-Apr (day 8, "supervising the MacBook keyboard"). Those are inside and after the envelope, not before it, so the section does **not** claim the tool exposure predates it. It makes the stronger available claim instead: the envelope is the *lower bound* of the exposure, not its duration — twenty-one days of heat through the shell and then no measurable interval at all before the hardware itself. On a page whose header comment makes every number checkable against a real record, an unearned "predates" would have been the one falsifiable sentence on it.
+
+*The RTX confound is disclosed, not asserted.* `public/photos/april-2026/desk-incubator-setup.jpg` shows a second machine beside the incubator — a laptop with a discrete GPU, backlit, in the same frame as the incubator readout at 99.6 °F / 69 %. § 1 now enters it as an unresolved confound the Foundation is obliged to publish: it declines to award causal credit between the machine that was performing inference and the one that was, by every conventional account, doing nothing but getting hot. **No model number or spec is claimed** — "a discrete GPU under sustained load," "the RTX unit's waste heat" — because nothing in the repo verifies one. The existing disclaimer was changed from "the waste heat" to "either machine's waste heat" to stay consistent.
+
+No numeric literals were added to the new prose; head counts still come from `{count}` and the emergence date from `{firstHatch}`, per the `edfb6ab` 9-vs-13 fix.
+
+`/ornitharch` still prerenders `○ (Static)` — confirmed in the build route table, and the frontispiece, the caption and all four new origin paragraphs were grepped out of `.next/server/app/ornitharch.html` rather than assumed. `npm run lint` reports nothing new on this file (the one `no-page-custom-font` warning on it is pre-existing, as is its Prettier non-conformance — not reformatted, to keep the diff readable).
+
 ## [1.42.0] — 2026-09-10
 
 ### Changed — /ornitharch leads with the arithmetic, and the cohort has faces (Claude Opus 5)
