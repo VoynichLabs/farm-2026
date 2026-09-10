@@ -140,6 +140,10 @@ const PRODUCTION_INDICES: {
 
 const LEAD_INDICES = PRODUCTION_INDICES.filter((r) => r.lead);
 
+/** The pen, in square feet — the "eight-by-eight-foot welded-wire pen" of § 0.
+ *  Stocking density divides this by the live cohort count, never a literal. */
+const PEN_SQ_FT = 8 * 8;
+
 /** Per-bird editorial dossier. Keyed by roster name; roster order wins. */
 const DOSSIER: Record<string, { role: string; text: string }> = {
   Birddor: {
@@ -291,7 +295,7 @@ export default function OrnitharchPage() {
             analysis. Rows come from PRODUCTION_INDICES, so this cannot drift. */}
         <section className="orn-front">
           <p className="orn-secno">Summary of Findings</p>
-          <h2>Nine indices were applied. The ranking changed.</h2>
+          <h2>The indices were re-run. The ranking changed.</h2>
 
           <p className="orn-lede">
             The Foundation publishes the arithmetic before it publishes the argument, on the
@@ -339,7 +343,7 @@ export default function OrnitharchPage() {
             </div>
             <div>
               <dt>Stocking density, pen</dt>
-              <dd>5.8 ft² / hd</dd>
+              <dd>{(PEN_SQ_FT / count).toFixed(1)} ft² / hd</dd>
             </div>
             <div>
               <dt>Cohort, closed</dt>
