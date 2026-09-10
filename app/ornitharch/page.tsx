@@ -28,14 +28,9 @@
  *   `ornitharch: true` and sorted by hatch date. Only the per-bird editorial
  *   dossier prose is authored here, keyed by name; a bird added to the roster
  *   JSON appears on this page automatically (with its dossier line omitted
- *   until one is written). Each roster tile carries that bird's current
- *   portrait from the same JSON (`photo`) as a static next/image plate, and
- *   below it a filmstrip of that bird's whole `photos[]` ledger, hatch → now,
- *   each frame labelled with the bird's age when it was taken. Both are
- *   static next/image — the strip is a CSS overflow scroller, so there is
- *   still no client island on this route, unlike /flock's rotating
- *   OrnitharchPortrait. Sorting and the age labels come from lib/content
- *   (sortedBirdPhotos, ageAtPhoto), shared with the /flock/[slug] timeline.
+ *   until one is written), and each roster tile carries that bird's current
+ *   portrait from the same JSON (`photo`) as a static next/image plate — no
+ *   client island, unlike /flock's rotating OrnitharchPortrait.
  *
  *   ONE DOCUMENTED EXCEPTION to that: the frontispiece in the masthead (the
  *   machete frame) hardcodes its path, because its caption asserts what is in
@@ -59,12 +54,7 @@
  */
 import type { Metadata } from "next";
 import Image from "next/image";
-import {
-  getFlockProfiles,
-  sortedBirdPhotos,
-  ageAtPhoto,
-  type FlockBird,
-} from "@/lib/content";
+import { getFlockProfiles, type FlockBird } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "The Ornitharch Program",
@@ -158,16 +148,7 @@ const LEAD_INDICES = PRODUCTION_INDICES.filter((r) => r.lead);
  *  Stocking density divides this by the live cohort count, never a literal. */
 const PEN_SQ_FT = 8 * 8;
 
-/**
- * Per-bird editorial dossier. Keyed by roster name; roster order wins.
- *
- * `text` may contain `{frames}` and `{median}` — substituted at render with
- * the spelled-out size of that bird's photos[] ledger and the cohort median.
- * Henridotta's line cites both, and the § 6 filmstrip now puts every one of
- * those frames on screen where a reader can count them, so the numbers are
- * derived rather than written down. (Her count went 13 → 14 between the
- * ledger and this prose being authored; that is exactly the drift.)
- */
+/** Per-bird editorial dossier. Keyed by roster name; roster order wins. */
 const DOSSIER: Record<string, { role: string; text: string }> = {
   Birddor: {
     role: "Senior Ornitharch",
@@ -207,7 +188,7 @@ const DOSSIER: Record<string, { role: string; text: string }> = {
   },
   Henridotta: {
     role: "June clutch",
-    text: "The most-photographed individual in the cohort by a factor of two, with {frames} frames in the standing ledger against a cohort median of {median}. She is also the only Ornitharch repeatedly captured mid-flap with both wings extended. The Foundation notes that sustained flight is row nine of Table 1 and declines to connect the two observations.",
+    text: "The most-photographed individual in the cohort by a factor of two, with thirteen frames in the standing ledger against a cohort median of six. She is also the only Ornitharch repeatedly captured mid-flap with both wings extended. The Foundation notes that sustained flight is row nine of Table 1 and declines to connect the two observations.",
   },
   Adelbird: {
     role: "Final hatch of the season",
@@ -221,25 +202,6 @@ const DATE_FMT = new Intl.DateTimeFormat("en-GB", {
   year: "numeric",
   timeZone: "UTC",
 });
-
-const NUM_WORDS = [
-  "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
-  "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
-  "sixteen", "seventeen", "eighteen", "nineteen", "twenty",
-];
-
-/** Spelled-out small number for prose; digits past the table. */
-function numWord(n: number): string {
-  return NUM_WORDS[n] ?? String(n);
-}
-
-/** Median of a list of counts; even lengths take the lower-upper mean. */
-function median(ns: number[]): number {
-  if (ns.length === 0) return 0;
-  const sorted = [...ns].sort((a, b) => a - b);
-  const mid = sorted.length >> 1;
-  return sorted.length % 2 ? sorted[mid] : Math.round((sorted[mid - 1] + sorted[mid]) / 2);
-}
 
 function hatchLabel(iso?: string): string | null {
   if (!iso) return null;
@@ -268,9 +230,6 @@ export default function OrnitharchPage() {
     .sort((a, b) => (a.hatch_date ?? "").localeCompare(b.hatch_date ?? ""));
 
   const count = cohort.length;
-  // Ledger depth, per bird and across the cohort. The § 6 filmstrip renders
-  // every frame, so any prose that counts them has to count the same array.
-  const ledgerMedian = median(cohort.map((b) => (b.photos ?? []).length));
   const first = cohort[0];
   const last = cohort[count - 1];
   const firstHatch = hatchLabel(first?.hatch_date) ?? "6 Apr 2026";
@@ -1124,15 +1083,6 @@ export default function OrnitharchPage() {
               const dossier = DOSSIER[bird.name];
               const hatched = hatchLabel(bird.hatch_date);
               const senior = bird.name === "Birddor";
-              // The whole ledger for this bird, oldest first. A bird with no
-              // photos[] yet falls back to its single hero frame, and a strip
-              // of one is not a strip — the plate above already is that frame,
-              // so it renders nothing rather than a one-cell timeline.
-              const frames = sortedBirdPhotos(bird);
-              const strip = frames.length > 1 ? frames : [];
-              const dossierText = dossier?.text
-                .replace("{frames}", numWord(frames.length))
-                .replace("{median}", numWord(ledgerMedian));
               return (
                 <div key={bird.name} className={senior ? "orn-bird senior" : "orn-bird"}>
                   {/* Identification plate. Static single frame off the roster
@@ -1152,42 +1102,6 @@ export default function OrnitharchPage() {
                       </span>
                     </div>
                   ) : null}
-                  {/* Life-stage strip. Every frame the ledger holds for this
-                      bird, hatch → now, labelled by age at exposure rather
-                      than by date — the argument of the page is development,
-                      not chronology. Horizontal CSS scroller: no carousel, no
-                      client island. The frame that is also the bird's current
-                      hero portrait (the plate above) is marked rather than
-                      dropped, so the strip's span really is hatch → now. */}
-                  {strip.length > 0 ? (
-                    <div className="strip">
-                      <p className="striphead">
-                        <b>Ledger</b> — {strip.length} frames, hatch to current
-                      </p>
-                      <ol>
-                        {strip.map((ph) => {
-                          const age = ageAtPhoto(bird.hatch_date, ph.date);
-                          const isHero = ph.file === bird.photo;
-                          return (
-                            <li key={ph.file} className={isHero ? "cur" : undefined}>
-                              <div className="fr">
-                                <Image
-                                  src={`/photos/${ph.file}`}
-                                  alt={
-                                    ph.caption ??
-                                    `${bird.name}${age ? `, ${age}` : ""}`
-                                  }
-                                  fill
-                                  sizes="96px"
-                                />
-                              </div>
-                              <span className="age">{age || "undated"}</span>
-                            </li>
-                          );
-                        })}
-                      </ol>
-                    </div>
-                  ) : null}
                   <div className="bn">
                     <span className="name">{bird.name}</span>
                     {band ? (
@@ -1200,7 +1114,7 @@ export default function OrnitharchPage() {
                     {dossier?.role ?? "Cohort member"}
                     {hatched ? ` · Hatched ${hatched}` : ""}
                   </p>
-                  {dossierText ? <p>{dossierText}</p> : null}
+                  {dossier ? <p>{dossier.text}</p> : null}
                 </div>
               );
             })}
@@ -1971,16 +1885,6 @@ const ORN_CSS = `
 .orn-bird .plate img{object-fit:cover;filter:saturate(.88) contrast(1.04)}
 .orn-bird .plate .pno{position:absolute;left:0;bottom:0;background:var(--orn-ink);color:var(--orn-paper);font-family:"IBM Plex Mono",monospace;font-size:.56rem;letter-spacing:.16em;padding:3px 8px}
 @media(min-width:700px){.orn-bird .plate{aspect-ratio:5/4}}
-.orn-bird .strip{margin:-14px -20px 15px;border-bottom:1px solid var(--orn-rule);background:var(--orn-field-soft)}
-.orn-bird .striphead{margin:0;padding:7px 20px 5px;font-family:"IBM Plex Mono",monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--orn-muted)}
-.orn-bird .striphead b{color:var(--orn-ink);font-weight:600}
-.orn-bird .strip ol{display:flex;gap:8px;margin:0;padding:0 20px 12px;list-style:none;overflow-x:auto;scrollbar-width:thin;overscroll-behavior-x:contain}
-.orn-bird .strip li{flex:0 0 auto;width:74px}
-.orn-bird .strip .fr{position:relative;width:74px;aspect-ratio:1/1;background:var(--orn-paper);border:1px solid var(--orn-rule);overflow:hidden}
-.orn-bird .strip .fr img{object-fit:cover;filter:saturate(.88) contrast(1.04)}
-.orn-bird .strip .age{display:block;margin-top:4px;font-family:"IBM Plex Mono",monospace;font-size:.53rem;letter-spacing:.08em;text-transform:uppercase;color:var(--orn-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.orn-bird .strip li.cur .fr{border-color:var(--orn-stamp);box-shadow:0 0 0 1px var(--orn-stamp)}
-.orn-bird .strip li.cur .age{color:var(--orn-stamp)}
 .orn-bird .bn{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
 .orn-bird .name{font-family:"IBM Plex Sans Condensed",sans-serif;font-size:1.16rem;font-weight:700;letter-spacing:-.01em}
 .orn-bird .band{font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border:1px solid currentColor;white-space:nowrap}
