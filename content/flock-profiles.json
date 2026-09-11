@@ -1936,6 +1936,37 @@
           "caption": "A rooster with a red comb and barred tail stands alert, eyeing the camera directly."
         }
       ]
+    },
+    {
+      "name": "EE Rooster",
+      "breed": "Easter Egger (rooster)",
+      "hatch_date": null,
+      "hatch_date_estimated": true,
+      "age_note": "Adult rooster \u2014 exact hatch date unknown.",
+      "status": "active",
+      "egg_color": "N/A (rooster)",
+      "temperament": null,
+      "color_observations": [
+        {
+          "date": "2026-09-11",
+          "date_unknown": false,
+          "description": "Mottled black and gray body plumage with gold and cream lacing on the neck hackles. Gray wing and tail feathers with rust-brown barring. Bright red single comb, red face and wattles, orange eye, dark beak. No leg band visible.",
+          "source": "roster-intake"
+        }
+      ],
+      "color_description": "Mottled black and gray body plumage with gold and cream lacing on the neck hackles. Gray wing and tail feathers with rust-brown barring. Bright red single comb, red face and wattles, orange eye, dark beak. No leg band visible.",
+      "color_description_as_of": "2026-09-11",
+      "photo": "birds/IMG_9754-ee-rooster-black-gold-11sep2026.jpg",
+      "notes": "Named \"EE Rooster\" by the Boss (11-Sep-2026) \u2014 literal name, not a placeholder. Persistently pursues Chonkers, the Buff Ranger rooster; the pursuit is one-directional and appears mating/dominance-driven.",
+      "location": "birdcatraz",
+      "ornitharch": false,
+      "photos": [
+        {
+          "file": "birds/IMG_9754-ee-rooster-black-gold-11sep2026.jpg",
+          "date": "2026-09-11",
+          "caption": "A black-and-gray rooster with gold-laced neck hackles and a bright red comb is held in hand in the coop run, wings partly spread."
+        }
+      ]
     }
   ]
 }
