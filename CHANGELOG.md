@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.43.2] — 2026-09-16
+
+### Changed — Henridotta is Henridot: sex confirmed cockerel, bird renamed (Claude Opus 5 (Bubba sub-agent))
+
+**What:** `content/flock-profiles.json`, `content/flock_bands.json`, the hatch record (renamed to `content/hatches/2026/2026-06-03-04-henridot.md`), the `/markets` analyst tile and newswire line, the `/ornitharch` dossier and the front-page featured order all move from **Henridotta** to **Henridot**, with `sex: cockerel` and `sex_confirmed_date: 2026-09-16`.
+
+**Why:** the Boss renamed the bird and confirmed the sex himself in Discord #meet-the-lobsters on 2026-09-16 — *"Henridot as he will be known now."* **The sex call is attributed to the Boss's words, not to a comb/wattle or plumage read.** Unlike the Henriella → Henriello rename (v1.39.2), this record carried no prior `suspected_sex` flag: the hatch-day entry read `sex: unknown` and made no morphological prediction, so there was no earlier call to vindicate. The roster and the hatch record both say so plainly, so a later reader doesn't mistake this for a plumage inference.
+
+**How:** `formerly: "Henridotta"` drives both the existing "fka Henridotta" chip and the old-URL redirect; `alternative_name: "Henridotta"` is retained as well, because every committed photo filename, caption and diary entry predating this change uses the old name. **No new redirect code was needed** — v1.39.2 made `/flock/[slug]` resolve an unresolved slug against `formerly` and 308 to the canonical slug, data-driven precisely so future renames get their redirect for free. This is the first rename to collect on that promise: `/flock/henridotta` → 308 → `/flock/henridot`, with `app/flock/[slug]/page.tsx` untouched.
+
+Scope held to forward-looking references. Names were updated where the text identifies a living bird (Henrietta's band note, Ingebird's and Adelbird's lookalike guidance, Henriessa's silver-dispute resolution) and left as written inside dated accounts of past events (Birdthazar's 10-Aug band-ID thread note), historical photo captions, the append-only `phenotype_observations` and `color_observations` entries, and the diary and field-notes archive. `she`→`he` in the live `color_description` and `notes` only; the dated 2026-08-22 observation entries keep their original wording. The hatch record's `id` (`2026-06-03-04`) is unchanged per `content/hatches/SCHEMA.md`, and `/hatches` reads the directory rather than a hand-maintained index, so the file rename needs no index edit.
+
 ## [1.43.1] — 2026-09-10
 
 ### Changed — /ornitharch REV 5: less talking, more charts (Claude Opus 5)

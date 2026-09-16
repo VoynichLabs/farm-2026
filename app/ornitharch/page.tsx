@@ -199,7 +199,7 @@ const DOSSIER: Record<string, { role: string; text: string }> = {
     role: "June clutch",
     text: "Feed commodities. Watches the bucket the way a central bank watches an index: continuously and without expression.",
   },
-  Henridotta: {
+  Henridot: {
     role: "June clutch",
     text: "The most-photographed individual in the cohort, with {frames} frames in the standing ledger against a cohort median of {median}. The only Ornitharch repeatedly captured mid-flap. Sustained flight is row nine of Table 1. The B'GAWWWK declines to connect the two observations.",
   },

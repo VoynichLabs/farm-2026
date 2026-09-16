@@ -3,7 +3,7 @@
  * Date: 22-Jul-2026
  * PURPOSE: BandChip — a compact leg-band chip (colored swatch + "color #N ·
  *   L/R") rendered from a bird's leg_band. The band is the canonical bird ID
- *   (near-identical birds like Henridotta ≈ Ingebird are told apart by it);
+ *   (near-identical birds like Henridot ≈ Ingebird are told apart by it);
  *   left leg = hatched on the farm. Shared by /flock (cards) and
  *   /flock/[slug] (the per-bird aging gallery header).
  * SRP/DRY check: Pass — extracted from app/flock/page.tsx so both surfaces

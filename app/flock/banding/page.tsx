@@ -320,7 +320,7 @@ export default function BandingPage() {
           <p className="mt-4 text-xs text-field-muted max-w-3xl">
             Every left-leg band above belongs to an Ornitharch; every right-leg
             band (Robirda, Bobirda) belongs to a purchased bird — the rule
-            holds. Henridotta&apos;s purple #12 is assigned but her leg is not
+            holds. Henridot&apos;s purple #12 is assigned but his leg is not
             yet confirmed.
           </p>
         </div>

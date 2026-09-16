@@ -51,7 +51,7 @@
  *   22-Jul-2026 (leg-band chips): each bird card (OrnitharchTile + BirdCard)
  *   now renders a BandChip when the roster entry has a leg_band — a colored
  *   swatch + "color #N · L/R" so you can eyeball who's who at a glance. The
- *   band is the canonical ID (near-identical birds like Henridotta ≈ Ingebird
+ *   band is the canonical ID (near-identical birds like Henridot ≈ Ingebird
  *   are told apart by it); left leg = farm-hatched. Data is flock-profiles.json
  *   leg_band; the dedicated assignments page stays at /flock/banding.
  *

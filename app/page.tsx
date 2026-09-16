@@ -87,7 +87,7 @@ function formatHatch(iso: string): string {
 // Boss-set featured order for the front page hero row — these five lead,
 // in this exact order, regardless of hatch date. Everyone else follows,
 // newest hatch first, same as before this override existed.
-const FEATURED_ORDER = ["Birddor", "Henridotta", "Birdimir", "Ingebird", "Horstabird"];
+const FEATURED_ORDER = ["Birddor", "Henridot", "Birdimir", "Ingebird", "Horstabird"];
 
 // How many Class-of-2026 tiles get next/image `priority` (eager + preload).
 // Six is one full row at the widest breakpoint (lg:grid-cols-6) and, at
