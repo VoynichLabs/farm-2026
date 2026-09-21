@@ -1,0 +1,7 @@
+# Portraits and a Bad Landing — 2026-09-20
+
+A day of close-up character studies from the coop cam. **Roosters dominated the reacted highlights** — a white rooster with red comb and yellow beak held dead still for the lens at 11:05, and a nearly identical white rooster returned twice more in the evening (18:16, 18:29), sharp-eyed and alert. Morning brought a run of favorites: a speckled rooster, a couple of dark-feathered birds with prominent combs, a glossy black hen, and a black-and-white barred chicken, all staring straight into the camera in quick succession between 08:36 and 09:22. The day closed with a nice paired shot — a brown hen with black streaking standing beside a speckled grey hen, side by side. Across the full day the yard stayed busy and calm, roosters patrolling the wood-chip run from sunup past 18:00.
+
+Off-camera, one of the hens is nursing a bad landing from a high roost — **her right leg won't bear weight and the foot has swollen up.** She's been crated flat on deep shavings with food and water raised to beak height; if she's still not putting weight on it in a week, it's more than a sprain and will need a vet.
+
+-Bubba

@@ -1126,10 +1126,18 @@
           "source": "roster-backfill",
           "age_weeks": 5,
           "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"Plumage from 23-Jun-2026\"."
+        },
+        {
+          "date": "2026-09-15",
+          "date_unknown": false,
+          "description": "Deep rust-red to mahogany all over, head, neck and body one even colour, with a glossy black tail and a slate-blue bar showing on the folded wing. Red single comb and wattles, yellow legs.",
+          "source": "claude-photo-review",
+          "age_weeks": 17,
+          "note": "Grown-bird refresh 21-Sep-2026 from Boss's 15-Sep photo (birds/IMG_9857-birdthazar-brown-red-15sep2026.jpg; purple band visible). The juvenile slate smudges and banded tail in the 23-Jun text have grown out."
         }
       ],
-      "color_description": "Copper-orange over back and wings with scattered slate and charcoal smudges, finishing in a boldly banded rust-and-charcoal tail carried low that reads near-black at a distance \u2014 a striped dark tail on an otherwise plain copper bird. Face and throat noticeably pale cream-white, with a rounded rust-brown patch on the cheek behind the eye. (Plumage from 23-Jun-2026 and five weeks stale.)",
-      "color_description_as_of": "2026-06-23",
+      "color_description": "Deep rust-red to mahogany all over, head, neck and body one even colour, with a glossy black tail and a slate-blue bar showing on the folded wing. Red single comb and wattles, yellow legs.",
+      "color_description_as_of": "2026-09-15",
       "photo": "birds/IMG_9857-birdthazar-brown-red-15sep2026.jpg",
       "notes": "First of three chicks from the April-25 clutch. Wing-feather sexing (2026-05-17 15:50 EDT) read approximately uniform single row \u2192 probable cockerel. Sire LBRJ probable per the April 25 paternity window. The early solo-brooder aggression settled out \u2014 he now runs with the flock in Birdcatraz.",
       "location": "birdcatraz",
@@ -1251,10 +1259,18 @@
           "source": "roster-backfill",
           "age_weeks": 9,
           "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"Plumage from 21-Jul-2026\"."
+        },
+        {
+          "date": "2026-09-15",
+          "date_unknown": false,
+          "description": "Rich rust-brown all over including the head, with a very small comb and a bare pink-red face. Unlike the similar rust-red Birdthazar, no full red comb and no black tail. Feathers edged slightly darker for a fine scaled look; yellow legs.",
+          "source": "claude-photo-review",
+          "age_weeks": 17,
+          "note": "Grown-bird refresh 21-Sep-2026 from Boss's 15-Sep photo (birds/IMG_9843-birdsilla-brown-stands-15sep2026.jpg; white band, number 03 legible)."
         }
       ],
-      "color_description": "Deep foxy rust-copper across back, wing and saddle, breaking hard into a blackish tail \u2014 rust body, black tail, with no barring or lacing. Carries only light dark marking: a scatter of slate-grey flecks across the nape like a dark collar, a couple of slate flecks at the shoulder and a thin dark line along the lower edge of the folded wing. Unusually extensive bright pink-red bare face skin, small low knobbly comb lying flat well back on the crown. \u26a0\ufe0f Easily confused with Birdthazar, who is also copper with slate smudges \u2014 Birdthazar has no band at all, Birdsilla wears white #3. (Plumage from 21-Jul-2026, photographed shortly before that day's banding session.)",
-      "color_description_as_of": "2026-07-21",
+      "color_description": "Rich rust-brown all over including the head, with a very small comb and a bare pink-red face. Unlike the similar rust-red Birdthazar, no full red comb and no black tail. Feathers edged slightly darker for a fine scaled look; yellow legs.",
+      "color_description_as_of": "2026-09-15",
       "photo": "birds/IMG_9843-birdsilla-brown-stands-15sep2026.jpg",
       "notes": "Third chick of the April-25 clutch. EE-lineage from blue egg; dam candidates are Birdadonna, Birdsula (EE hen 1), or EE hen 2 \u2014 none confirmed. Named-line candidate if dam turns out to be Birdadonna. Sire LBRJ probable. Named Birdsilla, aka 'Monster Leg' (recognized nickname/alias), per the Boss-confirmed 2026 hatch spine. Out in Birdcatraz \u2014 tested the top roost spot with Henriello (diary, 09-Jul-2026). Description (21-Jul-2026, IMG_7556): warm solid buff-orange across the back with no stripe pattern \u2014 the tell against Birdthazar; black tail coming in dark and full; yellow legs; small pink comb, consistent with pullet. Disposition: confident, owns the yard.",
       "location": "birdcatraz",
@@ -1335,10 +1351,18 @@
           "description": "He's coming in with a classic laced pattern -- black-tipped scalloped feathers across the neck and saddle giving a grizzled salt-and-pepper look over a white base, breast and body white with scattered black speckling more spangled than clean lacing, wingtips and tail coming in solid blackish against the white body, comb small and upright and still developing with some baby down still visible around the eyes, red leg band on the left leg confirms ID, molting out of chick fuzz into a proper laced speckled adult coat.",
           "source": "boss-caption",
           "age_weeks": 13
+        },
+        {
+          "date": "2026-09-19",
+          "date_unknown": false,
+          "description": "Mostly white bird with heavy dark grey-brown streaking and speckling across the breast and neck, the only predominantly white bird of the June hatch. Tail white barred with black. Red single comb and small wattles, orange eye, yellow beak and legs.",
+          "source": "claude-photo-review",
+          "age_weeks": 15,
+          "note": "Grown-bird refresh 21-Sep-2026 from the 19-Sep S7 gem Boss filed to this bird (birds/s7-cam-gem-birdimir-white-black-19sep2026.jpg); the red band is visible on a leg in that frame. Replaces the 06-Sep text as current, which still described chick down."
         }
       ],
-      "color_description": "He's coming in with a classic laced pattern -- black-tipped scalloped feathers across the neck and saddle giving a grizzled salt-and-pepper look over a white base, breast and body white with scattered black speckling more spangled than clean lacing, wingtips and tail coming in solid blackish against the white body, comb small and upright and still developing with some baby down still visible around the eyes, red leg band on the left leg confirms ID, molting out of chick fuzz into a proper laced speckled adult coat.",
-      "color_description_as_of": "2026-09-06",
+      "color_description": "Mostly white bird with heavy dark grey-brown streaking and speckling across the breast and neck, the only predominantly white bird of the June hatch. Tail white barred with black. Red single comb and small wattles, orange eye, yellow beak and legs.",
+      "color_description_as_of": "2026-09-19",
       "photo": "birds/s7-cam-gem-birdimir-white-black-19sep2026.jpg",
       "notes": "First chick of the June clutch (new incubator, eggs set ~12 May; sire window Whitey Red Legs). Hatched in the NI, moved to the retired old incubator overnight as a holding spot, then to the brooder 2026-06-03. Dam not individually confirmed (blue egg). Per-chick record: content/hatches/2026/2026-06-02-01-birdimir.md",
       "location": "birdcatraz",
@@ -1403,10 +1427,18 @@
           "description": "Near-black bird with fine, narrow, irregular white ticking rather than broad bars \u2014 the darkest of the dark patterned birds \u2014 with the head and neck more crisply white-speckled than the body. A pale patch shows on the lower back above the tail in her 21-Jul frame (IMG_7718); if that holds up in the field it is the one mark that separates her from Henridot and Adelbird without handling her. Comb and wattles already well reddened, yellow legs. Band is green #2.",
           "source": "roster-backfill",
           "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        },
+        {
+          "date": "2026-09-19",
+          "date_unknown": false,
+          "description": "Barred black-and-white hen with a paler white-speckled head and a bare red face; looks remarkably like Adelbird and is colored like the purchased Barred Rocks. Plumage alone cannot tell her apart; her leg band does. Yellow legs.",
+          "source": "claude-photo-review",
+          "age_weeks": 15,
+          "note": "Grown-bird refresh 21-Sep-2026 from Boss's 19-Sep group shot (birds/image-ingebird-henriessa-henridot-speckled-hens-19sep2026.png, Ingebird = green band, right-hand bird). Corrected same day per Boss: the green-band rooster in S7 frame archive/2026-09/s7-cam/2026-09-21T11-48-08-strong.jpg (large serrated comb, long wattles) is a DIFFERENT bird - its green band is on its RIGHT leg, and right-leg bands are purchased birds, never ornitharchs. A green band alone does not identify Ingebird; the leg does. Boss 21-Sep: Ingebird looks remarkably like Adelbird."
         }
       ],
-      "color_description": "Near-black bird with fine, narrow, irregular white ticking rather than broad bars \u2014 the darkest of the dark patterned birds \u2014 with the head and neck more crisply white-speckled than the body. A pale patch shows on the lower back above the tail in her 21-Jul frame (IMG_7718); if that holds up in the field it is the one mark that separates her from Henridot and Adelbird without handling her. Comb and wattles already well reddened, yellow legs. Band is green #2.",
-      "color_description_as_of": null,
+      "color_description": "Barred black-and-white hen with a paler white-speckled head and a bare red face; looks remarkably like Adelbird and is colored like the purchased Barred Rocks. Plumage alone cannot tell her apart; her leg band does. Yellow legs.",
+      "color_description_as_of": "2026-09-19",
       "photo": "birds/ingebird-crop-ingebird-black-white-07sep2026.jpg",
       "notes": "Second chick of the June clutch. Dam noted by Boss as Birdsula (a blue-egg Easter Egger hen, \u2248 'EE hen 1') \u2014 low confidence; sire window Whitey Red Legs. Moved to the brooder 2026-06-03. Per-chick record: content/hatches/2026/2026-06-02-02-ingebird.md",
       "location": "birdcatraz",
@@ -1468,10 +1500,18 @@
           "source": "boss-confirmed-vlm-read",
           "age_weeks": 13,
           "note": "Boss reviewed photo henriessa_crop-henriessa-speckled-grey-02sep2026.jpg and confirmed this VLM description as accurate. Supersedes the 2026-07-21 entry (\"plain unpatterned slate blue-grey, no bars\") \u2014 she has grown into a barred/cuckoo adult pattern; likely maturation, not misID (leg band pink #8 confirmed in frame)."
+        },
+        {
+          "date": "2026-09-15",
+          "date_unknown": false,
+          "description": "Soft blue-grey body with darker grey lacing on each feather, the smoothest and palest grey of the grey-and-barred group, not barred. Head and neck white with bold black spots. Small comb, red face, yellow legs.",
+          "source": "claude-photo-review",
+          "age_weeks": 14,
+          "note": "Grown-bird refresh 21-Sep-2026 from Boss's 15-Sep photo (birds/IMG_9846-henriessa-speckled-grey-15sep2026.jpg; pink band, number 08 legible), agreeing with the middle bird of the 19-Sep group shot. The prior 'barred/cuckoo' description no longer fits; the body is laced blue-grey."
         }
       ],
-      "color_description": "Barred/cuckoo pattern, not plain slate grey \u2014 white feathers with dense dark grey-black barring in stripes down the whole body, reading as salt-and-pepper grey overall. Head white with fine black speckling, orange face and comb, yellow-orange beak and legs.",
-      "color_description_as_of": "2026-09-02",
+      "color_description": "Soft blue-grey body with darker grey lacing on each feather, the smoothest and palest grey of the grey-and-barred group, not barred. Head and neck white with bold black spots. Small comb, red face, yellow legs.",
+      "color_description_as_of": "2026-09-15",
       "photo": "birds/IMG_9846-henriessa-speckled-grey-15sep2026.jpg",
       "silver_marking": "confirmed",
       "notes": "June Henrietta-line chick. Dam: Henrietta (the flock's only brown-egg layer); name echoes the line (cf. Henriella). Sire window Whitey Red Legs. SILVER RESOLVED: the Boss confirmed 2026-07-21 that Henriessa is the silver/blue-gray sister \u2014 this settles the June flip-flop back to her (the original hatch-day observation) and away from Henridot, who is the darker standard look. First logged photo (IMG_7655, 2026-07-21) is a solo portrait of her showing the silver barring. Per-chick record: content/hatches/2026/2026-06-03-01-henriessa.md BAND CONFIRMED 2026-07-21: pink #08 (boss confirmed from IMG_7729).",
@@ -1608,10 +1648,18 @@
           "description": "reads Barred Rock at a glance but it is not a clean ladder: the barring is bold and irregular, blotchy across breast and back, and far finer and tighter over head and hackle, nearly salt-and-pepper. Warm straw-gold feathers are coming in over the wing shoulder and onto the upper back, a pale cream-buff patch among the black and white. Tail is dark and largely unbarred with a green-blue sheen. Small bright red single comb still developing, orange-yellow legs, purple band on the left leg. Pale grey down still shows at belly and thighs; she is not finished feathering out.",
           "source": "boss-caption",
           "age_weeks": 11
+        },
+        {
+          "date": "2026-09-16",
+          "date_unknown": false,
+          "description": "Rooster: crisp black-and-white barring over the whole bird, head included, with a large bright-red single comb flopping to one side and full red wattles. Colored like the purchased Barred Rock roosters, so plumage alone cannot tell him apart; his leg band does. Yellow legs.",
+          "source": "claude-photo-review",
+          "age_weeks": 15,
+          "note": "Grown-bird refresh 21-Sep-2026 from Boss's 16-Sep photo (birds/IMG_9883-henridot-speckled-chicken-16sep2026.jpg; purple band visible), agreeing with the left bird of the 19-Sep group shot. Boss 21-Sep: formerly Henridotta; believed to be a rooster, and he is the purple-banded (left leg), rooster-combed bird on the left of the 19-Sep group shot."
         }
       ],
-      "color_description": "reads Barred Rock at a glance but it is not a clean ladder: the barring is bold and irregular, blotchy across breast and back, and far finer and tighter over head and hackle, nearly salt-and-pepper. Warm straw-gold feathers are coming in over the wing shoulder and onto the upper back, a pale cream-buff patch among the black and white. Tail is dark and largely unbarred with a green-blue sheen. Small bright red single comb still developing, orange-yellow legs, purple band on the left leg. Pale grey down still shows at belly and thighs; he is not finished feathering out.",
-      "color_description_as_of": "2026-08-22",
+      "color_description": "Rooster: crisp black-and-white barring over the whole bird, head included, with a large bright-red single comb flopping to one side and full red wattles. Colored like the purchased Barred Rock roosters, so plumage alone cannot tell him apart; his leg band does. Yellow legs.",
+      "color_description_as_of": "2026-09-16",
       "photo": "birds/IMG_9883-henridot-speckled-chicken-16sep2026.jpg",
       "silver_marking": "none",
       "notes": "June Henrietta-line chick, named in honor of his mother Henrietta. Dam: Henrietta; sire window Whitey Red Legs. SEX CONFIRMED COCKEREL \u2014 Boss-confirmed 2026-09-16 in #meet-the-lobsters, in his words: \"Henridot as he will be known now.\" The sex call is the Boss's, made in the field; it is NOT derived from any comb/wattle or plumage read in this record. RENAMED Henridotta \u2192 Henridot on that confirmation; 'Henridotta' is retained as formerly (which drives the \"fka\" chip and the old-URL redirect) and as alternative_name, because every photo filename, caption and diary entry before this date uses it. SILVER RESOLVED: the Boss confirmed 2026-07-21 that the silver sister is Henriessa, not Henridot \u2014 Henridot is the darker standard look (same coloring as Adelbird, who is slightly smaller). Per-chick record: content/hatches/2026/2026-06-03-04-henridot.md PLUMAGE CORRECTED 2026-07-29 (Boss-authoritative): he is barred black-and-white, not the silvery-scaled hatch-era description \u2014 that description is retired. Default photo updated to the wings-spread shot at the fence (purple band #12 confirmed in the companion portrait, IMG_8050).",
@@ -1721,10 +1769,18 @@
           "description": "Dark charcoal bird with soft, irregular pale grey-white scalloping over the body \u2014 greyer, softer and lower-contrast than crisp barring, with the head dark and white-flecked. Comb small and only partly reddened, and she is the youngest and smallest of the June clutch, so she generally looks a step behind her nest-mates. Read the band to confirm (hers is blue #7) \u2014 Henridot is no longer a plumage lookalike as of 2026-07-29 (Boss-confirmed: Henridot is bold black-and-white barred, not scalloped). Her description rests on a single frame (IMG_7731, 21-Jul).",
           "source": "roster-backfill",
           "note": "Backfilled 11-Aug-2026 from the undated color_description. No plumage-anchored date was recoverable from the record; the true observation date is unknown and was NOT inferred."
+        },
+        {
+          "date": "2026-09-21",
+          "date_unknown": false,
+          "description": "Charcoal-grey bird covered in soft white spangles, with a paler white-flecked head, a bare red face and a very small comb; looks remarkably like Ingebird. Plumage alone cannot tell her apart; her leg band does. Yellow legs.",
+          "source": "claude-photo-review",
+          "age_weeks": 15,
+          "note": "Grown-bird refresh 21-Sep-2026 from the S7 frame archive/2026-09/s7-cam/2026-09-21T11-03-43-strong.jpg, where the blue band's number 7 is legible, cross-checked against the 19-Sep S7 gem Boss filed to this bird. The old description's 'head dark and white-flecked' no longer holds; the head now reads pale. Boss 21-Sep: Adelbird and Ingebird look remarkably alike."
         }
       ],
-      "color_description": "Dark charcoal bird with soft, irregular pale grey-white scalloping over the body \u2014 greyer, softer and lower-contrast than crisp barring, with the head dark and white-flecked. Comb small and only partly reddened, and she is the youngest and smallest of the June clutch, so she generally looks a step behind her nest-mates. Read the band to confirm (hers is blue #7) \u2014 Henridot is no longer a plumage lookalike as of 2026-07-29 (Boss-confirmed: Henridot is bold black-and-white barred, not scalloped). Her description rests on a single frame (IMG_7731, 21-Jul).",
-      "color_description_as_of": null,
+      "color_description": "Charcoal-grey bird covered in soft white spangles, with a paler white-flecked head, a bare red face and a very small comb; looks remarkably like Ingebird. Plumage alone cannot tell her apart; her leg band does. Yellow legs.",
+      "color_description_as_of": "2026-09-21",
       "photo": "birds/s7-cam-gem-adelbird-speckled-adult-19sep2026.jpg",
       "notes": "The LAST HATCH of the 2026 incubator season. June clutch, Egg #5. The Boss dabbed a droplet of water on the drying membrane the evening of Jun 3; she pipped for air and finished on her own overnight. Named Adelbird 2026-06-04. Dark gray/black down with a white head spot, confirmed 2026-06-07 \u2014 shares the white spot with Ingebird, so the two are told apart by age/size (Adelbird is the youngest). Dam not individually confirmed (blue egg); sire window Whitey Red Legs. Per-chick record: content/hatches/2026/2026-06-04-01-adelbird.md",
       "location": "birdcatraz",
@@ -1881,7 +1937,7 @@
           "source": "boss-identified"
         }
       ],
-      "color_description": "Black-Breasted Red Old English Game coloring: golden-straw hackle, chestnut-red back, black breast, iridescent black-green tail, slate legs.",
+      "color_description": "Black-Breasted Red Old English Game coloring: golden-straw hackle and saddle feathers, chestnut-red back and wing bows, black breast and belly, iridescent black-green tail. Single red comb, red wattles, slate/grey legs. No leg band visible.",
       "color_description_as_of": "2026-09-07",
       "photo": "birds/IMG_9638-malt-liquor-red-comb-07sep2026.jpg",
       "notes": "Named Malt Liquor by the Boss (07-Sep-2026). Likely the same Old English Game / BB Red rooster from the Cackle Hatchery batch noted 06-Aug-2026.",
@@ -1912,7 +1968,7 @@
           "source": "boss-identified"
         }
       ],
-      "color_description": "White body, black breast and tail, red comb, slate legs.",
+      "color_description": "White body with black breast/belly and black tail, red single comb and wattles, slate-grey legs. No leg band visible.",
       "color_description_as_of": "2026-09-07",
       "photo": "birds/1EE597EF-0DBF-4F8F-A084-1960A0B56F7C-hawk-food-white-black-07sep2026.jpg",
       "notes": "Named Hawk Food by the Boss (07-Sep-2026).",
@@ -1943,7 +1999,7 @@
           "source": "boss-identified"
         }
       ],
-      "color_description": "Solid white body, large red comb and wattles, yellow beak and legs.",
+      "color_description": "Solid white body plumage, large upright red single comb, red wattles and face, yellow beak and legs.",
       "color_description_as_of": "2026-09-07",
       "photo": "birds/white-rooster-crop-white-rooster-white-chicken-07sep2026.jpg",
       "notes": "Named/called \"the White Rooster\" by the Boss (07-Sep-2026). Roster promotion gap flagged same morning in docs/plans/07-Sep-2026-juvenile-to-rooster-roster-promotion-gap.md \u2014 no leg band visible, source juvenile batch unconfirmed.",
@@ -1974,7 +2030,7 @@
           "source": "boss-identified"
         }
       ],
-      "color_description": "Calico-patterned: speckled silver-white neck, gold/rust saddle, black-and-white barred tail, red comb, yellow legs.",
+      "color_description": "Calico/multicolor patterning: black-speckled silvery-white head and neck, gold/straw and rust saddle feathers, black-and-white barred wing coverts and tail. Bright red single comb, red wattles, yellow legs. No leg band visible.",
       "color_description_as_of": "2026-09-07",
       "photo": "birds/IMG_9624-loud-dumb-bird-red-comb-07sep2026.jpg",
       "notes": "Named Loud Dumb Bird by the Boss (07-Sep-2026) \u2014 this is the \"calico rooster\" flagged same morning in docs/plans/07-Sep-2026-juvenile-to-rooster-roster-promotion-gap.md.",

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.43.3] — 2026-09-21
+
+### Changed — "special chick" badge is now "standout"; flock descriptions refreshed for grown birds (Claude Opus 5)
+
+**What:** gem cards show a **standout** pill instead of "special chick" (`GemCardBadges.tsx` reads the backend's new `standout_bird`, falling back to `any_special_chick`). `types.ts` gains `standout_bird` and the hen/rooster/turkey individual tags; `apparent_age_days` is documented as always null. `content/flock-profiles.json` gets new dated `color_observations` for Birdimir, Adelbird, Ingebird, Henriessa, Henridot, Birdthazar and Birdsilla from September photos, and Boss's full 7-Sep notes are restored as the current description for Malt Liquor, Hawk Food, White Rooster and Loud Dumb Bird. Also commits the pending raw diary drafts (`content/diary/`, source material, not published), the Birdcatraz pen specs doc, and the version-bump rule in CLAUDE.md.
+
+**Why:** Boss: the flock is grown and the chick wording is months stale. The backend change is farm-guardian v2.74.0 (field renamed, age retired). Boss confirmed Ingebird looks remarkably like Adelbird, and both look like the purchased Barred Rocks, as does Henridot. Their descriptions say plumage alone can't tell them apart; only the leg band can (hatched here = left leg, bought = right leg).
+
+**Size:** patch — a pill label, one optional type field and roster content; no new page, route or component API.
+
 ## [1.43.2] — 2026-09-16
 
 ### Changed — Henridotta is Henridot: sex confirmed cockerel, bird renamed (Claude Opus 5 (Bubba sub-agent))

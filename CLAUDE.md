@@ -255,6 +255,13 @@ Full orchestration guide and per-machine quick-reference table is in `farm-guard
   - Updating the top entry of `CHANGELOG.md` (SemVer; what/why/how; include author/model name).
 - Commits: do not commit unless explicitly requested; when asked, use descriptive commit messages and follow user instructions exactly.
 - Keep technical depth in docs/changelog rather than dumping it into chat.
+- **Version bumps are sized to the change, not to the effort.** Small content or copy tweaks
+  confined to a single page — swapping a hero image, adding or rewording prose, fixing a caption,
+  retouching one section's styling — get a **patch** bump (`1.42.0` → `1.42.1`). Reserve **minor**
+  bumps (`1.42.0` → `1.43.0`) for structural or feature changes: a new page or route, a new data
+  source or content type, a new pipeline, a component API change, or a reworking that spans
+  multiple pages. When in doubt, patch. The CHANGELOG entry should carry a one-line rationale for
+  the size of the bump so the next reader doesn't have to reverse-engineer it.
 
 ## Communication style
 - Keep responses tight and non-jargony; do not dump chain-of-thought.

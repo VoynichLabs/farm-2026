@@ -1,5 +1,5 @@
-// Author: Claude Opus 4.7 (1M context)
-// Date: 02-May-2026
+// Author: Claude Opus 4.7 (1M context); Claude Opus 5 (21-Sep-2026 — standout_bird, hen/rooster/turkey tags, retired age)
+// Date: 02-May-2026 (last touched 21-Sep-2026)
 // PURPOSE: TypeScript interfaces for Farm Guardian API responses.
 //          Maps to endpoints at guardian.markbarney.net by default;
 //          override with NEXT_PUBLIC_GUARDIAN_API for staging / preview /
@@ -155,7 +155,11 @@ export type ImageQuality = "sharp" | "soft" | "blurred";
 
 export type ShareWorth = "skip" | "decent" | "strong";
 
-export type IndividualTag = "birdadette" | "adult-survivor" | "chick" | "unknown-bird";
+// 21-Sep-2026 (farm-guardian v2.74.0): the VLM now tags hen/rooster/turkey;
+// the older values stay for historical rows and Discord name tags.
+export type IndividualTag =
+  | "hen" | "rooster" | "turkey"
+  | "birdadette" | "adult-survivor" | "adult" | "chick" | "unknown-bird";
 
 export interface GemRow {
   id: number;
@@ -172,8 +176,9 @@ export interface GemRow {
   composition: Composition;
   image_quality: ImageQuality;
   individuals_visible: IndividualTag[];
-  any_special_chick: boolean;
-  apparent_age_days: number | null; // backend -1 sentinel normalised to null
+  standout_bird?: boolean;          // v2.74.0 name for the flag below
+  any_special_chick: boolean;       // legacy key, same value as standout_bird
+  apparent_age_days: number | null; // retired 21-Sep-2026: backend always sends null
   caption_draft: string;
   share_reason: string;
   caption_is_override?: boolean;    // v0.2 backend field; absent in v0.1
