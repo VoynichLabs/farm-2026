@@ -22,14 +22,14 @@ Summary: 6 pass, 8 fixed, 6 need the Boss (Search Console, deceased-bird pages, 
 | # | Item | Status | Evidence |
 |---|------|--------|----------|
 | 1 | Server-side render | pass | Build route table: every page is static, SSG, or server-rendered; raw HTML of all 92 pages contains the page text and links. |
-| 2 | Sitemap in sync with routes | fixed | Live sitemap omitted `/ornitharch` and all bird pages. Built sitemap now has 83 URLs incl. `/ornitharch` and the 33 active birds; deceased birds left out per Boss rule (v1.31.1). |
+| 2 | Sitemap in sync with routes | fixed | Live sitemap omitted `/ornitharch` and all bird pages. Built sitemap now has 84 URLs incl. `/ornitharch` and exactly the 34 bird pages `/flock` links to (33 living birds plus Birddor, who stays on the farm-hatched wall); the other seven deceased birds are left out per Boss rule (v1.31.1). |
 | 3 | Sitemap submitted in Search Console | needs-human | No Search Console access from this machine. Boss: submit `https://farm.markbarney.net/sitemap.xml` and read the "Pages" coverage report. |
 | 4 | Robots does not block Googlebot | pass | Live `robots.txt`: `User-Agent: *` / `Allow: /` / sitemap line; served 200. |
 | 5 | No stray noindex | pass | No `robots` meta and no `X-Robots-Tag` header on any of the 92 pages; no `noindex` in source. |
 | 6 | No redirect chains | fixed | Every old address already reached its page in one hop. `/diary→/field-notes` was a temporary 307; now a permanent 308 (checked on the built server). |
 | 7 | No 404s / broken internal links | pass | 88 unique internal links fetched: zero errors, zero redirecting links. |
 | 8 | Canonical on every page | fixed | Live: no canonical anywhere. Build: all 91 audited pages carry a canonical equal to their own address. |
-| 9 | No orphan pages | needs-human | Every active page is linked. The seven unlinked pages are deceased birds (Birdatha, Birdgit, Henrietta, Little Big Red Junior, Whitey Red Legs, EE hen 2, Black Australorp hen); v1.31.1 removed them from `/flock` on purpose. Boss to decide: leave them reachable by address only (current), or stop generating them. Not added to the sitemap or linked. |
+| 9 | No orphan pages | needs-human | Every other page is linked. The seven unlinked pages are deceased birds (Birdatha, Birdgit, Henrietta, Little Big Red Junior, Whitey Red Legs, EE hen 2, Black Australorp hen); v1.31.1 removed them from `/flock` on purpose. Boss to decide: leave them reachable by address only (current), or stop generating them. Not added to the sitemap or linked. |
 | 10 | Unique, human meta descriptions | fixed | Field notes now use their own opening lines (37 of 37 unique); the three "(null)" bird descriptions are clean. Zero duplicate descriptions across the build. |
 | 11 | Exactly one H1 | fixed | Build: every audited page has exactly one H1. Home gained a screen-reader-only H1 plus section h2s (screenshot-compared, unchanged look); project MDX `#` headings render as h2. |
 | 12 | FAQ structured data only where real | pass | No page has a real question-and-answer section and none carries FAQ schema. Correctly absent; nothing added. |

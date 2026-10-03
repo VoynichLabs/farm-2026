@@ -9,7 +9,7 @@ Format: [SemVer](https://semver.org/) — what / why / how.
 
 **What:** ran `docs/SEO-CHECKLIST.md` against the live site and the production build; full item-by-item results in `docs/SEO-AUDIT-03-Oct-2026.md`. Fixes:
 - **Canonical tag on every page** (`alternates.canonical` per route, resolved against the existing `metadataBase`). Deliberately not on the root layout, which would make every page without its own canonical point at the homepage.
-- **Sitemap** now lists `/ornitharch` and every *active* bird's `/flock/[slug]` page. Deceased birds are left out on purpose: per the Boss's v1.31.1 rule, losses don't surface on the site, so their pages aren't advertised to search engines either.
+- **Sitemap** now lists `/ornitharch` and the `/flock/[slug]` pages that `/flock` itself links to: every active bird plus every ornitharch (the cohort wall shows Birddor though he is marked deceased). Other deceased birds are left out on purpose: per the Boss's v1.31.1 rule, losses don't surface on the site, so their pages aren't advertised to search engines either.
 - **`/diary` → `/field-notes` is a permanent 308** (was a temporary 307).
 - **One H1 per page.** The homepage had no headings at all; it now has a screen-reader-only H1 (the site name) and its three section chips sit inside `<h2>`s, visually unchanged. Project pages had two H1s because the MDX body opens with its own `# Title`; MDX `h1` now renders as `h2` there.
 - **Meta descriptions.** Field notes used "Farm field note — {date}" on every note; they now use the note's own opening lines (`plainExcerpt()` in `lib/content.ts`, markdown and heading lines stripped, cut at a word boundary). Three bird pages printed the literal word "(null)" for a missing breed; fixed.
