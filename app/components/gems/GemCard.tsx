@@ -1,6 +1,10 @@
 /**
- * Author: Claude Opus 4.8 (prev Claude Fable 5; orig Claude Opus 4.6)
- * Date: 16-Jul-2026 (orig 14-Apr-2026)
+ * Author: Claude Opus 5.5 (prev Claude Opus 4.8 / Claude Fable 5; orig Claude Opus 4.6)
+ * Date: 03-Oct-2026 (orig 14-Apr-2026; updated 16-Jul-2026)
+ *   03-Oct-2026: tiles load Guardian's card_url (720px WebP, ~70 KB)
+ *   instead of full_url (a full-frame ~0.6 MB JPEG for portrait gems).
+ *   The lightbox keeps full_url. Falls back to full_url/thumb_url when
+ *   an older Guardian omits card_url.
  * PURPOSE: Single gem tile — responsive thumbnail with overlay badges in
  *   compact mode, or a stacked card with caption in default mode. Accepts
  *   an onOpen callback so the lightbox owner (GemsGalleryClient) controls
@@ -38,7 +42,7 @@ export default function GemCard({ row, variant = "default", onOpen, priority = f
       <>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={row.full_url || row.thumb_url}
+          src={row.card_url || row.full_url || row.thumb_url}
           alt={thumbAlt}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
@@ -81,7 +85,7 @@ export default function GemCard({ row, variant = "default", onOpen, priority = f
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-field-bg">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={row.full_url || row.thumb_url}
+            src={row.card_url || row.full_url || row.thumb_url}
             alt={thumbAlt}
             loading={priority ? "eager" : "lazy"}
             decoding="async"
