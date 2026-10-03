@@ -1,6 +1,6 @@
 /**
- * Author: Claude Sonnet 5 (prev Claude Opus 4.8, 1M context)
- * Date: 22-Jul-2026 (orig 07-Jun-2026)
+ * Author: Claude Opus 5.5 (prev Claude Sonnet 5; Claude Opus 4.8, 1M context)
+ * Date: 03-Oct-2026 (orig 07-Jun-2026; updated 22-Jul-2026)
  * PURPOSE: Server-side content loader for MDX/JSON content. Reads projects, diary entries,
  *   field notes, flock profiles, and materials from the content/ directory using gray-matter.
  *   Field notes are the weekly farm update system (replaces diary for public-facing updates).
@@ -10,6 +10,11 @@
  *   boilerplate, no good in-voice replacement found) and both render sites
  *   in app/flock/page.tsx were deleted; the type was left claiming a field
  *   that no longer existed in the data, so it's removed here to match.
+ *
+ *   03-Oct-2026 (SEO checklist pass): FieldNote gains `description`, a plain-text
+ *   excerpt of the note's opening paragraph (markdown stripped, cut at a word
+ *   boundary). It replaces the old "Farm field note — {date}" meta description,
+ *   which was identical boilerplate on every note. See plainExcerpt().
  *
  * SRP/DRY check: Pass — all content loading flows through this single module.
  *   getBirdAgeLabel() is the single age authority: it computes a live age label from a
@@ -266,6 +271,48 @@ export interface FieldNote {
   photos: { src: string; caption: string }[];
   tags: string[];
   content: string;
+  // Plain-text excerpt of the opening paragraph — the page's meta description.
+  description: string;
+}
+
+// Meta-description length. Search results truncate around 155-160 characters.
+const EXCERPT_MAX = 155;
+
+/**
+ * Plain-text excerpt of a markdown/MDX body for meta descriptions: drops
+ * images, HTML/JSX tags, heading lines and the "-Bubba" style sign-off, unwraps
+ * links and emphasis, then takes whole paragraphs until there is enough text
+ * and trims at a word boundary. Returns "" for an empty body so callers can
+ * fall back to something else.
+ */
+export function plainExcerpt(markdown: string, max: number = EXCERPT_MAX): string {
+  const paragraphs = markdown
+    .split(/\n\s*\n/)
+    .map((para) =>
+      para
+        // Drop heading lines whole: a heading is a section label, not prose,
+        // and would read as a run-on ("Bird ID Boss asked…") once its # is gone.
+        .replace(/^\s{0,3}#{1,6}\s.*$/gm, "")
+        .replace(/!\[[^\]]*\]\([^)]*\)/g, "") // images
+        .replace(/<[^>]+>/g, "") // HTML / JSX tags
+        .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1") // links → their text
+        .replace(/^\s{0,3}(>|[-*+]|\d+\.)\s+/gm, "") // quote and list markers
+        .replace(/(\*\*|__|\*|_|`)/g, "") // emphasis and code ticks
+        .replace(/\s+/g, " ")
+        .trim(),
+    )
+    // Skip empty blocks, table rows and the one-line sign-off ("-Bubba").
+    .filter((para) => para.length > 0 && !para.startsWith("|") && !/^[-–—]\s*\w+$/.test(para));
+
+  let text = "";
+  for (const para of paragraphs) {
+    text = text ? `${text} ${para}` : para;
+    if (text.length >= max * 0.6) break;
+  }
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${(lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).replace(/[\s,;:.—–-]+$/, "")}…`;
 }
 
 export function getProjects(): Project[] {
@@ -402,6 +449,7 @@ export function getAllFieldNotes(): FieldNote[] {
         photos: data.photos ?? [],
         tags: data.tags ?? [],
         content,
+        description: plainExcerpt(content),
       };
     })
     .sort((a, b) => b.date.localeCompare(a.date));
@@ -593,5 +641,6 @@ export function getFieldNote(slug: string): FieldNote | null {
     photos: data.photos ?? [],
     tags: data.tags ?? [],
     content,
+    description: plainExcerpt(content),
   };
 }
