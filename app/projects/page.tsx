@@ -1,11 +1,12 @@
 /**
- * Author: Claude Opus 4.8 (prev Claude Fable 5; page predates the header rule)
- * Date: 16-Jul-2026
+ * Author: Claude Opus 5.5 (prev Claude Opus 4.8; Claude Fable 5; page predates the header rule)
+ * Date: 03-Oct-2026 (updated 16-Jul-2026)
  * PURPOSE: /projects listing — status-badged project cards + "why we build"
  *   context band. 16-Jul-2026 (daylight retheme): converted from the dark
  *   guardian palette to the light Field Guide tokens (field-*); page kicker
  *   carries the projects page mark from lib/emoji.ts. Styling-only
  *   conversion — copy unchanged; solid status badge chips kept as-is.
+ *   03-Oct-2026 (SEO checklist pass): canonical tag (alternates.canonical).
  * SRP/DRY check: Pass — data via getProjects() (lib/content.ts); no
  *   duplicated project metadata. Emoji from lib/emoji.ts SSoT.
  */
@@ -17,6 +18,7 @@ import { PAGE_MARKS } from "@/lib/emoji";
 export const metadata: Metadata = {
   title: "Projects",
   description: "Farm Guardian AI predator detection and other 2026 farm projects.",
+  alternates: { canonical: "/projects" },
 };
 
 const statusColors: Record<string, string> = {

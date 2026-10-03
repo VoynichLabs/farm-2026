@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.8 (prev Claude Fable 5; page predates the header rule)
- * Date: 16-Jul-2026
+ * Author: Claude Opus 5.5 (prev Claude Opus 4.8; Claude Fable 5; page predates the header rule)
+ * Date: 03-Oct-2026 (updated 06-Jul / 16-Jul-2026)
  * PURPOSE: Project detail page — MDX overview, materials table, diary
  *   timeline; the guardian slug swaps the hero for the live dashboard
  *   (max-w-7xl, hero suppression — untouched dark island).
@@ -9,6 +9,12 @@
  *   16-Jul-2026 (daylight retheme): converted from the dark guardian palette
  *   to the light Field Guide tokens (field-*); .terminal-prose class kept
  *   (its values are now light in globals.css). Styling only, copy unchanged.
+ *   03-Oct-2026 (SEO checklist pass): MDX `#` headings render as <h2> so
+ *   the page keeps exactly one H1 (birdcatraz and chicken-enclosure-2026
+ *   both open their body with a `#` title that duplicated the page H1);
+ *   canonical tag; BreadcrumbList JSON-LD (Home › Projects › project); the
+ *   hero image takes its true width/height from lib/image-dimensions.ts so
+ *   the reserved box matches the drawn one (no layout shift).
  * SRP/DRY check: Pass — content loading lives in lib/content.ts; Guardian
  *   rendering is composed from app/components/guardian/.
  */
@@ -25,11 +31,20 @@ import {
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import GuardianDashboard from "@/app/components/guardian/GuardianDashboard";
+import { getPublicImageSize } from "@/lib/image-dimensions";
+import BreadcrumbJsonLd from "@/app/components/system/BreadcrumbJsonLd";
 
 // GFM support (pipe tables, strikethrough, autolinks) for project MDX —
 // without it the Guardian hardware table rendered as literal `|` text
 // (fixed 06-Jul-2026, see docs/06-Jul-2026-duo2-frame-and-tunnel-load-plan.md).
 const mdxOptions = { mdxOptions: { remarkPlugins: [remarkGfm] } };
+
+// The page template already renders the project title as the one <h1>; an
+// MDX body that opens with its own `# Title` would make a second. Demote MDX
+// h1s to h2 so heading order stays: one H1, sections below it.
+const mdxComponents = {
+  h1: (props: React.ComponentProps<"h2">) => <h2 {...props} />,
+};
 
 const statusColors: Record<string, string> = {
   planning: "bg-yellow-600",
@@ -53,6 +68,7 @@ export async function generateMetadata({
   return {
     title: project.title,
     description: project.description,
+    alternates: { canonical: `/projects/${slug}` },
     openGraph: {
       title: project.title,
       description: project.description,
@@ -82,9 +98,16 @@ export default async function ProjectPage({
   const totalCost = materials.reduce((sum, m) => sum + m.totalCost, 0);
 
   const isGuardian = slug === "guardian";
+  const heroSize = project.heroPhoto ? getPublicImageSize(project.heroPhoto) : null;
 
   return (
     <main className={`${isGuardian ? "max-w-7xl" : "max-w-4xl"} mx-auto px-4 py-12`}>
+      <BreadcrumbJsonLd
+        trail={[
+          { name: "Projects", path: "/projects" },
+          { name: project.title, path: `/projects/${slug}` },
+        ]}
+      />
       <div className="mb-8">
         <Link href="/projects" className="text-field-accent hover:text-field-accent-deep hover:underline text-sm">
           &larr; All Projects
@@ -100,8 +123,8 @@ export default async function ProjectPage({
           <Image
             src={project.heroPhoto}
             alt={project.title}
-            width={1200}
-            height={800}
+            width={heroSize?.width ?? 1200}
+            height={heroSize?.height ?? 800}
             className="w-full h-auto max-h-[70vh] object-contain mx-auto"
             priority
           />
@@ -155,7 +178,7 @@ export default async function ProjectPage({
 
       {/* Project Overview MDX */}
       <section className="terminal-prose max-w-none mb-12 bg-field-card border border-field-border rounded-lg p-6 md:p-8">
-        <MDXRemote source={project.content} options={mdxOptions} />
+        <MDXRemote source={project.content} options={mdxOptions} components={mdxComponents} />
       </section>
 
       {/* Materials */}
@@ -227,7 +250,7 @@ export default async function ProjectPage({
                 </div>
                 <h3 className="text-xl font-bold font-serif text-field-ink mb-3">{entry.title}</h3>
                 <div className="terminal-prose max-w-none text-sm">
-                  <MDXRemote source={entry.content} options={mdxOptions} />
+                  <MDXRemote source={entry.content} options={mdxOptions} components={mdxComponents} />
                 </div>
               </article>
             ))}

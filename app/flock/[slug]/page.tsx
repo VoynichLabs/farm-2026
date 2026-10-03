@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 5 (prev Claude Sonnet 5; Claude Opus 4.8)
- * Date: 15-Aug-2026
+ * Author: Claude Opus 5.5 (prev Claude Opus 5; Claude Sonnet 5; Claude Opus 4.8)
+ * Date: 03-Oct-2026 (updated 22-Jul / 15-Aug-2026)
  * PURPOSE: /flock/[slug] — one bird's full aging gallery. Every picture we have
  *   of the bird (from its roster photos[] ledger), full-size, oldest→newest,
  *   each stamped with the date, the bird's age at that photo, and its caption.
@@ -18,6 +18,10 @@
  *     field that already backs the "fka …" chip) and 308s to the canonical
  *     slug. Data-driven: a future rename gets its redirect by filling in
  *     `formerly`, with no new route file.
+ *   03-Oct-2026 (SEO checklist pass): canonical tag; BreadcrumbList JSON-LD
+ *     (Home › The Flock › bird); the meta description no longer prints
+ *     "(null)" for birds with no recorded breed (Hawk Food, Loud Dumb Bird,
+ *     White Rooster).
  * SRP/DRY check: Pass — reuses getFlockProfiles / getBirdAgeLabel / birdSlug
  *   and the shared BandChip; page-local logic is layout + date/age labels only.
  *   The redirect reuses `formerly` rather than adding a parallel alias field.
@@ -35,6 +39,7 @@ import {
   type FlockBird,
 } from "@/lib/content";
 import BandChip from "@/app/components/flock/BandChip";
+import BreadcrumbJsonLd from "@/app/components/system/BreadcrumbJsonLd";
 
 export const revalidate = 3600;
 
@@ -76,9 +81,13 @@ export async function generateMetadata(
   const { slug } = await params;
   const bird = findBird(slug);
   if (!bird) return { title: "Bird not found" };
+  // Some roster entries have no breed on record (breed is null in the JSON);
+  // leave the parenthetical out rather than print "(null)".
+  const breed = bird.breed ? ` (${bird.breed})` : "";
   return {
     title: `${bird.name} — aging timeline`,
-    description: `Every photo of ${bird.name} (${bird.breed}) over time — the aging record for Farm 2026, Hampton CT.`,
+    description: `Every photo of ${bird.name}${breed} over time — the aging record for Farm 2026, Hampton CT.`,
+    alternates: { canonical: `/flock/${slug}` },
   };
 }
 
@@ -101,6 +110,12 @@ export default async function BirdGalleryPage(
 
   return (
     <main className="min-h-screen bg-field-bg text-field-ink">
+      <BreadcrumbJsonLd
+        trail={[
+          { name: "The Flock", path: "/flock" },
+          { name: bird.name, path: `/flock/${slug}` },
+        ]}
+      />
       <section className="max-w-4xl mx-auto px-4 py-10">
         <Link
           href="/flock"

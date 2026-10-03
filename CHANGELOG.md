@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.44.0] — 2026-10-03
+
+### Changed — SEO checklist pass: canonicals, sitemap, headings, descriptions, breadcrumbs, layout shift (Claude Opus 5.5 (Bubba sub-agent))
+
+**What:** ran `docs/SEO-CHECKLIST.md` against the live site and the production build; full item-by-item results in `docs/SEO-AUDIT-03-Oct-2026.md`. Fixes:
+- **Canonical tag on every page** (`alternates.canonical` per route, resolved against the existing `metadataBase`). Deliberately not on the root layout, which would make every page without its own canonical point at the homepage.
+- **Sitemap** now lists `/ornitharch` and the `/flock/[slug]` pages that `/flock` itself links to: every active bird plus every ornitharch (the cohort wall shows Birddor though he is marked deceased). Other deceased birds are left out on purpose: per the Boss's v1.31.1 rule, losses don't surface on the site, so their pages aren't advertised to search engines either.
+- **`/diary` → `/field-notes` is a permanent 308** (was a temporary 307).
+- **One H1 per page.** The homepage had no headings at all; it now has a screen-reader-only H1 (the site name) and its three section chips sit inside `<h2>`s, visually unchanged. Project pages had two H1s because the MDX body opens with its own `# Title`; MDX `h1` now renders as `h2` there.
+- **Meta descriptions.** Field notes used "Farm field note — {date}" on every note; they now use the note's own opening lines (`plainExcerpt()` in `lib/content.ts`, markdown and heading lines stripped, cut at a word boundary). Three bird pages printed the literal word "(null)" for a missing breed; fixed.
+- **BreadcrumbList JSON-LD** on field notes, bird pages, banding, and project pages (`lib/seo.ts` + `app/components/system/BreadcrumbJsonLd.tsx`), matching the visible "← back" link each already has.
+- **Layout shift.** Field-note covers, field-note photo grids and project heroes were hard-coded 3:2 and then height-capped, so portrait photos made everything below jump (Lighthouse CLS 0.153). `lib/image-dimensions.ts` reads each photo's true size (JPEG incl. EXIF rotation, PNG) at build time; CLS is now 0 on the pages re-measured.
+- Homepage preconnects to the Guardian tunnel; the homepage index hint no longer promises an "In Memoriam" section that v1.31.1 removed.
+
+**Not fixed here:** gem photos on the homepage and `/gallery/gems` load as full 1920px JPEGs straight from farm-guardian (homepage ~22 MB on mobile). The API only offers `1920`, `full`, or a 270px `thumb`, so the fix is a mid-size WebP variant in farm-guardian, then pointing `GemCard` at it.
+
+**Size:** minor — canonicals, sitemap scope and structured data change behaviour across most routes, and two new shared modules were added; no new pages.
+
 ## [1.43.3] — 2026-09-21
 
 ### Changed — "special chick" badge is now "standout"; flock descriptions refreshed for grown birds (Claude Opus 5)

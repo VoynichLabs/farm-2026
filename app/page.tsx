@@ -1,6 +1,16 @@
 /**
- * Author: Claude Opus 5 (prev Claude Opus 4.8 / Claude Fable 5 / Claude Opus 4.7 / Claude Sonnet 4.6)
- * Date: 18-Aug-2026 (orig 10-May-2026; updated 20-May / 22-Jun / 06-Jul / 22-Jul / 18-Aug-2026)
+ * Author: Claude Opus 5.5 (prev Claude Opus 5 / Claude Opus 4.8 / Claude Fable 5 / Claude Opus 4.7 / Claude Sonnet 4.6)
+ * Date: 03-Oct-2026 (orig 10-May-2026; updated 20-May / 22-Jun / 06-Jul / 22-Jul / 18-Aug-2026)
+ *   03-Oct-2026 (SEO checklist pass): the page had no headings at all. It
+ *   now carries one H1 (the site name, screen-reader-only so the hero row
+ *   still leads visually), and the three section kickers (Class of 2026,
+ *   Live Cameras, Index) are wrapped in <h2>s. The chip styling stays on the
+ *   inner <span>: globals.css sets every h1-h6 to Georgia outside Tailwind's
+ *   layers, which beats the font-mono utility on the heading element
+ *   itself. Canonical tag "/"; preconnect to the Guardian tunnel, which
+ *   serves the camera stage and the gems rail (Lighthouse: ~160 ms). The
+ *   /flock index hint no longer promises an "In Memoriam" section — it was
+ *   removed in v1.31.1 per Boss.
  *   18-Aug-2026: the Class of 2026 row's first six tiles now carry
  *   next/image `priority` — they are the top of the page and were being
  *   lazy-loaded, so the browser deferred them until after layout.
@@ -33,8 +43,10 @@
  *   data + empty states. Age uses the shared getBirdAgeLabel helper rather
  *   than a re-implemented date math.
  */
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { preconnect } from "react-dom";
 import GuardianHomeBadge from "@/app/components/guardian/GuardianHomeBadge";
 import HomeCameraStage from "@/app/components/home/HomeCameraStage";
 import RecentGemsRail from "@/app/components/home/RecentGemsRail";
@@ -43,11 +55,22 @@ import GemsStatFooter from "@/app/components/gems/GemsStatFooter";
 import { getBirdAgeLabel, getFlockProfiles } from "@/lib/content";
 import { PAGE_MARKS, STATUS } from "@/lib/emoji";
 
+// Title and description come from the root layout; this only pins the
+// canonical address. Set here rather than in layout.tsx, because a canonical
+// on the layout would be inherited by every page that doesn't set its own.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
+// The live camera stage and the gems rail both load from the Guardian tunnel;
+// open that connection while the HTML is still arriving.
+const GUARDIAN_ORIGIN = "https://guardian.markbarney.net";
+
 const DEEPER_LINKS: { href: string; label: string; hint: string }[] = [
   { href: "/projects/guardian", label: "guardian", hint: "live cameras + PTZ + dashboard" },
   { href: "/gallery/gems", label: "gallery/gems", hint: "filterable archive of curated gems" },
   { href: "/yard", label: "yard", hint: "thrice-daily Reolink stockpile" },
-  { href: "/flock", label: "flock", hint: "active birds + breed reference + In Memoriam" },
+  { href: "/flock", label: "flock", hint: "active birds + breed reference" },
   { href: "/hatches", label: "hatches", hint: "every 2026 incubator hatch — parentage + phenotype log" },
   { href: "/field-notes", label: "field-notes", hint: "weekly farm updates" },
   { href: "/projects", label: "projects", hint: "build logs + materials" },
@@ -121,15 +144,21 @@ function getClassOf2026(): Chick[] {
 
 export default function Home() {
   const hatchlings = getClassOf2026();
+  preconnect(GUARDIAN_ORIGIN);
   return (
     <main className="bg-field-bg text-field-ink min-h-screen font-sans">
+      {/* The page's one H1. Visually hidden: the hero row is the visual
+          opening, and SiteNav already shows the site name above it. */}
+      <h1 className="sr-only">Mark&apos;s Farm — Hampton, Connecticut</h1>
 
       {/* === THE CLASS OF 2026 — hero position === */}
       <section className="border-b border-field-border">
         <div className="max-w-7xl mx-auto px-3 py-4">
-          <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-3">
-            <span aria-hidden="true" className="mr-1.5">{PAGE_MARKS.home}</span>THE CLASS OF 2026 — hatched this spring, ruling Birdcatraz now
-          </span>
+          <h2>
+            <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-3">
+              <span aria-hidden="true" className="mr-1.5">{PAGE_MARKS.home}</span>THE CLASS OF 2026 — hatched this spring, ruling Birdcatraz now
+            </span>
+          </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {hatchlings.map((chick, idx) => (
               <div key={`${chick.name}-${idx}`} className="flex flex-col gap-1.5">
@@ -191,9 +220,11 @@ export default function Home() {
       {/* === LIVE CAMERAS — deliberate dark island; camera surfaces keep the guardian palette === */}
       <section className="border-b border-field-border">
         <div className="max-w-7xl mx-auto px-3 pt-4 pb-3">
-          <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-3">
-            <span aria-hidden="true" className="mr-1.5">{STATUS.live}</span>Live Cameras
-          </span>
+          <h2>
+            <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-3">
+              <span aria-hidden="true" className="mr-1.5">{STATUS.live}</span>Live Cameras
+            </span>
+          </h2>
           <div className="rounded-xl overflow-hidden bg-guardian-bg border border-field-border p-4">
             <GuardianHomeBadge />
             <div className="pt-2">
@@ -208,9 +239,11 @@ export default function Home() {
 
       {/* === DEEPER PAGES, file-listing styled === */}
       <section className="max-w-7xl mx-auto px-3 py-4 border-t border-field-border font-mono text-[0.78rem]">
-        <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-1.5">
-          INDEX
-        </span>
+        <h2>
+          <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-1.5">
+            INDEX
+          </span>
+        </h2>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-0.5">
           {DEEPER_LINKS.map((link) => (
             <li key={link.href}>

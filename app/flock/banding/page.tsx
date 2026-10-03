@@ -1,5 +1,5 @@
-// Author: Claude Opus 5
-// Date: 28-Jul-2026
+// Author: Claude Opus 5.5 (prev Claude Opus 5)
+// Date: 03-Oct-2026 (orig 28-Jul-2026)
 // PURPOSE: Banding methodology page — explains the leg-band identification
 //   system and lists every named flock member with their assigned band.
 //   28-Jul-2026: the band table and all four roster lists are now DERIVED from
@@ -10,6 +10,8 @@
 //   Henridotta's leg rendered as "unconfirmed" when the roster records it as
 //   left. Deriving is the fix — a page that transcribes the roster by hand
 //   goes stale every time Boss bands another bird.
+//   03-Oct-2026 (SEO checklist pass): canonical tag and BreadcrumbList JSON-LD
+//   (Home › The Flock › Banding).
 // SRP/DRY check: Pass — reuses getFlockProfiles()/FlockBird/LegBand from
 //   lib/content.ts, the same loader /flock and app/page.tsx already use. No
 //   new roster parsing introduced.
@@ -17,11 +19,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PAGE_MARKS } from "@/lib/emoji";
 import { getFlockProfiles, type FlockBird } from "@/lib/content";
+import BreadcrumbJsonLd from "@/app/components/system/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   title: "Banding — The Flock",
   description:
     "How leg-band identification works on Farm 2026: left-leg bands mark our own Ornitharchs, right-leg bands mark purchased birds. Current band assignments and the full named roster.",
+  alternates: { canonical: "/flock/banding" },
 };
 
 // Shared specimen-tag chrome — matches /flock's section kickers so the page
@@ -165,6 +169,12 @@ export default function BandingPage() {
 
   return (
     <main className="min-h-screen">
+      <BreadcrumbJsonLd
+        trail={[
+          { name: "The Flock", path: "/flock" },
+          { name: "Banding", path: "/flock/banding" },
+        ]}
+      />
       {/* Hero */}
       <section className="border-b border-field-border bg-field-wash">
         <div className="max-w-5xl mx-auto px-4 py-14">

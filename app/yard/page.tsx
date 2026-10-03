@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.8 (prev Claude Fable 5, Claude Opus 4.7)
- * Date: 16-Jul-2026 (orig 17-Apr-2026, purpose re-clarified 18-Apr-2026)
+ * Author: Claude Opus 5.5 (prev Claude Opus 4.8; Claude Fable 5, Claude Opus 4.7)
+ * Date: 03-Oct-2026 (orig 17-Apr-2026, purpose re-clarified 18-Apr-2026; updated 16-Jul-2026)
  * PURPOSE: /yard route — secondary browse surface for the yard-diary
  *   stockpile. Frames are captured by farm-guardian's
  *   yard-diary-capture.py at 07:00 / 12:00 / 16:00 local and committed
@@ -33,6 +33,7 @@
  *   tokens, yard page mark kicker + per-slot ☀️🌤️🌙 marks from
  *   lib/emoji.ts. Recolor + slot marks only — layout untouched, per the
  *   redesign warning above.
+ *   03-Oct-2026 (SEO checklist pass): canonical tag (alternates.canonical).
  * SRP/DRY check: Pass — single responsibility: enumerate frames from
  *   disk and render grouped by day. No I/O beyond readdirSync.
  */
@@ -47,6 +48,7 @@ export const metadata: Metadata = {
   title: "Yard Diary",
   description:
     "Three frames of the yard every day — morning, noon, evening. Pulled from the Reolink. The seasons roll through the tree line.",
+  alternates: { canonical: "/yard" },
 };
 
 type Slot = "morning" | "noon" | "evening";

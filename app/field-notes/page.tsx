@@ -1,12 +1,13 @@
 /**
- * Author: Claude Opus 4.8 (prev Claude Fable 5; orig Claude Opus 4.6, 12-Apr-2026)
- * Date: 16-Jul-2026
+ * Author: Claude Opus 5.5 (prev Claude Opus 4.8; Claude Fable 5; orig Claude Opus 4.6, 12-Apr-2026)
+ * Date: 03-Oct-2026 (updated 16-Jul-2026)
  * PURPOSE: Field Notes feed page — photo-forward weekly farm updates.
  *   Shows latest note as a featured hero, remaining as a card grid.
  *   Replaces the old /diary page. 16-Jul-2026 (daylight retheme):
  *   converted from the dark guardian palette to the light Field Guide
  *   tokens (field-*); page kicker carries the notes page mark from
  *   lib/emoji.ts. Styling-only conversion — copy unchanged.
+ *   03-Oct-2026 (SEO checklist pass): canonical tag (alternates.canonical).
  * SRP/DRY check: Pass — reuses getAllFieldNotes() from lib/content.ts,
  *   emoji from lib/emoji.ts SSoT.
  */
@@ -19,6 +20,7 @@ import { PAGE_MARKS } from "@/lib/emoji";
 export const metadata: Metadata = {
   title: "Field Notes",
   description: "Weekly updates from the farm — what happened, what hatched, what we built.",
+  alternates: { canonical: "/field-notes" },
 };
 
 export default function FieldNotesPage() {

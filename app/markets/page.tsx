@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.7 (Bubba)
- * Date: 21-May-2026
+ * Author: Claude Opus 5.5 (prev Claude Opus 4.7 (Bubba))
+ * Date: 03-Oct-2026 (orig 21-May-2026)
  * PURPOSE: /markets route — "POULTRY CAPITAL MARKETS", a deliberately
  *   over-the-top Bloomberg/terminal-style page where the farm's chickens
  *   issue daily stock + options picks. The pick chain is REAL: the S7
@@ -25,6 +25,7 @@
  *   at render time via fs (like /yard). NO Guardian-tunnel fetch in SSR,
  *   so this route can never ride the tunnel's latency or take the site
  *   down. All live motion happens client-side in <Terminal />.
+ *   03-Oct-2026 (SEO checklist pass): canonical tag (alternates.canonical).
  * SRP/DRY check: Pass — page only reads the JSON off disk and hands it to
  *   the client island. All presentation/animation lives in
  *   app/components/markets/Terminal.tsx.
@@ -38,6 +39,7 @@ export const metadata: Metadata = {
   title: "Chicken Picks — Coop Terminal",
   description:
     "Chicken Picks: a real IBKR paper portfolio of poultry-economics stocks, tracked live against fills. Plus daily picks issued by the flock via computer vision. Not investment advice.",
+  alternates: { canonical: "/markets" },
 };
 
 // Re-read on every render so a freshly-committed pick shows up after deploy.
