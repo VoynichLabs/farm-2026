@@ -15,28 +15,30 @@ Branch: `seo-checklist-pass` (off `main` at the checklist commit)
 
 ## Results
 
-Status key: **pass** · **fixed** (on this branch, verified in build output) · **needs-human** · **not-verified**.
+Status key: **pass** · **fixed** (on this branch, verified in build output — the live site changes only after merge and deploy) · **needs-human** · **not-verified**.
+
+Summary: 6 pass, 8 fixed, 6 need the Boss (Search Console, deceased-bird pages, gem image sizes, homepage speed, author bio, backlinks). Nothing left not-verified.
 
 | # | Item | Status | Evidence |
 |---|------|--------|----------|
 | 1 | Server-side render | pass | Build route table: every page is static, SSG, or server-rendered; raw HTML of all 92 pages contains the page text and links. |
-| 2 | Sitemap in sync with routes | _pending_ | Live sitemap lists 49 URLs but omits `/ornitharch` and all 41 `/flock/[slug]` bird pages. |
+| 2 | Sitemap in sync with routes | fixed | Live sitemap omitted `/ornitharch` and all bird pages. Built sitemap now has 83 URLs incl. `/ornitharch` and the 33 active birds; deceased birds left out per Boss rule (v1.31.1). |
 | 3 | Sitemap submitted in Search Console | needs-human | No Search Console access from this machine. Boss: submit `https://farm.markbarney.net/sitemap.xml` and read the "Pages" coverage report. |
 | 4 | Robots does not block Googlebot | pass | Live `robots.txt`: `User-Agent: *` / `Allow: /` / sitemap line; served 200. |
 | 5 | No stray noindex | pass | No `robots` meta and no `X-Robots-Tag` header on any of the 92 pages; no `noindex` in source. |
-| 6 | No redirect chains | _pending_ | All old addresses reach the final page in one hop (`http→https`, `/gallery→/gallery/gems`, `/flock/henridotta→/flock/henridot`, `/flock/→/flock`). `/diary→/field-notes` is one hop but a temporary 307, not permanent. |
+| 6 | No redirect chains | fixed | Every old address already reached its page in one hop. `/diary→/field-notes` was a temporary 307; now a permanent 308 (checked on the built server). |
 | 7 | No 404s / broken internal links | pass | 88 unique internal links fetched: zero errors, zero redirecting links. |
-| 8 | Canonical on every page | _pending_ | No page on the live site has a canonical tag. |
-| 9 | No orphan pages | _pending_ | Seven bird pages have no internal link (all deceased birds: Birdatha, Birdgit, Henrietta, Little Big Red Junior, Whitey Red Legs, EE hen 2, Black Australorp hen). `/flock` never renders deceased birds. |
-| 10 | Unique, human meta descriptions | _pending_ | All 37 field notes use "Farm field note — {date}". Three bird pages print the word "null" (Hawk Food, Loud Dumb Bird, White Rooster). |
-| 11 | Exactly one H1 | _pending_ | Home page has no H1 at all. `/projects/birdcatraz` and `/projects/chicken-enclosure-2026` have two (page title plus the MDX body's own `#` heading). All other pages: one. |
+| 8 | Canonical on every page | fixed | Live: no canonical anywhere. Build: all 91 audited pages carry a canonical equal to their own address. |
+| 9 | No orphan pages | needs-human | Every active page is linked. The seven unlinked pages are deceased birds (Birdatha, Birdgit, Henrietta, Little Big Red Junior, Whitey Red Legs, EE hen 2, Black Australorp hen); v1.31.1 removed them from `/flock` on purpose. Boss to decide: leave them reachable by address only (current), or stop generating them. Not added to the sitemap or linked. |
+| 10 | Unique, human meta descriptions | fixed | Field notes now use their own opening lines (37 of 37 unique); the three "(null)" bird descriptions are clean. Zero duplicate descriptions across the build. |
+| 11 | Exactly one H1 | fixed | Build: every audited page has exactly one H1. Home gained a screen-reader-only H1 plus section h2s (screenshot-compared, unchanged look); project MDX `#` headings render as h2. |
 | 12 | FAQ structured data only where real | pass | No page has a real question-and-answer section and none carries FAQ schema. Correctly absent; nothing added. |
-| 13 | Breadcrumbs + structured data on nested pages | _pending_ | Nested pages show a visible "← back" link but carry no BreadcrumbList data; the only JSON-LD sitewide is Person + WebSite. |
+| 13 | Breadcrumbs + structured data on nested pages | fixed | BreadcrumbList JSON-LD (Home › section › page) on all field notes, bird pages, banding and project pages, matching each page's visible "← back" link. |
 | 14 | Alt text on meaningful images | pass | Every `<img>` on all 92 pages has an alt attribute; gem alts are real scene descriptions. |
-| 15 | Modern image formats at sensible sizes | _pending_ | Site photos go through the Next.js image optimizer. Gem photos (home rail, `/gallery/gems`) come straight from the camera server as full 1920px JPEGs. |
-| 16 | No layout shift | _pending_ | Lighthouse CLS 0 on `/`, `/flock`, `/gallery/gems`, `/yard`; **0.153 on field-note pages** — the cover image reserves a 3:2 box but is capped at 75% of the screen height, so the header below it jumps. Same pattern on project hero images. |
-| 17 | Load fast | _pending_ | Lighthouse mobile performance: `/flock` 100, `/gallery/gems` 100, `/yard` 96, `/` 85 (largest paint 4.4 s, page weight ~22 MB), field note 74 (largest paint 5.4 s). |
-| 18 | No obvious AI slop | _pending_ | Copy is specific and farm-real. Defects: the literal "null" in three bird descriptions (item 10), and the formulaic field-note descriptions. |
+| 15 | Modern image formats at sensible sizes | needs-human | Site photos are served as WebP/AVIF at fitted sizes via the Next.js optimizer. Gem photos (home rail, `/gallery/gems`) are full 1920px JPEGs from farm-guardian, which only offers 1920, full or a 270px thumb. Fix belongs in farm-guardian (add a mid-size WebP), then point `GemCard` at it. |
+| 16 | No layout shift | fixed | Covers, photo grids and project heroes now reserve their true size. Re-measured on the build: CLS 0 on the newest field note (was 0.153) and on `/projects/birdcatraz`. Other pages already 0. |
+| 17 | Load fast | needs-human | Mobile Lighthouse (live): `/flock` 100, `/gallery/gems` 100, `/yard` 96, `/` 85, field note 74. The field note's slow paint was mostly the layout fix above plus a large cover; the homepage's ~22 MB is the gem photos in item 15. Added a preconnect to the Guardian tunnel. Real fix for `/` needs the farm-guardian change. Re-measure after deploy. |
+| 18 | No obvious AI slop | fixed | Copy is specific and farm-real. Fixed the literal "(null)" in three descriptions, the boilerplate field-note descriptions, and a stale homepage hint promising an "In Memoriam" section that no longer exists. |
 | 19 | Real author bio | needs-human | See "What the Boss needs to supply" below. |
 | 20 | Quality backlinks | needs-human | See below. |
 
