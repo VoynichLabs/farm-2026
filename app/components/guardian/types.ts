@@ -1,5 +1,5 @@
-// Author: Claude Opus 4.7 (1M context); Claude Opus 5 (21-Sep-2026 — standout_bird, hen/rooster/turkey tags, retired age)
-// Date: 02-May-2026 (last touched 21-Sep-2026)
+// Author: Claude Opus 4.7 (1M context); Claude Opus 5 (21-Sep-2026 — standout_bird, hen/rooster/turkey tags, retired age); Claude Opus 5.5 (03-Oct-2026 — GemRow.card_url)
+// Date: 02-May-2026 (last touched 03-Oct-2026)
 // PURPOSE: TypeScript interfaces for Farm Guardian API responses.
 //          Maps to endpoints at guardian.markbarney.net by default;
 //          override with NEXT_PUBLIC_GUARDIAN_API for staging / preview /
@@ -166,6 +166,9 @@ export interface GemRow {
   camera_id: string;
   ts: string;
   thumb_url: string;
+  // 03-Oct-2026 (farm-guardian v2.76.0): 720px-long-edge WebP for tiles.
+  // Optional so the site still renders against an older Guardian.
+  card_url?: string;
   full_url: string;
   width: number;
   height: number;

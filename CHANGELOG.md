@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.44.1] — 2026-10-03
+
+### Changed — gem tiles load a small WebP instead of the full-frame photo (Claude Opus 5.5 (Bubba sub-agent))
+
+**What:** `GemCard` (home-page recent-gems rail, `/flock` gem strip, `/gallery/gems` grid) now uses the gem row's new `card_url`, falling back to `full_url` then `thumb_url`. `types.ts` gains optional `card_url` on `GemRow`. The lightbox still opens `full_url`.
+
+**Why:** SEO checklist items 15 and 17. Recent gems are 1080x1920 portrait frames, and Guardian's `size=1920` doesn't downscale those at all, so each tile pulled a ~0.4-0.7 MB JPEG. Measured live: the home page's 12 gem requests drop from 6.9 MB to 0.87 MB.
+
+**How:** farm-guardian v2.76.0 added `size=card` (720px long edge, WebP, cached on disk, 30-day immutable cache) and `card_url` in every public gem row. No layout or component API change.
+
+**Size:** patch — one optional type field and an image source.
+
 ## [1.44.0] — 2026-10-03
 
 ### Changed — SEO checklist pass: canonicals, sitemap, headings, descriptions, breadcrumbs, layout shift (Claude Opus 5.5 (Bubba sub-agent))
