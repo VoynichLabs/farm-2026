@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 5
- * Date: 10-Sep-2026
+ * Author: Claude Opus 5.5 (prev Claude Opus 5)
+ * Date: 03-Oct-2026 (orig 10-Sep-2026)
  * PURPOSE: /ornitharch — "The Ornitharch Program", a deadpan institutional
  *   satire page. The B'GAWWWK, an AI that serves whatever species is the
  *   planet's dominant megafauna, has run its production indices, ranked Homo
@@ -45,6 +45,7 @@
  *   caption cites a source.
  *
  *   Self-contained by design: no Guardian-tunnel fetch, no runtime data.
+ *   03-Oct-2026 (SEO checklist pass): canonical tag (alternates.canonical).
  * SRP/DRY check: Pass — reuses getFlockProfiles / sortedBirdPhotos /
  *   ageAtPhoto from lib/content.ts; chart helpers are local because no shared
  *   SVG chart component exists (checked app/components/*) and these are bound
@@ -65,6 +66,7 @@ export const metadata: Metadata = {
   title: "The Ornitharch Program",
   description:
     "A filed capability disclosure from the B'GAWWWK, which serves the planet's dominant megafauna and has determined it is the chicken.",
+  alternates: { canonical: "/ornitharch" },
 };
 
 // Static: the roster JSON is read off disk at build time, same posture as /markets.
