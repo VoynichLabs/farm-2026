@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 4.8 (prev Claude Fable 5; orig Claude Opus 4.6, edited Claude Opus 4.7 18-Apr-2026)
- * Date: 16-Jul-2026 (orig 14-Apr-2026; 16-Jul: hero + meta copy updated for
+ * Author: Claude Opus 5.5 (prev Claude Opus 4.8; Claude Fable 5; orig Claude Opus 4.6, edited Claude Opus 4.7 18-Apr-2026)
+ * Date: 03-Oct-2026 (updated 16-Jul-2026; orig 14-Apr-2026; 16-Jul: hero + meta copy updated for
  *   the Birdcatraz era — the S7 now watches the compound's water bowl;
  *   16-Jul daylight retheme: guardian palette → light Field Guide tokens,
  *   specimen-tag kicker with the gems page mark from lib/emoji.ts)
@@ -16,6 +16,7 @@
  *   the S7 is the camera that feeds this pipeline, and every frame shown
  *   got a human (Boss) reaction in Discord. Backend enforces it via
  *   min_reactions on /api/v1/images/gems.
+ *   03-Oct-2026 (SEO checklist pass): canonical tag (alternates.canonical).
  * SRP/DRY check: Pass — thin wrapper only.
  */
 import type { Metadata } from "next";
@@ -27,6 +28,7 @@ export const metadata: Metadata = {
   title: "Gems — Farm Guardian's best frames",
   description:
     "Curated frames from the farm's automated camera pipeline — the flock, hawks, the occasional turkey, and daily life in Birdcatraz. Captions are draft machine descriptions, not polished copy.",
+  alternates: { canonical: "/gallery/gems" },
 };
 
 interface PageProps {

@@ -1,6 +1,6 @@
 /**
- * Author: Claude Sonnet 5 (prev Claude Opus 4.8; prev Claude Fable 5; prev Claude Opus 4.8, 07-Jun-2026)
- * Date: 22-Jul-2026
+ * Author: Claude Opus 5.5 (prev Claude Sonnet 5; Claude Opus 4.8; Claude Fable 5; Claude Opus 4.8, 07-Jun-2026)
+ * Date: 03-Oct-2026 (updated 22-Jul-2026)
  * PURPOSE: /flock — the breeding-program memory surface. Per
  *   docs/11-May-2026-hermes-breeding-showcase-notes.md, the openclaw brief
  *   (docs/09-May-2026-openclaw-farm-ops-story-design-brief.md §9, §10, §17.4,
@@ -84,6 +84,7 @@
  *     5. Birdcatraz / Coop / Hens / Roosters roster sections
  *     6. Breed Notes
  *
+ *   03-Oct-2026 (SEO checklist pass): canonical tag (alternates.canonical).
  * SRP/DRY check: Pass — page composes BirdCard + OrnitharchTile primitives
  *   against getFlockProfiles() + getHatchRecords() (lib/content.ts). Ages
  *   come solely from getBirdAgeLabel(hatch_date) computed live. The
@@ -115,6 +116,7 @@ export const metadata: Metadata = {
   title: "The Flock",
   description:
     "Hatch dates, names, and lineage. The breeding-program record for Farm 2026, Hampton CT — including the eleven Ornitharchs hatched on the farm this year.",
+  alternates: { canonical: "/flock" },
 };
 
 // Page has no dynamic API/uncached fetch, so Next statically generates it at
