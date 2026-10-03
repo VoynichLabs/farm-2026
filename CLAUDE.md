@@ -11,6 +11,10 @@ This project is part of a two-repo system:
 
 The Guardian components in this repo (`app/components/guardian/`) consume farm-guardian's REST API. The TypeScript interfaces in `types.ts` must stay in sync with the API response shapes in farm-guardian's `api.py` and `dashboard.py`.
 
+## SEO checklist
+
+Before shipping or reviewing any public page, run [`docs/SEO-CHECKLIST.md`](docs/SEO-CHECKLIST.md). Verify against the built output, and leave the two human-only items (author bio, backlinks) to the Boss.
+
 ## Social-posting pipelines that write into this repo
 
 > **For the surface-by-surface map** (every social platform the farm publishes to or reads from, code path, LaunchAgent, cadence, trust signal) → [`docs/SOCIAL_MEDIA_MAP.md`](docs/SOCIAL_MEDIA_MAP.md). That doc is the answer to "where does X get posted from?" / "why did Y end up on Instagram/Facebook/Nextdoor?" Read it before adding any social-related component.
