@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Author: Claude Opus 4.7
- * Date: 03-May-2026
+ * Author: Claude Opus 5 (prev Claude Opus 4.7)
+ * Date: 15-Aug-2026
  * PURPOSE: Live-API contract check between farm-2026 (frontend) and
  *   farm-guardian (backend). Hits the surfaces this app actually consumes
  *   and asserts that the response shapes match what `app/components/guardian/types.ts`
@@ -23,6 +23,9 @@
  * SRP/DRY check: Pass — single responsibility: probe live endpoints, assert
  *   shape, report drift. No side effects beyond stdout/exit code.
  */
+
+import fs from "node:fs";
+import path from "node:path";
 
 const API = process.env.GUARDIAN_API ?? "https://guardian.markbarney.net";
 
@@ -229,11 +232,151 @@ async function checkRecentImages() {
   return failures;
 }
 
+// ---------------------------------------------------------------------------
+// Frame aspect-ratio contract.
+//
+// `lib/cameras.ts` declares an `aspectRatio` per camera, and the stage uses it
+// to size the tile's box. The frame itself is rendered `object-contain`, so
+// when the declared ratio and the camera's real output disagree the picture
+// silently letterboxes inside a wrongly-shaped box — no error, no log, just a
+// tile that looks off. That drift is invisible until someone eyeballs it.
+//
+// It is a live risk, not a hypothetical: s7-cam switched to portrait 9:16 on
+// 2026-04-21 (farm-guardian v2.35.2), and the Duo 2 emits a stitched 8:3
+// panoramic. Either one changing again — a camera remounted, a lens swapped,
+// a backend resize default changed — desyncs the overlay with nothing to catch
+// it.
+//
+// Scope note: this checks *metadata drift* (declared vs actual geometry). It
+// would not have caught the 15-Aug-2026 orphaned-poll-chain bug, where the
+// endpoint returned a perfectly correct frame and the frontend requested the
+// wrong camera. That one is only observable in the browser.
+// ---------------------------------------------------------------------------
+
+// Minimal JPEG header walk — width/height from the SOF segment. Avoids adding
+// an image dependency to a script that is otherwise stdlib-only.
+function jpegSize(buf) {
+  if (buf.length < 4 || buf[0] !== 0xff || buf[1] !== 0xd8) return null;
+  const SOF = new Set([
+    0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7,
+    0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf,
+  ]);
+  let i = 2;
+  while (i + 9 < buf.length) {
+    if (buf[i] !== 0xff) {
+      i++;
+      continue;
+    }
+    const marker = buf[i + 1];
+    // Standalone markers carry no length payload.
+    if (marker === 0x01 || marker === 0xd8 || (marker >= 0xd0 && marker <= 0xd7)) {
+      i += 2;
+      continue;
+    }
+    const segmentLength = buf.readUInt16BE(i + 2);
+    if (SOF.has(marker)) {
+      return { height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) };
+    }
+    if (segmentLength < 2) return null;
+    i += 2 + segmentLength;
+  }
+  return null;
+}
+
+// Pull name → aspectRatio out of lib/cameras.ts. Regex rather than an import
+// because this script is plain .mjs and cameras.ts is TypeScript; matching one
+// object literal at a time keeps a missing field from bleeding across entries.
+function declaredAspectRatios() {
+  const src = fs.readFileSync(
+    path.join(import.meta.dirname, "..", "lib", "cameras.ts"),
+    "utf8",
+  );
+  const out = new Map();
+  for (const block of src.match(/\{[^{}]*?name:\s*"[^"]+"[^{}]*?\}/g) ?? []) {
+    const name = block.match(/name:\s*"([^"]+)"/)?.[1];
+    const ratio = block.match(/aspectRatio:\s*"([^"]+)"/)?.[1];
+    if (!name || !ratio) continue;
+    const [w, h] = ratio.split("/").map((n) => parseFloat(n.trim()));
+    if (w > 0 && h > 0) out.set(name, { text: ratio, value: w / h });
+  }
+  return out;
+}
+
+async function checkFrameAspectRatios() {
+  console.log(
+    `\n${C.bold}/api/cameras/{name}/frame${C.reset} ${C.dim}— geometry vs lib/cameras.ts aspectRatio${C.reset}`,
+  );
+
+  const declared = declaredAspectRatios();
+  const roster = await fetchJson("/api/cameras");
+  if (!roster || !Array.isArray(roster.json)) return 0; // checkCameras already reported
+
+  // Same liveness gate the frontend applies (lib/guardian-roster.ts).
+  const live = roster.json.filter((c) => c.is_live !== false);
+  if (live.length === 0) {
+    warn("frame geometry", "no live cameras — nothing to sample");
+    return 0;
+  }
+
+  let failures = 0;
+  for (const cam of live) {
+    const url = `${API}/api/cameras/${cam.name}/frame?max_width=640&q=60`;
+    let size = null;
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(15_000) });
+      if (!res.ok) {
+        warn(cam.name, `frame HTTP ${res.status} — skipped`);
+        continue;
+      }
+      size = jpegSize(Buffer.from(await res.arrayBuffer()));
+    } catch (err) {
+      warn(cam.name, `frame fetch failed: ${err.message} — skipped`);
+      continue;
+    }
+    if (!size) {
+      warn(cam.name, "could not parse JPEG dimensions — skipped");
+      continue;
+    }
+
+    const actual = size.width / size.height;
+    const spec = declared.get(cam.name);
+    const geometry = `${size.width}×${size.height} = ${actual.toFixed(3)}`;
+
+    if (!spec) {
+      // Documented + intentional: resolveCameraMeta falls back to 16/9 for any
+      // camera without an overlay entry, so this is a nudge, not a violation.
+      warn(
+        cam.name,
+        `no lib/cameras.ts entry — renders at the default 16/9, actual is ${geometry}`,
+      );
+      continue;
+    }
+
+    // 2% tolerance absorbs the backend's rounding on odd source dimensions.
+    if (Math.abs(actual - spec.value) / spec.value > 0.02) {
+      fail(
+        cam.name,
+        `declares "${spec.text}" (${spec.value.toFixed(3)}) but serves ${geometry} — ` +
+          `the tile will letterbox; update lib/cameras.ts or check the camera`,
+      );
+      failures++;
+    } else {
+      pass(cam.name, `${geometry} matches "${spec.text}"`);
+    }
+  }
+  return failures;
+}
+
 async function main() {
   console.log(`${C.bold}Guardian API contract check${C.reset}`);
   console.log(`${C.dim}Target:${C.reset} ${API}`);
 
-  const totals = await Promise.all([checkStatus(), checkCameras(), checkRecentImages()]);
+  const totals = await Promise.all([
+    checkStatus(),
+    checkCameras(),
+    checkRecentImages(),
+    checkFrameAspectRatios(),
+  ]);
   const failures = totals.reduce((a, b) => a + b, 0);
 
   console.log("");

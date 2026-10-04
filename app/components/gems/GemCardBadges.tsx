@@ -1,11 +1,13 @@
 /**
- * Author: Claude Opus 4.8 (orig Claude Opus 4.6 (1M context))
- * Date: 16-Jul-2026 (orig 14-Apr-2026)
+ * Author: Claude Opus 5 (prev Claude Opus 4.8, orig Claude Opus 4.6 (1M context))
+ * Date: 21-Sep-2026 (prev 16-Jul-2026, orig 14-Apr-2026)
+ * 21-Sep-2026: the "special chick" pill is now "standout" and reads the
+ *   backend's `standout_bird` (farm-guardian v2.74.0; the flock grew up).
  * PURPOSE: 16-Jul-2026 daylight retheme — non-compact pill tone moved off
  *   the deleted cream/forest tokens onto Field Guide card/border/ink
  *   tokens; the compact white-over-photo tone stays as-is.
  *   Metadata pills for a gem tile — camera (hardware label),
- *   activity, and an optional special-chick marker. Kept tiny and
+ *   activity, and an optional standout-bird marker. Kept tiny and
  *   pure so both the default and compact GemCard variants compose it
  *   without duplicating the label mapping.
  * SRP/DRY check: Pass — formatters live in lib/gems-format.ts; this
@@ -32,8 +34,8 @@ export default function GemCardBadges({ row, compact = false }: Props) {
       {row.activity !== "none-visible" && row.activity !== "other" && (
         <span className={`${base} ${tone}`}>{activityLabel(row.activity)}</span>
       )}
-      {row.any_special_chick && (
-        <span className={`${base} ${tone}`}>special chick</span>
+      {(row.standout_bird ?? row.any_special_chick) && (
+        <span className={`${base} ${tone}`}>standout</span>
       )}
     </div>
   );

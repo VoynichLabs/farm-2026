@@ -1,7 +1,7 @@
 "use client";
 /**
- * Author: Claude Fable 5 (prev Claude Opus 4.7 (1M context))
- * Date: 06-Jul-2026
+ * Author: Claude Opus 5 (prev Claude Fable 5; Claude Opus 4.7 (1M context))
+ * Date: 15-Aug-2026
  * PURPOSE: Modular camera viewer — one featured feed big, the rest as live
  *   thumbnails. Click any thumbnail to promote it to the stage. Selection
  *   persists in localStorage and can be deep-linked via `?cam=<name>`.
@@ -32,6 +32,23 @@
  *   Featured fallback: if `defaultFeatured` isn't present in the current
  *   roster (camera not online right now, or never configured), use the
  *   first roster entry so the stage never renders a dead slot.
+ *
+ *   15-Aug-2026: two fixes tied to the "Duo 2 box flips between the two
+ *     Reolinks" report (docs/15-Aug-2026-duo2-camera-tile-flip-plan.md).
+ *     - The two top-stage slots are now keyed by camera name. They were the
+ *       only unkeyed tile positions on the page, so promoting a camera
+ *       mutated `cameraName` on a mounted GuardianCameraFeed rather than
+ *       mounting a fresh tile. That prop change was the trigger for the
+ *       orphaned-poll-chain bug fixed in GuardianCameraFeed; keying makes
+ *       "one tile, one camera, for its lifetime" structural. Note this is
+ *       defence in depth, not the fix — the feed's own lifecycle guard is.
+ *     - `promote()` compared against `userFeatured`, which made a thumbnail
+ *       click a total no-op whenever auto-promote had moved `featured` off the
+ *       user's pick: the camera was still `userFeatured` (so the guard
+ *       returned early) but was rendering as a thumb (thumbs exclude
+ *       `featured`). It now compares against the derived `featured`, so the
+ *       click persists the pick. See the note on that guard for what it
+ *       deliberately does not do.
  *
  * SRP/DRY check: Pass — composes GuardianCameraFeed (rendering) and
  *   useCameraStatuses (per-tile FeedState aggregation for auto-promote).
@@ -121,7 +138,17 @@ export default function GuardianCameraStage({
   }, [userFeatured, statuses, cameras]);
 
   const promote = (name: string) => {
-    if (name === userFeatured) return;
+    // Bail only when the camera is already on the stage. Comparing against
+    // `userFeatured` made the thumbnail a dead click whenever auto-promote had
+    // moved `featured` away from the user's pick: the camera was still
+    // `userFeatured`, so this guard swallowed the click, yet it was rendering
+    // as a thumb (thumbs exclude `featured`, not `userFeatured`). The click
+    // now at least writes the pick through to localStorage/URL so it survives
+    // a reload. It does NOT override auto-promote: while the camera still
+    // reports "offline", `featured` stays put and the stage won't move.
+    // Letting a user pin a camera that isn't producing frames is a policy
+    // change, not a bug fix — left alone deliberately.
+    if (name === featured) return;
     setUserFeatured(name);
     try {
       window.localStorage.setItem(storageKey, name);
@@ -192,7 +219,15 @@ export default function GuardianCameraStage({
           aspect ratio without one swallowing the row. Mobile stacks. */}
       {secondaryCam ? (
         <div className="flex flex-col md:flex-row gap-1.5 md:items-start md:justify-center">
+          {/* `key` by camera name on both top slots: these were the only
+              unkeyed tile positions on the page (thumbs are keyed on their
+              button), so promoting a camera mutated `cameraName` on a live
+              feed instead of mounting a fresh one. GuardianCameraFeed now
+              survives that correctly on its own, but binding a tile to one
+              camera for its lifetime makes the invariant structural instead
+              of load-bearing on a cleanup guard. */}
           <div
+            key={featuredCam.name}
             className="w-full md:w-auto md:h-[50vh]"
             style={{ aspectRatio: featuredCam.aspectRatio }}
           >
@@ -205,6 +240,7 @@ export default function GuardianCameraStage({
             />
           </div>
           <div
+            key={secondaryCam.name}
             className="w-full md:w-auto md:h-[50vh]"
             style={{ aspectRatio: secondaryCam.aspectRatio }}
           >
@@ -219,6 +255,7 @@ export default function GuardianCameraStage({
         </div>
       ) : (
         <div
+          key={featuredCam.name}
           className="w-full mx-auto"
           style={{
             aspectRatio: featuredCam.aspectRatio,

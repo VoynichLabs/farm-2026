@@ -15,16 +15,21 @@ A camera system built with OpenClaw and AI tools, watching the flock across a 13
 
 One machine. Frame judge, gem curator, bird guardian.
 
-The headline feature isn't predator detection — that was built but is paused. The headline is the **VLM image pipeline**: cameras watching the birds around the clock, a local model judging every frame, Discord as the human review table, and the best moments reaching the public as gems.
+The headline feature isn't predator detection — that was built but is paused. The headline is the **image pipeline**: cameras watching the birds through the day, a chain of increasingly expensive judges deciding which frames deserve attention, Discord as the human review table, and the best moments reaching the public as gems.
+
+Most of the engineering here has gone into one question — *how do you avoid wasting a slow judge on a photo of an empty pen?* — and most of the answers came from reading the archive rather than from reasoning about it. A couple of good ideas died that way.
 
 ## The Pipeline
 
 This is the system that runs every day:
 
-1. **Cameras see the birds.** Cameras across the property pull frames on a steady cadence — no video encoding, no ffmpeg, just clean JPEGs at a few seconds apart.
-2. **Mac Mini judges the frames.** Bubba (the OpenClaw agent on the Mac Mini) runs vision-language models against every frame — scoring for composition, activity, lighting, and share-worthiness. Strong frames get flagged as gems.
-3. **Discord becomes the review table.** The best gems land in the `#farm-2026` channel. Boss reacts to the ones worth sharing — the single human-in-the-loop filter. Every reacted gem eventually publishes.
-4. **The best moments reach the public.** Reacted gems post to [@pawel_and_pawleen](https://www.instagram.com/pawel_and_pawleen/) on Instagram and the [Yorkies App](https://www.facebook.com/614607655061302/) Facebook Page. Stories, carousels, and reels — all from the same pipeline.
+1. **Cameras see the birds.** Frames get pulled on a steady cadence — no video encoding, no ffmpeg, just clean JPEGs. The phone camera watching Birdcatraz grabs a short burst each time rather than a single frame, because two shots seconds apart on the same still scene can differ enormously in sharpness.
+2. **A cheap detector asks whether anything is happening.** An object detector runs first, in about sixteen milliseconds. Judging a frame properly costs five seconds, and for a long time roughly a quarter of that work was being spent confirming an empty pen. Now the expensive judge only gets frames with a bird in them.
+3. **The best frame of the burst goes forward.** Sharpness is measured *inside the bird* rather than across the whole picture — a mistake worth admitting, because grass and foliage throw off so much fine detail that a whole-frame reading rates a soft photo higher than a crisp one.
+4. **The judge scores it.** A vision-language model running locally rates expression, notable detail, and technical quality. It deliberately does *not* score how much of the frame the bird fills. That turned out to be the single best predictor of which photos get picked — which is exactly why it belongs in choosing between frames, not in deciding whether a photo is worth showing a human at all.
+5. **Discord is the review table, and the only real filter.** Gems land in a private channel. Boss reacts to the keepers — the one human-in-the-loop step. Reacted gems publish to [@pawel_and_pawleen](https://www.instagram.com/pawel_and_pawleen/) on Instagram and the [Yorkies App](https://www.facebook.com/614607655061302/) Facebook Page as photos, carousels, stories and reels.
+
+There's a feedback loop in the middle of all this. Good moments arrive in clusters, not evenly — after a keeper, the odds of another within the next minute run about six times normal. So a hit makes the camera speed up for a minute and a half, and a stretch of empty pen makes it slow down. The pen sets the pace.
 
 The pipeline has posted hundreds of gems since it went live. The archive is a growth record: the palm-sized fluffballs it started watching in April are the full-grown birds filling the frame from Birdcatraz today.
 
@@ -36,7 +41,7 @@ Cameras across the property — named for the hardware, never for where they hap
 |--------|----------|--------------|
 | house-yard | Reolink E1 Outdoor Pro | 4K PTZ with spotlight + siren. 11-position patrol, sky-watch lock, HTTP snapshot polling via reolink_aio. The only unit with deterrents. |
 | duo2 | Reolink Duo 2 | Dual-lens panoramic — two sensors stitched into one ultra-wide 8:3 frame. RTSP capture. |
-| s7-cam | Samsung Galaxy S7 running the IP Webcam app | Portrait 1080×1920 — optimized for Instagram stories and reels. Fixed tripod, stream endpoint stable; currently aimed at the big water bowl in Birdcatraz. |
+| s7-cam | Samsung Galaxy S7 running the IP Webcam app | Portrait 1080×1920 — optimized for Instagram stories and reels, and the best sensor in the fleet. Lives in Birdcatraz on a wireless charging pad, which caps it at a couple of hours a day, so the pipeline is tuned to make the most of whatever window it gets. |
 | usb-cam | USB webcam on the Mac Mini | AVFoundation local capture, 1920×1080, snapshot polling with auto white-balance and autofocus warmup. |
 | mba-cam | MacBook Air 2013 built-in FaceTime HD webcam | 720p via ffmpeg + MediaMTX RTSP bridge on the laptop itself. |
 | gwtc | Gateway laptop built-in webcam | 720p via ffmpeg + MediaMTX RTSP on Windows; services auto-start via Shawl. |
@@ -45,13 +50,15 @@ The Reolink is the only one with deterrents — spotlight to 100% brightness and
 
 ## How It Watches
 
-The Mac Mini pulls a JPEG from each camera on a steady cadence — no video encoding, no ffmpeg processes, no HLS segments. Still images at a few seconds apart are plenty to see what's happening, and they sail through the Cloudflare tunnel instead of choking it.
+The Mac Mini pulls a JPEG from each camera — no video encoding, no ffmpeg processes, no HLS segments. Still images a few seconds apart are plenty to see what's happening, and they sail through the Cloudflare tunnel instead of choking it.
+
+The cadence isn't fixed on the camera that feeds the gem pipeline. It runs fast while there's something to look at and slows to a heartbeat when the pen is empty, so the effort follows the birds instead of the clock.
 
 It doesn't phone home. No cloud. No subscriptions. No data leaves the network. The dashboard, the camera control, the snapshots — everything runs on that one Mac Mini on the desk.
 
 **What's running right now:**
 - Live snapshot feeds from every camera Guardian currently sees, visible here and on the homepage
-- VLM scoring pipeline — every frame gets judged, strong ones get archived as gems
+- The frame pipeline — burst capture, a fast presence check, best-frame selection, then VLM scoring; strong frames get archived as gems
 - Automated posting to Instagram and Facebook via the gem pipeline
 - Manual PTZ on the Reolink — pan/tilt by approximate degrees, or jump to a named preset in one tap
 - Five on-camera presets: yard-center, coop-approach, fence-line, sky-watch, driveway

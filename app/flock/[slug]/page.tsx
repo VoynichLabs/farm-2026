@@ -1,6 +1,6 @@
 /**
- * Author: Claude Sonnet 5 (prev Claude Opus 4.8)
- * Date: 22-Jul-2026
+ * Author: Claude Opus 5.5 (prev Claude Opus 5; Claude Sonnet 5; Claude Opus 4.8)
+ * Date: 03-Oct-2026 (updated 22-Jul / 15-Aug-2026)
  * PURPOSE: /flock/[slug] — one bird's full aging gallery. Every picture we have
  *   of the bird (from its roster photos[] ledger), full-size, oldest→newest,
  *   each stamped with the date, the bird's age at that photo, and its caption.
@@ -10,21 +10,36 @@
  *   22-Jul-2026 (visual QA remediation): added `revalidate` so the AGE label
  *   (getBirdAgeLabel, computed from `new Date()`) doesn't freeze at
  *   last-build time under static generation — same fix as /flock.
+ *   15-Aug-2026: renamed birds no longer dead-end. The slug is derived from
+ *     `name`, so renaming a bird silently killed its old URL — /flock/birdadette
+ *     had been 404ing since Birdadette became Birddor, and /flock/henriella
+ *     would have joined it when Henriella was confirmed cockerel and renamed
+ *     Henriello. The unresolved slug is now matched against `formerly` (the
+ *     field that already backs the "fka …" chip) and 308s to the canonical
+ *     slug. Data-driven: a future rename gets its redirect by filling in
+ *     `formerly`, with no new route file.
+ *   03-Oct-2026 (SEO checklist pass): canonical tag; BreadcrumbList JSON-LD
+ *     (Home › The Flock › bird); the meta description no longer prints
+ *     "(null)" for birds with no recorded breed (Hawk Food, Loud Dumb Bird,
+ *     White Rooster).
  * SRP/DRY check: Pass — reuses getFlockProfiles / getBirdAgeLabel / birdSlug
  *   and the shared BandChip; page-local logic is layout + date/age labels only.
+ *   The redirect reuses `formerly` rather than adding a parallel alias field.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import {
   getFlockProfiles,
   getBirdAgeLabel,
   birdSlug,
+  sortedBirdPhotos,
+  ageAtPhoto,
   type FlockBird,
-  type BirdPhoto,
 } from "@/lib/content";
 import BandChip from "@/app/components/flock/BandChip";
+import BreadcrumbJsonLd from "@/app/components/system/BreadcrumbJsonLd";
 
 export const revalidate = 3600;
 
@@ -36,29 +51,24 @@ const fmtDate = (iso?: string): string | null => {
   return iso;
 };
 
-// The bird's age at a given photo date: "hatch day", "day 8", "3 wks", "2 mos".
-// Undated → "". (Mirrors the throwbackTag labels used on /flock.)
-const ageAtPhoto = (hatchISO?: string, photoISO?: string): string => {
-  if (!hatchISO || !photoISO) return "";
-  const hatch = new Date(`${hatchISO}T00:00:00`).getTime();
-  const shot = new Date(`${photoISO}T00:00:00`).getTime();
-  if (Number.isNaN(hatch) || Number.isNaN(shot)) return "";
-  const days = Math.round((shot - hatch) / 86400000);
-  if (days <= 1) return "hatch day";
-  if (days < 13) return `day ${days}`;
-  if (days < 56) return `${Math.floor(days / 7)} wks`;
-  return `${Math.floor(days / 30)} mos`;
-};
-
 const findBird = (slug: string): FlockBird | undefined => {
   const flock = getFlockProfiles();
   return flock?.flock_birds.find((b) => birdSlug(b.name) === slug);
 };
 
-const sortedPhotos = (bird: FlockBird): BirdPhoto[] =>
-  [...(bird.photos ?? [])].sort((a, b) =>
-    (a.date ?? "9999-99-99").localeCompare(b.date ?? "9999-99-99"),
+// A bird renamed after its page was live leaves its old URL dangling — the
+// slug is derived from `name`, so /flock/birdadette and /flock/henriella both
+// 404'd once those birds became Birddor and Henriello. `formerly` already
+// records the old name (it renders as the "fka …" chip), so resolve against it
+// and permanently redirect to the canonical slug. Data-driven on purpose: any
+// future rename that fills in `formerly` gets its redirect for free, with no
+// per-bird route file. Named birds only — a bird with no `formerly` is skipped.
+const findBirdByFormerName = (slug: string): FlockBird | undefined => {
+  const flock = getFlockProfiles();
+  return flock?.flock_birds.find(
+    (b) => b.formerly && birdSlug(b.formerly) === slug,
   );
+};
 
 export function generateStaticParams() {
   const flock = getFlockProfiles();
@@ -71,9 +81,13 @@ export async function generateMetadata(
   const { slug } = await params;
   const bird = findBird(slug);
   if (!bird) return { title: "Bird not found" };
+  // Some roster entries have no breed on record (breed is null in the JSON);
+  // leave the parenthetical out rather than print "(null)".
+  const breed = bird.breed ? ` (${bird.breed})` : "";
   return {
     title: `${bird.name} — aging timeline`,
-    description: `Every photo of ${bird.name} (${bird.breed}) over time — the aging record for Farm 2026, Hampton CT.`,
+    description: `Every photo of ${bird.name}${breed} over time — the aging record for Farm 2026, Hampton CT.`,
+    alternates: { canonical: `/flock/${slug}` },
   };
 }
 
@@ -82,14 +96,26 @@ export default async function BirdGalleryPage(
 ) {
   const { slug } = await params;
   const bird = findBird(slug);
-  if (!bird) notFound();
+  if (!bird) {
+    // Old URL for a renamed bird → 308 to the current slug, so existing links
+    // and search results survive the rename instead of dead-ending on a 404.
+    const renamed = findBirdByFormerName(slug);
+    if (renamed) permanentRedirect(`/flock/${birdSlug(renamed.name)}`);
+    notFound();
+  }
 
-  const photos = sortedPhotos(bird);
+  const photos = sortedBirdPhotos(bird);
   const age = getBirdAgeLabel(bird.hatch_date, bird.hatch_date_estimated);
   const hatchStr = fmtDate(bird.hatch_date);
 
   return (
     <main className="min-h-screen bg-field-bg text-field-ink">
+      <BreadcrumbJsonLd
+        trail={[
+          { name: "The Flock", path: "/flock" },
+          { name: bird.name, path: `/flock/${slug}` },
+        ]}
+      />
       <section className="max-w-4xl mx-auto px-4 py-10">
         <Link
           href="/flock"

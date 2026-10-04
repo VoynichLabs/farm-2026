@@ -93,6 +93,27 @@ export const CAMERAS: CameraMeta[] = [
     device: "Reolink Duo 2 dual-lens panoramic (stitched 8:3 frame, RTSP)",
     aspectRatio: "8 / 3",
   },
+  {
+    name: "usb-webcam-1080p",
+    label: "usb-webcam-1080p — 1080p USB webcam on farm-pi5",
+    shortLabel: "USB 1080p",
+    device: "1080p USB webcam (farm-pi5, HTTP snapshot)",
+    aspectRatio: "16 / 9",
+  },
+  {
+    name: "macbook-air-facetime",
+    label: "macbook-air-facetime — MacBook Air 2013 FaceTime HD",
+    shortLabel: "MBA",
+    device: "MacBook Air 2013 FaceTime HD (HTTP snapshot)",
+    aspectRatio: "16 / 9",
+  },
+  {
+    name: "jieli-dashcam",
+    label: "jieli-dashcam — Jieli-chipset USB dashcam on farm-pi5",
+    shortLabel: "Dashcam",
+    device: "Jieli-chipset USB dashcam (farm-pi5, HTTP snapshot)",
+    aspectRatio: "16 / 9",
+  },
 ];
 
 // Preferred featured camera for the homepage rail. The stage falls back to

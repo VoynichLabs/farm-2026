@@ -61,3 +61,17 @@ next-env.d.ts
 # after 48h. Committing them had banked 346 clips / 3.9 GB in git history.
 # See docs/01-Aug-2026-reel-hosting-remediation-plan.md
 /public/photos/reels/
+
+# Story JPEGs are the same case as the reels above, and were simply never
+# given the same treatment (15-Aug-2026). Same reasoning applies verbatim:
+# transport, not content. They existed only so Meta could fetch each one once
+# during story ingest; stories expire after 24h and nothing on this site has
+# ever linked to one. Serving moved to the Mini on 04-May-2026 —
+# guardian.markbarney.net/api/v1/images/story-assets/<name>.jpg — and the
+# assets are swept after 48h. The lane stopped writing here that same day;
+# CLAUDE.md has called this directory "a frozen archive" ever since, while
+# 334 files / 111 MB stayed in git.
+#
+# NOTE the leading slash: this must NOT match the archive lane's still-active
+# public/photos/on-this-day/YYYY-MM-DD/stories/, which is a different tree.
+/public/photos/stories/

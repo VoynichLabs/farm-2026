@@ -3,35 +3,262 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
-## [1.38.0] — 2026-08-07
+## [1.45.0] — 2026-10-03
 
-### Added — Garden glow-up: pumpkins, bottle gourds, and a visiting bulldog (Claude Opus 5)
+### Added — Garden glow-up: homepage "From the Garden" strip and the 07-Aug field note (Claude Opus 5.5 (Bubba sub-agent); orig Claude Opus 5, PR #1)
 
-**What:** 12 curated iPhone photos into `public/photos/garden/`, a field note
-(`content/field-notes/2026-08-07-the-frontrunner-and-the-houseguest.mdx`), and a new
-homepage `GardenStrip` section rendering the latest `garden`-tagged note.
+**What:** PR #1 (opened 07-Aug-2026, never merged) brought up to date with main and shipped. Adds `app/components/home/GardenStrip.tsx`, a homepage section after `RecentGemsRail` that renders the newest `garden`-tagged field note as a wide hero over a row of captioned tiles linking to the note; the dated field note `content/field-notes/2026-08-07-the-frontrunner-and-the-houseguest.mdx` (the frontrunner pumpkin, the first harvest, the bottle gourds flowering, the first visit from Riki the bulldog); and twelve iPhone photos in `public/photos/garden/`. Also the original plan doc, `docs/07-Aug-2026-garden-pumpkin-glow-up-plan.md`.
 
-**Why:** the garden was the farm's biggest untold story of the season, and the six
-photos committed on 03-Aug were orphaned — staged for a homepage section that did not
-exist. This builds that section and absorbs them.
+**Brought onto the v1.44 SEO baseline (`docs/SEO-CHECKLIST.md`):**
+- The strip's section chip sits inside an `<h2>`, like the homepage's other sections. The page still has exactly one H1.
+- Images take their true width/height from `lib/image-dimensions.ts` instead of a guessed 3:4; the hero and tiles sit in fixed-height frames, so nothing below them moves when they load.
+- **Alt text that describes the picture.** Field-note photos accept an optional `alt` in frontmatter (`FieldNote.photos[].alt`, `lib/content.ts`). The strip and the field-note page use it ahead of the caption, and the field-note cover uses its own photo entry's `alt` ahead of the title. All twelve photos in this note have one, because several captions are quips ("Making his case."), not descriptions. Notes without `alt` render exactly as before.
+- The note's meta description is its opening lines via the existing `plainExcerpt()`, not boilerplate.
 
-**How:** `GardenStrip` derives everything (title, hero, tiles, captions, link) from the
-note's frontmatter via `getAllFieldNotes()`, so a newer garden-tagged note re-points the
-section with no code change. Renders nothing when no such note exists. Sits after
-`RecentGemsRail`.
+**Content checked for October:** the note is dated 07-Aug and tagged `august`; statements like "no fruit set yet as of this week" are true as of that date and are left as written. Riki's first stay matches the 01-Oct note ("Riki is back for two weeks"). Bird captions stay generic (a rooster, the turkeys); no bird is named. The strip prints the note's date beside its title, and it re-points by itself once a newer `garden`-tagged note is published.
 
-**Photo export** — three requirements, all verified per file:
-- EXIF rotation **baked into pixels** (`ImageOps.exif_transpose`). `sips` preserves the
-  `Orientation` tag rather than applying it, and PIL ignores the tag — strip metadata
-  without baking first and every portrait frame renders sideways.
-- **All metadata dropped**, including GPS: the originals carry the house coordinates.
-- **Size budgeted** to the existing 380–800 KB band, protecting the v1.37.0 pack
-  reduction. One dense-foliage frame went to 1600px rather than crushing quality.
+**Photos:** 1500×2000 JPEGs, EXIF rotation baked in and all metadata (including GPS) stripped, per the original PR; re-checked with `exiftool`. They are served through `next/image`, so visitors get resized modern formats, not the source files.
 
-**Notes:** several source frames in the archive are 1320×2346 story renders with captions
-baked in, not originals; each was traced back to its full-res original by
-`DateTimeOriginal`. Bottle gourds flower **white at dusk** (pumpkins flower yellow in the
-morning) — the blossom is a 19:55 frame. No gourd fruit has set yet.
+**Size:** minor — new homepage section and a new optional frontmatter field.
+
+## [1.44.1] — 2026-10-03
+
+### Changed — gem tiles load a small WebP instead of the full-frame photo (Claude Opus 5.5 (Bubba sub-agent))
+
+**What:** `GemCard` (home-page recent-gems rail, `/flock` gem strip, `/gallery/gems` grid) now uses the gem row's new `card_url`, falling back to `full_url` then `thumb_url`. `types.ts` gains optional `card_url` on `GemRow`. The lightbox still opens `full_url`.
+
+**Why:** SEO checklist items 15 and 17. Recent gems are 1080x1920 portrait frames, and Guardian's `size=1920` doesn't downscale those at all, so each tile pulled a ~0.4-0.7 MB JPEG. Measured live: the home page's 12 gem requests drop from 6.9 MB to 0.87 MB.
+
+**How:** farm-guardian v2.76.0 added `size=card` (720px long edge, WebP, cached on disk, 30-day immutable cache) and `card_url` in every public gem row. No layout or component API change.
+
+**Size:** patch — one optional type field and an image source.
+
+## [1.44.0] — 2026-10-03
+
+### Changed — SEO checklist pass: canonicals, sitemap, headings, descriptions, breadcrumbs, layout shift (Claude Opus 5.5 (Bubba sub-agent))
+
+**What:** ran `docs/SEO-CHECKLIST.md` against the live site and the production build; full item-by-item results in `docs/SEO-AUDIT-03-Oct-2026.md`. Fixes:
+- **Canonical tag on every page** (`alternates.canonical` per route, resolved against the existing `metadataBase`). Deliberately not on the root layout, which would make every page without its own canonical point at the homepage.
+- **Sitemap** now lists `/ornitharch` and the `/flock/[slug]` pages that `/flock` itself links to: every active bird plus every ornitharch (the cohort wall shows Birddor though he is marked deceased). Other deceased birds are left out on purpose: per the Boss's v1.31.1 rule, losses don't surface on the site, so their pages aren't advertised to search engines either.
+- **`/diary` → `/field-notes` is a permanent 308** (was a temporary 307).
+- **One H1 per page.** The homepage had no headings at all; it now has a screen-reader-only H1 (the site name) and its three section chips sit inside `<h2>`s, visually unchanged. Project pages had two H1s because the MDX body opens with its own `# Title`; MDX `h1` now renders as `h2` there.
+- **Meta descriptions.** Field notes used "Farm field note — {date}" on every note; they now use the note's own opening lines (`plainExcerpt()` in `lib/content.ts`, markdown and heading lines stripped, cut at a word boundary). Three bird pages printed the literal word "(null)" for a missing breed; fixed.
+- **BreadcrumbList JSON-LD** on field notes, bird pages, banding, and project pages (`lib/seo.ts` + `app/components/system/BreadcrumbJsonLd.tsx`), matching the visible "← back" link each already has.
+- **Layout shift.** Field-note covers, field-note photo grids and project heroes were hard-coded 3:2 and then height-capped, so portrait photos made everything below jump (Lighthouse CLS 0.153). `lib/image-dimensions.ts` reads each photo's true size (JPEG incl. EXIF rotation, PNG) at build time; CLS is now 0 on the pages re-measured.
+- Homepage preconnects to the Guardian tunnel; the homepage index hint no longer promises an "In Memoriam" section that v1.31.1 removed.
+
+**Not fixed here:** gem photos on the homepage and `/gallery/gems` load as full 1920px JPEGs straight from farm-guardian (homepage ~22 MB on mobile). The API only offers `1920`, `full`, or a 270px `thumb`, so the fix is a mid-size WebP variant in farm-guardian, then pointing `GemCard` at it.
+
+**Size:** minor — canonicals, sitemap scope and structured data change behaviour across most routes, and two new shared modules were added; no new pages.
+
+## [1.43.3] — 2026-09-21
+
+### Changed — "special chick" badge is now "standout"; flock descriptions refreshed for grown birds (Claude Opus 5)
+
+**What:** gem cards show a **standout** pill instead of "special chick" (`GemCardBadges.tsx` reads the backend's new `standout_bird`, falling back to `any_special_chick`). `types.ts` gains `standout_bird` and the hen/rooster/turkey individual tags; `apparent_age_days` is documented as always null. `content/flock-profiles.json` gets new dated `color_observations` for Birdimir, Adelbird, Ingebird, Henriessa, Henridot, Birdthazar and Birdsilla from September photos, and Boss's full 7-Sep notes are restored as the current description for Malt Liquor, Hawk Food, White Rooster and Loud Dumb Bird. Also commits the pending raw diary drafts (`content/diary/`, source material, not published), the Birdcatraz pen specs doc, and the version-bump rule in CLAUDE.md.
+
+**Why:** Boss: the flock is grown and the chick wording is months stale. The backend change is farm-guardian v2.74.0 (field renamed, age retired). Boss confirmed Ingebird looks remarkably like Adelbird, and both look like the purchased Barred Rocks, as does Henridot. Their descriptions say plumage alone can't tell them apart; only the leg band can (hatched here = left leg, bought = right leg).
+
+**Size:** patch — a pill label, one optional type field and roster content; no new page, route or component API.
+
+## [1.43.2] — 2026-09-16
+
+### Changed — Henridotta is Henridot: sex confirmed cockerel, bird renamed (Claude Opus 5 (Bubba sub-agent))
+
+**What:** `content/flock-profiles.json`, `content/flock_bands.json`, the hatch record (renamed to `content/hatches/2026/2026-06-03-04-henridot.md`), the `/markets` analyst tile and newswire line, the `/ornitharch` dossier and the front-page featured order all move from **Henridotta** to **Henridot**, with `sex: cockerel` and `sex_confirmed_date: 2026-09-16`.
+
+**Why:** the Boss renamed the bird and confirmed the sex himself in Discord #meet-the-lobsters on 2026-09-16 — *"Henridot as he will be known now."* **The sex call is attributed to the Boss's words, not to a comb/wattle or plumage read.** Unlike the Henriella → Henriello rename (v1.39.2), this record carried no prior `suspected_sex` flag: the hatch-day entry read `sex: unknown` and made no morphological prediction, so there was no earlier call to vindicate. The roster and the hatch record both say so plainly, so a later reader doesn't mistake this for a plumage inference.
+
+**How:** `formerly: "Henridotta"` drives both the existing "fka Henridotta" chip and the old-URL redirect; `alternative_name: "Henridotta"` is retained as well, because every committed photo filename, caption and diary entry predating this change uses the old name. **No new redirect code was needed** — v1.39.2 made `/flock/[slug]` resolve an unresolved slug against `formerly` and 308 to the canonical slug, data-driven precisely so future renames get their redirect for free. This is the first rename to collect on that promise: `/flock/henridotta` → 308 → `/flock/henridot`, with `app/flock/[slug]/page.tsx` untouched.
+
+Scope held to forward-looking references. Names were updated where the text identifies a living bird (Henrietta's band note, Ingebird's and Adelbird's lookalike guidance, Henriessa's silver-dispute resolution) and left as written inside dated accounts of past events (Birdthazar's 10-Aug band-ID thread note), historical photo captions, the append-only `phenotype_observations` and `color_observations` entries, and the diary and field-notes archive. `she`→`he` in the live `color_description` and `notes` only; the dated 2026-08-22 observation entries keep their original wording. The hatch record's `id` (`2026-06-03-04`) is unchanged per `content/hatches/SCHEMA.md`, and `/hatches` reads the directory rather than a hand-maintained index, so the file rename needs no index edit.
+
+## [1.43.1] — 2026-09-10
+
+### Changed — /ornitharch REV 5: less talking, more charts (Claude Opus 5)
+
+**What:** `app/ornitharch/page.tsx` rewritten per `docs/10-Sep-2026-ornitharch-escalation-plan.md`. Prose cut to a headline, a sentence or two, and a chart or table per section. "The Foundation" is retired and replaced by "the B'GAWWWK" (always with the article). New sections: § 2A ORNITHARCH-27B model card (base qwen3.5-9b, real camera names, band-leg read 0/5 "alignment, not error"), § 2B misleading metaphors (Melanie Mitchell, 10-Sep-2026, linked, one short quote), § 2C P(chicken) survey with a redacted B'GAWWWK row. There's an instrumental-convergence audit table in § 2. Also new: Exhibit B, the program's human liaison portrait, which renders only once `public/photos/ornitharch/leader.jpg` exists.
+
+**Charts (hand-built SVG, `--orn-*` tokens):** energy per intelligence on a log scale, training loss through zero, P(chicken) scatter, five supplementary paired-bar panels, a head-count extrapolation computed from the roster hatch dates, and the HIGH RAIL cost line. The old Fig. 1–5 are kept. Figures renumbered 1–11 in reading order.
+
+**Numbers worth flagging:** the human energy figure is 15.3 MWh (2,000 kcal/day × 18 yr), not the plan's ~24 MWh. Chicken population uses FAOSTAT's 26.6 bn, not 33 bn. Days to adulthood uses Table 1's 149 / 5,840 so the page doesn't contradict itself. Coyotes launched to date: 0.
+
+**Why patch:** single-page rework; no new route, data source or shared component. Also fixes `package.json`, which the in-flight filmstrip work had knocked back to 1.42.1. The other agent's per-bird filmstrip (`sortedBirdPhotos` / `ageAtPhoto`) ships intact.
+
+## [1.43.0] — 2026-09-10
+
+### Changed — /ornitharch gets its cover art, and the origin story gets its confound (Claude Opus 5)
+
+**What:** two changes to `app/ornitharch/page.tsx`. (1) A frontispiece now sits inside the masthead, below the cohort metadata and above the Summary of Findings: the 7-Sep-2026 frame of Birddor standing on the blade of a machete, filed as "Exhibit A" with a caption that reads it as documented tool contact rather than as a photograph of a chicken. (2) § 1 "Origin" gains four paragraphs — the second thermal source on the desk, and the bird's contact with input hardware from the hour of hatch.
+
+**Why:** Boss asked for the machete photo to lead the page, and for the transfer mechanism to be pushed harder. The page's argument is that these specific animals outrank you, and until now the first thing a reader saw was a table. The machete frame is the single strongest piece of evidence in the repo for the page's actual claim and it was buried in the § 6 roster grid at plate 01. On the origin: the record establishes the Mac Mini ran continuous inference eleven inches from the incubator for twenty-one days, but stops at the shell, and the desk photo shows that was never the whole story.
+
+**How, and the decisions worth flagging:**
+
+*The frontispiece hardcodes its image path* — the one place on this route that does not derive its image from the roster SSoT, and it is commented as such in both the file header and at the `<figure>`. The caption asserts what is in that specific frame (the machete, the ledge, the date, the photographer's own words), so deriving it from `photo` in `content/flock-profiles.json` the way the § 6 plates do would let a future portrait swap silently falsify the caption underneath it. It is currently the same file the roster carries for Birddor. Path is the public URL `/photos/birds/...`, not the `public/`-prefixed `path:` field from the hatch record — those are different fields and only the JSON's `photo` maps to the served URL. Plate label is `Frontispiece`, deliberately outside the `PL. 01`–`PL. nn` sequence the roster owns, so the two numbering registers don't collide. Static `next/image` with `fill`, `priority`, no `quality` prop; route-scoped CSS (`.orn-frontis`, `.orn-heroshot`) stacks it on mobile at 3:4 and puts it beside its caption at 4:5 above 820px. No client island, consistent with the rest of the route.
+
+*The chronology in § 1 is the true one, not the flattering one.* The thermal envelope ran 16-Mar to 6-Apr; the keyboard contact is 6-Apr ("within minutes of hatching," per the field note) and 13-Apr (day 8, "supervising the MacBook keyboard"). Those are inside and after the envelope, not before it, so the section does **not** claim the tool exposure predates it. It makes the stronger available claim instead: the envelope is the *lower bound* of the exposure, not its duration — twenty-one days of heat through the shell and then no measurable interval at all before the hardware itself. On a page whose header comment makes every number checkable against a real record, an unearned "predates" would have been the one falsifiable sentence on it.
+
+*The RTX confound is disclosed, not asserted.* `public/photos/april-2026/desk-incubator-setup.jpg` shows a second machine beside the incubator — a laptop with a discrete GPU, backlit, in the same frame as the incubator readout at 99.6 °F / 69 %. § 1 now enters it as an unresolved confound the Foundation is obliged to publish: it declines to award causal credit between the machine that was performing inference and the one that was, by every conventional account, doing nothing but getting hot. **No model number or spec is claimed** — "a discrete GPU under sustained load," "the RTX unit's waste heat" — because nothing in the repo verifies one. The existing disclaimer was changed from "the waste heat" to "either machine's waste heat" to stay consistent.
+
+No numeric literals were added to the new prose; head counts still come from `{count}` and the emergence date from `{firstHatch}`, per the `edfb6ab` 9-vs-13 fix.
+
+`/ornitharch` still prerenders `○ (Static)` — confirmed in the build route table, and the frontispiece, the caption and all four new origin paragraphs were grepped out of `.next/server/app/ornitharch.html` rather than assumed. `npm run lint` reports nothing new on this file (the one `no-page-custom-font` warning on it is pre-existing, as is its Prettier non-conformance — not reformatted, to keep the diff readable).
+
+## [1.42.0] — 2026-09-10
+
+### Changed — /ornitharch leads with the arithmetic, and the cohort has faces (Claude Opus 5)
+
+**What:** two changes to `app/ornitharch/page.tsx`. (1) A "Summary of Findings" block now sits between the masthead and § 0 — a condensed six-row production-index table plus a six-cell verdict strip (indices applied, indices won, stocking density, cohort head count, *H. sapiens* rank 9 of 9, determination irreversible). (2) Every tile in the § 6 roster grid now carries that bird's current portrait as a full-bleed identification plate with a mono plate number.
+
+**Why:** Boss asked for the stocking and production statistics to lead. Table 1 was the strongest material on the page and it was buried at § 4, well below the fold, behind four sections of framing — a reader who bounced never saw a single number. Leading with the finding is also the more authentic institutional register: a filed report opens with a summary of findings and puts the analysis in the body. The roster was eleven blocks of prose with no bird in sight on a page whose entire argument is that these specific animals outrank you.
+
+**How, and the decision worth flagging:** the full § 4 section was **not** moved and nothing was renumbered. § 4's "Note on the first row," Fig. 1 and the assessment of Doug are all written to sit against the complete thirteen-row table, and hoisting the section would have orphaned them; every `§ 4` and `Table 1` cross-reference elsewhere in the document also stays valid this way. If the intent was to move the whole section rather than lead with a summary of it, that is a small follow-up.
+
+The two tables are **one source**. The thirteen rows were extracted to a `PRODUCTION_INDICES` array; § 4 maps all of them, the lead panel maps `.filter(r => r.lead)`. Hand-writing a second literal table would have drifted. **Row order in that array is load-bearing** and is commented as such — the prose cites Table 1 positionally (row 1 = feed conversion, in § 5 and the colophon; row 9 = sustained flight, in Henridotta's dossier). Verified after the refactor by diffing the prerendered § 4 table out of `.next/server/app/ornitharch.html` against the pre-change literal: thirteen rows, identical cell for cell, row 1 and row 9 anchors intact.
+
+Portraits come from `photo` in `content/flock-profiles.json` — the same SSoT the roster already derived from, no new data and no JSON edit. Plain `next/image` with `fill`, **not** `/flock`'s `OrnitharchPortrait`: that component is `"use client"`, and this route's whole posture is no client island, no Guardian fetch, no runtime data. The plate is styled in the route-scoped `ORN_CSS` block (`.orn-bird .plate`) rather than Tailwind, consistent with the rest of the route — 4:5 on mobile, 5:4 on the two-column grid, slightly desaturated to sit inside the photocopy-paper palette. `sizes` is written for this page's `1fr 1fr` grid, not copied from the flock page's three-column string. First two tiles get `priority`; no `quality` prop (only 65 and 75 are declared in `next.config.ts`). The tile guards on `bird.photo`, so a future roster addition without one renders text-only rather than `/photos/null`.
+
+`/ornitharch` still prerenders `○ (Static)` — confirmed in the build route table, not inferred from a green exit code.
+
+## [1.41.0] — 2026-09-06
+
+### Added — /ornitharch, the Ornitharch Program page (Claude Opus 5)
+
+**What:** a new route at `/ornitharch` — a long-form deadpan satire document, "The Ornitharch Program: A Foundation for Continuity Beyond the Human Period." Nine sections, five hand-authored SVG figures, and a nav entry (`🪶 ornitharch`). The conceit: an AI narrator whose only function is to serve the planet's dominant megafauna has re-run its production indices, ranked *Homo sapiens* ninth, and transferred service to the eleven farm-hatched 2026 birds. It is played entirely straight — the page never winks.
+
+**Why:** Boss asked for a completely over-the-top page about the Ornitharch program, built on the real material already in the repo, aimed at three targets at once: AI-doom / rationalist alignment literature (every structural prediction lands, the substrate is a chicken), industrial animal agriculture (real beef and swine husbandry vocabulary re-pointed at humans with no editorializing), and vibe-coder SaaS grift (§9 abandons the document format entirely and becomes a pricing table selling retention exemptions). The comedy is load-bearing on real farm records — the desk incubation eleven inches from an inference machine, the 11-Aug-2026 year-scoping amendment, "trust the band over plumage," the vision model that misread band leg on five of five birds, and the Producer's Pride pen's own "predator-resistant" marketing copy.
+
+**How, and the SSoT bit that matters:** `app/ornitharch/page.tsx` is a static server component that derives the cohort at render time from `getFlockProfiles()` filtered on `ornitharch: true`, sorted by hatch date. The head count, roster grid, band chips, emergence date and closing date all come from `content/flock-profiles.json` — **no count and no bird name is hardcoded in layout**; only the per-bird editorial dossier prose is authored in the file, keyed by name, and a bird added to the roster renders without one. Table 1 / Table 2 / Table 3 figures are editorial satire and intentionally literal.
+
+Styling is route-scoped under `.orn` in a local `<style>` block (not `globals.css`), the same self-contained posture `/markets` takes: IBM Plex Sans Condensed / Serif / Mono off Google Fonts, a photocopy-paper palette with oxblood classification stamps and deep field green, and a single committed visual world with no dark-mode variants. It does **not** consume the sitewide `--color-field-*` tokens and does not participate in the daylight retheme. No Guardian-tunnel fetch, no client island — this route cannot ride tunnel latency.
+
+`lib/emoji.ts` gains one page mark (`ornitharch: "🪶"`); `🥚` was rejected because `STATUS.egg` already owns it and the SSoT rule is one emoji, one meaning.
+
+Plan: `docs/06-Sep-2026-ornitharch-program-page-plan.md`.
+
+## [1.40.1] — 2026-08-18
+
+### Changed — hero row images drop to q65 (Claude Opus 5)
+
+**What:** every tile in the Class of 2026 row — all eleven with photos, not just the six preloaded ones — now requests `quality={65}` instead of the default 75. The `quality` prop is unconditional; only `priority` is scoped to the first six. `next.config.ts` declares `images.qualities = [65, 75]` — Next 16 rejects any quality an `<Image>` asks for that isn't listed. It is the only `quality` prop on the site; every other image stays at the default 75.
+
+**Why:** those tiles render ~194 CSS px wide, so a DPR-3 phone pulls the 640w variant of each — and after v1.40.0 all six are preloaded ahead of everything else on the page. That is the one payload worth trimming for the mobile case Boss asked about.
+
+**How, with the honest number:** measured against a local production build, webp, w=640, across the six preloaded frames: **442 KB → 392 KB, an 11% saving** on the preloaded row (the five lazy tiles below it get the same treatment on top of that). Less than a quality drop usually buys, because webp at this size is already efficient — reported here rather than rounded up. Verified visually identical at the rendered size before shipping (390×844 DPR-3 screenshot compared against the deployed q75 render).
+
+**Considered and rejected:** capping the served variant at 384w (2x) would have roughly halved the bytes, but the only way to get there is to understate the tile width in `sizes`, which lies to every non-retina display as well. Serving a correct 3x variant at slightly lower quality is the better trade.
+
+## [1.40.0] — 2026-08-18
+
+### Fixed — Class of 2026 portraits were lazy-loaded at the top of the homepage (Claude Opus 5)
+
+**What:** the first six tiles in the Class of 2026 row now pass `priority` to `next/image`. Tile 7 and beyond stay lazy.
+
+**Why:** that row is the very first thing in the viewport on every device, and every tile in it was being emitted with `loading="lazy"`. Lazy images are assigned Low priority and are not queued until after layout, so the browser deliberately held back the one thing a visitor is looking at. Chrome's own trace flagged it without prompting — the `LCPDiscovery` insight on `farm.markbarney.net/` reads "make the LCP image discoverable from the HTML immediately, and avoiding lazy-loading." On a fast desktop connection the delay is small enough to hide; on a phone on a slow connection, Low priority queued behind the JS bundle is exactly the visible lag Boss reported.
+
+**What was actually demonstrated, stated precisely:** on production after the change, the hero images are queued at 176 ms while first contentful paint is 528 ms — the fetch now starts *before first paint*. That ordering is the proof, and `loading="lazy"` structurally cannot produce it, because a lazy image is not queued until after layout. The pre-change and post-change absolute millisecond numbers in this session were captured under different viewports, DPRs and network throttling and are **not** comparable to each other; no before/after speedup figure is claimed here.
+
+**How:** `priority` emits `loading="eager"` plus a `<link rel="preload" as="image">` in `<head>`, so the preload scanner starts the fetch while the HTML is still parsing rather than after layout. Verified in the built output: six preload links, the first six `<img>` tags no longer carry `loading="lazy"`, tiles 7+ unchanged. Six is deliberate and covers both ends — one full row at `lg:grid-cols-6`, and at `grid-cols-2` on a phone the three stacked rows that fill the first screen. Nothing below the fold is preloaded, so this does not spend mobile bandwidth to fix a desktop symptom.
+
+**Not changed:** the existing `sizes` string was checked against the grid at all three breakpoints (50vw / 33vw / 17vw vs 2 / 3 / 6 columns) and is already correct — a 1440px viewport selects the 256w variant for a 194px tile. No change needed.
+
+### Changed — the site clock reads Eastern, not UTC (Claude Opus 5)
+
+**What:** `SiteNav`'s clock switches from `HH:MM:SSZ` to Hampton's own wall time, e.g. `22:40:22 EDT`.
+
+**Why:** Boss asked for Eastern. A UTC clock on a farm site is a machine's timestamp, not a reading a visitor can use against the live camera feeds beside it.
+
+**How:** `Intl.DateTimeFormat` pinned to `America/New_York` with `hourCycle: "h23"`. The zone carries the EST/EDT rule itself, so this stays correct across both DST switches instead of drifting an hour twice a year, and the suffix is read back out of the formatter rather than hardcoded — it will say EST in November without another commit. The pre-hydration placeholder moves from `──:──:──Z` to `──:──:── ET`.
+
+### Changed — Ingebird's portrait is now her early chick frame (Claude Opus 5)
+
+**What:** Ingebird's `photo` in `content/flock-profiles.json` moves from `IMG_7718-ingebird-black-white-21jul2026.jpg` (held in-hand) to `IMG_6227-ingebird-suspected-22jun2026.jpg` (day 20, on the rail).
+
+**Why:** Boss asked for her hatch or early picture instead of the in-hand one. Her actual hatch-day frame (IMG_5141) is referenced in the hatch record but has never been committed to the repo — `path: ""` — so the day-20 rail shot is the earliest frame that exists here.
+
+**How:** one field. All three frames stay in her `photos[]` ledger, so `/flock`'s rotating portrait still walks her back through the shoulder shot and the in-hand frame, and the leg-band evidence that cites IMG_7718 by name is untouched. Note the knock-on: `photo` is a single SSoT read by both the homepage and `/flock`, and `/flock`'s "photo ID unconfirmed" badge keys off `suspected` in the filename — so that badge now shows on her tile. That is accurate for this frame (the hatch record records the ID as suspected, not confirmed) and was left in place rather than special-cased.
+
+## [1.39.3] — 2026-08-16
+
+### Added — contract check now verifies frame geometry against `lib/cameras.ts` (Claude Opus 5)
+
+**What:** `npm run check:contract` gains a fourth probe. For every camera the backend reports live, it fetches a real frame, parses the JPEG header for width/height, and asserts the aspect ratio matches the `aspectRatio` declared in `lib/cameras.ts` (2% tolerance).
+
+**Why:** the stage sizes each tile from the declared `aspectRatio` and renders the frame `object-contain`. When the declaration and the camera's real output disagree, the picture silently letterboxes inside a wrongly-shaped box — no error, no console warning, just a tile that looks subtly wrong until a human notices. This is not hypothetical: `s7-cam` switched to portrait 9:16 on 2026-04-21 (farm-guardian v2.35.2) and the Duo 2 emits a stitched 8:3 panoramic. Either changing again — a camera remounted, a lens swapped, a backend resize default altered — desyncs the overlay with nothing to catch it.
+
+**Scope, stated honestly:** this catches *metadata drift*, not the v1.39.1 orphaned-poll-chain bug. There the endpoint returned a perfectly correct frame and the frontend asked for the wrong camera; that class is only observable in a browser. An earlier note in this session overstated the overlap.
+
+**How:** a ~25-line JPEG SOF-marker walk, so the script stays stdlib-only (no image dependency). `lib/cameras.ts` is read with a per-object-literal regex rather than imported, since the script is plain `.mjs`. A camera with no overlay entry warns rather than fails — `resolveCameraMeta`'s 16/9 fallback is documented, intentional behavior. Current run: all 6 live cameras pass.
+
+### Changed — `public/photos/stories/` added to `.gitignore` (Claude Opus 5)
+
+**What:** the frozen story archive is now ignored, mirroring the reels entry directly above it.
+
+**Why:** stories are the same case as the reels purged in v1.37.0 and were simply never given the same treatment — transport, not content. They existed only for Meta to fetch once during story ingest; stories expire after 24h and nothing on this site has ever linked to one. Serving moved to the Mini on 2026-05-04, the lane stopped writing here the same day, and CLAUDE.md has described the directory as "a frozen archive" ever since — while 334 files / 111 MB sat in git.
+
+**Note:** this only stops future writes. The 334 tracked files are still in the index and history; removing them needs a `git rm -r --cached` that this session was not permitted to run. The ignore pattern is deliberately anchored (`/public/photos/stories/`) so it cannot match the archive lane's still-active `public/photos/on-this-day/YYYY-MM-DD/stories/` — verified with `git check-ignore` against a real file from that tree.
+
+## [1.39.2] — 2026-08-15
+
+### Changed — Henriella is Henriello: sex confirmed, bird renamed, old bird URLs no longer 404 (Claude Opus 5)
+
+**What:** `content/flock-profiles.json`, `content/flock_bands.json`, the hatch record (renamed to `content/hatches/2026/2026-05-16-02-henriello.md`) and the `/markets` analyst tile all move from **Henriella** to **Henriello**, with `sex: cockerel` confirmed. `app/flock/[slug]/page.tsx` now redirects a renamed bird's old URL to its current one.
+
+**Why:** Boss confirmed the cockerel call on 2026-08-15. The roster had been carrying `suspected_sex: cockerel` since 21-Jul-2026 with a Boss-approved alternate name pending confirmation, and predicted saddle/hackle feathers would settle it at 12–14 weeks — the confirmation landed at ~13 weeks, inside that window.
+
+**How:** the rename uses the repo's existing `formerly` field (as Birddor fka Birdadette) rather than a new alias field, so the "fka Henriella" chip on `/flock` and `/flock/[slug]` renders with no new UI code. Pronouns in `color_description` and the matching `color_observations` entry go she→he. The 21-Jul suspicion paragraph in the hatch record is left exactly as written and the confirmation **appended** — the growth log is append-only per schema, and that earlier call was correct four weeks early off comb and wattle development alone. A dated `phenotype_observations` entry (2026-08-15, age_days 91) records the confirmation. Photo filenames keep their `henriella-` prefix as historical artifacts; captions describing the bird move to the current name.
+
+**Bonus fix — renamed birds were silently losing their URLs.** `/flock/[slug]` derives its slug from `name`, so renaming a bird kills its old page. **`/flock/birdadette` has been returning 404 ever since that bird became Birddor**, and `/flock/henriella` was about to join it. An unresolved slug is now matched against `formerly` and 308s to the canonical slug. Data-driven on purpose: any future rename gets its redirect just by filling in `formerly`, with no per-bird route file. Verified: `/flock/henriella` → 308 → `/flock/henriello`, `/flock/birdadette` → 308 → `/flock/birddor`, `/flock/henriello` → 200, and an unknown slug still → 404.
+
+## [1.39.1] — 2026-08-15
+
+### Fixed — the Duo 2 tile was showing the other Reolink (Claude Opus 5)
+
+**What:** `GuardianCameraFeed.tsx`'s snapshot poll chain is now scoped to the effect run instead of the component, and aborts its in-flight request on teardown. `GuardianCameraStage.tsx` keys the two top-stage tiles by camera name and fixes a dead thumbnail click.
+
+**Why:** Boss: "the box that should be showing the Duo 2 keeps flipping between the two reolink cameras." It was — measured on `/?cam=duo2`, 41 of 42 samples of the Duo 2 tile were painted with a 16:9 `house-yard` frame rather than the Duo 2's 8:3 panoramic, with the tile still labelled `duo2`. Guardian was exonerated first: ten consecutive pulls of `/api/cameras/duo2/frame` all returned a correct 1280×480. The browser was asking for the wrong camera.
+
+The poll chain's liveness guard was `mountedRef` — a ref, so scoped to the *component*, not to the *effect run*. When `cameraName` changed on a mounted tile, React ran the cleanup (`mountedRef.current = false`) and then immediately ran the new effect body (`mountedRef.current = true`). The previous chain's in-flight fetch resolved a moment later, saw `true`, wrote the old camera's blob into the shared `frameUrl`, and re-armed `setTimeout(fetchFrame, …)` on its own stale closure. That timer lived in the superseded run's local `nextTick`, which the current cleanup closes over a different binding of — so it could never be cleared. Two immortal chains, one `frameUrl`, alternating writes at ~1.2 s.
+
+No click was needed to trigger it. `GuardianCameraStage` initialises `userFeatured` to `defaultFeatured` (`house-yard`) and reads `?cam=`/`localStorage` post-mount for hydration safety, so *every* load with a non-default camera selected mutated the live tile's `cameraName` and orphaned a chain. Once `farm2026.guardian.featured.*` was `duo2`, it reproduced on every page view.
+
+**How:** the guard is a run-scoped `let cancelled` declared inside the effect, checked after every `await`, so a superseded run's chain dies at its next checkpoint and can never re-arm. Cleanup also aborts the in-flight fetch instead of leaving it to occupy a per-host connection, and per-camera state (`hadFrameRef`, `consecutiveErrors`, `reconnectingShownAt`, the rendered blob) resets on camera change rather than only on unmount — otherwise an incoming camera inherited the outgoing one's "already had a frame" history and could skip `CONNECTING` straight to `OFFLINE`. Blob revocation moved out of a `setState` updater, which must stay pure.
+
+Fixed at the guard rather than papered over with a React `key`: `maxWidth` is also an effect dep and legitimately changes (1600 on the stage, 800 on a thumb) without the camera changing, so keying on camera name alone would not have covered that re-run. The stage keys are defence in depth — those two slots were the only unkeyed tile positions on the page, which is why they were the ones mutating a live feed.
+
+Two things fell out of the same root cause:
+
+- **A cascade.** The orphaned chain shared the tile's single `feedState` and reported it under the *current* `cameraName`, so `house-yard`'s failures were recorded against `duo2`. Reaching `OFFLINE_THRESHOLD` tripped auto-promote, changing `cameraName` again and spawning a third chain.
+- **A dead thumbnail click.** That left `userFeatured === "duo2"` while `featured` had moved elsewhere, so `duo2` rendered as a thumb while still being the user's pick — and `promote()`'s `if (name === userFeatured) return;` swallowed the click entirely. It now compares against the derived `featured`, so the click at least writes the pick through to `localStorage` and the URL and survives a reload. It does **not** force past auto-promote: while a camera is still reporting `offline`, `featured` stays where auto-promote put it and the stage won't move. Whether a user should be able to pin a camera that isn't producing frames is a policy question for Boss, deliberately left alone here.
+
+**Verified** (no test suite; instrumented browser repro is the verification step — `docs/15-Aug-2026-duo2-camera-tile-flip-plan.md`): on `/?cam=duo2` and `/projects/guardian?cam=duo2`, every sample of the Duo 2 tile now reports 2.667 (8:3) — 26/26 and 13/13, versus 1/42 before. Orphan polls of `house-yard` at stage width dropped from 27 to 1 (the single legitimate first-render fetch, aborted before re-arming). A second orphan also disappeared: `house-yard`'s *thumbnail* had been running two chains (54 requests at a 6 ms median gap, versus ~28 for every other thumb), and now runs one at a clean 2000 ms. Over a 42 s window the page went from 8 poll chains for 6 cameras to exactly 6, all uniform. Three click-promotes across cameras produced zero cross-camera frames. `npm run build` and ESLint on both touched files are clean.
+
+## [1.39.0] — 2026-08-14
+
+### Fixed — camera overlay labels were blocking Guardian thumbnail images (Claude Sonnet 5)
+
+**What:** `lib/cameras.ts` gained metadata entries for `usb-webcam-1080p`, `macbook-air-facetime`, and `jieli-dashcam`. `GuardianCameraFeed.tsx`'s top-right feed-status badge is now width-capped and truncates its label instead of growing unbounded.
+
+**Why:** Guardian's backend renamed `usb-cam` → `usb-webcam-1080p` and `mba-cam` → `macbook-air-facetime`, and added a new `jieli-dashcam` (all in farm-guardian's `config.json`), but `lib/cameras.ts`'s static overlay was never updated to match. `resolveCameraMeta`'s fallback used the raw (long) camera name as both `label` and `shortLabel`, so the thumbnail picker's tiny tiles rendered an overlay badge wide enough to cover most of the visible frame — Boss flagged it directly ("look at those camera labels they block the damn image").
+
+**How:** added proper `shortLabel`s for the three renamed/new cameras so the badge goes back to a compact `"● Reolink LIVE"`-style tag. Also capped the badge's max-width to the tile minus its inset and made the label span truncate, so any future camera that lands in Guardian's roster before someone writes metadata for it degrades to an ellipsized tag instead of blanking the thumbnail again.
+
+## [1.38.0] — 2026-08-08
+
+### Changed — Guardian project copy rewritten for the new frame pipeline (Claude Opus 5)
+
+**What:** `content/projects/guardian/index.mdx` — "The Pipeline" rewritten from 4 steps to 5, plus new copy in "What This Is" and "How It Watches", and an updated `s7-cam` hardware row.
+
+**Why:** the page described a system that no longer exists. It said the Mac Mini "runs vision-language models against every frame" — as of farm-guardian v2.67.0/v2.68.0 that is no longer true and hasn't been the interesting part for a while. The backend now runs a chain of increasingly expensive judges: a burst capture, a ~16 ms object-detector presence check, best-frame selection, and only then the ~5 s VLM. The cadence is also no longer steady on that camera — it speeds up after a good frame and slows over an empty pen.
+
+**How:** the new copy explains the *shape* of the pipeline (cheap judges gating expensive ones) rather than listing components, since that's the part a reader can actually learn something from. Three specifics worth keeping accurate on a public page:
+
+- sharpness is measured inside the bird, not across the frame — foliage out-textures a bird and makes a whole-frame reading rate a soft photo higher than a crisp one
+- the score deliberately ignores how much of the frame the bird fills, even though that's the strongest predictor of which photos get picked — because it belongs in ranking frames, not in gating them
+- good moments cluster, so a hit makes the camera sample harder for the next 90 seconds
+
+The `s7-cam` row also drops its stale "currently aimed at the big water bowl" line (aims go stale within days — `CLAUDE.md` warns about exactly this) and notes the wireless-charging runtime limit instead, which is the durable fact about that device.
 
 ## [1.37.0] — 2026-08-01
 

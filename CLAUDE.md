@@ -11,6 +11,10 @@ This project is part of a two-repo system:
 
 The Guardian components in this repo (`app/components/guardian/`) consume farm-guardian's REST API. The TypeScript interfaces in `types.ts` must stay in sync with the API response shapes in farm-guardian's `api.py` and `dashboard.py`.
 
+## SEO checklist
+
+Before shipping or reviewing any public page, run [`docs/SEO-CHECKLIST.md`](docs/SEO-CHECKLIST.md). Verify against the built output, and leave the two human-only items (author bio, backlinks) to the Boss.
+
 ## Social-posting pipelines that write into this repo
 
 > **For the surface-by-surface map** (every social platform the farm publishes to or reads from, code path, LaunchAgent, cadence, trust signal) → [`docs/SOCIAL_MEDIA_MAP.md`](docs/SOCIAL_MEDIA_MAP.md). That doc is the answer to "where does X get posted from?" / "why did Y end up on Instagram/Facebook/Nextdoor?" Read it before adding any social-related component.
@@ -255,6 +259,13 @@ Full orchestration guide and per-machine quick-reference table is in `farm-guard
   - Updating the top entry of `CHANGELOG.md` (SemVer; what/why/how; include author/model name).
 - Commits: do not commit unless explicitly requested; when asked, use descriptive commit messages and follow user instructions exactly.
 - Keep technical depth in docs/changelog rather than dumping it into chat.
+- **Version bumps are sized to the change, not to the effort.** Small content or copy tweaks
+  confined to a single page — swapping a hero image, adding or rewording prose, fixing a caption,
+  retouching one section's styling — get a **patch** bump (`1.42.0` → `1.42.1`). Reserve **minor**
+  bumps (`1.42.0` → `1.43.0`) for structural or feature changes: a new page or route, a new data
+  source or content type, a new pipeline, a component API change, or a reworking that spans
+  multiple pages. When in doubt, patch. The CHANGELOG entry should carry a one-line rationale for
+  the size of the bump so the next reader doesn't have to reverse-engineer it.
 
 ## Communication style
 - Keep responses tight and non-jargony; do not dump chain-of-thought.

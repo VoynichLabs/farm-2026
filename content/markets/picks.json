@@ -208,7 +208,7 @@
   ],
   "picks": [
     {
-      "date": "2026-08-07",
+      "date": "2026-10-02",
       "ticker": "CORN",
       "company": "Teucrium Corn Fund",
       "play": "SHARES — long feed costs",
@@ -216,7 +216,7 @@
       "rating": "BUY",
       "omen": "Empty feeder by 07:00. Feed-cost signal. Long the commodity.",
       "frame": "",
-      "frameTime": "2026-08-07 09:30 ET (market open)",
+      "frameTime": "2026-10-02 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -224,10 +224,10 @@
         "Empty bucket — BULLISH SIGNAL on CORN"
       ],
       "mood": "Hungry. Inflationary.",
-      "realQuote": "CORN last $17.61 (-0.06%) — real, 2026-08-07"
+      "realQuote": "CORN last $18.98 (-0.32%) — real, 2026-10-02"
     },
     {
-      "date": "2026-08-06",
+      "date": "2026-10-01",
       "ticker": "MOO",
       "company": "VanEck Agribusiness ETF",
       "play": "SHARES — graze the index",
@@ -235,36 +235,17 @@
       "rating": "BUY",
       "omen": "Broad-based grazing across the full run. Ag basket reads positive. Index exposure confirmed.",
       "frame": "",
-      "frameTime": "2026-08-06 09:30 ET (market open)",
+      "frameTime": "2026-10-01 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
         "All visible birds — GROUND, uniform spread"
       ],
       "mood": "Calm. Diversified.",
-      "realQuote": "MOO last $81.22 (-0.58%) — real, 2026-08-06"
+      "realQuote": "MOO last $81.47 (-0.8%) — real, 2026-10-01"
     },
     {
-      "date": "2026-08-05",
-      "ticker": "ADM",
-      "company": "Archer-Daniels-Midland Company",
-      "play": "SHARES — clip the input spread",
-      "conviction": 62,
-      "rating": "ACCUMULATE",
-      "omen": "Scatter pattern across whole floor — inputs moving. ADM clips the spread either way.",
-      "frame": "",
-      "frameTime": "2026-08-05 09:30 ET (market open)",
-      "model": "rotation schedule (weekday deterministic)",
-      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
-      "birdReads": [
-        "Multiple — GROUND, distributed scratch search",
-        "One hen — NESTING BOX, not relevant to thesis"
-      ],
-      "mood": "Busy. Non-directional.",
-      "realQuote": "ADM last $81.58 (+2.09%) — real, 2026-08-05"
-    },
-    {
-      "date": "2026-08-04",
+      "date": "2026-09-29",
       "ticker": "PPC",
       "company": "Pilgrim's Pride Corporation",
       "play": "SHARES — follow the feeder",
@@ -272,7 +253,7 @@
       "rating": "BUY",
       "omen": "Feed bucket traffic elevated. Pilgrim's margins holding. Flock stays long.",
       "frame": "",
-      "frameTime": "2026-08-04 09:30 ET (market open)",
+      "frameTime": "2026-09-29 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -280,10 +261,10 @@
         "Tan/Brown — GROUND, circling bucket"
       ],
       "mood": "Hungry. Constructive.",
-      "realQuote": "PPC last $27.92 (+2.05%) — real, 2026-08-04"
+      "realQuote": "PPC last $28.11 (+1.04%) — real, 2026-09-29"
     },
     {
-      "date": "2026-08-03",
+      "date": "2026-09-28",
       "ticker": "TSN",
       "company": "Tyson Foods, Inc.",
       "play": "SHARES — hold the high roost",
@@ -291,7 +272,7 @@
       "rating": "STRONG BUY",
       "omen": "High-roost count up. Protein names lead. Tyson follows the perch.",
       "frame": "/photos/markets/pick-tsn.jpg",
-      "frameTime": "2026-08-03 09:30 ET (market open)",
+      "frameTime": "2026-09-28 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -300,68 +281,10 @@
         "Brown Striped — HIGH-ROOST, center"
       ],
       "mood": "Decisive. Feed-adjacent.",
-      "realQuote": "TSN last $57.96 (-4.44%) — real, 2026-08-03"
+      "realQuote": "TSN last $50.92 (-0.43%) — real, 2026-09-28"
     },
     {
-      "date": "2026-07-29",
-      "ticker": "ADM",
-      "company": "Archer-Daniels-Midland Company",
-      "play": "SHARES — clip the input spread",
-      "conviction": 62,
-      "rating": "ACCUMULATE",
-      "omen": "Scatter pattern across whole floor — inputs moving. ADM clips the spread either way.",
-      "frame": "",
-      "frameTime": "2026-07-29 09:30 ET (market open)",
-      "model": "rotation schedule (weekday deterministic)",
-      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
-      "birdReads": [
-        "Multiple — GROUND, distributed scratch search",
-        "One hen — NESTING BOX, not relevant to thesis"
-      ],
-      "mood": "Busy. Non-directional.",
-      "realQuote": "ADM last $84.04 (+1.07%) — real, 2026-07-29"
-    },
-    {
-      "date": "2026-07-28",
-      "ticker": "PPC",
-      "company": "Pilgrim's Pride Corporation",
-      "play": "SHARES — follow the feeder",
-      "conviction": 68,
-      "rating": "BUY",
-      "omen": "Feed bucket traffic elevated. Pilgrim's margins holding. Flock stays long.",
-      "frame": "",
-      "frameTime": "2026-07-28 09:30 ET (market open)",
-      "model": "rotation schedule (weekday deterministic)",
-      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
-      "birdReads": [
-        "Black & White Speckled — GROUND, by feeder",
-        "Tan/Brown — GROUND, circling bucket"
-      ],
-      "mood": "Hungry. Constructive.",
-      "realQuote": "PPC last $29.19 (+1.78%) — real, 2026-07-28"
-    },
-    {
-      "date": "2026-07-27",
-      "ticker": "TSN",
-      "company": "Tyson Foods, Inc.",
-      "play": "SHARES — hold the high roost",
-      "conviction": 74,
-      "rating": "STRONG BUY",
-      "omen": "High-roost count up. Protein names lead. Tyson follows the perch.",
-      "frame": "/photos/markets/pick-tsn.jpg",
-      "frameTime": "2026-07-27 09:30 ET (market open)",
-      "model": "rotation schedule (weekday deterministic)",
-      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
-      "birdReads": [
-        "Dark/Black — HIGH-ROOST, top-left ledge",
-        "Tan/Brown — GROUND, back-right corner",
-        "Brown Striped — HIGH-ROOST, center"
-      ],
-      "mood": "Decisive. Feed-adjacent.",
-      "realQuote": "TSN last $57.45 (+1.23%) — real, 2026-07-27"
-    },
-    {
-      "date": "2026-07-24",
+      "date": "2026-09-25",
       "ticker": "CORN",
       "company": "Teucrium Corn Fund",
       "play": "SHARES — long feed costs",
@@ -369,7 +292,7 @@
       "rating": "BUY",
       "omen": "Empty feeder by 07:00. Feed-cost signal. Long the commodity.",
       "frame": "",
-      "frameTime": "2026-07-24 09:30 ET (market open)",
+      "frameTime": "2026-09-25 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -377,10 +300,10 @@
         "Empty bucket — BULLISH SIGNAL on CORN"
       ],
       "mood": "Hungry. Inflationary.",
-      "realQuote": "CORN last $18.13 (-0.98%) — real, 2026-07-24"
+      "realQuote": "CORN last $19.31 (-1.88%) — real, 2026-09-25"
     },
     {
-      "date": "2026-07-23",
+      "date": "2026-09-24",
       "ticker": "MOO",
       "company": "VanEck Agribusiness ETF",
       "play": "SHARES — graze the index",
@@ -388,17 +311,17 @@
       "rating": "BUY",
       "omen": "Broad-based grazing across the full run. Ag basket reads positive. Index exposure confirmed.",
       "frame": "",
-      "frameTime": "2026-07-23 09:30 ET (market open)",
+      "frameTime": "2026-09-24 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
         "All visible birds — GROUND, uniform spread"
       ],
       "mood": "Calm. Diversified.",
-      "realQuote": "MOO last $83.17 (+1.24%) — real, 2026-07-23"
+      "realQuote": "MOO last $84.31 (-0.3%) — real, 2026-09-24"
     },
     {
-      "date": "2026-07-22",
+      "date": "2026-09-23",
       "ticker": "ADM",
       "company": "Archer-Daniels-Midland Company",
       "play": "SHARES — clip the input spread",
@@ -406,7 +329,7 @@
       "rating": "ACCUMULATE",
       "omen": "Scatter pattern across whole floor — inputs moving. ADM clips the spread either way.",
       "frame": "",
-      "frameTime": "2026-07-22 09:30 ET (market open)",
+      "frameTime": "2026-09-23 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -414,10 +337,10 @@
         "One hen — NESTING BOX, not relevant to thesis"
       ],
       "mood": "Busy. Non-directional.",
-      "realQuote": "ADM last $86.2 (+0.62%) — real, 2026-07-22"
+      "realQuote": "ADM last $82.34 (-1.25%) — real, 2026-09-23"
     },
     {
-      "date": "2026-07-21",
+      "date": "2026-09-22",
       "ticker": "PPC",
       "company": "Pilgrim's Pride Corporation",
       "play": "SHARES — follow the feeder",
@@ -425,7 +348,7 @@
       "rating": "BUY",
       "omen": "Feed bucket traffic elevated. Pilgrim's margins holding. Flock stays long.",
       "frame": "",
-      "frameTime": "2026-07-21 09:30 ET (market open)",
+      "frameTime": "2026-09-22 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -433,10 +356,10 @@
         "Tan/Brown — GROUND, circling bucket"
       ],
       "mood": "Hungry. Constructive.",
-      "realQuote": "PPC last $29.16 (+0.17%) — real, 2026-07-21"
+      "realQuote": "PPC last $29.48 (-1.24%) — real, 2026-09-22"
     },
     {
-      "date": "2026-07-20",
+      "date": "2026-09-21",
       "ticker": "TSN",
       "company": "Tyson Foods, Inc.",
       "play": "SHARES — hold the high roost",
@@ -444,7 +367,7 @@
       "rating": "STRONG BUY",
       "omen": "High-roost count up. Protein names lead. Tyson follows the perch.",
       "frame": "/photos/markets/pick-tsn.jpg",
-      "frameTime": "2026-07-20 09:30 ET (market open)",
+      "frameTime": "2026-09-21 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -453,10 +376,10 @@
         "Brown Striped — HIGH-ROOST, center"
       ],
       "mood": "Decisive. Feed-adjacent.",
-      "realQuote": "TSN last $57.77 (-0.1%) — real, 2026-07-20"
+      "realQuote": "TSN last $52.77 (+0.98%) — real, 2026-09-21"
     },
     {
-      "date": "2026-07-17",
+      "date": "2026-09-18",
       "ticker": "CORN",
       "company": "Teucrium Corn Fund",
       "play": "SHARES — long feed costs",
@@ -464,7 +387,7 @@
       "rating": "BUY",
       "omen": "Empty feeder by 07:00. Feed-cost signal. Long the commodity.",
       "frame": "",
-      "frameTime": "2026-07-17 09:30 ET (market open)",
+      "frameTime": "2026-09-18 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -472,10 +395,10 @@
         "Empty bucket — BULLISH SIGNAL on CORN"
       ],
       "mood": "Hungry. Inflationary.",
-      "realQuote": "CORN last $17.75 (+0.85%) — real, 2026-07-17"
+      "realQuote": "CORN last $19.83 (-0.7%) — real, 2026-09-18"
     },
     {
-      "date": "2026-07-16",
+      "date": "2026-09-17",
       "ticker": "MOO",
       "company": "VanEck Agribusiness ETF",
       "play": "SHARES — graze the index",
@@ -483,17 +406,17 @@
       "rating": "BUY",
       "omen": "Broad-based grazing across the full run. Ag basket reads positive. Index exposure confirmed.",
       "frame": "",
-      "frameTime": "2026-07-16 09:30 ET (market open)",
+      "frameTime": "2026-09-17 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
         "All visible birds — GROUND, uniform spread"
       ],
       "mood": "Calm. Diversified.",
-      "realQuote": "MOO last $81.58 (+0.09%) — real, 2026-07-16"
+      "realQuote": "MOO last $85.29 (-1.41%) — real, 2026-09-17"
     },
     {
-      "date": "2026-07-15",
+      "date": "2026-09-16",
       "ticker": "ADM",
       "company": "Archer-Daniels-Midland Company",
       "play": "SHARES — clip the input spread",
@@ -501,7 +424,7 @@
       "rating": "ACCUMULATE",
       "omen": "Scatter pattern across whole floor — inputs moving. ADM clips the spread either way.",
       "frame": "",
-      "frameTime": "2026-07-15 09:30 ET (market open)",
+      "frameTime": "2026-09-16 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -509,10 +432,10 @@
         "One hen — NESTING BOX, not relevant to thesis"
       ],
       "mood": "Busy. Non-directional.",
-      "realQuote": "ADM last $82.28 (+0.29%) — real, 2026-07-15"
+      "realQuote": "ADM last $85.61 (-1.14%) — real, 2026-09-16"
     },
     {
-      "date": "2026-07-14",
+      "date": "2026-09-15",
       "ticker": "PPC",
       "company": "Pilgrim's Pride Corporation",
       "play": "SHARES — follow the feeder",
@@ -520,7 +443,7 @@
       "rating": "BUY",
       "omen": "Feed bucket traffic elevated. Pilgrim's margins holding. Flock stays long.",
       "frame": "",
-      "frameTime": "2026-07-14 09:30 ET (market open)",
+      "frameTime": "2026-09-15 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -528,10 +451,10 @@
         "Tan/Brown — GROUND, circling bucket"
       ],
       "mood": "Hungry. Constructive.",
-      "realQuote": "PPC last $28.51 (+0.92%) — real, 2026-07-14"
+      "realQuote": "PPC last $30.25 (+0.03%) — real, 2026-09-15"
     },
     {
-      "date": "2026-07-13",
+      "date": "2026-09-14",
       "ticker": "TSN",
       "company": "Tyson Foods, Inc.",
       "play": "SHARES — hold the high roost",
@@ -539,7 +462,7 @@
       "rating": "STRONG BUY",
       "omen": "High-roost count up. Protein names lead. Tyson follows the perch.",
       "frame": "/photos/markets/pick-tsn.jpg",
-      "frameTime": "2026-07-13 09:30 ET (market open)",
+      "frameTime": "2026-09-14 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -548,10 +471,10 @@
         "Brown Striped — HIGH-ROOST, center"
       ],
       "mood": "Decisive. Feed-adjacent.",
-      "realQuote": "TSN last $57.83 (+0.21%) — real, 2026-07-13"
+      "realQuote": "TSN last $52.98 (+0.99%) — real, 2026-09-14"
     },
     {
-      "date": "2026-07-10",
+      "date": "2026-09-11",
       "ticker": "CORN",
       "company": "Teucrium Corn Fund",
       "play": "SHARES — long feed costs",
@@ -559,7 +482,7 @@
       "rating": "BUY",
       "omen": "Empty feeder by 07:00. Feed-cost signal. Long the commodity.",
       "frame": "",
-      "frameTime": "2026-07-10 09:30 ET (market open)",
+      "frameTime": "2026-09-11 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -567,10 +490,10 @@
         "Empty bucket — BULLISH SIGNAL on CORN"
       ],
       "mood": "Hungry. Inflationary.",
-      "realQuote": "CORN last $17.25 (-0.46%) — real, 2026-07-10"
+      "realQuote": "CORN last $20.01 (+0.91%) — real, 2026-09-11"
     },
     {
-      "date": "2026-07-09",
+      "date": "2026-09-10",
       "ticker": "MOO",
       "company": "VanEck Agribusiness ETF",
       "play": "SHARES — graze the index",
@@ -578,17 +501,17 @@
       "rating": "BUY",
       "omen": "Broad-based grazing across the full run. Ag basket reads positive. Index exposure confirmed.",
       "frame": "",
-      "frameTime": "2026-07-09 09:30 ET (market open)",
+      "frameTime": "2026-09-10 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
         "All visible birds — GROUND, uniform spread"
       ],
       "mood": "Calm. Diversified.",
-      "realQuote": "MOO last $80.87 (-0.05%) — real, 2026-07-09"
+      "realQuote": "MOO last $87.69 (+0.13%) — real, 2026-09-10"
     },
     {
-      "date": "2026-07-08",
+      "date": "2026-09-09",
       "ticker": "ADM",
       "company": "Archer-Daniels-Midland Company",
       "play": "SHARES — clip the input spread",
@@ -596,7 +519,7 @@
       "rating": "ACCUMULATE",
       "omen": "Scatter pattern across whole floor — inputs moving. ADM clips the spread either way.",
       "frame": "",
-      "frameTime": "2026-07-08 09:30 ET (market open)",
+      "frameTime": "2026-09-09 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -604,10 +527,10 @@
         "One hen — NESTING BOX, not relevant to thesis"
       ],
       "mood": "Busy. Non-directional.",
-      "realQuote": "ADM last $79.61 (+1.79%) — real, 2026-07-08"
+      "realQuote": "ADM last $84.5 (-0.13%) — real, 2026-09-09"
     },
     {
-      "date": "2026-07-07",
+      "date": "2026-09-08",
       "ticker": "PPC",
       "company": "Pilgrim's Pride Corporation",
       "play": "SHARES — follow the feeder",
@@ -615,7 +538,7 @@
       "rating": "BUY",
       "omen": "Feed bucket traffic elevated. Pilgrim's margins holding. Flock stays long.",
       "frame": "",
-      "frameTime": "2026-07-07 09:30 ET (market open)",
+      "frameTime": "2026-09-08 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -623,106 +546,10 @@
         "Tan/Brown — GROUND, circling bucket"
       ],
       "mood": "Hungry. Constructive.",
-      "realQuote": "PPC last $28.65 (-0.38%) — real, 2026-07-07"
+      "realQuote": "PPC last $30.48 (-0.1%) — real, 2026-09-08"
     },
     {
-      "date": "2026-07-06",
-      "ticker": "TSN",
-      "company": "Tyson Foods, Inc.",
-      "play": "SHARES — hold the high roost",
-      "conviction": 74,
-      "rating": "STRONG BUY",
-      "omen": "High-roost count up. Protein names lead. Tyson follows the perch.",
-      "frame": "/photos/markets/pick-tsn.jpg",
-      "frameTime": "2026-07-06 09:30 ET (market open)",
-      "model": "rotation schedule (weekday deterministic)",
-      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
-      "birdReads": [
-        "Dark/Black — HIGH-ROOST, top-left ledge",
-        "Tan/Brown — GROUND, back-right corner",
-        "Brown Striped — HIGH-ROOST, center"
-      ],
-      "mood": "Decisive. Feed-adjacent.",
-      "realQuote": "TSN last $58.89 (+0.79%) — real, 2026-07-06"
-    },
-    {
-      "date": "2026-07-02",
-      "ticker": "MOO",
-      "company": "VanEck Agribusiness ETF",
-      "play": "SHARES — graze the index",
-      "conviction": 71,
-      "rating": "BUY",
-      "omen": "Broad-based grazing across the full run. Ag basket reads positive. Index exposure confirmed.",
-      "frame": "",
-      "frameTime": "2026-07-02 09:30 ET (market open)",
-      "model": "rotation schedule (weekday deterministic)",
-      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
-      "birdReads": [
-        "All visible birds — GROUND, uniform spread"
-      ],
-      "mood": "Calm. Diversified.",
-      "realQuote": "MOO last $78.99 (-0.27%) — real, 2026-07-02"
-    },
-    {
-      "date": "2026-07-01",
-      "ticker": "ADM",
-      "company": "Archer-Daniels-Midland Company",
-      "play": "SHARES — clip the input spread",
-      "conviction": 62,
-      "rating": "ACCUMULATE",
-      "omen": "Scatter pattern across whole floor — inputs moving. ADM clips the spread either way.",
-      "frame": "",
-      "frameTime": "2026-07-01 09:30 ET (market open)",
-      "model": "rotation schedule (weekday deterministic)",
-      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
-      "birdReads": [
-        "Multiple — GROUND, distributed scratch search",
-        "One hen — NESTING BOX, not relevant to thesis"
-      ],
-      "mood": "Busy. Non-directional.",
-      "realQuote": "ADM last $76.4 (-0.61%) — real, 2026-07-01"
-    },
-    {
-      "date": "2026-06-30",
-      "ticker": "PPC",
-      "company": "Pilgrim's Pride Corporation",
-      "play": "SHARES — follow the feeder",
-      "conviction": 68,
-      "rating": "BUY",
-      "omen": "Feed bucket traffic elevated. Pilgrim's margins holding. Flock stays long.",
-      "frame": "",
-      "frameTime": "2026-06-30 09:30 ET (market open)",
-      "model": "rotation schedule (weekday deterministic)",
-      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
-      "birdReads": [
-        "Black & White Speckled — GROUND, by feeder",
-        "Tan/Brown — GROUND, circling bucket"
-      ],
-      "mood": "Hungry. Constructive.",
-      "realQuote": "PPC last $28.95 (+1.19%) — real, 2026-06-30"
-    },
-    {
-      "date": "2026-06-29",
-      "ticker": "TSN",
-      "company": "Tyson Foods, Inc.",
-      "play": "SHARES — hold the high roost",
-      "conviction": 74,
-      "rating": "STRONG BUY",
-      "omen": "High-roost count up. Protein names lead. Tyson follows the perch.",
-      "frame": "/photos/markets/pick-tsn.jpg",
-      "frameTime": "2026-06-29 09:30 ET (market open)",
-      "model": "rotation schedule (weekday deterministic)",
-      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
-      "birdReads": [
-        "Dark/Black — HIGH-ROOST, top-left ledge",
-        "Tan/Brown — GROUND, back-right corner",
-        "Brown Striped — HIGH-ROOST, center"
-      ],
-      "mood": "Decisive. Feed-adjacent.",
-      "realQuote": "TSN last $58.55 (+1.3%) — real, 2026-06-29"
-    },
-    {
-      "date": "2026-06-26",
+      "date": "2026-09-04",
       "ticker": "CORN",
       "company": "Teucrium Corn Fund",
       "play": "SHARES — long feed costs",
@@ -730,7 +557,7 @@
       "rating": "BUY",
       "omen": "Empty feeder by 07:00. Feed-cost signal. Long the commodity.",
       "frame": "",
-      "frameTime": "2026-06-26 09:30 ET (market open)",
+      "frameTime": "2026-09-04 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -738,10 +565,10 @@
         "Empty bucket — BULLISH SIGNAL on CORN"
       ],
       "mood": "Hungry. Inflationary.",
-      "realQuote": "CORN last $16.91 (-0.24%) — real, 2026-06-26"
+      "realQuote": "CORN last $20.17 (-0.25%) — real, 2026-09-04"
     },
     {
-      "date": "2026-06-25",
+      "date": "2026-09-03",
       "ticker": "MOO",
       "company": "VanEck Agribusiness ETF",
       "play": "SHARES — graze the index",
@@ -749,17 +576,17 @@
       "rating": "BUY",
       "omen": "Broad-based grazing across the full run. Ag basket reads positive. Index exposure confirmed.",
       "frame": "",
-      "frameTime": "2026-06-25 09:30 ET (market open)",
+      "frameTime": "2026-09-03 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
         "All visible birds — GROUND, uniform spread"
       ],
       "mood": "Calm. Diversified.",
-      "realQuote": "MOO last $77.16 (+0.81%) — real, 2026-06-25"
+      "realQuote": "MOO last $88.85 (+1.62%) — real, 2026-09-03"
     },
     {
-      "date": "2026-06-24",
+      "date": "2026-09-02",
       "ticker": "ADM",
       "company": "Archer-Daniels-Midland Company",
       "play": "SHARES — clip the input spread",
@@ -767,7 +594,7 @@
       "rating": "ACCUMULATE",
       "omen": "Scatter pattern across whole floor — inputs moving. ADM clips the spread either way.",
       "frame": "",
-      "frameTime": "2026-06-24 09:30 ET (market open)",
+      "frameTime": "2026-09-02 09:30 ET (market open)",
       "model": "rotation schedule (weekday deterministic)",
       "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
       "birdReads": [
@@ -775,7 +602,178 @@
         "One hen — NESTING BOX, not relevant to thesis"
       ],
       "mood": "Busy. Non-directional.",
-      "realQuote": "ADM last $75.84 (-0.59%) — real, 2026-06-24"
+      "realQuote": "ADM last $84.55 (+4.01%) — real, 2026-09-02"
+    },
+    {
+      "date": "2026-09-01",
+      "ticker": "PPC",
+      "company": "Pilgrim's Pride Corporation",
+      "play": "SHARES — follow the feeder",
+      "conviction": 68,
+      "rating": "BUY",
+      "omen": "Feed bucket traffic elevated. Pilgrim's margins holding. Flock stays long.",
+      "frame": "",
+      "frameTime": "2026-09-01 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "Black & White Speckled — GROUND, by feeder",
+        "Tan/Brown — GROUND, circling bucket"
+      ],
+      "mood": "Hungry. Constructive.",
+      "realQuote": "PPC last $31.56 (+0.57%) — real, 2026-09-01"
+    },
+    {
+      "date": "2026-08-31",
+      "ticker": "TSN",
+      "company": "Tyson Foods, Inc.",
+      "play": "SHARES — hold the high roost",
+      "conviction": 74,
+      "rating": "STRONG BUY",
+      "omen": "High-roost count up. Protein names lead. Tyson follows the perch.",
+      "frame": "/photos/markets/pick-tsn.jpg",
+      "frameTime": "2026-08-31 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "Dark/Black — HIGH-ROOST, top-left ledge",
+        "Tan/Brown — GROUND, back-right corner",
+        "Brown Striped — HIGH-ROOST, center"
+      ],
+      "mood": "Decisive. Feed-adjacent.",
+      "realQuote": "TSN last $55.4 (+0.09%) — real, 2026-08-31"
+    },
+    {
+      "date": "2026-08-28",
+      "ticker": "CORN",
+      "company": "Teucrium Corn Fund",
+      "play": "SHARES — long feed costs",
+      "conviction": 65,
+      "rating": "BUY",
+      "omen": "Empty feeder by 07:00. Feed-cost signal. Long the commodity.",
+      "frame": "",
+      "frameTime": "2026-08-28 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "All birds — FEEDER, aggressive pecking",
+        "Empty bucket — BULLISH SIGNAL on CORN"
+      ],
+      "mood": "Hungry. Inflationary.",
+      "realQuote": "CORN last $20.0 (+1.16%) — real, 2026-08-28"
+    },
+    {
+      "date": "2026-08-27",
+      "ticker": "MOO",
+      "company": "VanEck Agribusiness ETF",
+      "play": "SHARES — graze the index",
+      "conviction": 71,
+      "rating": "BUY",
+      "omen": "Broad-based grazing across the full run. Ag basket reads positive. Index exposure confirmed.",
+      "frame": "",
+      "frameTime": "2026-08-27 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "All visible birds — GROUND, uniform spread"
+      ],
+      "mood": "Calm. Diversified.",
+      "realQuote": "MOO last $84.84 (-0.32%) — real, 2026-08-27"
+    },
+    {
+      "date": "2026-08-26",
+      "ticker": "ADM",
+      "company": "Archer-Daniels-Midland Company",
+      "play": "SHARES — clip the input spread",
+      "conviction": 62,
+      "rating": "ACCUMULATE",
+      "omen": "Scatter pattern across whole floor — inputs moving. ADM clips the spread either way.",
+      "frame": "",
+      "frameTime": "2026-08-26 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "Multiple — GROUND, distributed scratch search",
+        "One hen — NESTING BOX, not relevant to thesis"
+      ],
+      "mood": "Busy. Non-directional.",
+      "realQuote": "ADM last $79.16 (+1.28%) — real, 2026-08-26"
+    },
+    {
+      "date": "2026-08-25",
+      "ticker": "PPC",
+      "company": "Pilgrim's Pride Corporation",
+      "play": "SHARES — follow the feeder",
+      "conviction": 68,
+      "rating": "BUY",
+      "omen": "Feed bucket traffic elevated. Pilgrim's margins holding. Flock stays long.",
+      "frame": "",
+      "frameTime": "2026-08-25 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "Black & White Speckled — GROUND, by feeder",
+        "Tan/Brown — GROUND, circling bucket"
+      ],
+      "mood": "Hungry. Constructive.",
+      "realQuote": "PPC last $31.79 (-1.43%) — real, 2026-08-25"
+    },
+    {
+      "date": "2026-08-24",
+      "ticker": "TSN",
+      "company": "Tyson Foods, Inc.",
+      "play": "SHARES — hold the high roost",
+      "conviction": 74,
+      "rating": "STRONG BUY",
+      "omen": "High-roost count up. Protein names lead. Tyson follows the perch.",
+      "frame": "/photos/markets/pick-tsn.jpg",
+      "frameTime": "2026-08-24 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "Dark/Black — HIGH-ROOST, top-left ledge",
+        "Tan/Brown — GROUND, back-right corner",
+        "Brown Striped — HIGH-ROOST, center"
+      ],
+      "mood": "Decisive. Feed-adjacent.",
+      "realQuote": "TSN last $58.77 (+0.48%) — real, 2026-08-24"
+    },
+    {
+      "date": "2026-08-21",
+      "ticker": "CORN",
+      "company": "Teucrium Corn Fund",
+      "play": "SHARES — long feed costs",
+      "conviction": 65,
+      "rating": "BUY",
+      "omen": "Empty feeder by 07:00. Feed-cost signal. Long the commodity.",
+      "frame": "",
+      "frameTime": "2026-08-21 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "All birds — FEEDER, aggressive pecking",
+        "Empty bucket — BULLISH SIGNAL on CORN"
+      ],
+      "mood": "Hungry. Inflationary.",
+      "realQuote": "CORN last $18.83 (+0.37%) — real, 2026-08-21"
+    },
+    {
+      "date": "2026-08-20",
+      "ticker": "MOO",
+      "company": "VanEck Agribusiness ETF",
+      "play": "SHARES — graze the index",
+      "conviction": 71,
+      "rating": "BUY",
+      "omen": "Broad-based grazing across the full run. Ag basket reads positive. Index exposure confirmed.",
+      "frame": "",
+      "frameTime": "2026-08-20 09:30 ET (market open)",
+      "model": "rotation schedule (weekday deterministic)",
+      "source": "Chicken Picks basket — Mon=TSN Tue=PPC Wed=ADM Thu=MOO Fri=CORN",
+      "birdReads": [
+        "All visible birds — GROUND, uniform spread"
+      ],
+      "mood": "Calm. Diversified.",
+      "realQuote": "MOO last $82.13 (+0.96%) — real, 2026-08-20"
     }
   ],
   "analysts": [
@@ -820,7 +818,7 @@
       "blurb": "High beta. Three weeks old. Fears nothing."
     },
     {
-      "name": "Henridotta",
+      "name": "Henridot",
       "title": "Chief Risk & Volatility",
       "img": "/photos/markets/analyst-6.jpg",
       "rating": "REDUCE",
@@ -838,7 +836,7 @@
     "Coop sentiment hits 73 GREED as two birds achieve high-roost",
     "Quant desk reports anomalous pecking velocity, cause unknown",
     "FEED futures slide on rumors of additional scratch supply",
-    "Henridotta: 'I am the only one here who can actually fly. Plan around that.'"
+    "Henridot: 'I am the only one here who can actually fly. Plan around that.'"
   ],
   "realStocks": [
     {
@@ -907,40 +905,40 @@
     {
       "sym": "TSN",
       "name": "Tyson Foods",
-      "px": 58.54,
-      "chg": 0.6,
-      "date": "2026-08-07"
+      "px": 50.47,
+      "chg": -0.12,
+      "date": "2026-10-02"
     },
     {
       "sym": "PPC",
       "name": "Pilgrim's Pride",
-      "px": 27.55,
-      "chg": 3.65,
-      "date": "2026-08-07"
+      "px": 25.2,
+      "chg": -6.7,
+      "date": "2026-10-02"
     },
     {
       "sym": "ADM",
       "name": "Archer-Daniels-Midland",
-      "px": 77.51,
-      "chg": -0.09,
-      "date": "2026-08-07"
+      "px": 79.52,
+      "chg": 0.18,
+      "date": "2026-10-02"
     },
     {
       "sym": "MOO",
       "name": "VanEck Agribusiness ETF",
-      "px": 81.48,
-      "chg": 0.32,
-      "date": "2026-08-07"
+      "px": 80.82,
+      "chg": 0.25,
+      "date": "2026-10-02"
     },
     {
       "sym": "CORN",
       "name": "Teucrium Corn Fund",
-      "px": 17.61,
-      "chg": -0.06,
-      "date": "2026-08-07"
+      "px": 18.98,
+      "chg": -0.32,
+      "date": "2026-10-02"
     }
   ],
-  "realAsOf": "2026-08-07",
+  "realAsOf": "2026-10-02",
   "benchmark": {
     "flock": "+7.30% MTD (unaudited, imaginary)",
     "spy": "SPY $741.25 (+0.75% last session, real)"

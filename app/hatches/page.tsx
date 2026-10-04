@@ -1,6 +1,6 @@
 /**
- * Author: Claude Sonnet 5 (prev Claude Opus 4.8 / Claude Fable 5)
- * Date: 22-Jul-2026 (orig 10-May-2026 / updated 22-Jun-2026, 06-Jul-2026, 16-Jul-2026)
+ * Author: Claude Opus 5.5 (prev Claude Sonnet 5 / Claude Opus 4.8 / Claude Fable 5)
+ * Date: 03-Oct-2026 (orig 10-May-2026 / updated 22-Jun-2026, 06-Jul-2026, 16-Jul-2026, 22-Jul-2026)
  * PURPOSE: /hatches — event ledger for every 2026 incubator hatch. Reads from
  *   content/hatches/2026/*.md (per-chick source of truth, schema in
  *   content/hatches/SCHEMA.md). Each card is a hatch event, not a
@@ -22,6 +22,7 @@
  *   near the top third of frame, and object-cover's default center-crop was
  *   cutting heads off.
  *
+ *   03-Oct-2026 (SEO checklist pass): canonical tag (alternates.canonical).
  * SRP/DRY check: Pass — page selects records via getHatchRecords and composes
  *   HatchCard + the presentational ThenAndNow component. The then/now data is
  *   derived from Birdimir's own HatchRecord (photos[], hatch_date, latest
@@ -44,6 +45,7 @@ export const metadata: Metadata = {
   title: "Hatches 2026",
   description:
     "Every chick hatched from the incubator on Farm 2026, Hampton CT — hatch date, parentage, dated phenotype observations, predictions vs outcomes.",
+  alternates: { canonical: "/hatches" },
 };
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
