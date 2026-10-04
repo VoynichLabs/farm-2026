@@ -16,6 +16,8 @@
  *   width/height from lib/image-dimensions.ts so the browser reserves the
  *   right space before it loads (was a fixed 1200x800 → CLS 0.153); the
  *   inline photo grid gets the same treatment (was a fixed 600x400).
+ *   03-Oct-2026 (garden strip, v1.45.0): images use a photo's optional
+ *   frontmatter `alt` when the note supplies one, else caption/title as before.
  * SRP/DRY check: Pass — reuses getFieldNote/getAllFieldNotes from lib/content.ts,
  *   follows same MDXRemote pattern as project pages.
  */
@@ -80,6 +82,9 @@ export default async function FieldNotePage({
   // True ratio so the reserved box matches the drawn one (no layout shift);
   // 1200x800 stays as the fallback when the file can't be read.
   const coverSize = note.cover ? getPublicImageSize(note.cover) : null;
+  // Cover alt: the cover's own photos[] entry describes it best when present.
+  const coverAlt =
+    note.photos.find((photo) => photo.src === note.cover)?.alt ?? note.title;
 
   return (
     <main className="max-w-4xl mx-auto px-4 py-12">
@@ -100,7 +105,7 @@ export default async function FieldNotePage({
         <div className="mb-8 rounded-xl overflow-hidden border border-field-border bg-field-card">
           <Image
             src={note.cover}
-            alt={note.title}
+            alt={coverAlt}
             width={coverSize?.width ?? 1200}
             height={coverSize?.height ?? 800}
             className="w-full h-auto max-h-[75vh] object-contain mx-auto"
@@ -144,7 +149,7 @@ export default async function FieldNotePage({
                 <div className="rounded-lg overflow-hidden border border-field-border bg-field-card">
                   <Image
                     src={photo.src}
-                    alt={photo.caption}
+                    alt={photo.alt ?? photo.caption}
                     width={size?.width ?? 600}
                     height={size?.height ?? 400}
                     className="w-full h-auto max-h-[70vh] object-contain mx-auto"

@@ -48,6 +48,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { preconnect } from "react-dom";
 import GuardianHomeBadge from "@/app/components/guardian/GuardianHomeBadge";
+import GardenStrip from "@/app/components/home/GardenStrip";
 import HomeCameraStage from "@/app/components/home/HomeCameraStage";
 import RecentGemsRail from "@/app/components/home/RecentGemsRail";
 import SystemBanner from "@/app/components/home/SystemBanner";
@@ -236,6 +237,9 @@ export default function Home() {
 
       {/* === RECENT GEMS === */}
       <RecentGemsRail />
+
+      {/* === FROM THE GARDEN — latest garden-tagged field note === */}
+      <GardenStrip />
 
       {/* === DEEPER PAGES, file-listing styled === */}
       <section className="max-w-7xl mx-auto px-3 py-4 border-t border-field-border font-mono text-[0.78rem]">

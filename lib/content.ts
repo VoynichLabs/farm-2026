@@ -16,6 +16,9 @@
  *   boundary). It replaces the old "Farm field note — {date}" meta description,
  *   which was identical boilerplate on every note. See plainExcerpt().
  *
+ *   03-Oct-2026 (garden strip, v1.45.0): field-note photos accept an optional
+ *   `alt` in frontmatter, used as image alt text in place of the caption.
+ *
  * SRP/DRY check: Pass — all content loading flows through this single module.
  *   getBirdAgeLabel() is the single age authority: it computes a live age label from a
  *   bird's hatch_date (full, partial, or year-only) on every render. Every bird now
@@ -268,7 +271,9 @@ export interface FieldNote {
   title: string;
   date: string;
   cover: string;
-  photos: { src: string; caption: string }[];
+  // `alt` is optional: a plain description of what is in the frame, for
+  // when the caption is a joke or a quip rather than a description.
+  photos: { src: string; caption: string; alt?: string }[];
   tags: string[];
   content: string;
   // Plain-text excerpt of the opening paragraph — the page's meta description.

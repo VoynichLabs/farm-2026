@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.45.0] — 2026-10-03
+
+### Added — Garden glow-up: homepage "From the Garden" strip and the 07-Aug field note (Claude Opus 5.5 (Bubba sub-agent); orig Claude Opus 5, PR #1)
+
+**What:** PR #1 (opened 07-Aug-2026, never merged) brought up to date with main and shipped. Adds `app/components/home/GardenStrip.tsx`, a homepage section after `RecentGemsRail` that renders the newest `garden`-tagged field note as a wide hero over a row of captioned tiles linking to the note; the dated field note `content/field-notes/2026-08-07-the-frontrunner-and-the-houseguest.mdx` (the frontrunner pumpkin, the first harvest, the bottle gourds flowering, the first visit from Riki the bulldog); and twelve iPhone photos in `public/photos/garden/`. Also the original plan doc, `docs/07-Aug-2026-garden-pumpkin-glow-up-plan.md`.
+
+**Brought onto the v1.44 SEO baseline (`docs/SEO-CHECKLIST.md`):**
+- The strip's section chip sits inside an `<h2>`, like the homepage's other sections. The page still has exactly one H1.
+- Images take their true width/height from `lib/image-dimensions.ts` instead of a guessed 3:4; the hero and tiles sit in fixed-height frames, so nothing below them moves when they load.
+- **Alt text that describes the picture.** Field-note photos accept an optional `alt` in frontmatter (`FieldNote.photos[].alt`, `lib/content.ts`). The strip and the field-note page use it ahead of the caption, and the field-note cover uses its own photo entry's `alt` ahead of the title. All twelve photos in this note have one, because several captions are quips ("Making his case."), not descriptions. Notes without `alt` render exactly as before.
+- The note's meta description is its opening lines via the existing `plainExcerpt()`, not boilerplate.
+
+**Content checked for October:** the note is dated 07-Aug and tagged `august`; statements like "no fruit set yet as of this week" are true as of that date and are left as written. Riki's first stay matches the 01-Oct note ("Riki is back for two weeks"). Bird captions stay generic (a rooster, the turkeys); no bird is named. The strip prints the note's date beside its title, and it re-points by itself once a newer `garden`-tagged note is published.
+
+**Photos:** 1500×2000 JPEGs, EXIF rotation baked in and all metadata (including GPS) stripped, per the original PR; re-checked with `exiftool`. They are served through `next/image`, so visitors get resized modern formats, not the source files.
+
+**Size:** minor — new homepage section and a new optional frontmatter field.
+
 ## [1.44.1] — 2026-10-03
 
 ### Changed — gem tiles load a small WebP instead of the full-frame photo (Claude Opus 5.5 (Bubba sub-agent))
