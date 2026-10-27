@@ -1796,7 +1796,7 @@
       ],
       "color_description": "Charcoal-grey bird covered in soft white spangles, with a paler white-flecked head, a bare red face and a very small comb; looks remarkably like Ingebird. Plumage alone cannot tell her apart; her leg band does. Yellow legs.",
       "color_description_as_of": "2026-09-21",
-      "photo": "birds/input-IMG_0444-adelbird-speckled-red-19oct2026.jpg",
+      "photo": "birds/input-IMG_0631-adelbird-speckled-perches-27oct2026.jpg",
       "notes": "The LAST HATCH of the 2026 incubator season. June clutch, Egg #5. The Boss dabbed a droplet of water on the drying membrane the evening of Jun 3; she pipped for air and finished on her own overnight. Named Adelbird 2026-06-04. Dark gray/black down with a white head spot, confirmed 2026-06-07 \u2014 shares the white spot with Ingebird, so the two are told apart by age/size (Adelbird is the youngest). Dam not individually confirmed (blue egg); sire window Whitey Red Legs. Per-chick record: content/hatches/2026/2026-06-04-01-adelbird.md",
       "location": "birdcatraz",
       "ornitharch": true,
@@ -1841,6 +1841,11 @@
           "file": "birds/input-IMG_0444-adelbird-speckled-red-19oct2026.jpg",
           "date": "2026-10-19",
           "caption": "A speckled hen with red face and yellow beak perches on a fence, eyeing the camera directly."
+        },
+        {
+          "file": "birds/input-IMG_0631-adelbird-speckled-perches-27oct2026.jpg",
+          "date": "2026-10-27",
+          "caption": "A speckled hen perches on a fence rail, eyeing the camera with clear detail."
         }
       ]
     },
