@@ -553,7 +553,7 @@
       ],
       "color_description": "A sharply bounded rust-and-black streaked cape over the head, neck and shoulders that stops dead where the body begins \u2014 a copper collar on a solid black bird, visible from across the yard. Body black to near-black with a faint green-blue sheen, no barring, speckling or white. Legs olive-tan mottled grey-brown rather than clean yellow. (Plumage from 23-Jun-2026 and five weeks stale; that frame showed neither the blue eyes nor the white wing and belly tips previously on file, and both shanks were bare where the roster puts orange #10 \u2014 she needs re-checking.)",
       "color_description_as_of": "2026-06-23",
-      "photo": "birds/IMG_6271-birdadotta-23jun2026.jpg",
+      "photo": "birds/input-IMG_0633-birdadotta-black-rust-27oct2026.jpg",
       "notes": "Birdadonna's offspring \u2014 egg laid 03-April-2026, hatched day-22, making her the first second-generation chick of the breeding program (dam Birdadonna, sire window Little Big Red Junior). Grown and out in Birdcatraz with the rest of the 2026 class.",
       "location": "birdcatraz",
       "ornitharch": true,
@@ -579,6 +579,11 @@
           "file": "birds/IMG_6271-birdadotta-23jun2026.jpg",
           "date": "2026-06-23",
           "caption": "Birdadotta, 23 Jun 2026 (day 59) \u2014 front three-quarter in the run; black body plumage with rust-auburn hackle, single red comb developing. Boss-confirmed ID."
+        },
+        {
+          "file": "birds/input-IMG_0633-birdadotta-black-rust-27oct2026.jpg",
+          "date": "2026-10-27",
+          "caption": "A black-and-rust hen perches on a wire fence, eyeing the camera with a sharp gaze."
         }
       ]
     },
