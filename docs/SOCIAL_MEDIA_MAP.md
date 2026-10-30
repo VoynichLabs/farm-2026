@@ -4,7 +4,7 @@
 >
 > **Canonical version:** [`farm-guardian/docs/SOCIAL_MEDIA_MAP.md`](https://github.com/VoynichLabs/farm-guardian/blob/main/docs/SOCIAL_MEDIA_MAP.md). Edit there first; mirror non-credentialed changes here. Do not fork the operational details (file paths on the Mac Mini, kill switches, LaunchAgent config) into this repo — they belong in farm-guardian only.
 
-**Last updated:** 2026-04-26
+**Last updated:** 2026-10-29 (reel rows and the separate @voynichlabs account; Claude Opus 5.5 Medium)
 
 ## How farm-2026 fits in
 
@@ -19,7 +19,10 @@ farm-2026 is the public-facing website at [farm.markbarney.net](https://farm.mar
 |---|---|---|---|
 | **Instagram `@pawel_and_pawleen`** — story | every 2h | live-camera reacted gems (FIFO; cap = IG's rolling 24h publish quota) | Discord `#farm-2026` reaction count > 0 |
 | **Instagram** — carousel | daily 18:00 ET | today's reacted strong+sharp gems | same |
-| **Instagram** — reel | Sundays 19:00 ET | week's reacted strong+sharp gems, ffmpeg-stitched | same |
+| **Instagram** — daily camera time-lapse reels | house-yard 09:00, duo2 15:00, S7 21:00, dashcam 21:30 ET | one reel per camera per day; the yard/duo2/dashcam reels cover midnight to midnight with quiet minutes sped up. Hosted off the Mini, not committed here. | none — auto-posted, Discord notice to Mark |
+| **Instagram** — time-lapse catch-up | 11:40 + 17:40 ET until done | ~230 daily reels built 9-Aug → 29-Oct-2026 that never posted (outage, see farm-guardian `docs/29-Oct-2026-instagram-outage-and-timelapse-recovery.md`) | none |
+| **Instagram** — S7 weekly gems reel | Sundays 10:30 ET | week's reacted S7 gems, ffmpeg-stitched | Discord reaction |
+| **Instagram `@voynichlabs`** (separate account, 29-Oct-2026) | Thursdays 19:00 ET | VoynichLabs music-video reels from the SSD queue; posts via Instagram login, not the farm's Facebook Page | none — Boss-prepared cuts |
 | **Facebook Page "Yorkies App"** | mirrors every successful IG post | tail-called from `ig_poster` success branches | same — FB inherits IG's gate |
 | **IG / FB Stories — on-this-day archive** | every 90 min | iPhone photo catalog (years 2022 / 2024 / 2025; 2023 deliberately skipped) | automated keyword filter (farm/pet keywords in; predators/receipts/screenshots out) — NO Discord gate |
 | **Nextdoor — Hampton CT neighborhood** | 08:00 ET throwback + 18:30 ET today | 1 reacted archive photo + 1 reacted live-camera gem per day | Discord `#farm-2026` reaction. Audience hard-locked to "Your neighborhood · Hampton only". |
