@@ -1595,7 +1595,7 @@
       ],
       "color_description": "A solid slate-grey folded wing panel lying flat against a gold body splashed all over with bold irregular black leopard blotches \u2014 the plain dark wing against the spotted gold is readable right across a pen. Tail solid black. Face and throat dusky grey-brown bare skin with a small cream patch behind the eye, comb a low pink-red ridge. \u26a0\ufe0f The grey-wing-over-gold look is shared with Birddor \u2014 Birddor has a large bright RED face and a very pale yellow-gold eye, Horstabird's face is dull grey-brown. (Plumage from 21-Jul-2026, photographed shortly before banding \u2014 not yet confirmed against yellow #2.)",
       "color_description_as_of": "2026-07-21",
-      "photo": "birds/285ccb73cc290621e91de5bea116638a5bb4dba7fe34745db1803727a613a0d2-horstabird-brown-black-08aug2026.jpg",
+      "photo": "birds/input-IMG_0838-horstabird-brown-reddish-08nov2026.jpg",
       "notes": "Boss-corrected 2026-06-07: a pullet, sired by LBRJ (the red rooster lost in the April predator wave) \u2014 identified by the rust/red coming in on her face and throat, which supersedes the earlier Whitey Red Legs paternity window. June clutch, Egg #4; an assisted hatch (the Boss removed a small piece of shell and dabbed water on the membrane, then the chick freed itself). Named in honor of Horst, the note-taking bot that logged the hatch. Per-chick record: content/hatches/2026/2026-06-03-03-horstabird.md",
       "location": "birdcatraz",
       "ornitharch": true,
@@ -1614,6 +1614,11 @@
           "file": "birds/285ccb73cc290621e91de5bea116638a5bb4dba7fe34745db1803727a613a0d2-horstabird-brown-black-08aug2026.jpg",
           "date": "2026-08-08",
           "caption": "A brown-and-black chicken perches on a branch, eye alert and feathers detailed."
+        },
+        {
+          "file": "birds/input-IMG_0838-horstabird-brown-reddish-08nov2026.jpg",
+          "date": "2026-11-08",
+          "caption": "A brown and reddish hen looks directly at the lens with visible feather detail."
         }
       ],
       "leg_band": {
