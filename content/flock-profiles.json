@@ -2062,7 +2062,7 @@
       ],
       "color_description": "Calico/multicolor patterning: black-speckled silvery-white head and neck, gold/straw and rust saddle feathers, black-and-white barred wing coverts and tail. Bright red single comb, red wattles, yellow legs. No leg band visible.",
       "color_description_as_of": "2026-09-07",
-      "photo": "birds/IMG_9624-loud-dumb-bird-red-comb-07sep2026.jpg",
+      "photo": "birds/input-IMG_0824-loud-dumb-bird-mottled-brown-08nov2026.jpg",
       "notes": "Named Loud Dumb Bird by the Boss (07-Sep-2026) \u2014 this is the \"calico rooster\" flagged same morning in docs/plans/07-Sep-2026-juvenile-to-rooster-roster-promotion-gap.md.",
       "location": "birdcatraz",
       "ornitharch": false,
@@ -2071,6 +2071,11 @@
           "file": "birds/IMG_9624-loud-dumb-bird-red-comb-07sep2026.jpg",
           "date": "2026-09-07",
           "caption": "A rooster with a red comb and barred tail stands alert, eyeing the camera directly."
+        },
+        {
+          "file": "birds/input-IMG_0824-loud-dumb-bird-mottled-brown-08nov2026.jpg",
+          "date": "2026-11-08",
+          "caption": "A mottled brown and white hen looks directly toward the camera."
         }
       ]
     },
