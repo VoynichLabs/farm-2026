@@ -2010,7 +2010,7 @@
       ],
       "color_description": "White body with black breast/belly and black tail, red single comb and wattles, slate-grey legs. No leg band visible.",
       "color_description_as_of": "2026-09-07",
-      "photo": "birds/1EE597EF-0DBF-4F8F-A084-1960A0B56F7C-hawk-food-white-black-07sep2026.jpg",
+      "photo": "birds/input-IMG_0818-hawk-food-black-white-08nov2026.jpg",
       "notes": "Named Hawk Food by the Boss (07-Sep-2026).",
       "location": "birdcatraz",
       "ornitharch": false,
@@ -2019,6 +2019,11 @@
           "file": "birds/1EE597EF-0DBF-4F8F-A084-1960A0B56F7C-hawk-food-white-black-07sep2026.jpg",
           "date": "2026-09-07",
           "caption": "A white-and-black rooster with red comb perches on a wooden beam, looking directly at the camera."
+        },
+        {
+          "file": "birds/input-IMG_0818-hawk-food-black-white-08nov2026.jpg",
+          "date": "2026-11-08",
+          "caption": "A black and white rooster looks directly at the lens with a prominent red comb and wattles."
         }
       ]
     },
