@@ -1,7 +1,7 @@
 "use client";
 /**
- * Author: Claude Sonnet 5 (prev Claude Opus 4.8; prev Claude Fable 5)
- * Date: 22-Jul-2026
+ * Author: Claude Opus 5.5 High (prev Claude Sonnet 5; Claude Opus 4.8; Claude Fable 5)
+ * Date: 08-Nov-2026 (updated 22-Jul-2026)
  * PURPOSE: Rotating portrait for one bird tile on /flock — cycles through a
  *   pool of frames (current portrait + dated throwbacks from the bird's
  *   hatch record) with a mono age-tag chip ("now · 3 months", "hatch day",
@@ -29,6 +29,10 @@
  *   10000 and the orn-fade cross-fade (globals.css) lengthened 700ms → 900ms
  *   — the cycle read as flashing/too fast to comfortably view a frame before
  *   it changed again.
+ *
+ *   08-Nov-2026 (flock cleanup): the age-tag chip only renders when the
+ *   frame has a tag. Frames with no tag (a bird with no live age, e.g. one
+ *   that has died) used to show an empty dark pill over the photo.
  *
  * SRP/DRY check: Pass — presentation-only client island; the pool (paths,
  *   tags, alts) is assembled server-side in app/flock/page.tsx from the
@@ -106,9 +110,11 @@ export default function OrnitharchPortrait({
         sizes={sizes}
         className="object-cover orn-fade"
       />
-      <span className="absolute bottom-2 left-2 bg-black/60 border border-white/25 text-white font-mono text-[0.6rem] uppercase tracking-widest px-2 py-0.5 rounded backdrop-blur-sm">
-        {current.tag}
-      </span>
+      {current.tag && (
+        <span className="absolute bottom-2 left-2 bg-black/60 border border-white/25 text-white font-mono text-[0.6rem] uppercase tracking-widest px-2 py-0.5 rounded backdrop-blur-sm">
+          {current.tag}
+        </span>
+      )}
     </>
   );
 }

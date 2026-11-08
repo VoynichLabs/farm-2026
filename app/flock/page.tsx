@@ -1,6 +1,6 @@
 /**
- * Author: Claude Opus 5.5 (prev Claude Sonnet 5; Claude Opus 4.8; Claude Fable 5; Claude Opus 4.8, 07-Jun-2026)
- * Date: 03-Oct-2026 (updated 22-Jul-2026)
+ * Author: Claude Opus 5.5 High (prev Claude Opus 5.5; Claude Sonnet 5; Claude Opus 4.8; Claude Fable 5; Claude Opus 4.8, 07-Jun-2026)
+ * Date: 08-Nov-2026 (updated 03-Oct-2026, 22-Jul-2026)
  * PURPOSE: /flock — the breeding-program memory surface. Per
  *   docs/11-May-2026-hermes-breeding-showcase-notes.md, the openclaw brief
  *   (docs/09-May-2026-openclaw-farm-ops-story-design-brief.md §9, §10, §17.4,
@@ -85,6 +85,17 @@
  *     6. Breed Notes
  *
  *   03-Oct-2026 (SEO checklist pass): canonical tag (alternates.canonical).
+ *
+ *   08-Nov-2026 (flock cleanup): every active rooster lives in Birdcatraz,
+ *   so each one rendered twice — once in the Birdcatraz grid and again in
+ *   The Roosters. Roosters now render once, in Birdcatraz, with the ROOSTER
+ *   badge; The Roosters section only picks up a rooster with no location
+ *   (none today, so it self-suppresses). Deceased ornitharchs (Birddor)
+ *   stay on the cohort wall as a hatch record but no longer show a live,
+ *   still-growing age — no death marker is added (16-Jul rule). Photos of
+ *   birds with no hatch_date no longer carry a false "throwback" tag. The
+ *   Hens blurb named a Wyandotte that isn't in that section; it now names
+ *   the two hens it actually shows.
  * SRP/DRY check: Pass — page composes BirdCard + OrnitharchTile primitives
  *   against getFlockProfiles() + getHatchRecords() (lib/content.ts). Ages
  *   come solely from getBirdAgeLabel(hatch_date) computed live. The
@@ -231,7 +242,7 @@ const throwbackTag = (hatchISO?: string, photoISO?: string): string => {
 // portrait is deduped out of the throwback list by src.
 const buildPortraitPool = (bird: FlockBird, record?: HatchRecord): RotatingPhoto[] => {
   const pool: RotatingPhoto[] = [];
-  const age = getBirdAgeLabel(bird.hatch_date, bird.hatch_date_estimated);
+  const age = liveAge(bird);
   if (bird.photo) {
     pool.push({
       src: `/photos/${bird.photo}`,
@@ -251,6 +262,12 @@ const buildPortraitPool = (bird: FlockBird, record?: HatchRecord): RotatingPhoto
   return [...pool, ...throwbacks];
 };
 
+// Live age for a bird that is still with us. A deceased bird keeps its
+// hatch date on the page but gets no age — getBirdAgeLabel counts up to
+// today, which would keep "ageing" a bird after its death.
+const liveAge = (bird: FlockBird): string | null =>
+  bird.status === "deceased" ? null : getBirdAgeLabel(bird.hatch_date, bird.hatch_date_estimated);
+
 // GrowthStrip's data source: the bird's accumulating photos[] ledger — every
 // picture we have of it, oldest first, undated last, with live age-at-photo
 // labels. Works for EVERY bird (not just ornitharchs with a hatch record):
@@ -263,7 +280,9 @@ const buildBirdGrowthPhotos = (bird: FlockBird): ThenNowPhoto[] => {
     .map((ph) => ({
       src: `/photos/${ph.file}`,
       dateLabel: ph.date ? fmtDate(ph.date) || "—" : "undated",
-      ageLabel: ph.date ? throwbackTag(bird.hatch_date, ph.date) : "",
+      // No hatch_date means no age-at-photo; throwbackTag would otherwise
+      // stamp "throwback" on every frame, including today's portrait.
+      ageLabel: ph.date && bird.hatch_date ? throwbackTag(bird.hatch_date, ph.date) : "",
       caption: ph.caption ?? "",
       alt: ph.caption || `${bird.name}, dated photo`,
     }));
@@ -298,7 +317,9 @@ export default function FlockPage() {
   const adultHens = activeBirds.filter(
     (b) => !b.location && !isRooster(b.egg_color)
   );
-  const roosters = activeBirds.filter((b) => isRooster(b.egg_color));
+  // Roosters with a location are already shown in that location's grid
+  // (all of them are in Birdcatraz today); only unhoused ones land here.
+  const roosters = activeBirds.filter((b) => !b.location && isRooster(b.egg_color));
 
   // ---- THE ORNITHARCHS ----
   // Identity/photo/status from flock-profiles.json (ornitharch flag);
@@ -557,8 +578,11 @@ export default function FlockPage() {
                           className="object-cover"
                         />
                       ) : (
-                        <div className="h-full flex items-center justify-center text-3xl text-field-muted">
-                          🐣
+                        <div
+                          aria-hidden="true"
+                          className="h-full flex items-center justify-center text-3xl text-field-muted"
+                        >
+                          {isRooster(b.egg_color) ? "🐓" : "🐣"}
                         </div>
                       )}
                     </div>
@@ -612,10 +636,11 @@ export default function FlockPage() {
             limit={12}
           />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {birdcatrazBirds.map((bird, idx) => (
+            {birdcatrazBirds.map((bird) => (
               <BirdCard
-                key={idx}
+                key={bird.name}
                 bird={bird}
+                isRooster={isRooster(bird.egg_color)}
               />
             ))}
           </div>
@@ -659,8 +684,8 @@ export default function FlockPage() {
           </p>
           <h2 className="text-2xl font-bold font-serif text-field-ink mb-2">The Hens</h2>
           <p className="text-field-muted mb-6 text-sm max-w-3xl">
-            The breeding stock. Easter Eggers, a Wyandotte, and the
-            yearling that hatched on Boss&apos;s desk last spring.
+            The breeding stock: Birdsula, an Easter Egger, and her daughter
+            Birdadonna, who hatched on Boss&apos;s desk last spring.
           </p>
           <FlockGemStrip
             scenes={["yard"]}
@@ -775,7 +800,7 @@ function OrnitharchTile({
   record?: HatchRecord;
   index?: number;
 }) {
-  const age = getBirdAgeLabel(bird.hatch_date, bird.hatch_date_estimated);
+  const age = liveAge(bird);
   const hatchStr = fmtDate(bird.hatch_date);
   const eggColor = record?.egg_color?.toLowerCase();
   const dam = record?.parent_hen || null;
@@ -798,7 +823,7 @@ function OrnitharchTile({
           />
         ) : (
           <div className="h-full flex flex-col items-center justify-center gap-2 text-field-muted">
-            <span className="text-4xl">🐣</span>
+            <span aria-hidden="true" className="text-4xl">🐣</span>
             <span className="font-mono text-[0.65rem] uppercase tracking-widest">
               portrait pending
             </span>
@@ -908,7 +933,7 @@ function BirdCard({
 
   const hatchStr = fmtDate(bird.hatch_date);
   // Live age computed from hatch_date — the single source of truth.
-  const dynamicAge = getBirdAgeLabel(bird.hatch_date, bird.hatch_date_estimated);
+  const dynamicAge = liveAge(bird);
   // Aging timeline from the bird's own photo ledger (self-suppresses below 2).
   const growthPhotos = buildBirdGrowthPhotos(bird);
 
@@ -938,7 +963,7 @@ function BirdCard({
           />
         ) : (
           <div className="h-full flex flex-col items-center justify-center gap-2">
-            <span className="text-4xl text-field-muted">
+            <span aria-hidden="true" className="text-4xl text-field-muted">
               {roosterFlag ? "🐓" : "🐣"}
             </span>
             <span className="text-[0.65rem] uppercase tracking-widest text-field-muted font-medium">

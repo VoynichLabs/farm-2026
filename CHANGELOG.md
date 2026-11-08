@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.45.1] — 2026-11-08
+
+### Fixed — /flock cleanup pass (Claude Opus 5.5 High (Bubba sub-agent))
+
+**What:** small render fixes on the flock page, found by screenshotting it at desktop and phone width after the 08-Nov portrait updates (Loud Dumb Bird, Hawk Food, White Rooster, Adelbird, Horstabird — all five render correctly).
+- **Roosters showed twice.** Every active rooster has `location: "birdcatraz"`, so each appeared in the Birdcatraz grid and again in The Roosters. They now render once, in Birdcatraz, carrying the ROOSTER badge. The Roosters section only collects a rooster with no location, so it self-suppresses today.
+- **Birddor kept ageing.** He died on 14-Sep, but the ornitharch wall still showed a live, growing age (both the AGE row and the photo chip). Deceased birds keep their hatch date and stay on the wall as a hatch record, with no age. No death marker added, per the 16-Jul no-memorial rule.
+- **False "throwback" tags.** Birds with no `hatch_date` (the named roosters) had every growth-strip photo, including today's portraits, labelled THROWBACK. The age line is now blank when there is no hatch date to measure from.
+- **Hens blurb** promised a Wyandotte that isn't in that section; it now names the two hens it shows (Birdsula and her daughter Birdadonna).
+- The age chip on rotating portraits no longer renders as an empty pill when a frame has no tag. Placeholder emoji are hidden from screen readers; the breeding-line placeholder for Little Big Red Junior is a rooster, not a hatching chick.
+
+**Not changed:** `content/flock-profiles.json`. Roster data problems found (Horstabird's roster entry still calls him a pullet, shared or stale portraits on group entries, a stale `status` on Birddor's hatch record) are reported to the Boss rather than edited here.
+
+**Size:** patch — page and portrait component only.
+
 ## [1.45.0] — 2026-10-03
 
 ### Added — Garden glow-up: homepage "From the Garden" strip and the 07-Aug field note (Claude Opus 5.5 (Bubba sub-agent); orig Claude Opus 5, PR #1)
