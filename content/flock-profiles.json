@@ -501,12 +501,17 @@
       ],
       "color_description": "Full white adult plumage, red heads and wattles in color",
       "color_description_as_of": null,
-      "photo": "april-2026/turkey-poult-in-hand.jpg",
+      "photo": "garden/white-turkeys-in-the-squash-03aug2026.jpg",
       "notes": "3 White Broad-Breasted turkeys bought together. First turkeys on the farm. Grown into the big regal-and-ridiculous stage; live in the turkey pen inside Birdcatraz. The female white turkey was lost on 25-Sep-2026: Boss found a large scatter of white feathers in the woods behind the pen, no carcass, and she was gone. Presumed predation in broad daylight (Guardian's predator detection does not run by day); no camera footage of it. Two white turkeys remain.",
       "location": "birdcatraz",
       "photos": [
         {
           "file": "april-2026/turkey-poult-in-hand.jpg"
+        },
+        {
+          "file": "garden/white-turkeys-in-the-squash-03aug2026.jpg",
+          "date": "2026-08-03",
+          "caption": "Two grown white turkeys in the squash patch, 03-Aug-2026 \u2014 full white plumage, red heads and wattles. Taken while all three were still alive."
         }
       ]
     },
@@ -1191,7 +1196,7 @@
       "hatch_date": "2026-05-16",
       "age_note": "Hatched \u226421:21 EDT, 2026-05-16 from a brown egg set 2026-04-25",
       "status": "active",
-      "egg_color": "TBD (too young)",
+      "egg_color": "N/A (rooster)",
       "temperament": "Was vocalizing distress at 21:23 EDT while Birdthazar was harassing; settled once Birdthazar moved to brooder",
       "color_observations": [
         {
@@ -1577,11 +1582,13 @@
     },
     {
       "name": "Horstabird",
+      "sex": "rooster",
+      "sex_confirmed_date": "2026-11-08",
       "breed": "Easter Egger lineage (cross TBD)",
       "hatch_date": "2026-06-03",
       "age_note": "Hatched 16:44 EDT 2026-06-03 from a blue egg (Egg #4), June (new-incubator) clutch. Assisted hatch.",
       "status": "active",
-      "egg_color": "TBD (too young)",
+      "egg_color": "N/A (rooster)",
       "temperament": "Slow to clear the shell; rested between pushes",
       "color_observations": [
         {
@@ -1591,12 +1598,20 @@
           "source": "roster-backfill",
           "age_weeks": 6,
           "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"Plumage from 21-Jul-2026\"."
+        },
+        {
+          "date": "2026-11-08",
+          "date_unknown": false,
+          "description": "Deep mahogany-red body, glossy black tail, red single comb and wattles, yellow legs, yellow leg band. A grown rooster; the spotted gold juvenile coat of July and August has grown out into solid mahogany.",
+          "source": "boss-identified",
+          "age_weeks": 22,
+          "note": "Boss-identified 08-Nov-2026 from photo input-IMG_0838, by yellow-band elimination (Birddor, the only other yellow band, is deceased). The band number was not legible in the photo."
         }
       ],
-      "color_description": "A solid slate-grey folded wing panel lying flat against a gold body splashed all over with bold irregular black leopard blotches \u2014 the plain dark wing against the spotted gold is readable right across a pen. Tail solid black. Face and throat dusky grey-brown bare skin with a small cream patch behind the eye, comb a low pink-red ridge. \u26a0\ufe0f The grey-wing-over-gold look is shared with Birddor \u2014 Birddor has a large bright RED face and a very pale yellow-gold eye, Horstabird's face is dull grey-brown. (Plumage from 21-Jul-2026, photographed shortly before banding \u2014 not yet confirmed against yellow #2.)",
-      "color_description_as_of": "2026-07-21",
+      "color_description": "Deep mahogany-red body, glossy black tail, red single comb and wattles, yellow legs, yellow leg band. A grown rooster; the spotted gold juvenile coat of July and August has grown out into solid mahogany.",
+      "color_description_as_of": "2026-11-08",
       "photo": "birds/input-IMG_0838-horstabird-brown-reddish-08nov2026.jpg",
-      "notes": "Boss-corrected 2026-06-07: a pullet, sired by LBRJ (the red rooster lost in the April predator wave) \u2014 identified by the rust/red coming in on her face and throat, which supersedes the earlier Whitey Red Legs paternity window. June clutch, Egg #4; an assisted hatch (the Boss removed a small piece of shell and dabbed water on the membrane, then the chick freed itself). Named in honor of Horst, the note-taking bot that logged the hatch. Per-chick record: content/hatches/2026/2026-06-03-03-horstabird.md",
+      "notes": "SEX CONFIRMED ROOSTER \u2014 Boss-confirmed 2026-11-08 from photo IMG_0838 by yellow-band elimination (Birddor, the only other yellow band, is deceased); the band number was not legible in that photo. This overturns the 2026-06-07 call that he was a pullet. Sire: LBRJ (the red rooster lost in the April predator wave) \u2014 Boss-corrected 2026-06-07 from the rust/red coming in on his face and throat, which supersedes the earlier Whitey Red Legs paternity window; that sire read still stands. June clutch, Egg #4; an assisted hatch (the Boss removed a small piece of shell and dabbed water on the membrane, then the chick freed itself). Named in honor of Horst, the note-taking bot that logged the hatch. Per-chick record: content/hatches/2026/2026-06-03-03-horstabird.md",
       "location": "birdcatraz",
       "ornitharch": true,
       "photos": [
@@ -1618,7 +1633,7 @@
         {
           "file": "birds/input-IMG_0838-horstabird-brown-reddish-08nov2026.jpg",
           "date": "2026-11-08",
-          "caption": "A brown and reddish hen looks directly at the lens with visible feather detail."
+          "caption": "A brown and reddish rooster looks directly at the lens with visible feather detail."
         }
       ],
       "leg_band": {
@@ -1639,7 +1654,7 @@
       "hatch_date": "2026-06-03",
       "age_note": "Hatched \u224818:22 EDT 2026-06-03 from Henrietta's own brown egg (Egg #7, marked 5/10), June (new-incubator) clutch.",
       "status": "active",
-      "egg_color": "TBD (too young)",
+      "egg_color": "N/A (rooster)",
       "temperament": "Settled with siblings in the brooder",
       "color_observations": [
         {

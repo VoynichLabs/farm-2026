@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.45.2] — 2026-11-09
+
+### Fixed — roster data from the /flock cleanup pass (Claude Opus 5.5 Low (Bubba sub-agent))
+
+**What:** the roster problems the 1.45.1 pass reported, fixed by hand on the Boss's "Fix the roster" (08/09-Nov-2026). Data only; no code changed.
+- **Horstabird is a rooster** (Boss-confirmed 08-Nov-2026 from IMG_0838, yellow-band elimination; Birddor, the only other yellow band, is deceased). Added `sex`/`sex_confirmed_date`, set `egg_color` to `N/A (rooster)` so the page badges him as a rooster, rewrote the notes so the June "pullet" call is marked overturned while the LBRJ sire read stays, replaced the July gold-spotted `color_description` with the grown mahogany look and appended a dated 08-Nov observation (older ones kept). The 08-Nov portrait caption said "hen"; now "rooster". Band number left out — it was not legible in the photo.
+- **Henriello and Henridot** were already recorded as confirmed cockerels (15-Aug and 16-Sep), but `egg_color` still read "TBD (too young)", which rendered as an egg badge and kept them off the rooster badge. Set to `N/A (rooster)`.
+- **Birddor's hatch record** said `status: alive` above a body recording his death; now `deceased`. `lost_date`/`lost_cause` were already filled from the page's own account.
+- **White turkeys** card showed an April poult photo under adult text; the portrait is now the Boss's 03-Aug-2026 squash-patch shot of two grown white turkeys (the poult photo stays in the history).
+
+**Left alone (no evidence in the repo):** Ravenello has only one photo (18-Jun-2026); Little Big Red Junior, the Tractor Supply juveniles and the March juveniles have no photos at all.
+
+**Size:** patch — content only.
+
 ## [1.45.1] — 2026-11-08
 
 ### Fixed — /flock cleanup pass (Claude Opus 5.5 High (Bubba sub-agent))
