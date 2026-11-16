@@ -1281,7 +1281,7 @@
       ],
       "color_description": "Rich rust-brown all over including the head, with a very small comb and a bare pink-red face. Unlike the similar rust-red Birdthazar, no full red comb and no black tail. Feathers edged slightly darker for a fine scaled look; yellow legs.",
       "color_description_as_of": "2026-09-15",
-      "photo": "birds/IMG_9843-birdsilla-brown-stands-15sep2026.jpg",
+      "photo": "birds/input-IMG_0938-birdsilla-brown-perches-16nov2026.jpg",
       "notes": "Third chick of the April-25 clutch. EE-lineage from blue egg; dam candidates are Birdadonna, Birdsula (EE hen 1), or EE hen 2 \u2014 none confirmed. Named-line candidate if dam turns out to be Birdadonna. Sire LBRJ probable. Named Birdsilla, aka 'Monster Leg' (recognized nickname/alias), per the Boss-confirmed 2026 hatch spine. Out in Birdcatraz \u2014 tested the top roost spot with Henriello (diary, 09-Jul-2026). Description (21-Jul-2026, IMG_7556): warm solid buff-orange across the back with no stripe pattern \u2014 the tell against Birdthazar; black tail coming in dark and full; yellow legs; small pink comb, consistent with pullet. Disposition: confident, owns the yard.",
       "location": "birdcatraz",
       "ornitharch": true,
@@ -1327,6 +1327,11 @@
           "file": "birds/IMG_9843-birdsilla-brown-stands-15sep2026.jpg",
           "date": "2026-09-15",
           "caption": "A brown hen stands on a chair, looking directly at the camera with a clear eye and comb."
+        },
+        {
+          "file": "birds/input-IMG_0938-birdsilla-brown-perches-16nov2026.jpg",
+          "date": "2026-11-16",
+          "caption": "A brown hen perches on a fence rail, tail slightly fanned, looking away from the lens."
         }
       ]
     },
