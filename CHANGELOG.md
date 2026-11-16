@@ -5,9 +5,9 @@ Format: [SemVer](https://semver.org/) — what / why / how.
 
 ## [1.45.3] — 2026-11-16
 
-### Fixed — Henriessa’s current band status (GPT-6.1 Sol)
+### Updated — flock portraits and Henriessa’s current band status (GPT-6.1 Sol)
 
-The Boss confirmed Henriessa lost her pink band. Removed the active band assignment so her site card and banding page no longer present it as current. Preserved the former pink left-leg band and its loss date in the roster and canonical band history. Portrait updates are pending the ingestion module’s vision prerequisite.
+The Boss confirmed Henriessa lost her pink band. Removed the active band assignment so her site card and banding page no longer present it as current. Preserved the former pink left-leg band and its loss date in the roster and canonical band history. Refreshed the latest Boss-confirmed portraits of Hawk Food, Adelbird, Henriessa, Birdimir and Birdsilla through the canonical bird-photo ingestion module, preserving each photo history. The already-downloaded vision model was loaded temporarily for this filing; no automatic-load or service configuration was changed.
 
 ## [1.45.2] — 2026-11-09
 
