@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-07-28",
+  "_updated": "2026-11-16",
   "_note": "Canonical leg band assignments. left leg = hatched on farm (ornitharch). right leg = purchased. Source of truth: flock-profiles.json leg_band fields.",
   "rule": "Trust the band over plumage. A visible leg band uniquely identifies the bird.",
   "rule_precedence": {
@@ -86,14 +86,6 @@
       "confirmed_date": "2026-07-23"
     },
     {
-      "name": "Henriessa",
-      "color": "pink",
-      "number": 8,
-      "leg": "left",
-      "confirmed": true,
-      "confirmed_date": "2026-07-21"
-    },
-    {
       "name": "Henridot",
       "color": "purple",
       "number": 12,
@@ -116,6 +108,19 @@
       "leg": "left",
       "confirmed": true,
       "confirmed_date": "2026-07-21"
+    }
+  ],
+  "historical_bands": [
+    {
+      "name": "Henriessa",
+      "color": "pink",
+      "number": 8,
+      "leg": "left",
+      "confirmed": true,
+      "confirmed_date": "2026-07-21",
+      "status": "lost",
+      "lost_date": "2026-11-16",
+      "note": "Boss confirmed missing band in Discord #meet-the-lobsters. Currently unbanded; do not use this historical band as active identification."
     }
   ]
 }

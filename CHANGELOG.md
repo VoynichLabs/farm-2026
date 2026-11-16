@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.45.3] — 2026-11-16
+
+### Fixed — Henriessa’s current band status (GPT-6.1 Sol)
+
+The Boss confirmed Henriessa lost her pink band. Removed the active band assignment so her site card and banding page no longer present it as current. Preserved the former pink left-leg band and its loss date in the roster and canonical band history. Portrait updates are pending the ingestion module’s vision prerequisite.
+
 ## [1.45.2] — 2026-11-09
 
 ### Fixed — roster data from the /flock cleanup pass (Claude Opus 5.5 Low (Bubba sub-agent))
