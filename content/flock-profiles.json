@@ -1337,12 +1337,14 @@
     },
     {
       "name": "Birdimir",
+      "sex": "cockerel",
+      "sex_confirmed_date": "2026-11-18",
       "breed": "Easter Egger lineage (cross TBD)",
       "hatch_date": "2026-06-02",
       "age_note": "Hatched 2026-06-02 from a blue egg, June (new-incubator) clutch set ~2026-05-12. First of six June chicks.",
       "status": "active",
       "egg_color": "TBD (too young)",
-      "temperament": "Calm; presumed male per Boss's early call",
+      "temperament": "Calm; Boss-confirmed male",
       "color_observations": [
         {
           "date": "2026-06-22",
@@ -1413,22 +1415,22 @@
         {
           "file": "birds/IMG_9586-birdimir-white-black-06sep2026.jpg",
           "date": "2026-09-06",
-          "caption": "A white-and-black speckled hen stands in the yard, eyeing the camera with a red comb and yellow feet."
+          "caption": "A white-and-black speckled cockerel stands in the yard, eyeing the camera with a red comb and yellow feet."
         },
         {
           "file": "birds/IMG_9587-birdimir-speckled-white-06sep2026.jpg",
           "date": "2026-09-06",
-          "caption": "A speckled white and black hen stands in profile, eye alert and comb bright red."
+          "caption": "A speckled white and black cockerel stands in profile, eye alert and comb bright red."
         },
         {
           "file": "birds/s7-cam-gem-birdimir-white-black-19sep2026.jpg",
           "date": "2026-09-19",
-          "caption": "A white and black speckled hen stands close, eye and comb clearly visible."
+          "caption": "A white and black speckled cockerel stands close, eye and comb clearly visible."
         },
         {
           "file": "birds/input-IMG_0205-birdimir-white-black-03oct2026.jpg",
           "date": "2026-10-03",
-          "caption": "A white hen with a black-spotted neck and a small red comb faces the lens, one leg marked with a red."
+          "caption": "A white cockerel with a black-spotted neck and a small red comb faces the lens, one leg marked with a red band."
         },
         {
           "file": "birds/input-IMG_0862-birdimir-white-dark-12nov2026.jpg",
@@ -1900,7 +1902,7 @@
         {
           "file": "birds/input-IMG_0828-adelbird-rust-black-08nov2026.jpg",
           "date": "2026-11-08",
-          "caption": "A rust-and-black streaked hen is visible, showing detail on its head and neck."
+          "caption": "A dark blue-black speckled hen perches on a wooden rail in the sun, blue leg band 07 visible."
         },
         {
           "file": "birds/input-IMG_0929-adelbird-speckled-perches-16nov2026.jpg",
