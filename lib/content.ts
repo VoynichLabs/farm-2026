@@ -162,6 +162,16 @@ export interface FlockBird {
   // throwback) — rotated against `photo` with the label as the era chip.
   photo_throwback?: string;
   photo_throwback_label?: string;
+  // Recorded sex, when confirmed ("hen" | "cockerel" | "rooster" in the roster).
+  sex?: string;
+  // Prior and lost leg bands; the strip shows a lost band with its date.
+  leg_band_history?: {
+    color: string;
+    number: number | null;
+    side?: string;
+    status?: string;
+    lost_date?: string;
+  }[];
 }
 
 // Turn a whole-day count into the human age tier:

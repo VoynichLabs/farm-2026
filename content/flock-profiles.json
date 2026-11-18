@@ -396,18 +396,15 @@
       ],
       "color_description": "Black plumage with iridescent green sheen",
       "color_description_as_of": null,
-      "photo": "birds/australorp.jpg",
+      "photo": null,
       "notes": "Excellent egg producer. Lost in early April 2026.",
       "deceased_date": "2026-04-09",
       "cause_of_death": "Predator losses \u2014 first week of April 2026",
-      "photos": [
-        {
-          "file": "birds/australorp.jpg"
-        }
-      ]
+      "photos": []
     },
     {
       "name": "Birddor",
+      "sex": "cockerel",
       "breed": "Easter Egger",
       "hatch_date": "2026-04-06",
       "age_note": "Hatched 06-April-2026 \u2014 the first bird hatched on the farm in 2026",
@@ -418,13 +415,13 @@
         {
           "date": "2026-06-23",
           "date_unknown": false,
-          "description": "Big slate blue-grey feather blocks laid across the shoulders and wings over a copper-chestnut ground \u2014 a grey-over-rust patchwork with no barring or lacing. Golden-orange neck hackles with dark shafts, a large area of bare bright RED skin over the face, and a strikingly pale yellow-gold iris. Comb low, red and knobby rather than upright. He is a cockerel. \u26a0\ufe0f Compare Horstabird, who also shows grey over gold but has a dull grey-brown face. (Plumage from 23-Jun-2026 and five weeks stale \u2014 re-check.)",
+          "description": "Big slate blue-grey feather blocks laid across the shoulders and wings over a copper-chestnut ground \u2014 a grey-over-rust patchwork with no barring or lacing. Golden-orange neck hackles with dark shafts, a large area of bare bright RED skin over the face, and a strikingly pale yellow-gold iris. Comb low, red and knobby rather than upright. He is a cockerel. \u26a0\ufe0f Compare Horstabird, who also shows grey over gold but has a dull grey-brown face. (Plumage from 23-Jun-2026. Late-summer frames show a mostly copper body; see the photo record.)",
           "source": "roster-backfill",
           "age_weeks": 11,
           "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"Plumage from 23-Jun-2026\"."
         }
       ],
-      "color_description": "Big slate blue-grey feather blocks laid across the shoulders and wings over a copper-chestnut ground \u2014 a grey-over-rust patchwork with no barring or lacing. Golden-orange neck hackles with dark shafts, a large area of bare bright RED skin over the face, and a strikingly pale yellow-gold iris. Comb low, red and knobby rather than upright. He is a cockerel. \u26a0\ufe0f Compare Horstabird, who also shows grey over gold but has a dull grey-brown face. (Plumage from 23-Jun-2026 and five weeks stale \u2014 re-check.)",
+      "color_description": "Big slate blue-grey feather blocks laid across the shoulders and wings over a copper-chestnut ground \u2014 a grey-over-rust patchwork with no barring or lacing. Golden-orange neck hackles with dark shafts, a large area of bare bright RED skin over the face, and a strikingly pale yellow-gold iris. Comb low, red and knobby rather than upright. He is a cockerel. \u26a0\ufe0f Compare Horstabird, who also shows grey over gold but has a dull grey-brown face. (Plumage from 23-Jun-2026. Late-summer frames show a mostly copper body; see the photo record.)",
       "color_description_as_of": "2026-06-23",
       "photo": "birds/IMG_9640-birddor-copper-grey-07sep2026.jpg",
       "notes": "First successful incubator hatch of 2026 \u2014 from a blue egg set 16-March, hatched on Boss's desk 06-April. Formerly Birdadette; renamed Birddor in July 2026 when he turned out to be a cockerel. Sire window Little Big Red Junior (probable); dam unconfirmed. Per-chick record: content/hatches/2026/2026-04-06-01-birdadette.md DIED 14-Sep-2026 \u2014 the first ornitharch to die. He had roosted on top of the pen rather than inside; Boss saw him up there that evening and tried to get him down, but he would not come. No known offspring \u2014 his lineage did not carry forward.",
@@ -540,6 +537,7 @@
     },
     {
       "name": "Birdadotta",
+      "sex": "hen",
       "breed": "Easter Egger \u00d7 RIR cross",
       "hatch_date": "2026-04-25",
       "age_note": "Hatched April 25, 2026 in incubator from Birdadonna's egg",
@@ -1122,6 +1120,7 @@
     },
     {
       "name": "Birdthazar",
+      "sex": "cockerel",
       "breed": "Easter Egger lineage (cross TBD)",
       "hatch_date": "2026-05-16",
       "age_note": "Hatched 06:04 EDT, 2026-05-16 from a blue egg set 2026-04-25. Provisional name pending male confirmation.",
@@ -1255,6 +1254,7 @@
     },
     {
       "name": "Birdsilla",
+      "sex": "hen",
       "breed": "Easter Egger lineage (cross TBD)",
       "hatch_date": "2026-05-16",
       "age_note": "Hatched 22:12 EDT, 2026-05-16 from a blue egg marked 4/25",
@@ -1372,13 +1372,13 @@
         {
           "date": "2026-09-19",
           "date_unknown": false,
-          "description": "Mostly white bird with heavy dark grey-brown streaking and speckling across the breast and neck, the only predominantly white bird of the June hatch. Tail white barred with black. Red single comb and small wattles, orange eye, yellow beak and legs.",
+          "description": "Mostly white bird with heavy dark grey-brown streaking and speckling across the neck and upper breast, the only predominantly white bird of the June hatch. Tail mostly black. Red single comb and small wattles, orange eye, yellow beak and legs.",
           "source": "claude-photo-review",
           "age_weeks": 15,
           "note": "Grown-bird refresh 21-Sep-2026 from the 19-Sep S7 gem Boss filed to this bird (birds/s7-cam-gem-birdimir-white-black-19sep2026.jpg); the red band is visible on a leg in that frame. Replaces the 06-Sep text as current, which still described chick down."
         }
       ],
-      "color_description": "Mostly white bird with heavy dark grey-brown streaking and speckling across the breast and neck, the only predominantly white bird of the June hatch. Tail white barred with black. Red single comb and small wattles, orange eye, yellow beak and legs.",
+      "color_description": "Mostly white bird with heavy dark grey-brown streaking and speckling across the neck and upper breast, the only predominantly white bird of the June hatch. Tail mostly black. Red single comb and small wattles, orange eye, yellow beak and legs.",
       "color_description_as_of": "2026-09-19",
       "photo": "birds/input-IMG_0937-birdimir-white-black-16nov2026.jpg",
       "notes": "First chick of the June clutch (new incubator, eggs set ~12 May; sire window Whitey Red Legs). Hatched in the NI, moved to the retired old incubator overnight as a holding spot, then to the brooder 2026-06-03. Dam not individually confirmed (blue egg). Per-chick record: content/hatches/2026/2026-06-02-01-birdimir.md",
@@ -1435,7 +1435,7 @@
         {
           "file": "birds/input-IMG_0862-birdimir-white-dark-12nov2026.jpg",
           "date": "2026-11-12",
-          "caption": "A white and dark-streaked hen is visible standing on the ground."
+          "caption": "A white and dark-streaked cockerel is visible standing on the ground."
         },
         {
           "file": "birds/input-IMG_0937-birdimir-white-black-16nov2026.jpg",
@@ -1446,6 +1446,7 @@
     },
     {
       "name": "Ingebird",
+      "sex": "hen",
       "breed": "Easter Egger lineage (cross TBD)",
       "hatch_date": "2026-06-02",
       "age_note": "Hatched 2026-06-02 from a blue egg, June (new-incubator) clutch. Photographed wet ~15:58 EDT.",
@@ -1510,6 +1511,7 @@
     },
     {
       "name": "Henriessa",
+      "sex": "hen",
       "breed": "Golden Laced Wyandotte cross (Henrietta line)",
       "hatch_date": "2026-06-03",
       "age_note": "Hatched the morning of 2026-06-03 from a brown egg, June (new-incubator) clutch.",
@@ -1520,7 +1522,7 @@
         {
           "date": "2026-07-21",
           "date_unknown": false,
-          "description": "Plain, completely unpatterned slate blue-grey body \u2014 no bars, no blotches, no rust anywhere \u2014 under a head and neck densely frosted with white flecking, so she reads as a grey bird in a salt-and-pepper hood. Breast a lighter dove-grey than the back. Comb still small and low, pale gold iris, bright clean yellow legs.",
+          "description": "Slate blue-grey body with fine grey lacing and light barring, no blotches, no rust anywhere \u2014 under a head and neck densely frosted with white flecking, so she reads as a grey bird in a salt-and-pepper hood. Breast a lighter dove-grey than the back. Comb still small and low, pale gold iris, bright clean yellow legs.",
           "source": "roster-backfill",
           "age_weeks": 6,
           "note": "Backfilled 11-Aug-2026 from the undated color_description. Date recovered from the record's own wording: \"SILVER RESOLVED: the Boss confirmed 2026-07-21\"."
@@ -1709,13 +1711,13 @@
         {
           "date": "2026-09-16",
           "date_unknown": false,
-          "description": "Rooster: crisp black-and-white barring over the whole bird, head included, with a large bright-red single comb flopping to one side and full red wattles. Colored like the purchased Barred Rock roosters, so plumage alone cannot tell him apart; his leg band does. Yellow legs.",
+          "description": "Rooster: black-and-white barring over the whole body, with the head and neck finer, more speckled and often silver-grey, and a large bright-red single comb flopping to one side and full red wattles. Colored like the purchased Barred Rock roosters, so plumage alone cannot tell him apart; his leg band does. Yellow legs.",
           "source": "claude-photo-review",
           "age_weeks": 15,
           "note": "Grown-bird refresh 21-Sep-2026 from Boss's 16-Sep photo (birds/IMG_9883-henridot-speckled-chicken-16sep2026.jpg; purple band visible), agreeing with the left bird of the 19-Sep group shot. Boss 21-Sep: formerly Henridotta; believed to be a rooster, and he is the purple-banded (left leg), rooster-combed bird on the left of the 19-Sep group shot."
         }
       ],
-      "color_description": "Rooster: crisp black-and-white barring over the whole bird, head included, with a large bright-red single comb flopping to one side and full red wattles. Colored like the purchased Barred Rock roosters, so plumage alone cannot tell him apart; his leg band does. Yellow legs.",
+      "color_description": "Rooster: black-and-white barring over the whole body, with the head and neck finer, more speckled and often silver-grey, and a large bright-red single comb flopping to one side and full red wattles. Colored like the purchased Barred Rock roosters, so plumage alone cannot tell him apart; his leg band does. Yellow legs.",
       "color_description_as_of": "2026-09-16",
       "photo": "birds/input-IMG_0870-henridot-rust-black-12nov2026.jpg",
       "silver_marking": "none",
@@ -1823,6 +1825,7 @@
     },
     {
       "name": "Adelbird",
+      "sex": "hen",
       "breed": "Easter Egger lineage (cross TBD)",
       "hatch_date": "2026-06-04",
       "age_note": "Hatched overnight 2026-06-03 \u2192 2026-06-04 from a blue egg (Egg #5, day 23). The sixth and final chick of the 2026 season.",

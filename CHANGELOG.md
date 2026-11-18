@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 Format: [SemVer](https://semver.org/) — what / why / how.
 
+## [1.46.0] — 2026-11-18
+
+### Changed — homepage rebuilt around a film strip of the Ornitharchs (Claude Haiku 5.5 Medium)
+
+**What:** the homepage's "Class of 2026" portrait grid is replaced by one film-strip row per Ornitharch, hatch to newest picture. Each row shows one picture per day, labelled with the day count and the date; a row's newest picture has an amber outline; pictures showing more than one bird are tagged. Birds with the most pictures come first; Birddor (deceased) is last. The SystemBanner, RecentGemsRail and GardenStrip sections are no longer on the homepage (the components stay in the repo for other pages). The live camera section is kept.
+
+**Why:** the Boss asked for a dense, research-style page that shows each bird growing up, with every figure derived from the flock records rather than typed in. A new page structure and a new data source make this a minor bump.
+
+**How:**
+- New lib/ornitharch-strip.ts: an editorial list of which picture to show each day (PICKS, one per day, with the four shared group frames listed by hand), and buildStrips() which derives dates, day counts, band text, breed text and totals from content/flock-profiles.json at build time. Missing files and second same-day frames are reported as build warnings and skipped.
+- New app/components/home/OrnitharchStrip.tsx: server component, layout only, no client JavaScript. On a phone the pictures wrap into a grid rather than scrolling sideways.
+- app/page.tsx rebuilt around it. The site-wide navigation in the layout is the only nav, so the homepage adds none.
+- lib/content.ts: FlockBird gains optional `sex` and `leg_band_history` fields (types only; no behaviour change).
+
+**Checked:** type-check and lint clean; production build clean with no picture warnings; the built page lists the birds in the intended order and carries no bare age of 13; images load (200); no horizontal scroll at 375 px width.
+
+**Open:** Henridot's 12-Nov frame is left out until the Boss confirms it (its filename does not fit a barred bird). The approved mock's camera tiles were placeholders; the page uses the live camera components.
+
 ## [1.45.3] — 2026-11-16
 
 ### Updated — flock portraits and Henriessa’s current band status (GPT-6.1 Sol)

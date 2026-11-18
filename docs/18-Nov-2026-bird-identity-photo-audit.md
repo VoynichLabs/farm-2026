@@ -54,3 +54,42 @@ SRP/DRY check: Pass — this doc is an audit record; it changes no code. The one
 2. Settle Birdimir's sex.
 3. Decide whether a deceased bird should appear on the Ornitharch program page.
 4. Provide a frame that shows the Henriello band number.
+
+## Colour sweep, all roster entries (added 18-Nov-2026, later the same day)
+
+Method: one agent per roster entry read its colour text and every photo, checked the leg band against the registry, then three independent skeptics re-checked the verdict, each through one lens (colour and pattern, leg band, non-colour features). 41 entries, 164 agents, no failures. Raw result kept in the session scratchpad.
+
+Overall verdicts: match for 5 entries (Birdadonna, Birdgit, Malt Liquor, White Rooster, Robirda); partial for 29; mismatch for 1 (Black Australorp hen); unverifiable for 6 (Birdatha, Little Big Red Junior, Tractor Supply juveniles, Barred Rocks, Plymouth Rocks, March juveniles). "Partial" is mostly wording detail, not wrong birds.
+
+### Corrections applied to content/flock-profiles.json
+
+- Henridot: colour text and the 16-Sep observation said crisp black-and-white barring over the whole bird, head included. Most frames show a finer, speckled, often silver-grey head. Reworded. The 29-Jul Boss-confirmed observation is left untouched.
+- Henriessa, 21-Jul observation: said completely unpatterned, no bars. The band-confirmed frame of that date shows fine lacing and barring. Reworded.
+- Birddor: removed the live "re-check, five weeks stale" instruction, since he is deceased; points to the photo record for later frames. The owl death is documented elsewhere and is not a data problem.
+- Birdimir: tail is mostly black in the September and October frames, not white barred with black. Speckling sits on the neck and upper breast. Reworded in the colour text and the 19-Sep observation. The 12-Nov caption now says cockerel.
+
+### Identity questions for the Boss (not changed)
+
+- Black Australorp hen: the only photo shows a grey, dark-laced hen with golden-bronze hackle, red comb, yellow legs and a dark tail. It is not a black bird with green sheen. Either the photo is of a different bird or the colour text is wrong. Re-checked by eye.
+- Adelbird, 08-Aug frame: crisp black-and-white barring, which the roster reserves for Henridot. Adelbird's record is soft charcoal spangling. Band not legible in that frame. Re-checked by eye, same concern.
+- Chonkers and Chonkette: the July hero shows a large golden adult, but Chonkette is described as the smaller one. The 23-Aug Chonkers frame shows a deep orange-red body, not the buff-gold in the colour text.
+- Birdthazar: the leg band has colour and side but no number. The Boss-confirmed photo the note cites is not on the bird's photo list.
+- Little Big Red Junior: the structured death date is set to late April, which conflicts with the Boss-confirmed note.
+
+### Wording fixes still open (for a next pass)
+
+- Adelbird: the 08-Aug barring frame and the 27-Oct and 08-Nov frames need dated observations rather than the single September line.
+- Ingebird: the September line says plumage alone cannot tell her apart from Adelbird, which contradicts the undated backfill. The pale lower-back patch is visible in the July frame.
+- Horstabird: the juvenile coat was spotted gold in July but rust-brown with black by August.
+- Hawk Food: the November frame is mostly black, so "white body" overstates it there.
+- Not Soup: the roster says mahogany-red, the photo and caption say brown with a faint red cast.
+- Quasibirdo: the colour text omits the dark head and neck, the strongest feature of the June frame.
+- Henriello: the body is slate blue-grey in one line and dark charcoal in the notes. The frames show charcoal in July.
+- Birdsilla: the comparison clause "and no black tail" is contradicted by the frames. Its own tail matches Birdthazar's black tail in the September frame.
+- Bobirda: the band sentence sits inside the colour description and duplicates the leg band field.
+- Tractor Supply May batch: still lists the two Buff Rangers that were split out on 18-Jun.
+- Cackle Hatchery cohort and March juveniles: colour text is a group label or a breed expectation, not an observed colour.
+
+### Repository state note
+
+While this work was in progress, another session committed the audit and roster edits, and a rebase marker was present in the repository. Nothing was committed or rebased by this audit. The corrections above are uncommitted working-tree changes on top of that commit.

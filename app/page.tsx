@@ -1,232 +1,64 @@
 /**
- * Author: Claude Opus 5.5 (prev Claude Opus 5 / Claude Opus 4.8 / Claude Fable 5 / Claude Opus 4.7 / Claude Sonnet 4.6)
- * Date: 03-Oct-2026 (orig 10-May-2026; updated 20-May / 22-Jun / 06-Jul / 22-Jul / 18-Aug-2026)
- *   03-Oct-2026 (SEO checklist pass): the page had no headings at all. It
- *   now carries one H1 (the site name, screen-reader-only so the hero row
- *   still leads visually), and the three section kickers (Class of 2026,
- *   Live Cameras, Index) are wrapped in <h2>s. The chip styling stays on the
- *   inner <span>: globals.css sets every h1-h6 to Georgia outside Tailwind's
- *   layers, which beats the font-mono utility on the heading element
- *   itself. Canonical tag "/"; preconnect to the Guardian tunnel, which
- *   serves the camera stage and the gems rail (Lighthouse: ~160 ms). The
- *   /flock index hint no longer promises an "In Memoriam" section — it was
- *   removed in v1.31.1 per Boss.
- *   18-Aug-2026: the Class of 2026 row's first six tiles now carry
- *   next/image `priority` — they are the top of the page and were being
- *   lazy-loaded, so the browser deferred them until after layout.
- *   22-Jul-2026: Class of 2026 grid now DERIVES from flock-profiles.json
- *   (ornitharchs), not a hardcoded array — so new bird portraits committed to
- *   the roster show on the front page automatically instead of silently
- *   drifting out of sync (they never appeared here before this).
- * PURPOSE: Homepage composition. 16-Jul-2026 daylight retheme: converted to
- *   the light Field Guide (field-*) tokens, styling only; the live-camera
- *   surfaces (GuardianHomeBadge + HomeCameraStage) are kept as a
- *   self-contained dark island. From top to
- *   bottom: SiteNav (in layout.tsx), then this page renders:
- *     1. Class of 2026 hero — the birds hatched/raised this spring, newest
- *        hatch first, now grown and living in Birdcatraz (the outdoor
- *        fenced compound holding the coop + turkey pen).
- *     2. SystemBanner — short story strip about the live pipeline.
- *     3. GuardianHomeBadge + HomeCameraStage — live camera feeds.
- *     4. RecentGemsRail — client-side fetch of curated moments.
- *     5. A tight nav rail to the deeper pages, file-listing styled.
- *     6. A short status-line footer.
+ * Author: Claude Haiku 5.5 Medium
+ * Date: 18-Nov-2026
+ * PURPOSE: Homepage composition, rebuilt around the Ornitharch film strip
+ *   (CHANGELOG 1.46.0). From top to bottom: a screen-reader H1 (the site-wide
+ *   SiteNav in layout.tsx carries the navigation, so this page adds none); the
+ *   film strip (OrnitharchStrip, one row per bird, hatch to newest picture); the live
+ *   camera section (GuardianHomeBadge + HomeCameraStage, kept as the dark
+ *   island that polls the Guardian tunnel); and the status footer.
+ *   Removed from the homepage: the Class of 2026 portrait grid (replaced by
+ *   the strip), SystemBanner, RecentGemsRail and GardenStrip (still in the
+ *   repo for other pages). The page carries no typed date: every date and
+ *   count is derived from the roster when the page is built.
+ *   SEO: canonical "/"; the H1 is screen-reader only; the Guardian origin is
+ *   preconnected because the camera section loads from the tunnel.
  *
- *   Ages are computed live from each bird's hatch_date via getBirdAgeLabel
- *   (the age SSoT established in CHANGELOG 1.18.0) — there is no hardcoded
- *   day count to drift, and no bird count is rendered (Boss rule).
- *   16-Jul-2026 (Birdcatraz-era refresh): header de-chickified, day-4
- *   brooder portraits swapped for current grown-bird frames where one
- *   exists in the repo.
- *
- * SRP/DRY check: Pass — composition only. Each sub-piece owns its own
- *   data + empty states. Age uses the shared getBirdAgeLabel helper rather
- *   than a re-implemented date math.
+ * SRP/DRY check: Pass. Composition only. The strip's data comes from
+ *   buildStrips() in lib/ornitharch-strip.ts; the camera components own their
+ *   own data.
  */
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 import { preconnect } from "react-dom";
 import GuardianHomeBadge from "@/app/components/guardian/GuardianHomeBadge";
-import GardenStrip from "@/app/components/home/GardenStrip";
 import HomeCameraStage from "@/app/components/home/HomeCameraStage";
-import RecentGemsRail from "@/app/components/home/RecentGemsRail";
-import SystemBanner from "@/app/components/home/SystemBanner";
+import OrnitharchStrip from "@/app/components/home/OrnitharchStrip";
 import GemsStatFooter from "@/app/components/gems/GemsStatFooter";
-import { getBirdAgeLabel, getFlockProfiles } from "@/lib/content";
-import { PAGE_MARKS, STATUS } from "@/lib/emoji";
+import { buildStrips } from "@/lib/ornitharch-strip";
 
 // Title and description come from the root layout; this only pins the
-// canonical address. Set here rather than in layout.tsx, because a canonical
-// on the layout would be inherited by every page that doesn't set its own.
+// canonical address (set here, not in layout.tsx, so it is not inherited).
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-// The live camera stage and the gems rail both load from the Guardian tunnel;
-// open that connection while the HTML is still arriving.
+// The camera stage and the status badge load from the Guardian tunnel; open
+// that connection while the HTML is still arriving.
 const GUARDIAN_ORIGIN = "https://guardian.markbarney.net";
 
-const DEEPER_LINKS: { href: string; label: string; hint: string }[] = [
-  { href: "/projects/guardian", label: "guardian", hint: "live cameras + PTZ + dashboard" },
-  { href: "/gallery/gems", label: "gallery/gems", hint: "filterable archive of curated gems" },
-  { href: "/yard", label: "yard", hint: "thrice-daily Reolink stockpile" },
-  { href: "/flock", label: "flock", hint: "active birds + breed reference" },
-  { href: "/hatches", label: "hatches", hint: "every 2026 incubator hatch — parentage + phenotype log" },
-  { href: "/field-notes", label: "field-notes", hint: "weekly farm updates" },
-  { href: "/projects", label: "projects", hint: "build logs + materials" },
-];
-
-type Chick = {
-  name: string;
-  breed: string;
-  hatch: string; // short display label, e.g. "Jun 2"
-  hatchISO: string; // age source of truth — live age derived from this date
-  photo: string | null;
-};
-
-// The Class of 2026 IS the roster's ornitharchs (the birds hatched on the farm
-// this spring). We derive this list LIVE from content/flock-profiles.json so the
-// front page always shows each bird's CURRENT portrait — the exact same photo
-// /flock shows. This used to be a hardcoded array whose photo paths silently
-// drifted out of sync with the roster (why new bird photos never appeared on the
-// homepage). Deriving fixes that at the root: update a bird's photo once and it
-// shows everywhere. Newest hatch first; age is computed live from hatch_date
-// (never stored) so it can't stale. No count is rendered — Boss rule.
-function shortBreed(breed: string): string {
-  // Compact the roster's long breed strings into a card label.
-  return breed
-    .replace(/\s*\([^)]*\)/g, "") // drop parentheticals like "(cross TBD)"
-    .replace(/Easter Egger/gi, "EE")
-    .trim();
-}
-
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-function formatHatch(iso: string): string {
-  // "2026-06-02" -> "Jun 2"
-  const [, m, d] = iso.split("-").map(Number);
-  return `${MONTHS[(m ?? 1) - 1]} ${d ?? ""}`.trim();
-}
-
-// Boss-set featured order for the front page hero row — these five lead,
-// in this exact order, regardless of hatch date. Everyone else follows,
-// newest hatch first, same as before this override existed.
-const FEATURED_ORDER = ["Birddor", "Henridot", "Birdimir", "Ingebird", "Horstabird"];
-
-// How many Class-of-2026 tiles get next/image `priority` (eager + preload).
-// Six is one full row at the widest breakpoint (lg:grid-cols-6) and, at
-// grid-cols-2 on a phone, the three stacked rows that fill the first screen —
-// so the same number is correct at both ends and nothing below the fold gets
-// preloaded. See the Image below for why this matters.
-const FIRST_ROW_PRIORITY = 6;
-
-function getClassOf2026(): Chick[] {
-  const flock = getFlockProfiles();
-  if (!flock) return [];
-  return flock.flock_birds
-    .filter((b) => b.ornitharch && b.hatch_date)
-    .map((b) => ({
-      name: b.name,
-      breed: shortBreed(b.breed),
-      hatch: formatHatch(b.hatch_date as string),
-      hatchISO: b.hatch_date as string,
-      photo: b.photo ? `/photos/${b.photo}` : null,
-    }))
-    .sort((a, z) => z.hatchISO.localeCompare(a.hatchISO)) // newest hatch first
-    .sort((a, z) => {
-      const ai = FEATURED_ORDER.indexOf(a.name);
-      const zi = FEATURED_ORDER.indexOf(z.name);
-      if (ai === -1 && zi === -1) return 0; // preserve newest-first order below
-      if (ai === -1) return 1;
-      if (zi === -1) return -1;
-      return ai - zi;
-    });
-}
 
 export default function Home() {
-  const hatchlings = getClassOf2026();
   preconnect(GUARDIAN_ORIGIN);
+  const strips = buildStrips();
+
   return (
-    <main className="bg-field-bg text-field-ink min-h-screen font-sans">
-      {/* The page's one H1. Visually hidden: the hero row is the visual
-          opening, and SiteNav already shows the site name above it. */}
+    <main className="min-h-screen bg-field-bg font-sans text-field-ink">
+      {/* The page's one H1. Visually hidden: the strip is the visual opening. */}
       <h1 className="sr-only">Mark&apos;s Farm — Hampton, Connecticut</h1>
 
-      {/* === THE CLASS OF 2026 — hero position === */}
-      <section className="border-b border-field-border">
-        <div className="max-w-7xl mx-auto px-3 py-4">
-          <h2>
-            <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-3">
-              <span aria-hidden="true" className="mr-1.5">{PAGE_MARKS.home}</span>THE CLASS OF 2026 — hatched this spring, ruling Birdcatraz now
-            </span>
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {hatchlings.map((chick, idx) => (
-              <div key={`${chick.name}-${idx}`} className="flex flex-col gap-1.5">
-                {chick.photo ? (
-                  <div className="w-full h-56 border border-field-border bg-field-wash flex items-center justify-center overflow-hidden">
-                    <Image
-                      src={chick.photo}
-                      alt={chick.name}
-                      width={400}
-                      height={500}
-                      className="w-full h-full object-contain"
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw"
-                      // The Class of 2026 row is the top of the homepage — the
-                      // first thing in the viewport on every device. Without
-                      // this, next/image emits loading="lazy" on all of them,
-                      // so Chrome assigns Low priority and does not even queue
-                      // the fetch until after layout (measured 18-Aug-2026:
-                      // Chrome's own LCPDiscovery insight flagged the row).
-                      // `priority` emits loading="eager" + fetchpriority="high"
-                      // + a <link rel="preload"> in <head>, so the preload
-                      // scanner starts the fetch while the HTML is still
-                      // parsing. FIRST_ROW_PRIORITY covers a full row at every
-                      // breakpoint (6-across desktop, and the 2-across mobile
-                      // stack, whose three rows all sit within the first
-                      // screen). Tile 7+ stays lazy — that's below the fold
-                      // everywhere and shouldn't spend a mobile's bandwidth.
-                      priority={idx < FIRST_ROW_PRIORITY}
-                      // These tiles render ~194 CSS px wide, so a DPR-3 phone
-                      // pulls the 640w variant of each — and six of them are
-                      // preloaded ahead of everything else. q65 is invisible at
-                      // that display size and keeps the preloaded row light on
-                      // a phone. Declared in next.config.ts images.qualities.
-                      quality={65}
-                    />
-                  </div>
-                ) : (
-                  <div className="w-full h-56 border border-dashed border-field-border flex items-center justify-center bg-field-wash">
-                    <span className="font-mono text-[0.65rem] text-field-muted text-center px-1">
-                      photo<br />incoming
-                    </span>
-                  </div>
-                )}
-                <div className="font-mono text-[0.72rem] leading-tight">
-                  <div className="text-field-accent">{chick.name}</div>
-                  <div className="text-field-muted">{chick.breed}</div>
-                  <div className="text-field-muted">
-                    b. {chick.hatch} · {getBirdAgeLabel(chick.hatchISO)}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {strips ? (
+        <OrnitharchStrip data={strips} />
+      ) : (
+        <p className="mx-auto max-w-7xl px-3 py-6 font-mono text-xs text-field-muted">
+          The flock records are unavailable right now.
+        </p>
+      )}
 
-      {/* === STORY ABOUT THE LIVE PIPELINE === */}
-      <SystemBanner />
-
-      {/* === LIVE CAMERAS — deliberate dark island; camera surfaces keep the guardian palette === */}
+      {/* Live cameras: a deliberate dark island; the camera surfaces keep the guardian palette. */}
       <section className="border-b border-field-border">
-        <div className="max-w-7xl mx-auto px-3 pt-4 pb-3">
-          <h2>
-            <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-3">
-              <span aria-hidden="true" className="mr-1.5">{STATUS.live}</span>Live Cameras
-            </span>
-          </h2>
-          <div className="rounded-xl overflow-hidden bg-guardian-bg border border-field-border p-4">
+        <div className="mx-auto max-w-7xl px-3 pb-3 pt-4">
+          <h2 className="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-field-muted">Live cameras</h2>
+          <div className="overflow-hidden rounded-xl border border-field-border bg-guardian-bg p-4">
             <GuardianHomeBadge />
             <div className="pt-2">
               <HomeCameraStage />
@@ -235,60 +67,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* === RECENT GEMS === */}
-      <RecentGemsRail />
-
-      {/* === FROM THE GARDEN — latest garden-tagged field note === */}
-      <GardenStrip />
-
-      {/* === DEEPER PAGES, file-listing styled === */}
-      <section className="max-w-7xl mx-auto px-3 py-4 border-t border-field-border font-mono text-[0.78rem]">
-        <h2>
-          <span className="inline-block font-mono text-[0.66rem] tracking-[0.16em] uppercase border border-field-border bg-field-card px-2.5 py-1 text-field-muted mb-1.5">
-            INDEX
-          </span>
-        </h2>
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-0.5">
-          {DEEPER_LINKS.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className="group flex items-baseline gap-2 py-1 hover:bg-field-wash px-1 -mx-1"
-              >
-                <span className="text-field-muted select-none">└─</span>
-                <span className="text-field-accent group-hover:text-field-accent-deep">
-                  {link.label}
-                </span>
-                <span className="text-field-muted truncate">
-                  — {link.hint}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* === STATUS-LINE FOOTER === */}
-      <footer className="border-t border-field-border bg-field-card text-field-muted py-2 font-mono text-[0.7rem]">
-        <div className="max-w-7xl mx-auto px-3 flex flex-wrap items-center gap-x-3 gap-y-0.5">
-          <span className="text-field-muted">FARM-2026</span>
-          <span>·</span>
-          <span>Hampton, CT</span>
+      {/* Status footer. */}
+      <footer className="border-t border-field-border bg-field-card py-2 font-mono text-[0.7rem] text-field-muted">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-3 gap-y-0.5 px-3">
+          <span>The farm · Hampton, Connecticut</span>
           <span>·</span>
           <GemsStatFooter />
           <span className="ml-auto flex gap-3">
-            <a
-              href="https://www.instagram.com/pawel_and_pawleen/"
-              rel="noopener"
-              className="hover:text-field-ink"
-            >
+            <a href="https://www.instagram.com/pawel_and_pawleen/" rel="noopener" className="hover:text-field-ink">
               instagram ↗
             </a>
-            <a
-              href="https://www.facebook.com/profile.php?id=61557234706008"
-              rel="noopener"
-              className="hover:text-field-ink"
-            >
+            <a href="https://www.facebook.com/profile.php?id=61557234706008" rel="noopener" className="hover:text-field-ink">
               facebook ↗
             </a>
             <span>© {new Date().getFullYear()}</span>
