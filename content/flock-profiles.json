@@ -1715,10 +1715,17 @@
           "source": "claude-photo-review",
           "age_weeks": 15,
           "note": "Grown-bird refresh 21-Sep-2026 from Boss's 16-Sep photo (birds/IMG_9883-henridot-speckled-chicken-16sep2026.jpg; purple band visible), agreeing with the left bird of the 19-Sep group shot. Boss 21-Sep: formerly Henridotta; believed to be a rooster, and he is the purple-banded (left leg), rooster-combed bird on the left of the 19-Sep group shot."
+        },
+        {
+          "date": "2026-11-23",
+          "date_unknown": false,
+          "description": "Henridot has pale silver-gray neck feathers, dark barring across the breast and body, and a mostly dark tail. The Boss reports that his coloring changed a lot over the past few weeks and that he used to look just like his sisters.",
+          "source": "boss-caption",
+          "age_weeks": 24
         }
       ],
-      "color_description": "Rooster: black-and-white barring over the whole body, with the head and neck finer, more speckled and often silver-grey, and a large bright-red single comb flopping to one side and full red wattles. Colored like the purchased Barred Rock roosters, so plumage alone cannot tell him apart; his leg band does. Yellow legs.",
-      "color_description_as_of": "2026-09-16",
+      "color_description": "Henridot has pale silver-gray neck feathers, dark barring across the breast and body, and a mostly dark tail. The Boss reports that his coloring changed a lot over the past few weeks and that he used to look just like his sisters.",
+      "color_description_as_of": "2026-11-23",
       "photo": "birds/input-IMG_1045-henridot-large-stands-23nov2026.jpg",
       "silver_marking": "none",
       "notes": "June Henrietta-line chick, named in honor of his mother Henrietta. Dam: Henrietta; sire window Whitey Red Legs. SEX CONFIRMED COCKEREL \u2014 Boss-confirmed 2026-09-16 in #meet-the-lobsters, in his words: \"Henridot as he will be known now.\" The sex call is the Boss's, made in the field; it is NOT derived from any comb/wattle or plumage read in this record. RENAMED Henridotta \u2192 Henridot on that confirmation; 'Henridotta' is retained as formerly (which drives the \"fka\" chip and the old-URL redirect) and as alternative_name, because every photo filename, caption and diary entry before this date uses it. SILVER RESOLVED: the Boss confirmed 2026-07-21 that the silver sister is Henriessa, not Henridot \u2014 Henridot is the darker standard look (same coloring as Adelbird, who is slightly smaller). Per-chick record: content/hatches/2026/2026-06-03-04-henridot.md PLUMAGE CORRECTED 2026-07-29 (Boss-authoritative): he is barred black-and-white, not the silvery-scaled hatch-era description \u2014 that description is retired. Default photo updated to the wings-spread shot at the fence (purple band #12 confirmed in the companion portrait, IMG_8050).",
